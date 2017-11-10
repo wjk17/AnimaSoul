@@ -5,3 +5,5 @@ AnimaSoul.sln
 .vs
 Debug
 Library
+AnimaSoul.Editor.csproj
+Ignore
