@@ -7,3 +7,8 @@ Debug
 Library
 AnimaSoul.Editor.csproj
 Ignore
+Standard Assets
+AnimaSoulv01.exe
+AnimaSoulv01_Data
+AnimaSoul.Editor.Plugins.csproj
+AnimaSoul.Plugins.csproj

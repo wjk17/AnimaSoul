@@ -4,4 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/AnimaEditor/AnimaEditor.unity
+    guid: 8058b3d841917da4e82f0fcdcb12e842

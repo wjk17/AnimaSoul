@@ -295,6 +295,24 @@ ModelImporter:
     100574: Shoes
     100576: Tie
     100578: Head.001
+    100580: Band
+    100582: Band2
+    100584: Blade
+    100586: Blade2
+    100588: FaceBones
+    100590: HairBones
+    100592: Sphere
+    100594: tail
+    100596: tail.001
+    100598: tail.002
+    100600: tail.003
+    100602: tail.004
+    100604: tail.005
+    100606: tail.006
+    100608: tail.007
+    100610: tail.008
+    100612: tail.009
+    100614: tail.009_end
     400000: //RootNode
     400002: Cube
     400004: Cube.001
@@ -585,6 +603,24 @@ ModelImporter:
     400574: Shoes
     400576: Tie
     400578: Head.001
+    400580: Band
+    400582: Band2
+    400584: Blade
+    400586: Blade2
+    400588: FaceBones
+    400590: HairBones
+    400592: Sphere
+    400594: tail
+    400596: tail.001
+    400598: tail.002
+    400600: tail.003
+    400602: tail.004
+    400604: tail.005
+    400606: tail.006
+    400608: tail.007
+    400610: tail.008
+    400612: tail.009
+    400614: tail.009_end
     2300000: Cube
     2300002: Cube.001
     2300004: Plane
@@ -624,6 +660,11 @@ ModelImporter:
     2300072: Shoes
     2300074: Tie
     2300076: Head.001
+    2300078: Band
+    2300080: Band2
+    2300082: Blade
+    2300084: Blade2
+    2300086: Sphere
     3300000: Cube
     3300002: Cube.001
     3300004: Plane
@@ -663,6 +704,11 @@ ModelImporter:
     3300072: Shoes
     3300074: Tie
     3300076: Head.001
+    3300078: Band
+    3300080: Band2
+    3300082: Blade
+    3300084: Blade2
+    3300086: Sphere
     4300000: Cube
     4300002: Plane.012
     4300004: Cube.001
@@ -702,6 +748,32 @@ ModelImporter:
     4300072: Inner
     4300074: Shoes
     4300076: Head.001
+    4300078: Sphere
+    4300080: Band2
+    4300082: Blade2
+    4300084: Band
+    4300086: Blade
+    9500000: //RootNode
+    13700000: Arms
+    13700002: Eye
+    13700004: EyeBrow
+    13700006: EyeFold
+    13700008: EyeHl
+    13700010: EyeHl2
+    13700012: EyeLash
+    13700014: EyePupil
+    13700016: Gloves
+    13700018: Hair
+    13700020: Hairpin
+    13700022: HairpinBack
+    13700024: Head
+    13700026: Horn
+    13700028: Inner
+    13700030: Lower
+    13700032: Outer
+    13700034: Pants
+    13700036: Shoes
+    13700038: Tie
   materials:
     importMaterials: 1
     materialName: 0
@@ -718,7 +790,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -768,10 +840,10 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
