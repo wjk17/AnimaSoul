@@ -110,8 +110,8 @@ public class ASDOF
     {
         var dof = new ASDOF();
         dof.count = 1;
-        dof.swingXMin = -xMax; // 按照常识习惯反转方向，向前方的旋转（逆时针）为正。
-        dof.swingXMax = -xMin;
+        dof.swingXMin = xMin;
+        dof.swingXMax = xMax;
         return dof;
     }
     public static ASDOF Hinge2D(float xMin, float xMax, float tMin, float tMax)

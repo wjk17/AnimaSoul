@@ -89,13 +89,13 @@ public static class DOFLiminator
             case ASBone.ring3_l:
             case ASBone.pinky3_l: dof = finger(2); break;
             //第二截手指
-            case ASBone.thumb2_l: dof = ASDOF.Ball(-20, +20, -40, +80); break;
+            case ASBone.thumb2_l: dof = ASDOF.Ball(-20, +20, -80, +40); break;
             case ASBone.index2_l:
             case ASBone.middle2_l:
             case ASBone.ring2_l:
             case ASBone.pinky2_l: dof = finger(1); break;
             //第一截手指
-            case ASBone.thumb1_l: dof = ASDOF.Ball(-15, +15, -15, +30); break;
+            case ASBone.thumb1_l: dof = ASDOF.Ball(-15, +15, -30, +15); break;
             case ASBone.index1_l: dof = ASDOF.Hinge(-100, 0); break;
             case ASBone.middle1_l:
             case ASBone.ring1_l:
@@ -106,9 +106,9 @@ public static class DOFLiminator
             case ASBone.palm3_l:
             case ASBone.palm4_l: dof = ASDOF.Fixed; break;
             //四肢
-            case ASBone.hand_l: dof = ASDOF.Ball(-25, +55, +90, +90); break;
-            case ASBone.forearm_l: dof = ASDOF.Hinge2D(0, +150, -145, +10); break;
-            case ASBone.upperarm_l: dof = ASDOF.Ball3D(-140, +40, -45, +180, -90, +90); break;
+            case ASBone.hand_l: dof = ASDOF.Ball(-25, +55, -90, +90); break;
+            case ASBone.forearm_l: dof = ASDOF.Hinge2D(-150, +0, -145, +10); break;
+            case ASBone.upperarm_l: dof = ASDOF.Ball3D(-140, +40, -135, +90, -90, +90); break;
             case ASBone.shoulder_l: dof = ASDOF.Ball(-20, +20, -20, +20); break;
             case ASBone.head: dof = ASDOF.Hinge(-35, +40); break;
             case ASBone.neck: dof = ASDOF.Ball3D(-55, +55, -50, +60, -70, +70); break;
@@ -120,7 +120,7 @@ public static class DOFLiminator
             case ASBone.foot_l: dof = ASDOF.Ball(-35, +20, -45, +20); break;
             case ASBone.shin_l: dof = ASDOF.Hinge(0, 150); break;
             //case HumanSkeleton.thigh: dof = DOF.Ball3D( -25, +125, -25, +45, -45, +45); dof.Offset(15, 180, 180); break;
-            case ASBone.thigh_l: dof = ASDOF.Hinge(-25, +125); break;
+            case ASBone.thigh_l: dof = ASDOF.Hinge(-125, +25); break;
             case ASBone.hips: dof = ASDOF.Fixed; break;
             case ASBone.root: dof = ASDOF.Fixed; break;
             case ASBone.other: dof = ASDOF.NoLimit; break;

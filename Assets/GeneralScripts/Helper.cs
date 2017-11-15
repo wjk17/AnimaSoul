@@ -139,13 +139,13 @@ public static class ComTool
         if (com == null) com = c.gameObject.AddComponent<T>();
         return com;
     }
-    public static T GetCom<T>(this GameObject go) where T : Component
+    public static T GetComOrAdd<T>(this GameObject go) where T : Component
     {
         var com = go.GetComponent<T>();
         if (com == null) com = go.AddComponent<T>();
         return com;
     }
-    public static T GetCom<T>(this Transform t) where T : Component
+    public static T GetComOrAdd<T>(this Transform t) where T : Component
     {
         var com = t.GetComponent<T>();
         if (com == null) com = t.gameObject.AddComponent<T>();
@@ -785,6 +785,14 @@ public static class GTool
     public static void SetPosZ(this Transform trans, float f)
     {
         trans.position = new Vector3(trans.position.x, trans.position.y, f);
+    }
+    public static Vector2 SetX(this Vector2 vec, float f)
+    {
+        return new Vector2(f, vec.y);
+    }
+    public static Vector2 SetY(this Vector2 vec, float f)
+    {
+        return new Vector2(vec.x, f);
     }
     public static Vector3 SetX(this Vector3 vec, float f)
     {

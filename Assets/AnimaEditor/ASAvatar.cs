@@ -17,6 +17,48 @@ public enum ZHumanPart
     foot,
     hand,
 }
+public static class ASBoneTool
+{
+    public static string[] names = new string[]
+    {
+    "拇指3(左)", "拇指3(右)",
+    "拇指2(左)", "拇指2(右)",
+    "拇指1(左)", "拇指1(右)",
+    "食指3(左)", "食指3(右)",
+    "食指2(左)", "食指2(右)",
+    "食指1(左)", "食指1(右)",
+    "中指3(左)", "中指3(右)",
+    "中指2(左)", "中指2(右)",
+    "中指1(左)", "中指1(右)",
+    "无名指3(左)", "无名指3(右)",
+    "无名指2(左)", "无名指2(右)",
+    "无名指1(左)", "无名指1(右)",
+    "尾指3(左)", "尾指3(右)",
+    "尾指2(左)", "尾指2(右)",
+    "尾指1(左)", "尾指1(右)",
+    "掌骨1(左)", "掌骨1(右)",
+    "掌骨2(左)", "掌骨2(右)",
+    "掌骨3(左)", "掌骨3(右)",
+    "掌骨4(左)", "掌骨4(右)",
+    "手(左)", "手(右)",
+    "前臂(左)", "前臂(右)",
+    "上臂(左)", "上臂(右)",
+    "肩膀(左)", "肩膀(右)",
+    "头",
+    "颈部",
+    "胸部",
+    "脊椎",
+    "脚跟2(左)", "脚跟2(右)",
+    "脚跟1(左)", "脚跟1(右)",
+    "脚趾(左)", "脚趾(右)",
+    "脚(左)", "脚(右)",
+    "小腿(左)", "小腿(右)",
+    "大腿(左)", "大腿(右)",
+    "屁股",
+    "根",
+    "其他",
+    };
+}
 public enum ASBone
 {
     thumb3_l, thumb3_r,
@@ -57,6 +99,7 @@ public enum ASBone
     root,
     other,
 }
+
 public class ZSkeleton
 {
     public ASBone bone;
@@ -205,6 +248,30 @@ public class ASAvatarEditor : Editor
 #endif
 public class ASAvatar : MonoBehaviour
 {
+    public Transform this[ASBone bone]
+    {
+        get
+        {
+            try
+            {
+                return dic[bone];
+            }
+            catch
+            {
+#if UNITY_EDITOR
+                throw;
+#endif
+                return null;
+            }
+        }
+    }
+    public Transform this[ASDOF dof]
+    {
+        get
+        {
+            return this[dof.bone];
+        }
+    }
     public Dictionary<ASBone, Transform> dic
     {
         get
@@ -216,11 +283,10 @@ public class ASAvatar : MonoBehaviour
     private Dictionary<ASBone, Transform> _dic;
     public Transform rig;
     public List<ASTransform> ASTs;
-    private ASDOFMgr dofMgr;    
+    private ASDOFMgr dofMgr;
     public void Reset()
     {
-        rig = transform;
-        dofMgr = GetComponent<ASDOFMgr>();
+        rig = transform;        
     }
     public ASBone GetZbone(Transform t)
     {
@@ -232,6 +298,7 @@ public class ASAvatar : MonoBehaviour
     }
     public void Match()
     {
+        dofMgr = GetComponent<ASDOFMgr>();
         _dic = new Dictionary<ASBone, Transform>();
         _dic.Add(ASBone.root, rig);
         ASTs = new List<ASTransform>();
