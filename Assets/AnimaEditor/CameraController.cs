@@ -72,11 +72,11 @@ namespace UnityChan
             if (showInstWindow)
             {
                 timer += Time.deltaTime;
-                if (GUI.Button(new Rect(x, y, 200, 90), "") && timer >0.5f) { showInstWindow = false; }
-                GUI.Box(new Rect(x, y, 200, 90), "摄像机操作（点击隐藏）");
-                GUI.Label(new Rect(x + 10, y + 20, 200, 30), "右键 / Alt+左键: 旋转");
-                GUI.Label(new Rect(x + 10, y + 40, 200, 30), "中键 / Alt+Cmd/Ctrl+左键: 移动");
-                GUI.Label(new Rect(x + 10, y + 60, 200, 30), "滚轮 / 2 指滑动: 推拉");
+                if (GUI.Button(new Rect(x, y, 200, 90), "") && timer > 0.5f) { showInstWindow = false; }
+                GUI.Label(new Rect(x + 20, y + 10, 200, 30), "摄像机操作（点击隐藏）");
+                GUI.Label(new Rect(x + 10, y + 30, 200, 30), "右键 / Alt+左键: 旋转");
+                GUI.Label(new Rect(x + 10, y + 50, 200, 30), "中键 / Alt+Cmd/Ctrl+左键: 移动");
+                GUI.Label(new Rect(x + 10, y + 70, 200, 30), "滚轮 / 2 指滑动: 推拉");
             }
         }
 
