@@ -149,7 +149,7 @@ Material:
     - _Mode: 0
     - _Nearest_Distance: 0
     - _OcclusionStrength: 1
-    - _Offset_Z: -0.01
+    - _Offset_Z: -0.0001
     - _Outline_Width: 0
     - _Parallax: 0.02
     - _RimLight: 0
