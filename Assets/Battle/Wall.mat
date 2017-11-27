@@ -7,10 +7,10 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Wall
-  m_Shader: {fileID: 4800000, guid: 9baf30ce95c751649b14d96da3a4b4d5, type: 3}
-  m_ShaderKeywords: _IS_BLENDADDTOHICOLOR_ON _IS_BLENDADDTOMATCAP_ON _IS_LIGHTCOLOR_1ST_SHADE_ON
-    _IS_LIGHTCOLOR_2ND_SHADE_ON _IS_LIGHTCOLOR_AP_RIMLIGHT_ON _IS_LIGHTCOLOR_BASE_ON
-    _IS_LIGHTCOLOR_HIGHCOLOR_ON _IS_LIGHTCOLOR_MATCAP_ON _IS_LIGHTCOLOR_RIMLIGHT_ON
+  m_Shader: {fileID: 47, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA _IS_BLENDADDTOHICOLOR_ON _IS_BLENDADDTOMATCAP_ON
+    _IS_LIGHTCOLOR_1ST_SHADE_ON _IS_LIGHTCOLOR_2ND_SHADE_ON _IS_LIGHTCOLOR_AP_RIMLIGHT_ON
+    _IS_LIGHTCOLOR_BASE_ON _IS_LIGHTCOLOR_HIGHCOLOR_ON _IS_LIGHTCOLOR_MATCAP_ON _IS_LIGHTCOLOR_RIMLIGHT_ON
     _IS_NORMALMAPTOBASE_ON _IS_NORMALMAPTOHIGHCOLOR_ON _IS_SPECULARTOHIGHCOLOR_ON
     _NORMALMAP _SET_SYSTEMSHADOWSTOBASE_ON
   m_LightmapFlags: 4
@@ -55,7 +55,7 @@ Material:
         m_Scale: {x: 100, y: 200}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: e25f5edd819ce0744ab28dfbc251723f, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 100, y: 200}
         m_Offset: {x: 0, y: 0}
     - _MatCap_Sampler:
@@ -102,6 +102,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _1st2nd_Shades_Feather: 0.0001
     - _Add_Antipodean_RimLight: 0
@@ -117,7 +121,7 @@ Material:
     - _Farthest_Distance: 10
     - _GI_Intensity: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.19
+    - _Glossiness: 0.393
     - _GlossyReflections: 1
     - _HighColor_Power: 0.68
     - _Is_BlendAddToHiColor: 1
@@ -139,7 +143,7 @@ Material:
     - _Is_UseTweakMatCapOnShadow: 0
     - _LightDirection_MaskOn: 0
     - _MatCap: 0
-    - _Metallic: 1
+    - _Metallic: 0.46
     - _Mode: 0
     - _Nearest_Distance: 0.5
     - _OcclusionStrength: 1
@@ -172,7 +176,7 @@ Material:
     - _2nd_ShadeColor: {r: 0, g: 0, b: 0, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 0.78676474, g: 0.78676474, b: 0.78676474, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.20514707, g: 0.1865809, b: 0.21323532, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HighColor: {r: 0.029411793, g: 0.026816634, b: 0.026816634, a: 1}
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}

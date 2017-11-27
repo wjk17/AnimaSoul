@@ -104,7 +104,7 @@ public static class DOFLiminator
             case ASBone.palm1_l:
             case ASBone.palm2_l:
             case ASBone.palm3_l:
-            case ASBone.palm4_l: dof = ASDOF.Fixed; break;
+            case ASBone.palm4_l: dof = new ASDOF(); break;
             //四肢
             case ASBone.hand_l: dof = ASDOF.Ball(-25, +55, -90, +90); break;
             case ASBone.forearm_l: dof = ASDOF.Hinge2D(-150, +0, -145, +10); break;
@@ -114,15 +114,15 @@ public static class DOFLiminator
             case ASBone.neck: dof = ASDOF.Ball3D(-55, +55, -50, +60, -70, +70); break;
             case ASBone.chest: dof = ASDOF.Ball3D(-25, +25, -15, +40, -40, +40); break;
             case ASBone.spine: dof = ASDOF.Ball3D(-25, +25, -15, +40, -40, +40); break;
-            case ASBone.heel2_l: dof = ASDOF.Fixed; break;
-            case ASBone.heel1_l: dof = ASDOF.Fixed; break;
+            case ASBone.heel2_l: dof = new ASDOF(); break;
+            case ASBone.heel1_l: dof = new ASDOF(); break;
             case ASBone.toe_l: dof = ASDOF.Hinge(-40, +50); break;
             case ASBone.foot_l: dof = ASDOF.Ball(-35, +20, -45, +20); break;
             case ASBone.shin_l: dof = ASDOF.Hinge(0, 150); break;
             //case HumanSkeleton.thigh: dof = DOF.Ball3D( -25, +125, -25, +45, -45, +45); dof.Offset(15, 180, 180); break;
             case ASBone.thigh_l: dof = ASDOF.Hinge(-125, +25); break;
-            case ASBone.hips: dof = ASDOF.Fixed; break;
-            case ASBone.root: dof = ASDOF.Fixed; break;
+            case ASBone.hips: dof = new ASDOF(); break;
+            case ASBone.root: dof = new ASDOF(); break;
             case ASBone.other: dof = ASDOF.NoLimit; break;
             default:
                 if (!mirror)//first time goto left bones(guess is a right bone)
@@ -136,9 +136,9 @@ public static class DOFLiminator
         }
         return dof;
     }
-    public static void LimitDOF(DeltaRotation dr, ASDOF dof)
+    public static void LimitDOF(ASTransDOF ast, ASDOF dof)
     {
-        dr.euler = LimitDOF(dr.euler, dof);
+        ast.euler = LimitDOF(ast.euler, dof);
     }
     public static Vector3 LimitDOF(Vector3 V, ASDOF dof)
     {

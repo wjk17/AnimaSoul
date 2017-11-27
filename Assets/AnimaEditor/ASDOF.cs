@@ -19,6 +19,8 @@ public class ASDOF
     {
         get
         {
+            // 这里共用一个DOF，有点危险的。因为DOF里有bone字段，指明哪一个骨骼使用。
+            // 可以使用 new ASDOF();替代
             if (_fixed == null) _fixed = new ASDOF();
             return _fixed;
         }

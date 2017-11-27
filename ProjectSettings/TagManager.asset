@@ -22,7 +22,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Outline
   - 
   - Light2
   - 
@@ -31,10 +31,10 @@ TagManager:
   - 
   - 
   - 
+  - Distort
   - 
   - 
-  - 
-  - 
+  - PostEffect
   - 
   - 
   m_SortingLayers:

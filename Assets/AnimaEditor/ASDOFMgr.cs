@@ -176,6 +176,23 @@ public class DOFSetting
 }
 public class ASDOFMgr : MonoBehaviour
 {
+    public ASDOF this[ASBone bone]
+    {
+        get
+        {
+            try
+            {
+                return GetDOF(bone);
+            }
+            catch
+            {
+#if UNITY_EDITOR
+                throw;
+#endif
+                return null;
+            }
+        }
+    }
     public DOFSetting DOFSetting;
     public string path;
     public string folder = "Settings/";
@@ -186,7 +203,11 @@ public class ASDOFMgr : MonoBehaviour
     }
     public void Load()
     {
-        DOFSetting.dofs = DOFLiminator.DefaultHumanDOF();
+        //DOFSetting.dofs = DOFLiminator.DefaultHumanDOF();
+        var dataPath = Application.dataPath;
+        var rootPath = dataPath + "/../";
+        path = rootPath + folder + fileName;
+        DOFSetting = Serializer.XMLDeSerialize<DOFSetting>(path);
     }
     public void Save()
     {

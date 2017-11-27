@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Xml.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -191,7 +192,7 @@ public static class ZHuman
             return _HumanSkeletonMap;
         }
     }
-    private static ZSkeleton CreateHumanMap()
+    public static ZSkeleton CreateHumanMap()
     {
         // & < |
         var thumb3 = MirrorBone(ASBone.thumb3_l, "thumb|pollex");
@@ -239,22 +240,51 @@ public class ASAvatarEditor : Editor
     {
         var o = (ASAvatar)target;
         base.OnInspectorGUI();
+        if (GUILayout.Button("Load"))
+        {
+            o.OpenASTs();
+        }
+        if (GUILayout.Button("Save"))
+        {
+            o.SaveASTs();
+        }
         if (GUILayout.Button("Match"))
         {
             o.Match();
         }
+        if (GUILayout.Button("ChildrenSwap Y & Z (exclude self)"))
+        {
+            o.ChildrenSwapYAndZ();
+        }
     }
 }
 #endif
+[Serializable]
+public class AvatarSetting
+{
+    public List<ASTransDOF> asts;
+    public string name = "Default Avatar Setting";
+    public AvatarSetting() { }
+    public ASTransDOF GetTransDOF(ASBone bone)
+    {
+        //foreach (var ast in asts)
+        //{
+        //    if (bone == ast.dof.bone)
+        //        return ast;
+        //}
+        return null;
+    }
+}
+[ExecuteInEditMode]
 public class ASAvatar : MonoBehaviour
 {
-    public Transform this[ASBone bone]
+    public ASTransDOF this[ASBone bone]
     {
         get
         {
             try
             {
-                return dic[bone];
+                return GetTransDOF(bone);
             }
             catch
             {
@@ -265,48 +295,141 @@ public class ASAvatar : MonoBehaviour
             }
         }
     }
-    public Transform this[ASDOF dof]
+    public ASTransDOF this[ASDOF dof]
     {
         get
         {
             return this[dof.bone];
         }
     }
-    public Dictionary<ASBone, Transform> dic
+    public Transform rig;
+    public AvatarSetting setting;
+    public string path;
+    public string folder = "Settings/";
+    public string fileName = "AvatarSetting.xml";
+    public void SaveASTs()
     {
-        get
+        var dataPath = Application.dataPath;
+        var rootPath = dataPath + "/../";
+        path = rootPath + folder + fileName;
+        Serializer.XMLSerialize(setting, path);
+    }
+    public void OpenASTs()
+    {
+        var dataPath = Application.dataPath;
+        var rootPath = dataPath + "/../";
+        path = rootPath + folder + fileName;
+        setting = Serializer.XMLDeSerialize<AvatarSetting>(path);
+    }
+    public ASDOFMgr dofMgr { get { return GetComponent<ASDOFMgr>(); } }
+    public ASBone selectBone;
+    public void UpdateCoord()
+    {
+        Start();
+        foreach (var t in setting.asts)
         {
-            if (_dic == null || _dic.Count == 0) Match();
-            return _dic;
+            t.Init();
+            t.UpdateCoord();
         }
     }
-    private Dictionary<ASBone, Transform> _dic;
-    public Transform rig;
-    public List<ASTransform> ASTs;
-    private ASDOFMgr dofMgr;
+    public void ChildrenSwapYAndZ()
+    {
+        var td = GetTransDOF(selectBone);
+        if (td == null || td.transform == null) return;
+        foreach (var t in td.transform.GetComponentsInChildren<Transform>(true))
+        {
+            if (t == td.transform) continue;
+            var transD = GetTransDOF(t);
+            if (transD == null) continue;
+            var up = transD.up;
+            transD.up = transD.forward;
+            transD.forward = up;
+            transD.UpdateCoord();
+            Debug.Log(transD.transform.name);
+        }
+    }
     public void Reset()
     {
-        rig = transform;        
+        rig = transform;
     }
-    public ASBone GetZbone(Transform t)
+    public ASTransDOF GetTransDOF(ASDOF dof)
     {
-        foreach (var d in dic)
-        {
-            if (t == d.Value) return d.Key;
-        }
-        return ASBone.other;
+        return GetTransDOF(dof.bone);
     }
+    public ASTransDOF GetTransDOF(ASBone bone)
+    {
+        foreach (var t in setting.asts)
+        {
+            if (t.dof.bone == bone)
+            {
+                return t;
+            }
+        }
+        return null;
+    }
+    public ASTransDOF GetTransDOF(Transform trans)
+    {
+        foreach (var t in setting.asts)
+        {
+            if (t.transform == trans)
+            {
+                return t;
+            }
+        }
+        return null;
+    }
+    //public ASBone GetBone(Transform t)
+    //{
+    //    foreach (var d in dic)
+    //    {
+    //        if (t == d.Value) return d.Key;
+    //    }
+    //    return ASBone.other;
+    //}
+    [ContextMenu("Match")]
     public void Match()
     {
-        dofMgr = GetComponent<ASDOFMgr>();
-        _dic = new Dictionary<ASBone, Transform>();
+        var _dic = new Dictionary<ASBone, Transform>();
         _dic.Add(ASBone.root, rig);
-        ASTs = new List<ASTransform>();
-        ZHuman.MatchBones(_dic, rig, ZHuman.HumanSkeletonMap);
+        //ZHuman.MatchBones(_dic, rig, ZHuman.HumanSkeletonMap);
+        ZHuman.MatchBones(_dic, rig, ZHuman.CreateHumanMap());
         foreach (var item in _dic)
         {
-            ASTransform ast = new ASTransform(dofMgr.GetDOF(item.Key));
-            ASTs.Add(ast);
+            var ast = GetTransDOF(item.Key);
+            if (ast != null)
+            {
+                ast.transform = item.Value;
+                Debug.Log("match: " + ast.transform.name);
+            }
+        }
+        Start();
+    }
+    public void LoadFromDOFMgr()
+    {
+        foreach (var ast in setting.asts)
+        {
+            var dof = dofMgr.GetDOF(ast.dof.bone);
+            ast.dof = dof;
+        }
+    }
+    private void Start()
+    {
+        foreach (var t in setting.asts)
+        {
+            t.Init();
+        }
+    }
+    public float drawLineLength = 0.5f;
+    public bool depthTest = false;
+    public void Update()
+    {
+        foreach (var t in setting.asts)
+        {
+#if UNITY_EDITOR
+            t.coord.DrawRay(t.transform, t.euler, drawLineLength, depthTest);
+            if (Application.isPlaying)
+#endif
+                t.Update();
         }
     }
 }

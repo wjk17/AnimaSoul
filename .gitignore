@@ -1,15 +1,21 @@
-参考图
-建筑
-AnimaSoul.csproj
-AnimaSoul.sln
-.vs
-Debug
-Library
-AnimaSoul.Editor.csproj
-Ignore
-Standard Assets
-AnimaSoulv01.exe
-AnimaSoulv01_Data
-AnimaSoul.Editor.Plugins.csproj
-AnimaSoul.Plugins.csproj
-Temp
+/Legacy
+/Settings - 副本
+/Temp
+/UnityPackageManager
+/参考图
+/.vs
+/AnimaSoulv01_Data
+/Debug
+/demo_Data
+/Ignore
+/Library
+/music
+/AnimaSoul.sln
+/AnimaSoul.csproj
+/AnimaSoul.Editor.csproj
+/AnimaSoul.Editor.Plugins.csproj
+/AnimaSoul.Plugins.csproj
+/AnimaSoulv01.exe
+/demo.exe
+/UnityPlayer.dll
+/Assets/PostProcessing
