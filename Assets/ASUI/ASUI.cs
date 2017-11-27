@@ -54,6 +54,13 @@ public static class ASUI
         label.color = labelColor;
         horizon.Add(toggle);
     }
+
+    internal static void ClearCmd()
+    {
+        I.glCommands.Clear();
+        I.imCommands.Clear();
+    }
+
     public static void Button(string labelStr, UnityAction onClick = null)
     {
         var button = Obj.Instantiate(I.buttonPrefab, parent).GetComponent<Button>();

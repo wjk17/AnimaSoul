@@ -48,12 +48,12 @@ namespace UnityChan
         }
         private void Start()
         {
-            orthoCamSize = Camera.main.orthographicSize;
+            orthoCamSize = GetComponent<Camera>().orthographicSize;
             SyncCamSize();
         }
         public void SyncCamSize()
         {
-            var cams = Camera.main.GetComponentsInChildren<Camera>(true);
+            var cams = GetComponentsInChildren<Camera>(true);
             foreach (var cam in cams)
             {
                 cam.orthographicSize = orthoCamSize;

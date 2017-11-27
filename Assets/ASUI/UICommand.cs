@@ -17,14 +17,15 @@ public class FloatArg : Argument
 public class Argument
 {
 }
-public enum GLUICommandType
+public enum GLUICmdType
 {
+    LoadOrtho,
     DrawLineOrtho,
 }
 public class GLUICommand
 {
-    public GLUICommandType type;
-    public Argument[] args;
+    public GLUICmdType type;
+    public object[] args;
 }
 public static class GLUIHandler
 {
@@ -32,27 +33,38 @@ public static class GLUIHandler
     {
         switch (cmd.type)
         {
-            case GLUICommandType.DrawLineOrtho:
-                GLUI.DrawLineOrtho((cmd.args[0] as Vector2Arg).value, (cmd.args[0] as Vector2Arg).value);
+            case GLUICmdType.LoadOrtho: GL.LoadOrtho(); break;
+            case GLUICmdType.DrawLineOrtho:
+                if (cmd.args.Length == 2)
+                    GLUI.DrawLineOrtho((Vector2)cmd.args[0], (Vector2)cmd.args[1]);
+                else
+                    GLUI.DrawLineOrtho((Vector2)cmd.args[0], (Vector2)cmd.args[1], (Color)cmd.args[2]);
                 break;
             default:
                 throw null;
         }
     }
 }
-public enum IMUICommandType
+public enum IMUICmdType
 {
     DrawText,
 }
 public class IMUICommand
 {
-    public IMUICommandType type;
-    public Argument[] arguments;
+    public IMUICmdType type;
+    public object[] args;
 }
 public static class IMUIHandler
 {
-    public static void ExecuteCommand(IMUICommand command)
+    public static void ExecuteCommand(IMUICommand cmd)
     {
-
+        switch (cmd.type)
+        {
+            case IMUICmdType.DrawText:
+                IMUI.DrawTextIM((string)cmd.args[0], (Vector2)cmd.args[1]);
+                break;
+            default:
+                throw null;
+        }
     }
 }

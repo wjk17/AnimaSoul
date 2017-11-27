@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using System;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -56,11 +54,8 @@ public class DOFProp
     public FloatValueIF swingXMax;
     public FloatValueIF swingZMin;
     public FloatValueIF swingZMax;
-    //[NonSerialized]
     public SliderWrapper twistSlider;
-    //[NonSerialized]
     public SliderWrapper swingXSlider;
-    //[NonSerialized]
     public SliderWrapper swingZSlider;
     public void Update(ASDOF dof)
     {
@@ -76,6 +71,7 @@ public class DOFProp
         swingZSlider.UpdateRange();
     }
 }
+#if UNITY_EDITOR
 [CustomEditor(typeof(UIDOFEditor))]
 public class UIDOFEditorEditor : Editor
 {
@@ -89,6 +85,7 @@ public class UIDOFEditorEditor : Editor
         }
     }
 }
+#endif
 public class UIDOFEditor : MonoBehaviour
 {
     public Color labelColor = Color.black;

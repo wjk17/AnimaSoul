@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class ASObjectCurves
+[Serializable]
+public class ASObjectCurve
 {
     public string name;
     public Transform trans;
     public ASCurve[] eulerAngles;
     public ASCurve[] localPosition;
-    public ASObjectCurves()
+    public ASObjectCurve()
     {
         eulerAngles = new ASCurve[3];
         localPosition = new ASCurve[3];
     }
-    public ASObjectCurves Clone()
+    public ASObjectCurve Clone()
     {
-        var n = new ASObjectCurves();
+        var n = new ASObjectCurve();
         n.name = name;
         n.eulerAngles = eulerAngles.Clone() as ASCurve[];
         n.localPosition = localPosition.Clone() as ASCurve[];
@@ -26,16 +27,23 @@ public class ASObjectCurves
 public class ASKey
 {
     public float time;
-    public Vector3 value;
+    public float value;
+    public ASKey() { }
+    public ASKey(float time, float value)
+    {
+        this.time = time;
+        this.value = value;
+    }
 }
 [Serializable]
 public class ASCurve
 {
+    public List<ASKey> keys;
+    public ASCurve() { keys = new List<ASKey>(); }
     public bool hasKey
     {
         get { return keys != null && keys.Count > 0; }
     }
-    public List<ASKey> keys;
     public ASCurve Clone()
     {
         var n = new ASCurve();
@@ -46,6 +54,10 @@ public class ASCurve
         }
         n.keys = newKeys;
         return n;
+    }
+    public void InsertKey(float time, float value)
+    {
+        InsertKey(new ASKey(time, value));
     }
     public void InsertKey(ASKey newKey) // 根据时间顺序插入。已有此帧则修改值
     {
@@ -75,7 +87,7 @@ public class ASCurve
         }
         keys.Add(newKey);//插入到末尾
     }
-    public Vector3 Evaluate(float realTime)
+    public float Evaluate(float realTime)
     {
         if (realTime >= keys[keys.Count - 1].time || keys.Count == 1)
         {
@@ -88,7 +100,7 @@ public class ASCurve
                 var a = keys[i - 1].time;
                 var b = keys[i].time;
                 var t = (realTime - a) / (b - a);
-                return Vector3.Lerp(keys[i - 1].value, keys[i].value, t);
+                return Mathf.Lerp(keys[i - 1].value, keys[i].value, t);
             }
         }
         throw new Exception("意外");

@@ -12,6 +12,13 @@ public static class IMUI
             return Screen.width / scaler.referenceResolution.x;
         }
     }
+    public static float screenFacterReverse
+    {
+        get
+        {
+            return scaler.referenceResolution.x / Screen.width;
+        }
+    }
     private static CanvasScaler _scaler;
     public static CanvasScaler scaler
     {
@@ -25,11 +32,31 @@ public static class IMUI
             _scaler = value;
         }
     }
-    public static void DrawText(string content)
+
+
+    public static IMUICommand Cmd(IMUICmdType type, params object[] args)
     {
-        DrawText(content, Vector2.zero);
+        var cmd = new IMUICommand();
+        cmd.type = type;
+        cmd.args = args;
+        return cmd;
+    }
+    public static void ClearCmd()
+    {
+        ASUI.I.imCommands.Clear();
     }
     public static void DrawText(string content, Vector2 pos)
+    {
+        ASUI.I.imCommands.Add(Cmd(IMUICmdType.DrawText, content, pos));
+    }
+    public static Vector2 CalSize(string content)
+    {
+        var n = new GUIStyle(fontStyle);
+        n.fontSize = fontSize; // 设计时的大小
+        Vector2 size = n.CalcSize(new GUIContent(content));
+        return size;
+    }
+    public static void DrawTextIM(string content, Vector2 pos)
     {
         fontStyle.fontSize = Mathf.RoundToInt(fontSize * screenFacter);
         Vector2 size = fontStyle.CalcSize(new GUIContent(content)); // 计算对应样式的字符尺寸  

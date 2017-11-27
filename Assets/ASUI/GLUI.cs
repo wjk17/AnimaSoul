@@ -5,19 +5,8 @@ using UnityEngine;
 
 public static class GLUI
 {
-    public static int accurate = 100;
-    public static float radius = 3.0f;
-
     static Material lineMaterial;
-    static CameraEventWrapper cameraEvent;
-    public static void Init()
-    {
-        if (cameraEvent != null) return;
-        cameraEvent = ASUI.I.camera.GetComOrAdd<CameraEventWrapper>();
-        cameraEvent.onRenderObject = RenderObject;
-        cameraEvent.onPostRender = PostRender;
-    }
-    static void SetLineMaterial()
+    public static void SetLineMaterial()
     {
         if (!lineMaterial)
         {
@@ -35,53 +24,41 @@ public static class GLUI
         // Apply the line material
         lineMaterial.SetPass(0);
     }
-    static void RenderObject() // Test
+    public static void ClearCmd()
     {
-        SetLineMaterial();
-        GL.PushMatrix();
-        // Set transformation matrix for drawing to
-        // match our transform
-        GL.MultMatrix(ASUI.I.camera.transform.localToWorldMatrix);
-        // Draw lines
-        GL.Begin(GL.LINES);
-        DrawLineFan(accurate, radius);
-        GL.End();
-        GL.PopMatrix();
+        ASUI.I.glCommands.Clear();
     }
-    static void PostRender() // Test
+    public static GLUICommand Cmd(GLUICmdType type, params object[] args )
     {
-        SetLineMaterial();
-        GL.LoadOrtho();//设置绘制2D图像          
-
-        //画从左下到右上的线  
-        GL.Begin(GL.LINES);
-        GL.Color(Color.white);
-        GL.Vertex(new Vector2(0, 0));
-        GL.Vertex(new Vector2(1, 1));
-        GL.End();
-
-        //画从左上到右下的线  
-        GL.Begin(GL.LINES);
-        GL.Color(Color.red);
-        GL.Vertex(new Vector2(0, 1));
-        GL.Vertex(new Vector2(1, 0));
-        GL.End();
+        var cmd = new GLUICommand();
+        cmd.type = type;
+        cmd.args = args;
+        return cmd;
     }
-    public static void BeginOrtho()
+    public static void BeginOrtho() // 正交变换
     {
-        SetLineMaterial();
-        GL.LoadOrtho();//设置绘制2D图像       
+        ASUI.I.glCommands.Add(Cmd(GLUICmdType.LoadOrtho));
     }
+    public static void DrawLine(Vector2 pos1, Vector2 pos2)
+    {
+        ASUI.I.glCommands.Add(Cmd(GLUICmdType.DrawLineOrtho, pos1, pos2));
+    }
+    public static void DrawLine(Vector2 pos1, Vector2 pos2,Color color)
+    {
+        ASUI.I.glCommands.Add(Cmd(GLUICmdType.DrawLineOrtho, pos1, pos2, color));
+    }
+    // 左下角原点（0,0），右上角（1,1）
     public static void DrawLineOrtho(Vector2 pos1, Vector2 pos2)
     {
         DrawLineOrtho(pos1, pos2, Color.black);
     }
-    // 左上角原点（0,0），右下（1,1）
     public static void DrawLineOrtho(Vector2 pos1, Vector2 pos2, Color color)
     {
         pos1.x /= IMUI.scaler.referenceResolution.x;
+        pos1.y = IMUI.scaler.referenceResolution.y - pos1.y;
         pos1.y /= IMUI.scaler.referenceResolution.y;
         pos2.x /= IMUI.scaler.referenceResolution.x;
+        pos2.y = IMUI.scaler.referenceResolution.y - pos2.y;
         pos2.y /= IMUI.scaler.referenceResolution.y;
         GL.Begin(GL.LINES);
         GL.Color(color);
@@ -92,20 +69,6 @@ public static class GLUI
     public static void DrawPoint()
     {
 
-    }
-    private static void DrawLineFan(int count, float radius)
-    {
-        for (int i = 0; i < count; ++i)
-        {
-            float a = i / (float)count;
-            float angle = a * Mathf.PI * 2;
-            // Vertex colors change from red to green
-            GL.Color(new Color(a, 1 - a, 0, 0.8F));
-            // One vertex at transform position
-            GL.Vertex3(0, 0, 0);
-            // Another vertex at edge of circle
-            GL.Vertex3(Mathf.Cos(angle) * radius, Mathf.Sin(angle) * radius, 0);
-        }
     }
     public static void DrawCircle(Vector3 pos, float radius, Color color, float accurracy = 0.01f)
     {

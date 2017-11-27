@@ -9,8 +9,9 @@ public class UITimeLine : MonoBehaviour
 {
     public float realtime;
     public float normalizedTime;
-    public int XSpaceInRuler; // 时间线指针UI的移动步长
-    public float XSpaceInArea; // 标尺每隔多少帧有一个帧数标签显示
+    public int xSpaceInRuler; // 标尺每隔多少帧有一个帧数数字
+    public int xSpaceLineInRuler; // 多少帧画一条线
+    public float XSpaceInArea; // 时间线指针UI的移动步长
     public Canvas canvas;
     private RectTransform area;
     private RectTransform ruler;
@@ -28,10 +29,10 @@ public class UITimeLine : MonoBehaviour
     public Rect uiRect;
     public Vector2 pos2D;
     public int fontSize;
+    public float rulerScalerSensitivity = 1f;
+    public float rulerLength = 200;
 
-    private bool _hover;
     private int _frameIndex;
-
     public int frameIndex
     {
         get
@@ -46,6 +47,7 @@ public class UITimeLine : MonoBehaviour
     }
     void Start()
     {
+        frameIndex = 0;
         scaler = canvas.GetComponent<CanvasScaler>();
         xFactor = 1 / XSpaceInArea;
         area = transform.Search("Area") as RectTransform;
@@ -55,50 +57,56 @@ public class UITimeLine : MonoBehaviour
         mouse.CreateBox2D();
         mouse.onMouseDown = MouseDown;
         mouse.onMouseDrag = MouseDrag;
-        mouse.onMouseOver = MouseOver;
 
-        InitGUI();
+        InitASUI();
     }
-    private void InitGUI()
+    private void InitASUI()
     {
-        //GLUI.Init();
+        IMUI.fontSize = fontSize;
         ASUI.parent = area;
         ASUI.BeginHorizon();
 
         ASUI.EndHorizon();
     }
-    private void OnGUI()
+    void UpdateASUI()
     {
-        UpdateIMUI();
-    }
-    private void OnRenderObject()
-    {
-        
-    }
-    public int accurate;
-    public float radius;
-    void UpdateIMUI()
-    {
+        ASUI.ClearCmd();
         GLUI.BeginOrtho();
-        GLUI.accurate = accurate;
-        GLUI.radius = radius;
-        IMUI.fontSize = fontSize;
         float x, y;
         for (int i = 0; i < 1000; i++)
         {
-            if ((i % XSpaceInRuler) == 0)
+            var rulerX = i / rulerLength;
+            if ((i % xSpaceInRuler) == 0)
             {
-                x = i * XSpaceInArea;
-                if (x > ruler.sizeDelta.x) break;
+                x = rulerX * ruler.sizeDelta.x;
+                if (x + IMUI.CalSize(i.ToString()).x > ruler.sizeDelta.x) break;
                 x += ruler.anchoredPosition.x;
                 y = -ruler.anchoredPosition.y;
-                GLUI.DrawLineOrtho(new Vector2(x, y), new Vector2(x, y + ruler.sizeDelta.y));
-                IMUI.DrawText(i.ToString(), new Vector2(x, y));
+                var p = new Vector2(x, y);
+                IMUI.DrawText(i.ToString(), p);
+                y = -area.anchoredPosition.y;
+                p = new Vector2(x, y);
+                GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, Color.grey - ASColor.V * 0.35f);
+            }
+            else if ((i % xSpaceLineInRuler) == 0)
+            {
+                x = rulerX * area.sizeDelta.x;
+                if (x > area.sizeDelta.x) break;
+                x += area.anchoredPosition.x;
+                y = -area.anchoredPosition.y;
+                var p = new Vector2(x, y);
+                GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, Color.grey - ASColor.V * 0.2f);
             }
         }
     }
     void Update()
     {
+        UpdateASUI();
+        float delta = Input.GetAxis("Mouse ScrollWheel");
+        if (delta != 0)
+        {
+            rulerLength += delta * rulerScalerSensitivity;
+        }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             leftTimer += Time.deltaTime;
@@ -119,36 +127,50 @@ public class UITimeLine : MonoBehaviour
             rightTimer -= continuousKeyInterval;
             frameIndex++;
         }
-        hover = _hover;
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
+            {
+                RemoveKey();
+            }
+            InsertKey();
+        }
+    }
+    public ASClip clip;
+    public InsertKeyType insertType;
+    public enum InsertKeyType
+    {
+        EulPos,
+        Eul,
+        Pos,
+    }
+    Vector3 euler;
+    Vector3 pos;
+    private void InsertKey()
+    {
+        switch (insertType)
+        {
+            case InsertKeyType.EulPos: clip.AddEulerPos(frameIndex, euler, pos); break;
+            case InsertKeyType.Eul: break;
+            case InsertKeyType.Pos: break;
+            default: throw null;
+        }
+    }
+    private void RemoveKey()
+    {
+        clip.RemoveKey(frameIndex);
     }
     private void MouseDown()
     {
-    }
-    private void MouseOver()
-    {
-        _hover = true;
-    }
-    private void LateUpdate()
-    {
-        _hover = false;
+        MouseDrag();
     }
     private void MouseDrag()
     {
-        pos2D = GetLocalMousePos();
-        var x = (pos2D - area.anchoredPosition).x;
-        frameIndex = Mathf.RoundToInt(x * xFactor);
-        cursor.anchoredPosition = new Vector2(frameIndex * XSpaceInArea, cursor.anchoredPosition.y);
-    }
-    Vector2 GetLocalMousePos()
-    {
-        return GetLocalPos(Input.mousePosition);
-    }
-    Vector2 GetLocalPos(Vector3 screenPos)
-    {
-        Vector2 pos;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvas.transform as RectTransform, screenPos, canvas.worldCamera, out pos);
-        pos += scaler.referenceResolution * 0.5f;
-        return pos;
+        var lx = Input.mousePosition.x * IMUI.screenFacterReverse - area.anchoredPosition.x;
+        lx = lx / area.sizeDelta.x;
+        lx = Mathf.Clamp01(lx);
+        frameIndex = Mathf.RoundToInt(lx * rulerLength);
+        var factor = area.sizeDelta.x / rulerLength;
+        cursor.anchoredPosition = new Vector2(frameIndex * factor, cursor.anchoredPosition.y);
     }
 }
