@@ -2,17 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Xml.Serialization;
+
 [Serializable]
 public class ASObjectCurve
 {
     public string name;
+    [XmlIgnore]
     public Transform trans;
     public ASCurve[] eulerAngles;
     public ASCurve[] localPosition;
     public ASObjectCurve()
     {
-        eulerAngles = new ASCurve[3];
-        localPosition = new ASCurve[3];
+        eulerAngles = new ASCurve[3] { new ASCurve(), new ASCurve() , new ASCurve() };
+        localPosition = new ASCurve[3] { new ASCurve(), new ASCurve(), new ASCurve() };
+    }
+    public ASObjectCurve(Transform trans):this()
+    {
+        this.trans = trans;
+        this.name = trans.name;
     }
     public ASObjectCurve Clone()
     {
@@ -26,12 +34,14 @@ public class ASObjectCurve
 [Serializable]
 public class ASKey
 {
-    public float time;
+    public int index;
     public float value;
+    public float InTangent;
+    public float OutTangent;
     public ASKey() { }
-    public ASKey(float time, float value)
+    public ASKey(int index, float value)
     {
-        this.time = time;
+        this.index = index;
         this.value = value;
     }
 }
@@ -40,6 +50,15 @@ public class ASCurve
 {
     public List<ASKey> keys;
     public ASCurve() { keys = new List<ASKey>(); }
+    public int IndexOf(int index)
+    {
+        if (!hasKey) return -1;
+        for (int i = 0; i < keys.Count; i++)
+        {
+            if (keys[i].index == index) { return i; }
+        }
+        return -1;
+    }
     public bool hasKey
     {
         get { return keys != null && keys.Count > 0; }
@@ -55,31 +74,34 @@ public class ASCurve
         n.keys = newKeys;
         return n;
     }
-    public void InsertKey(float time, float value)
+    public bool RemoveKey(int index)
     {
-        InsertKey(new ASKey(time, value));
+        var i = IndexOf(index);
+        {
+            if (i > -1) { keys.RemoveAt(i); return true; }
+        }
+        return false;
     }
-    public void InsertKey(ASKey newKey) // 根据时间顺序插入。已有此帧则修改值
+    public void InsertKey(int index, float value)
     {
-        if (!hasKey)
+        InsertKey(new ASKey(index, value));
+    }
+    public void InsertKey(ASKey newKey) // 根据帧序号插入。已有此帧则修改值
+    {
+        if (!hasKey)//初始化
         {
             keys = new List<ASKey>();
             keys.Add(newKey);
             return;
         }
-        if (newKey.time == keys[0].time)
+        for (int i = 0; i < keys.Count; i++)
         {
-            keys[0].value = newKey.value;//第一帧
-            return;
-        }
-        for (int i = 1; i < keys.Count; i++)
-        {
-            if (newKey.time == keys[i].time)
+            if (newKey.index == keys[i].index)
             {
                 keys[i].value = newKey.value;//覆盖帧（修改值）
                 return;
             }
-            if (newKey.time < keys[i].time)
+            if (newKey.index < keys[i].index)
             {
                 keys.Insert(i, newKey);//插入帧到对应时间
                 return;
@@ -87,18 +109,21 @@ public class ASCurve
         }
         keys.Add(newKey);//插入到末尾
     }
-    public float Evaluate(float realTime)
+    // if: fps = 60;
+    // so: timePerFrame = s/fps = 1/60 = 0.0166667
+    public float Evaluate(float realTime, float fps)
     {
-        if (realTime >= keys[keys.Count - 1].time || keys.Count == 1)
+        float timePerFrame = 1 / fps;
+        if (realTime >= keys[keys.Count - 1].index * timePerFrame || keys.Count == 1)
         {
             return keys[keys.Count - 1].value;
         }
         for (int i = 1; i < keys.Count; i++)
         {
-            if (realTime < keys[i].time)
+            if (realTime < keys[i].index * timePerFrame)
             {
-                var a = keys[i - 1].time;
-                var b = keys[i].time;
+                var a = keys[i - 1].index * timePerFrame;
+                var b = keys[i].index * timePerFrame;
                 var t = (realTime - a) / (b - a);
                 return Mathf.Lerp(keys[i - 1].value, keys[i].value, t);
             }

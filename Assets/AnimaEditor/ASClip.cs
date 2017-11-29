@@ -1,24 +1,90 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
 [Serializable]
 public class ASClip
 {
     public List<ASObjectCurve> curves;
-    public void AddEulerPos(int frameIndex, Vector3 euler, Vector3 pos)
+    public ASClip() { curves = new List<ASObjectCurve>(); }
+    public ASObjectCurve this[Transform t]
     {
-        var time = frameIndex * 999;//??
-        var bone = 999;
-        curves[bone].eulerAngles[0].InsertKey(time, euler.z);
-        curves[bone].eulerAngles[1].InsertKey(time, euler.x);
-        curves[bone].eulerAngles[2].InsertKey(time, euler.y);
-        curves[bone].localPosition[0].InsertKey(time, pos.z);
-        curves[bone].localPosition[1].InsertKey(time, pos.x);
-        curves[bone].localPosition[2].InsertKey(time, pos.y);
+        get
+        {
+            return GetCurve(t);
+        }
     }
-    public void RemoveKey(int frameIndex)
+    public ASObjectCurve this[string name]
     {
-        throw new NotImplementedException();
+        get
+        {
+            return GetCurve(name);
+        }
+    }
+    public ASObjectCurve GetCurve(Transform t)
+    {
+        foreach (var curve in curves)
+        {
+            if (curve.trans == t)
+            {
+                return curve;
+            }
+        }
+        throw null;
+    }
+    public ASObjectCurve GetCurve(string name)
+    {
+        foreach (var curve in curves)
+        {
+            if (curve.name == name)
+            {
+                return curve;
+            }
+        }
+        throw null;
+    }
+    public int IndexOf(Transform trans)
+    {
+        for (int i = 0; i < curves.Count; i++)
+        {
+            if (curves[i].trans == trans) return i;
+        }
+        return -1;
+    }
+    public void AddCurve(Transform tran)
+    {
+        if (IndexOf(tran) != -1) throw null;
+        curves.Add(new ASObjectCurve(tran));
+    }
+    public bool HasKey(ASObjectCurve curve, int frameIndex)
+    {
+        foreach (var c in curve.eulerAngles)
+        {
+            if (c.IndexOf(frameIndex) > -1) return true;
+        }
+        foreach (var c in curve.localPosition)
+        {
+            if (c.IndexOf(frameIndex) > -1) return true;
+        }
+        return false;
+    }
+    public void AddEulerPos(ASObjectCurve curve, int frameIndex, Vector3 euler, Vector3 pos)
+    {
+        curve.eulerAngles[0].InsertKey(frameIndex, euler.z);
+        curve.eulerAngles[1].InsertKey(frameIndex, euler.x);
+        curve.eulerAngles[2].InsertKey(frameIndex, euler.y);
+        curve.localPosition[0].InsertKey(frameIndex, pos.z);
+        curve.localPosition[1].InsertKey(frameIndex, pos.x);
+        curve.localPosition[2].InsertKey(frameIndex, pos.y);
+    }
+    public void RemoveKey(ASObjectCurve curve, int frameIndex)
+    {
+        foreach (var c in curve.eulerAngles)
+        {
+            c.RemoveKey(frameIndex);
+        }
+        foreach (var c in curve.localPosition)
+        {
+            c.RemoveKey(frameIndex);
+        }
     }
 }

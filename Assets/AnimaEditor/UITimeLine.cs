@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 // UI控件
@@ -15,8 +12,6 @@ public class UITimeLine : MonoBehaviour
     public Canvas canvas;
     private RectTransform area;
     private RectTransform ruler;
-    private RectTransform cursor;
-    private CanvasScaler scaler;
 
     private float xFactor;
     private float leftTimer;
@@ -45,48 +40,87 @@ public class UITimeLine : MonoBehaviour
             uiFrameIndex.text = "帧：" + _frameIndex.ToString();
         }
     }
+    UIDOFEditor dofe;
+    public string path;
+    public string folder = "Clips/";
+    public string fileName = "default.xml";
+    string rootPath { get { return Application.dataPath + "/../"; } }
+    public ASClip clip;
+    public InsertKeyType insertType;
+    public enum InsertKeyType
+    {
+        EulPos,
+        Eul,
+        Pos,
+    }
+    ASObjectCurve curve
+    {
+        get { return clip[trans]; }
+    }
+    Transform trans
+    {
+        get { return dofe.ast.transform; }
+    }
+    Vector3 euler
+    {
+        get { return dofe.ast.euler; }
+    }
+    Vector3 pos
+    {
+        get { return trans.localPosition; }
+    }
     void Start()
     {
         frameIndex = 0;
-        scaler = canvas.GetComponent<CanvasScaler>();
         xFactor = 1 / XSpaceInArea;
         area = transform.Search("Area") as RectTransform;
         ruler = transform.Search("Ruler") as RectTransform;
-        cursor = transform.Search("Cursor") as RectTransform;
         var mouse = area.gameObject.AddComponent<UIMouseEventWrapper>();
         mouse.CreateBox2D();
         mouse.onMouseDown = MouseDown;
         mouse.onMouseDrag = MouseDrag;
 
+        dofe = FindObjectOfType<UIDOFEditor>();
+        InitClip();
         InitASUI();
+    }
+    private void InitClip()
+    {
+        clip = new ASClip();
+        foreach (var ast in dofe.avatar.setting.asts)
+        {
+            clip.AddCurve(ast.transform);
+        }
     }
     private void InitASUI()
     {
         IMUI.fontSize = fontSize;
         ASUI.parent = area;
         ASUI.BeginHorizon();
-
         ASUI.EndHorizon();
     }
+    public float lineWidth = 2;
     void UpdateASUI()
     {
-        ASUI.ClearCmd();
+        ASUI.owner = this;
         GLUI.BeginOrtho();
-        float x, y;
+
+        float x, y, rulerX;
+        Vector2 p;
         for (int i = 0; i < 1000; i++)
         {
-            var rulerX = i / rulerLength;
+            rulerX = i / rulerLength;
             if ((i % xSpaceInRuler) == 0)
             {
                 x = rulerX * ruler.sizeDelta.x;
                 if (x + IMUI.CalSize(i.ToString()).x > ruler.sizeDelta.x) break;
                 x += ruler.anchoredPosition.x;
                 y = -ruler.anchoredPosition.y;
-                var p = new Vector2(x, y);
-                IMUI.DrawText(i.ToString(), p);
+                p = new Vector2(x, y);
+                IMUI.DrawText(i.ToString(), p, Vector2.one * 0.5f);
                 y = -area.anchoredPosition.y;
                 p = new Vector2(x, y);
-                GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, Color.grey - ASColor.V * 0.35f);
+                GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, Color.grey - ASColor.V * 0.3f);
             }
             else if ((i % xSpaceLineInRuler) == 0)
             {
@@ -94,10 +128,28 @@ public class UITimeLine : MonoBehaviour
                 if (x > area.sizeDelta.x) break;
                 x += area.anchoredPosition.x;
                 y = -area.anchoredPosition.y;
-                var p = new Vector2(x, y);
+                p = new Vector2(x, y);
                 GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, Color.grey - ASColor.V * 0.2f);
             }
+            if (clip.HasKey(curve, i))
+            {
+                x = rulerX * area.sizeDelta.x;
+                if (x > area.sizeDelta.x) break;
+                x += area.anchoredPosition.x;
+                y = -area.anchoredPosition.y;
+                p = new Vector2(x, y);
+                GLUI.commandOrder = 2;
+                GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, lineWidth * 0.45f, Color.yellow - ASColor.V * 0.2f);
+            }
         }
+        rulerX = frameIndex / rulerLength;
+        x = rulerX * area.sizeDelta.x;
+        if (x > area.sizeDelta.x) return;
+        x += area.anchoredPosition.x;
+        y = -area.anchoredPosition.y;
+        p = new Vector2(x, y);
+        GLUI.commandOrder = 1;
+        GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, lineWidth, Color.green + ASColor.H * 0.2f);
     }
     void Update()
     {
@@ -133,24 +185,28 @@ public class UITimeLine : MonoBehaviour
             {
                 RemoveKey();
             }
-            InsertKey();
+            else
+            {
+                InsertKey();
+            }
         }
     }
-    public ASClip clip;
-    public InsertKeyType insertType;
-    public enum InsertKeyType
+    public void Load()
     {
-        EulPos,
-        Eul,
-        Pos,
+        path = rootPath + folder + fileName;
+        clip = Serializer.XMLDeSerialize<ASClip>(path);
     }
-    Vector3 euler;
-    Vector3 pos;
+    [ContextMenu("Save")]
+    public void Save()
+    {
+        path = rootPath + folder + fileName;
+        Serializer.XMLSerialize(clip, path);
+    }
     private void InsertKey()
     {
         switch (insertType)
         {
-            case InsertKeyType.EulPos: clip.AddEulerPos(frameIndex, euler, pos); break;
+            case InsertKeyType.EulPos: clip.AddEulerPos(curve, frameIndex, euler, pos); break;
             case InsertKeyType.Eul: break;
             case InsertKeyType.Pos: break;
             default: throw null;
@@ -158,7 +214,7 @@ public class UITimeLine : MonoBehaviour
     }
     private void RemoveKey()
     {
-        clip.RemoveKey(frameIndex);
+        clip.RemoveKey(curve, frameIndex);
     }
     private void MouseDown()
     {
@@ -166,11 +222,9 @@ public class UITimeLine : MonoBehaviour
     }
     private void MouseDrag()
     {
-        var lx = Input.mousePosition.x * IMUI.screenFacterReverse - area.anchoredPosition.x;
+        var lx = Input.mousePosition.x * IMUI.facterToReference - area.anchoredPosition.x;
         lx = lx / area.sizeDelta.x;
         lx = Mathf.Clamp01(lx);
         frameIndex = Mathf.RoundToInt(lx * rulerLength);
-        var factor = area.sizeDelta.x / rulerLength;
-        cursor.anchoredPosition = new Vector2(frameIndex * factor, cursor.anchoredPosition.y);
     }
 }

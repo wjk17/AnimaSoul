@@ -12,10 +12,10 @@ public class CameraEventWrapper : MonoBehaviour
     {
         if (onRenderObject != null) onRenderObject();
     }
-    //void OnPostRender()
-    //{
-    //    if (onPostRender != null) onPostRender();
-    //}
+    void OnPostRender()
+    {
+        if (onPostRender != null) onPostRender();
+    }
     //private void OnWillRenderObject()
     //{
     //    if (onWillRenderObject != null) onWillRenderObject();

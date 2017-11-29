@@ -11,6 +11,11 @@ public static class ASUI
     public static Color floatLabelColor = Color.black;
     public static Color floatFieldColor = Color.black;
     public static Color dropdownColor = Color.blue;
+    public static object owner
+    {
+        get { return I.owner; }
+        set { I.owner = value; I.ClearCmd(); }
+    }
     public static ASGUI I
     {
         get
@@ -54,13 +59,6 @@ public static class ASUI
         label.color = labelColor;
         horizon.Add(toggle);
     }
-
-    internal static void ClearCmd()
-    {
-        I.glCommands.Clear();
-        I.imCommands.Clear();
-    }
-
     public static void Button(string labelStr, UnityAction onClick = null)
     {
         var button = Obj.Instantiate(I.buttonPrefab, parent).GetComponent<Button>();
