@@ -9,9 +9,19 @@ public static class GLUI
     internal static int commandOrder
     {
         set { _commandOrder = value; }
-        get { var order = _commandOrder; _commandOrder = 0; return order; }//每次使用后归0
+        get { var order = _commandOrder; if (!keepOrder) _commandOrder = 0; return order; }//每次使用后归0
     }
     static int _commandOrder;
+    static bool keepOrder = false;
+    public static void BeginOrder(int order)
+    {
+        _commandOrder = order;
+        keepOrder = true;
+    }
+    public static void EndOrder()
+    {
+        keepOrder = false;
+    }
     public static void SetLineMaterial()
     {
         if (!lineMaterial)
@@ -42,6 +52,7 @@ public static class GLUI
     {
         ASUI.I.AddCommand(Cmd(-1, GLUICmdType.LoadOrtho));
     }
+    //左上角坐标
     public static void DrawLine(Vector2 p1, Vector2 p2)
     {
         ASUI.I.AddCommand(Cmd(commandOrder, GLUICmdType.DrawLineOrtho, p1, p2));
@@ -98,17 +109,25 @@ public static class GLUI
     }
     internal static void DrawSquare(Vector2 p, float wh)
     {
+        DrawSquare(p, wh, Color.black);
+    }
+    internal static void DrawSquare(Vector2 p, float wh, Color color)
+    {
         wh *= 0.5f;
         var p1 = p - Vector2.one * wh; // lt
         var p2 = new Vector2(p.x + wh, p.y - wh); // rt
         var p3 = p + Vector2.one * wh; // rb
         var p4 = new Vector2(p.x - wh, p.y + wh); // lb
-        DrawLine(p1, p2);
-        DrawLine(p2, p3);
-        DrawLine(p3, p4);
-        DrawLine(p4, p1);
+        DrawLine(p1, p2, color);
+        DrawLine(p2, p3, color);
+        DrawLine(p3, p4, color);
+        DrawLine(p4, p1, color);
     }
     internal static void DrawSquare(Vector2 p, float wh, float lineWidth)
+    {
+        DrawSquare(p, wh, lineWidth, Color.black);
+    }
+    internal static void DrawSquare(Vector2 p, float wh, float lineWidth, Color color)
     {
         wh *= 0.5f;
         var p12a = p - Vector2.one * wh;
@@ -125,10 +144,10 @@ public static class GLUI
         p12b.x += width;
         p34a.x += width;
         p34b.x -= width;
-        DrawLine(p12a, p12b, lineWidth);
-        DrawLine(p23a, p23b, lineWidth);
-        DrawLine(p34a, p34b, lineWidth);
-        DrawLine(p41a, p41b, lineWidth);
+        DrawLine(p12a, p12b, lineWidth, color);
+        DrawLine(p23a, p23b, lineWidth, color);
+        DrawLine(p34a, p34b, lineWidth, color);
+        DrawLine(p41a, p41b, lineWidth, color);
     }
     public static void DrawQuads(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, Color color)
     {

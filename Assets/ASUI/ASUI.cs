@@ -133,4 +133,17 @@ public static class ASUI
         horizon.Add(inputField);
         return 0f;
     }
+    internal static bool MouseOver(params RectTransform[] rts)
+    {
+        var ip = Input.mousePosition;
+        ip *= IMUI.facterToReference;
+        ip.y = IMUI.scaler.referenceResolution.y - ip.y;
+        foreach (var rt in rts)
+        {
+            var rect = rt.rect;
+            rect.position = Vector2.Scale(rt.anchoredPosition, Vector2.one.SetY(-1));
+            if (rect.Contains(ip)) return true;
+        }
+        return false;
+    }
 }

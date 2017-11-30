@@ -14,10 +14,10 @@ public class ASObjectCurve
     public ASCurve[] localPosition;
     public ASObjectCurve()
     {
-        eulerAngles = new ASCurve[3] { new ASCurve(), new ASCurve() , new ASCurve() };
+        eulerAngles = new ASCurve[3] { new ASCurve(), new ASCurve(), new ASCurve() };
         localPosition = new ASCurve[3] { new ASCurve(), new ASCurve(), new ASCurve() };
     }
-    public ASObjectCurve(Transform trans):this()
+    public ASObjectCurve(Transform trans) : this()
     {
         this.trans = trans;
         this.name = trans.name;
@@ -31,13 +31,26 @@ public class ASObjectCurve
         return n;
     }
 }
+public enum CurveMode
+{
+    Bezier,
+    Constant, // 常数，硬转折，左端值优先，比如左右两点都是常数模式，使用左边点的值。
+    Linear, // 一端线性一端贝塞尔时，线性端的控制点为线性方向t=0.3333333f
+    None, // 一端none一端Bezier，就会使用二阶贝塞尔；两端none即是一阶贝塞尔，等同线性插值。
+}
 [Serializable]
 public class ASKey
 {
     public int index;
     public float value;
-    public float InTangent;
-    public float OutTangent;
+    public Vector2 inTangent;
+    public Vector2 outTangent;
+    public CurveMode inMode;
+    public CurveMode outMode;
+    public Vector2 ToVector2(float fps)
+    {
+        return new Vector2(index * fps, value);
+    }
     public ASKey() { }
     public ASKey(int index, float value)
     {
@@ -116,18 +129,78 @@ public class ASCurve
         float timePerFrame = 1 / fps;
         if (realTime >= keys[keys.Count - 1].index * timePerFrame || keys.Count == 1)
         {
+            // 只有一帧，或者时间大于最后一帧时，使用最后一帧的值
             return keys[keys.Count - 1].value;
         }
         for (int i = 1; i < keys.Count; i++)
         {
             if (realTime < keys[i].index * timePerFrame)
             {
-                var a = keys[i - 1].index * timePerFrame;
-                var b = keys[i].index * timePerFrame;
-                var t = (realTime - a) / (b - a);
+                var a = keys[i - 1];
+                var b = keys[i];
+                var t1 = a.index * timePerFrame;
+                var t2 = b.index * timePerFrame;
+                var t = (realTime - t1) / (t2 - t1);
+                var v = EvaluateInner(a, b, t, fps);
                 return Mathf.Lerp(keys[i - 1].value, keys[i].value, t);
             }
         }
         throw new Exception("意外");
+    }
+
+    private float EvaluateInner(ASKey k1, ASKey k2, float t, float fps)
+    {
+        var a = new Vector2(k1.index * fps, k1.value);
+        var b = new Vector2(k2.index * fps, k2.value);
+        if (k1.outMode == CurveMode.Constant)
+        {
+            return b.y;
+        }
+        else if (k2.inMode == CurveMode.Constant)
+        {
+            return a.y;
+        }
+        List<Vector2> p = new List<Vector2>();
+        p.Add(a);//p0
+        switch (k1.outMode)//p1
+        {
+            case CurveMode.Bezier: p.Add(k1.outTangent); break;
+            case CurveMode.Linear: p.Add(Vector2.Lerp(a, b, 0.3333333f)); break;
+            case CurveMode.None: break;
+            default: throw null;
+        }
+        switch (k2.inMode)//p2
+        {
+            case CurveMode.Bezier: p.Add(k2.inTangent); break;
+            case CurveMode.Linear: p.Add(Vector2.Lerp(a, b, 0.6666667f)); break;
+            case CurveMode.None: break;
+            default: throw null;
+        }
+        p.Add(a);//p3
+        var v = CalBezier(p.ToArray(), t);
+        return v.y;
+    }
+    Vector2 CalBezier(Vector2[] p, float t)
+    {
+        Vector2 v = Vector2.zero;
+        switch (p.Length)
+        {
+            case 4:
+                v = p[0] * Mathf.Pow((1 - t), 3) +
+                    3 * p[1] * t * Mathf.Pow((1 - t), 2) +
+                    3 * p[2] * Mathf.Pow(t, 2) * (1 - t) +
+                    p[3] * Mathf.Pow(t, 3);
+                return v;
+            case 3:
+                v = p[0] * Mathf.Pow((1 - t), 2) +
+                    2 * p[1] * t * (1 - t) +
+                    p[2] * Mathf.Pow(t, 2);
+                return v;
+            case 2:
+                v = Vector2.Lerp(p[0], p[1], t);
+                return v;
+            default:
+                throw null;
+        }
     }
 }

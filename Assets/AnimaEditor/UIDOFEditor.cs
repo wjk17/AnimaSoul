@@ -88,6 +88,11 @@ public class UIDOFEditorEditor : Editor
 #endif
 public class UIDOFEditor : MonoBehaviour
 {
+    public static UIDOFEditor I
+    {
+        get { if (instance == null) instance = FindObjectOfType<UIDOFEditor>(); return instance; }
+    }
+    static UIDOFEditor instance;
     public Color labelColor = Color.black;
     public Color floatFieldColor = Color.black;
     public Color floatLabelColor = Color.black;
@@ -207,7 +212,7 @@ public class UIDOFEditor : MonoBehaviour
         if (dof != null) dofP.SaveASDOF(dof);//先保存
         var bone = (ASBone)index;
         dof = dofSet[bone];
-        ast = avatar[bone];        
+        ast = avatar[bone];
         UpdateDOF();
     }
     void UpdateDOF()

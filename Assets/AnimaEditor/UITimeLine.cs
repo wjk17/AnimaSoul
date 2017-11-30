@@ -4,28 +4,43 @@ using UnityEngine.UI;
 // UI控件
 public class UITimeLine : MonoBehaviour
 {
+    public static UITimeLine I
+    {
+        get
+        {
+            if (instance == null) instance = FindObjectOfType<UITimeLine>(); return instance;
+        }
+    }
+    public static int FrameIndex
+    {
+        get { return I.frameIndex; }
+        set { I.frameIndex = value; }
+    }
+    public static ASClip Clip
+    {
+        get { return I.clip; }
+        set { I.clip = value; }
+    }
+    private static UITimeLine instance;
     public float realtime;
     public float normalizedTime;
     public int xSpaceInRuler; // 标尺每隔多少帧有一个帧数数字
     public int xSpaceLineInRuler; // 多少帧画一条线
-    public float XSpaceInArea; // 时间线指针UI的移动步长
+    public float rulerScalerSensitivity = 20;
+    public float rulerLength = 200;
     public Canvas canvas;
     private RectTransform area;
     private RectTransform ruler;
 
-    private float xFactor;
     private float leftTimer;
     private float rightTimer;
     public float continuousKeyTime = 0.5f; // 上下左右键连发延迟
     public float continuousKeyInterval = 0.01f; // 间隔（其实0.01通常约等于每帧触发）
     public Text uiFrameIndex;
-    public bool hover;
     public Vector3 mousePos;
     public Rect uiRect;
     public Vector2 pos2D;
     public int fontSize;
-    public float rulerScalerSensitivity = 1f;
-    public float rulerLength = 200;
 
     private int _frameIndex;
     public int frameIndex
@@ -40,12 +55,19 @@ public class UITimeLine : MonoBehaviour
             uiFrameIndex.text = "帧：" + _frameIndex.ToString();
         }
     }
-    UIDOFEditor dofe;
     public string path;
     public string folder = "Clips/";
     public string fileName = "default.xml";
     string rootPath { get { return Application.dataPath + "/../"; } }
-    public ASClip clip;
+    public ASClip clip
+    {
+        get
+        {
+            if (_clip == null) I.InitClip(); return _clip;
+        }
+        set { _clip = value; }
+    }
+    ASClip _clip;
     public InsertKeyType insertType;
     public enum InsertKeyType
     {
@@ -53,17 +75,21 @@ public class UITimeLine : MonoBehaviour
         Eul,
         Pos,
     }
+    public static ASObjectCurve ObjCurve
+    {
+        get { return I.clip[I.trans]; }
+    }
     ASObjectCurve curve
     {
         get { return clip[trans]; }
     }
     Transform trans
     {
-        get { return dofe.ast.transform; }
+        get { return UIDOFEditor.I.ast.transform; }
     }
     Vector3 euler
     {
-        get { return dofe.ast.euler; }
+        get { return UIDOFEditor.I.ast.euler; }
     }
     Vector3 pos
     {
@@ -72,22 +98,18 @@ public class UITimeLine : MonoBehaviour
     void Start()
     {
         frameIndex = 0;
-        xFactor = 1 / XSpaceInArea;
         area = transform.Search("Area") as RectTransform;
         ruler = transform.Search("Ruler") as RectTransform;
         var mouse = area.gameObject.AddComponent<UIMouseEventWrapper>();
         mouse.CreateBox2D();
         mouse.onMouseDown = MouseDown;
         mouse.onMouseDrag = MouseDrag;
-
-        dofe = FindObjectOfType<UIDOFEditor>();
-        InitClip();
         InitASUI();
     }
     private void InitClip()
     {
         clip = new ASClip();
-        foreach (var ast in dofe.avatar.setting.asts)
+        foreach (var ast in UIDOFEditor.I.avatar.setting.asts)
         {
             clip.AddCurve(ast.transform);
         }
@@ -99,7 +121,7 @@ public class UITimeLine : MonoBehaviour
         ASUI.BeginHorizon();
         ASUI.EndHorizon();
     }
-    public float lineWidth = 2;
+    public float lineWidth = 5;
     void UpdateASUI()
     {
         ASUI.owner = this;
@@ -155,9 +177,9 @@ public class UITimeLine : MonoBehaviour
     {
         UpdateASUI();
         float delta = Input.GetAxis("Mouse ScrollWheel");
-        if (delta != 0)
+        if (delta != 0 && ASUI.MouseOver(area, ruler))
         {
-            rulerLength += delta * rulerScalerSensitivity;
+            rulerLength -= delta * rulerScalerSensitivity;
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
