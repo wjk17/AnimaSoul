@@ -5,13 +5,38 @@ using UnityEngine.UI;
 using Obj = UnityEngine.Object;
 using System;
 
+/// <summary>
+/// 左上角坐标
+/// </summary>
 public static class ASUI
 {
+    public static void swapPts(ref Vector2 p1, ref Vector2 p2)
+    {
+        var tmp = p1; p1 = p2; p2 = tmp;
+    }
+    public static void swapCodes(ref byte c1, ref byte c2)
+    {
+        var tmp = c1; c1 = c2; c2 = tmp;
+    }
+    public static Vector2[] Offset(this RectTransform rt)
+    {
+        var v = MathTool.ReverseY(rt.anchoredPosition);
+        return new Vector2[] { v, v + rt.sizeDelta };
+    }
+    public enum MouseButton
+    {
+        Left = 0,
+        Right,
+        Middle,
+    };
     public static Color labelColor = Color.black;
     public static Color floatLabelColor = Color.black;
     public static Color floatFieldColor = Color.black;
     public static Color dropdownColor = Color.blue;
-    public static object owner
+    /// <summary>
+    /// 将锚点和轴心设置为左上角，这样画图形时能正确地裁剪到矩形区域。
+    /// </summary>
+    public static RectTransform owner
     {
         get { return I.owner; }
         set { I.owner = value; I.ClearCmd(); }
@@ -24,6 +49,36 @@ public static class ASUI
             return _instance;
         }
     }
+    private static CanvasScaler _scaler;
+    public static CanvasScaler scaler
+    {
+        get
+        {
+            if (_scaler == null) _scaler = Obj.FindObjectOfType<CanvasScaler>();
+            return _scaler;
+        }
+        set
+        {
+            _scaler = value;
+        }
+    }
+    public static float facterToRealPixel
+    {
+        get
+        {
+            return Screen.width / scaler.referenceResolution.x;
+        }
+    }
+    public static float facterToReference
+    {
+        get
+        {
+            return scaler.referenceResolution.x / Screen.width;
+        }
+    }
+    // 鼠标在设计时的分辨率下的位置
+    public static Vector2 mousePositionRef { get { return Input.mousePosition * facterToReference; } }
+
     static ASGUI _instance;
     static List<UIHorizon> horizons;
     static UIHorizon horizon;
@@ -136,8 +191,8 @@ public static class ASUI
     internal static bool MouseOver(params RectTransform[] rts)
     {
         var ip = Input.mousePosition;
-        ip *= IMUI.facterToReference;
-        ip.y = IMUI.scaler.referenceResolution.y - ip.y;
+        ip *= ASUI.facterToReference;
+        ip.y = ASUI.scaler.referenceResolution.y - ip.y;
         foreach (var rt in rts)
         {
             var rect = rt.rect;

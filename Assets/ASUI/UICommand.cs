@@ -32,6 +32,14 @@ public abstract class CommandHandler
     public void Execute()
     {
         commands.Sort(SortList);
+        foreach (var hdl in ASUI.I.glHandlers)
+        {
+            if (this == hdl.Value)
+            {
+                ASUI.I.owner = hdl.Key;
+                break;
+            }
+        }
         foreach (var command in commands)
         {
             ExecuteCommand(command);

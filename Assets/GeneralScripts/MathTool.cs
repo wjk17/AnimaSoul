@@ -121,7 +121,34 @@ public static class MathTool
                 return Vector3.zero;
         }
     }
-
+    internal static Vector2 ReverseY(Vector2 a)
+    {
+        return new Vector2(a.x, a.y * -1);
+    }
+    internal static Vector2 Divide(Vector2 a, Vector2 b)
+    {
+        return new Vector2(a.x / b.x, a.y / b.y);
+    }
+    internal static bool Between(Vector2 v, Vector2 min, Vector2 max)
+    {
+        return (v.x >= min.x && v.y >= min.y) && (v.x <= max.x && v.y <= max.y);
+    }
+    internal static bool Between(int index, int min, int max)
+    {
+        return (index >= min) && (index <= max);
+    }
+    internal static bool Between(int index, float min, int max)
+    {
+        return (index >= min) && (index <= max);
+    }
+    internal static bool Between(int index, int min, float max)
+    {
+        return (index >= min) && (index <= max);
+    }
+    internal static bool Between(int index, float min, float max)
+    {
+        return (index >= min) && (index <= max);
+    }
 }
 public static class QuaternionTool
 {

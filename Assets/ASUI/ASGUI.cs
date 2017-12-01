@@ -12,11 +12,11 @@ public class ASGUI : MonoBehaviour
     public GameObject togglePrefab;
     public new Camera camera;
 
-    public Dictionary<object, GLUIHandler> glHandlers = new Dictionary<object, GLUIHandler>();
-    public Dictionary<object, IMUIHandler> imHandlers = new Dictionary<object, IMUIHandler>();
+    public Dictionary<RectTransform, GLUIHandler> glHandlers = new Dictionary<RectTransform, GLUIHandler>();
+    public Dictionary<RectTransform, IMUIHandler> imHandlers = new Dictionary<RectTransform, IMUIHandler>();
 
-    private object _owner;
-    public object owner
+    private RectTransform _owner;
+    public RectTransform owner
     {
         set
         {

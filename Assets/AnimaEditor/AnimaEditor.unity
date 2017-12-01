@@ -5778,7 +5778,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 483539892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -800, y: 450, z: 0}
+  m_LocalPosition: {x: -799.79474, y: 449.88452, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2006952673}
@@ -5809,8 +5809,7 @@ MonoBehaviour:
   spaceLineInRulerX: 5
   spaceLineInRulerY: 5
   rulerScalerSensitivity: 20
-  rulerLength: 200
-  rulerYLength: 60
+  rulerLength: {x: 166, y: 62}
   points:
   - {x: 358, y: 478}
   - {x: 404, y: 614}
@@ -5829,7 +5828,7 @@ MonoBehaviour:
       time: 0.28397825
       value: 0.872636
       inSlope: 2.4157171
-      outSlope: 2.3341541
+      outSlope: 5.8838696
       tangentMode: 1
     - serializedVersion: 2
       time: 0.44317907
@@ -5860,21 +5859,27 @@ MonoBehaviour:
     m_RotationOrder: 0
   curve:
     keys:
-    - index: 0
-      value: 478
-      inTangent: {x: 0, y: 0}
-      outTangent: {x: 404, y: 614}
+    - index: 10
+      value: 50
+      inTangent: {x: 5, y: 10.5}
+      outTangent: {x: 19.2, y: 21.7}
       inMode: 0
       outMode: 0
-    - index: 0
-      value: 472
-      inTangent: {x: 792, y: 608}
-      outTangent: {x: 0, y: 0}
+    - index: 70
+      value: 50
+      inTangent: {x: 50.6, y: 28.4}
+      outTangent: {x: 90, y: 30.5}
       inMode: 0
       outMode: 0
-  squareSize: 20
+    approxRange: 0.00001
+  squareSize: 15
   lineWidth: 2
-  segmentCount: 20
+  segmentCount: 50
+  moveSensitivity: 0.35
+  keyPointColor: {r: 0, g: 1, b: 0, a: 1}
+  curveColor: {r: 0, g: 1, b: 0, a: 1}
+  controlPointColor: {r: 0.853, g: 0.3765108, b: 0.189366, a: 1}
+  controlLineColor: {r: 0.853, g: 0.3765108, b: 0.189366, a: 1}
 --- !u!1 &484029528
 GameObject:
   m_ObjectHideFlags: 0
@@ -9975,7 +9980,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 869043477}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -790, y: 440, z: 0}
+  m_LocalPosition: {x: -789.79474, y: 439.88452, z: 0}
   m_LocalScale: {x: 1.0000137, y: 1.0000137, z: 1.0000137}
   m_Children: []
   m_Father: {fileID: 976285354}
@@ -11086,7 +11091,7 @@ RectTransform:
   m_GameObject: {fileID: 976285350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 90}
-  m_LocalScale: {x: 0.0038888888, y: 0.0038888888, z: 0.0038888888}
+  m_LocalScale: {x: 0.0038898871, y: 0.0038898871, z: 0.0038898871}
   m_Children:
   - {fileID: 1790258388}
   - {fileID: 1017906914}
@@ -20556,6 +20561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82af12f151e744143be0489ce6641777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fps: 60
   realtime: 0
   normalizedTime: 0
   xSpaceInRuler: 10
@@ -20580,6 +20586,7 @@ MonoBehaviour:
   fileName: default.xml
   insertType: 0
   lineWidth: 4
+  moveSensitivity: 0.3
 --- !u!1 &1477913708
 GameObject:
   m_ObjectHideFlags: 0
@@ -27169,7 +27176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6691177, g: 0.6691177, b: 0.6691177, a: 1}
+  m_Color: {r: 0.53676474, g: 0.53676474, b: 0.53676474, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

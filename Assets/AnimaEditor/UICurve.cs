@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class UICurve : MonoBehaviour
 {
     private RectTransform area;
@@ -13,46 +12,61 @@ public class UICurve : MonoBehaviour
     public int spaceLineInRulerX = 5; // 多少帧画一条线
     public int spaceLineInRulerY = 5;
     public float rulerScalerSensitivity = 20;
-    public float rulerLength = 200;
-    public float rulerYLength = 60;
+    public Vector2 rulerLength = new Vector2(200, 60);
+    public Vector2 range
+    {
+        get { return endPos - startPos; }
+    }
+    public Vector2 endPos
+    {
+        get { return startPos + rulerLength; }
+    }
+    private Vector2 startPos;
+    public Vector2Int startPosInt
+    {
+        get { return new Vector2Int(Mathf.RoundToInt(startPos.x), Mathf.RoundToInt(startPos.y)); }
+    }
     public List<Vector2> points;
     public AnimationCurve acurve;
     public ASCurve curve = new ASCurve();
+    public List<ASKey> keys { get { return curve.keys; } }
     public float squareSize;
     public float lineWidth;
     public int segmentCount = 10;
-    void DrawBezier(params Vector2[] p)
+
+    bool middle;
+    Vector2 oldPos;
+    public float moveSensitivity = 0.3f;
+    public Color keyPointColor = Color.green;
+    public Color curveColor = Color.green - ASColor.V * 0.5f;
+    public Color controlPointColor = Color.grey + ASColor.V * 0.3f;
+    public Color controlLineColor = Color.grey;
+
+    Vector2 ConvertV(Vector2 v)
     {
-        float t;
-        Vector2 p1, p2;
-        p1 = p[0];
+        var d = v - startPos;
+        var n = MathTool.Divide(d, range);
+        var x = n.x * area.sizeDelta.x + area.anchoredPosition.x;
+        var y = -n.y * area.sizeDelta.y + -area.anchoredPosition.y + area.sizeDelta.y;
+        return new Vector2(x, y);
+    }
+    void DrawBezier(ASCurve curve)
+    {
+        float t0 = startPos.x, t1, y;
+        Vector2 v1, v2;
         for (int i = 1; i <= segmentCount; i++)
         {
-            t = (float)i / segmentCount;
-            p2 = CalBezier(p, t);
-            GLUI.DrawLine(p1, p2);
-            p1 = p2;
+            t1 = startPos.x + ((float)i / segmentCount) * range.x;
+            y = curve.Evaluate(t0);
+            v1 = ConvertV(new Vector2(t0, y));
+            y = curve.Evaluate(t1);
+            v2 = ConvertV(new Vector2(t1, y));
+            t0 = t1;
+            GLUI.DrawLine(v1, v2, curveColor);
         }
     }
-    Vector2 CalBezier(Vector2[] p, float t)
+    void DrawBezier(ASKey k1, ASKey k2)
     {
-        Vector2 v = Vector2.zero;
-        switch (p.Length)
-        {
-            case 4:
-                v = p[0] * Mathf.Pow((1 - t), 3) +
-                    3 * p[1] * t * Mathf.Pow((1 - t), 2) +
-                    3 * p[2] * Mathf.Pow(t, 2) * (1 - t) +
-                    p[3] * Mathf.Pow(t, 3);
-                return v;
-            case 3:
-                v = p[0] * Mathf.Pow((1 - t), 2) +
-                    2 * p[1] * t * (1 - t) +
-                    p[2] * Mathf.Pow(t, 2);
-                return v;
-            default:
-                throw null;
-        }
     }
     void Start()
     {
@@ -67,52 +81,68 @@ public class UICurve : MonoBehaviour
     }
     private void MouseDown2()
     {
-        points.Add(Input.mousePosition * IMUI.facterToReference);
-        points[points.Count - 1] = points[points.Count - 1].SetY(IMUI.scaler.referenceResolution.y - points[points.Count - 1].y);
+        points.Add(Input.mousePosition * ASUI.facterToReference);
+        points[points.Count - 1] = points[points.Count - 1].SetY(ASUI.scaler.referenceResolution.y - points[points.Count - 1].y);
     }
-    [ContextMenu("EE")]
-    void EE()
+
+    private void OnGUI()
     {
-        var a = new ASKey(0, points[0].y);
-        a.outTangent = points[1];
-        var b = new ASKey(0, points[3].y);
-        b.inTangent = points[2];
-        curve.keys.Add(a);
-        curve.keys.Add(b);
+        var e = Event.current;
+        if (e.type == EventType.mouseDown) e.Use();
     }
     void Update()
     {
         var shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         var ctrl = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+        if (Input.GetMouseButtonDown((int)ASUI.MouseButton.Middle) && ASUI.MouseOver(area, ruler, rulerY)) { middle = true; oldPos = ASUI.mousePositionRef; }
+        if (!Input.GetMouseButton((int)ASUI.MouseButton.Middle)) middle = false;
         float delta = Input.GetAxis("Mouse ScrollWheel");
         if (delta != 0)
         {
             if (ASUI.MouseOver(area, ruler))
             {
-                if (shift || ctrl) rulerYLength -= delta * rulerScalerSensitivity;
-                if (!shift) rulerLength -= delta * rulerScalerSensitivity;
+                if (shift || ctrl) rulerLength.y -= delta * rulerScalerSensitivity;
+                if (!shift) rulerLength.x -= delta * rulerScalerSensitivity;
             }
             if (ASUI.MouseOver(rulerY))
             {
-                if (ctrl) rulerLength -= delta * rulerScalerSensitivity;
-                rulerYLength -= delta * rulerScalerSensitivity;
+                if (ctrl) rulerLength.x -= delta * rulerScalerSensitivity;
+                rulerLength.y -= delta * rulerScalerSensitivity;
             }
+            rulerLength.x = Mathf.Clamp(rulerLength.x, 1, Mathf.Infinity);
+            rulerLength.y = Mathf.Clamp(rulerLength.y, 1, Mathf.Infinity);
         }
-        ASUI.owner = this;
+        if (middle)
+        {
+            var deltaV = ASUI.mousePositionRef - oldPos;
+            startPos -= deltaV * moveSensitivity;
+            oldPos = ASUI.mousePositionRef;
+        }
+        ASUI.owner = area;
         GLUI.BeginOrtho();
         UpdateASUI();
         GLUI.BeginOrder(1);
-        DrawBezier(points.ToArray());
-        for (int i = 0; i < curve.keys.Count; i++)
+        DrawBezier(curve);
+        for (int i = 0; i < keys.Count; i++)
         {
-
-        }
-        foreach (var p in points)
-        {
-            GLUI.DrawSquare(p, squareSize);
-            GLUI.DrawSquare(p, squareSize, lineWidth);
+            DrawPointOnArea(keys[i].ToVector2(), keyPointColor);
+            GLUI.DrawLine(ConvertV(keys[i]), ConvertV(keys[i].inTangent), controlLineColor);
+            DrawPointOnArea(keys[i].inTangent, controlPointColor);
+            GLUI.DrawLine(ConvertV(keys[i]), ConvertV(keys[i].outTangent), controlLineColor);
+            DrawPointOnArea(keys[i].outTangent, controlPointColor);
         }
         GLUI.EndOrder();
+    }
+    void DrawPointOnArea(Vector2 v, Color color)
+    {
+        if (MathTool.Between(v, startPos, endPos))
+        {
+            var d = v - startPos;
+            var n = MathTool.Divide(d, range);
+            var x = n.x * area.sizeDelta.x + area.anchoredPosition.x;
+            var y = -n.y * area.sizeDelta.y + -area.anchoredPosition.y + area.sizeDelta.y;
+            GLUI.DrawSquare(new Vector2(x, y), squareSize, color);
+        }
     }
     private void MouseDown()
     {
@@ -120,10 +150,10 @@ public class UICurve : MonoBehaviour
     }
     private void MouseDrag()
     {
-        var lx = Input.mousePosition.x * IMUI.facterToReference - area.anchoredPosition.x;
+        var lx = Input.mousePosition.x * ASUI.facterToReference - area.anchoredPosition.x;
         lx = lx / area.sizeDelta.x;
         lx = Mathf.Clamp01(lx);
-        UITimeLine.FrameIndex = Mathf.RoundToInt(lx * rulerLength);
+        UITimeLine.FrameIndex = Mathf.RoundToInt(lx * rulerLength.x);
     }
     private void InitASUI()
     {
@@ -133,59 +163,57 @@ public class UICurve : MonoBehaviour
     {
         float x, y, deltaX, deltaY;
         Vector2 p;
-        for (int i = 0; i < 1000; i++)
+        int num;
+        for (int i = 0; i < rulerLength.y; i++)
         {
-            deltaY = i / rulerYLength;
-            if ((i % spaceInRulerY) == 0)
+            deltaY = i / rulerLength.y;
+            num = startPosInt.y + i;
+            if ((num % spaceInRulerY) == 0)
             {
                 y = deltaY * rulerY.sizeDelta.y;
-                if (y + IMUI.CalSize(i.ToString()).y > rulerY.sizeDelta.y) break;
                 x = rulerY.anchoredPosition.x;
                 y = -y - rulerY.anchoredPosition.y + rulerY.sizeDelta.y;
                 p = new Vector2(x, y);
-                IMUI.DrawText(i.ToString(), p, Vector2.one * 0.5f);
+                IMUI.DrawText(num.ToString(), p, Vector2.one * 0.5f);
                 x = area.anchoredPosition.x;
                 p = new Vector2(x, y);
                 GLUI.DrawLine(p, p + Vector2.right * area.sizeDelta.x, Color.grey - ASColor.V * 0.3f);
             }
-            else if ((i % spaceLineInRulerY) == 0)
+            else if ((num % spaceLineInRulerY) == 0)
             {
                 y = deltaY * area.sizeDelta.y;
-                if (y > area.sizeDelta.y) break;
                 y = -y - area.anchoredPosition.y + rulerY.sizeDelta.y;
                 x = area.anchoredPosition.x;
                 p = new Vector2(x, y);
                 GLUI.DrawLine(p, p + Vector2.right * area.sizeDelta.x, Color.grey - ASColor.V * 0.2f);
             }
         }
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < rulerLength.x; i++)
         {
-            deltaX = i / rulerLength;
-            if ((i % spaceInRulerX) == 0)
+            num = startPosInt.x + i;
+            deltaX = i / rulerLength.x;
+            if ((num % spaceInRulerX) == 0)
             {
                 x = deltaX * ruler.sizeDelta.x;
-                if (x + IMUI.CalSize(i.ToString()).x > ruler.sizeDelta.x) break;
                 x += ruler.anchoredPosition.x;
                 y = -ruler.anchoredPosition.y;
                 p = new Vector2(x, y);
-                IMUI.DrawText(i.ToString(), p, Vector2.one * 0.5f);
+                IMUI.DrawText(num.ToString(), p, Vector2.one * 0.5f);
                 y = -area.anchoredPosition.y;
                 p = new Vector2(x, y);
                 GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, Color.grey - ASColor.V * 0.3f);
             }
-            else if ((i % spaceLineInRulerX) == 0)
+            else if ((num % spaceLineInRulerX) == 0)
             {
                 x = deltaX * area.sizeDelta.x;
-                if (x > area.sizeDelta.x) break;
                 x += area.anchoredPosition.x;
                 y = -area.anchoredPosition.y;
                 p = new Vector2(x, y);
                 GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, Color.grey - ASColor.V * 0.2f);
             }
-            if (UITimeLine.Clip.HasKey(UITimeLine.ObjCurve, i))
+            if (UITimeLine.Clip.HasKey(UITimeLine.ObjCurve, num))
             {
                 x = deltaX * area.sizeDelta.x;
-                if (x > area.sizeDelta.x) break;
                 x += area.anchoredPosition.x;
                 y = -area.anchoredPosition.y;
                 p = new Vector2(x, y);
@@ -193,9 +221,8 @@ public class UICurve : MonoBehaviour
                 GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, lineWidth * 0.45f, Color.yellow - ASColor.V * 0.2f);
             }
         }
-        deltaX = UITimeLine.FrameIndex / rulerLength;
+        deltaX = UITimeLine.FrameIndex / rulerLength.x;
         x = deltaX * area.sizeDelta.x;
-        if (x > area.sizeDelta.x) return;
         x += area.anchoredPosition.x;
         y = -area.anchoredPosition.y;
         p = new Vector2(x, y);

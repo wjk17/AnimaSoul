@@ -41,15 +41,36 @@ public enum CurveMode
 [Serializable]
 public class ASKey
 {
+    public static implicit operator Vector2(ASKey a)
+    {
+        return a.ToVector2();
+    }
     public int index;
+    public float time
+    {
+        get { return index * UITimeLine.timePerFrame; }
+    }
     public float value;
     public Vector2 inTangent;
+    public Vector2 inTangentKey
+    {
+        get { return new Vector2(inTangent.x * UITimeLine.Fps, inTangent.y); }
+    }
     public Vector2 outTangent;
+    public Vector2 outTangentKey
+    {
+        get { return new Vector2(outTangent.x * UITimeLine.Fps, outTangent.y); }
+    }
     public CurveMode inMode;
     public CurveMode outMode;
     public Vector2 ToVector2(float fps)
     {
-        return new Vector2(index * fps, value);
+        return new Vector2(index * (1 / fps), value);
+    }
+    public Vector2 ToVector2(bool convert = false)
+    {
+        if (convert) return new Vector2(index * (1 / UITimeLine.Fps), value);
+        else return new Vector2(index, value);
     }
     public ASKey() { }
     public ASKey(int index, float value)
@@ -122,11 +143,76 @@ public class ASCurve
         }
         keys.Add(newKey);//插入到末尾
     }
+    public float approxRange = 0.00001f;
+    bool Approx(float a, float b)
+    {
+        var r = Mathf.Abs(a - b) < approxRange;
+        return r;
+    }
+    public float Evaluate(float indexFloat)
+    {
+        if (indexFloat >= keys[keys.Count - 1].index || keys.Count == 1)
+        {
+            // 只有一帧，或者时间大于最后一帧时，使用最后一帧的值
+            return keys[keys.Count - 1].value;
+        }
+        if (Approx(indexFloat, keys[0].index))
+        {
+            return keys[0].value;
+        }
+        for (int i = 1; i < keys.Count; i++)
+        {
+            if (Approx(indexFloat, keys[i].index))
+            {
+                return keys[i].value;
+            }
+            if (indexFloat < keys[i].index)
+            {
+                return EvaluateInner(keys[i - 1], keys[i], indexFloat);
+            }
+        }
+        throw null;
+    }
+    private float EvaluateInner(ASKey k1, ASKey k2, float indexFloat)
+    {
+        var t = (indexFloat - k1.index) / (k2.index - k1.index);
+        if (k1.outMode == CurveMode.Constant)
+        {
+            return k1.value;
+        }
+        else if (k2.inMode == CurveMode.Constant)
+        {
+            return k2.value;
+        }
+        List<Vector2> p = new List<Vector2>();
+        p.Add(k1);//p0
+        switch (k1.outMode)//p1
+        {
+            case CurveMode.Bezier: p.Add(k1.outTangent); break;
+            case CurveMode.Linear: p.Add(Vector2.Lerp(k1, k2, 0.3333333f)); break;
+            case CurveMode.None: break;
+            default: throw null;
+        }
+        switch (k2.inMode)//p2
+        {
+            case CurveMode.Bezier: p.Add(k2.inTangent); break;
+            case CurveMode.Linear: p.Add(Vector2.Lerp(k1, k2, 0.6666667f)); break;
+            case CurveMode.None: break;
+            default: throw null;
+        }
+        p.Add(k2);//p3
+        var v = CalBezier(p.ToArray(), t);
+        return v.y;
+    }
+    public float EvaluateRT(float realTime)
+    {
+        return EvaluateRT(realTime, UITimeLine.Fps);
+    }
     // if: fps = 60;
     // so: timePerFrame = s/fps = 1/60 = 0.0166667
-    public float Evaluate(float realTime, float fps)
+    public float EvaluateRT(float realTime, float fps)
     {
-        float timePerFrame = 1 / fps;
+        var timePerFrame = 1 / fps;
         if (realTime >= keys[keys.Count - 1].index * timePerFrame || keys.Count == 1)
         {
             // 只有一帧，或者时间大于最后一帧时，使用最后一帧的值
@@ -145,7 +231,7 @@ public class ASCurve
                 return Mathf.Lerp(keys[i - 1].value, keys[i].value, t);
             }
         }
-        throw new Exception("意外");
+        throw null;
     }
 
     private float EvaluateInner(ASKey k1, ASKey k2, float t, float fps)

@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 左上角坐标
+/// </summary>
 public static class GLUI
 {
     static Material lineMaterial;
@@ -10,6 +13,7 @@ public static class GLUI
     {
         set { _commandOrder = value; }
         get { var order = _commandOrder; if (!keepOrder) _commandOrder = 0; return order; }//每次使用后归0
+        //get {  return _commandOrder; }
     }
     static int _commandOrder;
     static bool keepOrder = false;
@@ -20,6 +24,7 @@ public static class GLUI
     }
     public static void EndOrder()
     {
+        _commandOrder = 0;
         keepOrder = false;
     }
     public static void SetLineMaterial()
@@ -52,7 +57,11 @@ public static class GLUI
     {
         ASUI.I.AddCommand(Cmd(-1, GLUICmdType.LoadOrtho));
     }
-    //左上角坐标
+    /// <summary>
+    /// 左上角坐标
+    /// </summary>
+    /// <param name="p1"></param>
+    /// <param name="p2"></param>
     public static void DrawLine(Vector2 p1, Vector2 p2)
     {
         ASUI.I.AddCommand(Cmd(commandOrder, GLUICmdType.DrawLineOrtho, p1, p2));
@@ -73,6 +82,23 @@ public static class GLUI
     {
         DrawLineWidth(p1, p2, width, Color.black);
     }
+    static void SortX(Vector2[] p)
+    {
+        SortX(ref p[0], ref p[1]);
+    }
+    static void SortY(Vector2[] p)
+    {
+        SortY(ref p[0], ref p[1]);
+    }
+    static void SortX(ref Vector2 p1, ref Vector2 p2)
+    {
+        if (p1.x > p2.x) ASUI.swapPts(ref p1, ref p2);
+    }
+    static void SortY(ref Vector2 p1, ref Vector2 p2)
+    {
+        if (p1.y > p2.y) ASUI.swapPts(ref p1, ref p2);
+    }
+    // 控制粗细的线条实际是画四边形，不一定与坐标轴垂直。
     public static void DrawLineWidth(Vector2 p1, Vector2 p2, float width, Color color)
     {
         var v = p2 - p1;
@@ -82,31 +108,49 @@ public static class GLUI
         var p1b = p1 + new Vector2(v.y, -v.x).normalized * width;
         var p2a = p2 + new Vector2(-v2.y, v2.x).normalized * width;
         var p2b = p2 + new Vector2(v2.y, -v2.x).normalized * width;
+
+        //四边形可能切成更多边形，暂时没做画多边形功能因此暂不裁剪
+        
         DrawQuads(p1a, p1b, p2a, p2b, color);
     }
     // 左下角原点（0,0），右上角（1,1）
-    public static void DrawLineOrtho(Vector2 pos1, Vector2 pos2)
+    public static void DrawLineOrtho(Vector2 p1, Vector2 p2)
     {
-        DrawLineOrtho(pos1, pos2, Color.black);
+        DrawLineOrtho(p1, p2, Color.black);
     }
-    public static void DrawLineOrtho(Vector2 pos1, Vector2 pos2, Color color)
+    public static void DrawLineOrtho(Vector2 p1, Vector2 p2, Color color)
     {
-        pos1.x /= IMUI.scaler.referenceResolution.x;
-        pos1.y = IMUI.scaler.referenceResolution.y - pos1.y;
-        pos1.y /= IMUI.scaler.referenceResolution.y;
-        pos2.x /= IMUI.scaler.referenceResolution.x;
-        pos2.y = IMUI.scaler.referenceResolution.y - pos2.y;
-        pos2.y /= IMUI.scaler.referenceResolution.y;
+        //clip
+        var os = ASUI.Offset(ASUI.owner);
+        Vector2[] vs;
+        var result = LineClip.ClipCohSuth(os[0], os[1], p1, p2, out vs);
+        switch (result)
+        {
+            case LineClip.Result.origin: break;
+            case LineClip.Result.processed: p1 = vs[0]; p2 = vs[1]; break;
+            case LineClip.Result.discard: return;
+            default: throw null;
+        }
+
+        //normalize & flip y
+        p1.x /= ASUI.scaler.referenceResolution.x;
+        p1.y = ASUI.scaler.referenceResolution.y - p1.y;
+        p1.y /= ASUI.scaler.referenceResolution.y;
+        p2.x /= ASUI.scaler.referenceResolution.x;
+        p2.y = ASUI.scaler.referenceResolution.y - p2.y;
+        p2.y /= ASUI.scaler.referenceResolution.y;
+
+
         GL.Begin(GL.LINES);
         GL.Color(color);
-        GL.Vertex(pos1);
-        GL.Vertex(pos2);
+        GL.Vertex(p1);
+        GL.Vertex(p2);
         GL.End();
     }
     public static void DrawSquareSoild()
     {
-
     }
+    // 垂直于坐标轴的正方形
     internal static void DrawSquare(Vector2 p, float wh)
     {
         DrawSquare(p, wh, Color.black);
@@ -157,14 +201,14 @@ public static class GLUI
     {
         GL.Begin(GL.QUADS);
         GL.Color(color);
-        y1 = IMUI.scaler.referenceResolution.y - y1;
-        y2 = IMUI.scaler.referenceResolution.y - y2;
-        y3 = IMUI.scaler.referenceResolution.y - y3;
-        y4 = IMUI.scaler.referenceResolution.y - y4;
-        GL.Vertex3(x1 / IMUI.scaler.referenceResolution.x, y1 / IMUI.scaler.referenceResolution.y, 0);
-        GL.Vertex3(x2 / IMUI.scaler.referenceResolution.x, y2 / IMUI.scaler.referenceResolution.y, 0);
-        GL.Vertex3(x3 / IMUI.scaler.referenceResolution.x, y3 / IMUI.scaler.referenceResolution.y, 0);
-        GL.Vertex3(x4 / IMUI.scaler.referenceResolution.x, y4 / IMUI.scaler.referenceResolution.y, 0);
+        y1 = ASUI.scaler.referenceResolution.y - y1;
+        y2 = ASUI.scaler.referenceResolution.y - y2;
+        y3 = ASUI.scaler.referenceResolution.y - y3;
+        y4 = ASUI.scaler.referenceResolution.y - y4;
+        GL.Vertex3(x1 / ASUI.scaler.referenceResolution.x, y1 / ASUI.scaler.referenceResolution.y, 0);
+        GL.Vertex3(x2 / ASUI.scaler.referenceResolution.x, y2 / ASUI.scaler.referenceResolution.y, 0);
+        GL.Vertex3(x3 / ASUI.scaler.referenceResolution.x, y3 / ASUI.scaler.referenceResolution.y, 0);
+        GL.Vertex3(x4 / ASUI.scaler.referenceResolution.x, y4 / ASUI.scaler.referenceResolution.y, 0);
         GL.End();
     }
     public static void DrawCircle(Vector3 pos, float radius, Color color, float accurracy = 0.01f)

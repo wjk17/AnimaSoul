@@ -5,35 +5,6 @@ public static class IMUI
 {
     public static GUIStyle fontStyle = new GUIStyle();
     public static int fontSize = 24; // reference size设计时的字体大小
-    public static float facterToRealPixel
-    {
-        get
-        {
-            return Screen.width / scaler.referenceResolution.x;
-        }
-    }
-    public static float facterToReference
-    {
-        get
-        {
-            return scaler.referenceResolution.x / Screen.width;
-        }
-    }
-    private static CanvasScaler _scaler;
-    public static CanvasScaler scaler
-    {
-        get
-        {
-            if (_scaler == null) _scaler = Object.FindObjectOfType<CanvasScaler>();
-            return _scaler;
-        }
-        set
-        {
-            _scaler = value;
-        }
-    }
-
-
     public static IMUICommand Cmd(IMUICmdType type, params object[] args)
     {
         var cmd = new IMUICommand();
@@ -58,14 +29,14 @@ public static class IMUI
     }
     public static void DrawTextIM(string content, Vector2 pos)
     {
-        fontStyle.fontSize = Mathf.RoundToInt(fontSize * facterToRealPixel);
+        fontStyle.fontSize = Mathf.RoundToInt(fontSize * ASUI.facterToRealPixel);
         Vector2 size = fontStyle.CalcSize(new GUIContent(content)); // 计算对应样式的字符尺寸  
-        GUI.Label(new Rect(pos * facterToRealPixel, size), content, fontStyle);
+        GUI.Label(new Rect(pos * ASUI.facterToRealPixel, size), content, fontStyle);
     }
     public static void DrawTextIM(string content, Vector2 pos, Vector2 pivot)
     {
-        fontStyle.fontSize = Mathf.RoundToInt(fontSize * facterToRealPixel);
+        fontStyle.fontSize = Mathf.RoundToInt(fontSize * ASUI.facterToRealPixel);
         Vector2 size = fontStyle.CalcSize(new GUIContent(content));
-        GUI.Label(new Rect(pos * facterToRealPixel - Vector2.Scale(size, pivot), size), content, fontStyle);
+        GUI.Label(new Rect(pos * ASUI.facterToRealPixel - Vector2.Scale(size, pivot), size), content, fontStyle);
     }
 }
