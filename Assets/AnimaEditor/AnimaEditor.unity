@@ -5778,7 +5778,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 483539892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -799.79474, y: 449.88452, z: 0}
+  m_LocalPosition: {x: -800.1887, y: 450.10614, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2006952673}
@@ -5873,13 +5873,24 @@ MonoBehaviour:
       outMode: 0
     approxRange: 0.00001
   squareSize: 15
-  lineWidth: 2
-  segmentCount: 50
+  lineWidth: 3
+  segmentCount: 150
   moveSensitivity: 0.35
   keyPointColor: {r: 0, g: 1, b: 0, a: 1}
   curveColor: {r: 0, g: 1, b: 0, a: 1}
   controlPointColor: {r: 0.853, g: 0.3765108, b: 0.189366, a: 1}
   controlLineColor: {r: 0.853, g: 0.3765108, b: 0.189366, a: 1}
+  ind: -1
+  t: 0
+  clickDist: 20
+  dist1: 0
+  dist1in: 0
+  dist1out: 0
+  V1: {x: 0, y: 0}
+  V1in: {x: 0, y: 0}
+  V1out: {x: 0, y: 0}
+  ipRef: {x: 0, y: 0}
+  p: {x: 0, y: 0}
 --- !u!1 &484029528
 GameObject:
   m_ObjectHideFlags: 0
@@ -9980,7 +9991,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 869043477}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -789.79474, y: 439.88452, z: 0}
+  m_LocalPosition: {x: -790.1887, y: 440.10614, z: 0}
   m_LocalScale: {x: 1.0000137, y: 1.0000137, z: 1.0000137}
   m_Children: []
   m_Father: {fileID: 976285354}
@@ -11091,7 +11102,7 @@ RectTransform:
   m_GameObject: {fileID: 976285350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 90}
-  m_LocalScale: {x: 0.0038898871, y: 0.0038898871, z: 0.0038898871}
+  m_LocalScale: {x: 0.0038879719, y: 0.0038879719, z: 0.0038879719}
   m_Children:
   - {fileID: 1790258388}
   - {fileID: 1017906914}
@@ -13696,7 +13707,7 @@ MonoBehaviour:
   trackOnX: 1
   trackOnY: 1
   space: 1
-  wheelControlOn: 0
+  wheelControlOn: 1
   orthoCamSize: 0
   orthoCamSizeMOM: {x: 0.05, y: 0, z: 5}
   tX: 0
@@ -20581,12 +20592,12 @@ MonoBehaviour:
     height: 0
   pos2D: {x: 0, y: 0}
   fontSize: 20
+  lineWidth: 4
+  moveSensitivity: 0.3
   path: 
   folder: Clips/
   fileName: default.xml
   insertType: 0
-  lineWidth: 4
-  moveSensitivity: 0.3
 --- !u!1 &1477913708
 GameObject:
   m_ObjectHideFlags: 0

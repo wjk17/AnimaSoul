@@ -4,7 +4,12 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using Obj = UnityEngine.Object;
 using System;
-
+public enum MouseButton
+{
+    Left = 0,
+    Right,
+    Middle,
+};
 /// <summary>
 /// 左上角坐标
 /// </summary>
@@ -23,12 +28,6 @@ public static class ASUI
         var v = MathTool.ReverseY(rt.anchoredPosition);
         return new Vector2[] { v, v + rt.sizeDelta };
     }
-    public enum MouseButton
-    {
-        Left = 0,
-        Right,
-        Middle,
-    };
     public static Color labelColor = Color.black;
     public static Color floatLabelColor = Color.black;
     public static Color floatFieldColor = Color.black;
@@ -76,8 +75,11 @@ public static class ASUI
             return scaler.referenceResolution.x / Screen.width;
         }
     }
+    public static float mouseDist(Vector2 v) { return Vector2.Distance(v, mousePositionRef); }
+    public static float mouseDistLT(Vector2 v) { return Vector2.Distance(v, mousePositionRefLT); }
     // 鼠标在设计时的分辨率下的位置
     public static Vector2 mousePositionRef { get { return Input.mousePosition * facterToReference; } }
+    public static Vector2 mousePositionRefLT { get { var ip = Input.mousePosition * facterToReference; ip.y = scaler.referenceResolution.y - ip.y; return ip; } }
 
     static ASGUI _instance;
     static List<UIHorizon> horizons;

@@ -156,7 +156,7 @@ public class ASCurve
             // 只有一帧，或者时间大于最后一帧时，使用最后一帧的值
             return keys[keys.Count - 1].value;
         }
-        if (Approx(indexFloat, keys[0].index))
+        if (Approx(indexFloat, keys[0].index) || indexFloat < keys[0].index)
         {
             return keys[0].value;
         }

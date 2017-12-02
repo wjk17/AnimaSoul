@@ -101,6 +101,10 @@ public static class GLUI
     // 控制粗细的线条实际是画四边形，不一定与坐标轴垂直。
     public static void DrawLineWidth(Vector2 p1, Vector2 p2, float width, Color color)
     {
+        //clip
+        var os = ASUI.Offset(ASUI.owner);
+        if (LineClip.ClipCohSuth(os[0], os[1], ref p1, ref p2) == LineClip.Result.discard) return ;
+
         var v = p2 - p1;
         var v2 = p1 - p2;
         width *= 0.5f;
@@ -109,8 +113,8 @@ public static class GLUI
         var p2a = p2 + new Vector2(-v2.y, v2.x).normalized * width;
         var p2b = p2 + new Vector2(v2.y, -v2.x).normalized * width;
 
-        //四边形可能切成更多边形，暂时没做画多边形功能因此暂不裁剪
-        
+        //四边形可能切成更多边形，暂时没做画多边形功能因此暂不裁剪宽度，只裁剪长度
+
         DrawQuads(p1a, p1b, p2a, p2b, color);
     }
     // 左下角原点（0,0），右上角（1,1）
@@ -122,15 +126,7 @@ public static class GLUI
     {
         //clip
         var os = ASUI.Offset(ASUI.owner);
-        Vector2[] vs;
-        var result = LineClip.ClipCohSuth(os[0], os[1], p1, p2, out vs);
-        switch (result)
-        {
-            case LineClip.Result.origin: break;
-            case LineClip.Result.processed: p1 = vs[0]; p2 = vs[1]; break;
-            case LineClip.Result.discard: return;
-            default: throw null;
-        }
+        if (LineClip.ClipCohSuth(os[0], os[1], ref p1, ref p2) == LineClip.Result.discard) return;
 
         //normalize & flip y
         p1.x /= ASUI.scaler.referenceResolution.x;

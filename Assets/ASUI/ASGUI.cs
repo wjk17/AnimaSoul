@@ -69,4 +69,30 @@ public class ASGUI : MonoBehaviour
         var wrapper = camera.GetComOrAdd<CameraEventWrapper>();
         wrapper.onPostRender = CameraPostRender;
     }
+    public List<InputCallBack> inputCallBacks = new List<InputCallBack>();
+    public class InputCallBack
+    {
+        public InputCallBack() { }
+        /// <summary>
+        /// 降序
+        /// </summary>
+        public InputCallBack(Action gi, int order = 0) { getInput = gi; this.order = order; }
+        public Action getInput;
+        public int order;
+    }
+    public virtual int SortList(InputCallBack a, InputCallBack b)
+    {
+        if (a.order > b.order) { return -1; }//降序
+        else if (a.order < b.order) { return 1; }
+        return 0;
+    }
+    public void Update()
+    {
+        Events.used = false;
+        inputCallBacks.Sort(SortList);
+        foreach (var call in inputCallBacks)
+        {
+            call.getInput();
+        }
+    }
 }

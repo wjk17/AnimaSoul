@@ -10,12 +10,12 @@ public class ImageClick : MonoBehaviour
     [Range(0, 1)]
     public float off = 0.7f;
     UnityEngine.UI.Image image;
-    UnityChan.CameraController cam;
+    CameraController cam;
     public RectTransform rt;
     Vector2 sizeOrigin;
     void Start()
     {
-        cam = FindObjectOfType<UnityChan.CameraController>();
+        cam = FindObjectOfType<CameraController>();
         if (cam == null) { enabled = false; return; }
         image =transform.GetComponent<UnityEngine.UI.Image>();
         sizeOrigin = image.rectTransform.sizeDelta;

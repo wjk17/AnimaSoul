@@ -170,7 +170,14 @@ public class UIDOFEditor : MonoBehaviour
         ASUI.Button("IK目标设为当前位置", OnIKSnap);
         ASUI.EndHorizon();
 
+        ASUI.I.inputCallBacks.Add(new ASGUI.InputCallBack(GetInput, 1));
+
         UpdateDOF();
+    }
+
+    void GetInput()
+    {
+        if (Events.Click && ASUI.MouseOver(transform.Search("Area") as RectTransform)) Events.Use();//拦截点击事件，防止穿透
     }
     void OnIKBoneLengthChanged(float v, SliderWrapper slider)
     {
