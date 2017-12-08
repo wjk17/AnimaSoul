@@ -101,9 +101,11 @@ public static class GLUI
     // 控制粗细的线条实际是画四边形，不一定与坐标轴垂直。
     public static void DrawLineWidth(Vector2 p1, Vector2 p2, float width, Color color)
     {
+        p1 += MathTool.ReverseY(ASUI.owner.anchoredPosition);
+        p2 += MathTool.ReverseY(ASUI.owner.anchoredPosition);
         //clip
-        var os = ASUI.Offset(ASUI.owner);
-        if (LineClip.ClipCohSuth(os[0], os[1], ref p1, ref p2) == LineClip.Result.discard) return ;
+        var rect = ASUI.Rect(ASUI.owner);
+        if (LineClip.ClipCohSuth(rect[0], rect[1], ref p1, ref p2) == LineClip.Result.discard) return ;
 
         var v = p2 - p1;
         var v2 = p1 - p2;
@@ -124,9 +126,11 @@ public static class GLUI
     }
     public static void DrawLineOrtho(Vector2 p1, Vector2 p2, Color color)
     {
+        p1 += MathTool.ReverseY(ASUI.owner.anchoredPosition);
+        p2 += MathTool.ReverseY(ASUI.owner.anchoredPosition);
         //clip
-        var os = ASUI.Offset(ASUI.owner);
-        if (LineClip.ClipCohSuth(os[0], os[1], ref p1, ref p2) == LineClip.Result.discard) return;
+        var rect = ASUI.Rect(ASUI.owner);
+        if (LineClip.ClipCohSuth(rect[0], rect[1], ref p1, ref p2) == LineClip.Result.discard) return;
 
         //normalize & flip y
         p1.x /= ASUI.scaler.referenceResolution.x;
@@ -135,7 +139,6 @@ public static class GLUI
         p2.x /= ASUI.scaler.referenceResolution.x;
         p2.y = ASUI.scaler.referenceResolution.y - p2.y;
         p2.y /= ASUI.scaler.referenceResolution.y;
-
 
         GL.Begin(GL.LINES);
         GL.Color(color);

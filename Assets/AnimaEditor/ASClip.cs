@@ -69,12 +69,15 @@ public class ASClip
     }
     public void AddEulerPos(ASObjectCurve curve, int frameIndex, Vector3 euler, Vector3 pos)
     {
-        curve.eulerAngles[0].InsertKey(frameIndex, euler.z);
-        curve.eulerAngles[1].InsertKey(frameIndex, euler.x);
-        curve.eulerAngles[2].InsertKey(frameIndex, euler.y);
-        curve.localPosition[0].InsertKey(frameIndex, pos.z);
-        curve.localPosition[1].InsertKey(frameIndex, pos.x);
-        curve.localPosition[2].InsertKey(frameIndex, pos.y);
+        //ASCurve.print = true;
+        if (curve.timeCurve.keys.Count < 2) curve.timeCurve.InsertKey(frameIndex, 0);// UITimeLine.FrameValue);
+        else curve.timeCurve.InsertKey(frameIndex, curve.timeCurve.Evaluate(UITimeLine.FrameIndex));
+        curve.eulerAngles[0].InsertKey(frameIndex, euler.x);
+        curve.eulerAngles[1].InsertKey(frameIndex, euler.y);
+        curve.eulerAngles[2].InsertKey(frameIndex, euler.z);
+        curve.localPosition[0].InsertKey(frameIndex, pos.x);
+        curve.localPosition[1].InsertKey(frameIndex, pos.y);
+        curve.localPosition[2].InsertKey(frameIndex, pos.z);
     }
     public void RemoveKey(ASObjectCurve curve, int frameIndex)
     {
@@ -86,5 +89,6 @@ public class ASClip
         {
             c.RemoveKey(frameIndex);
         }
+        curve.timeCurve.RemoveKey(frameIndex);
     }
 }

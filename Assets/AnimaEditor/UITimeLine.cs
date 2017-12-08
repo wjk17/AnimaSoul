@@ -53,7 +53,6 @@ public class UITimeLine : MonoBehaviour
     public int fontSize;
 
     public float lineWidth = 5;
-    public float moveSensitivity = 0.3f;
     public Vector2 range
     {
         get { return endPos - startPos; }
@@ -68,6 +67,7 @@ public class UITimeLine : MonoBehaviour
     }
     private Vector2 startPos;
 
+    public static float FrameValue;
     private int _frameIndex;
     public int frameIndex
     {
@@ -105,7 +105,7 @@ public class UITimeLine : MonoBehaviour
     {
         get { return I.clip[I.trans]; }
     }
-    ASObjectCurve curve
+    ASObjectCurve objCurve
     {
         get { return clip[trans]; }
     }
@@ -125,7 +125,7 @@ public class UITimeLine : MonoBehaviour
     {
         frameIndex = 0;
         area = transform.Search("Area") as RectTransform;
-        ruler = transform.Search("Ruler") as RectTransform;
+        ruler = transform.Search("Ruler X") as RectTransform;
         InitASUI();
         ASUI.I.inputCallBacks.Add(new ASGUI.InputCallBack(GetInput, 1));
     }
@@ -149,38 +149,28 @@ public class UITimeLine : MonoBehaviour
         ASUI.owner = area;
         GLUI.BeginOrtho();
 
-        float x, y, rulerX;
-        Vector2 p;
+        float rulerX;
         int num;
+        var areaP = Vector2.zero;
+        var p = areaP;
         for (int i = 0; i < rulerLength; i++)
         {
             num = startPosInt.x + i;
             rulerX = i / rulerLength;
             if ((num % xSpaceInRuler) == 0)
             {
-                x = rulerX * ruler.sizeDelta.x;
-                x += ruler.anchoredPosition.x;
-                y = -ruler.anchoredPosition.y;
-                p = new Vector2(x, y);
-                IMUI.DrawText(num.ToString(), p, Vector2.one * 0.5f);
-                y = -area.anchoredPosition.y;
-                p = new Vector2(x, y);
+                p.x = areaP.x + rulerX * ruler.sizeDelta.x;
+                IMUI.DrawText(num.ToString(), p + MathTool.ReverseY(ruler.anchoredPosition), Vector2.one * 0.5f);
                 GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, Color.grey - ASColor.V * 0.3f);
             }
             else if ((num % xSpaceLineInRuler) == 0)
             {
-                x = rulerX * area.sizeDelta.x;
-                x += area.anchoredPosition.x;
-                y = -area.anchoredPosition.y;
-                p = new Vector2(x, y);
+                p.x = areaP.x + rulerX * area.sizeDelta.x;
                 GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, Color.grey - ASColor.V * 0.2f);
             }
-            if (clip.HasKey(curve, num))
+            if (clip.HasKey(objCurve, num))
             {
-                x = rulerX * area.sizeDelta.x;
-                x += area.anchoredPosition.x;
-                y = -area.anchoredPosition.y;
-                p = new Vector2(x, y);
+                p.x = areaP.x + rulerX * area.sizeDelta.x;
                 GLUI.commandOrder = 2;
                 GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, lineWidth * 0.45f, Color.yellow - ASColor.V * 0.2f);
             }
@@ -188,12 +178,9 @@ public class UITimeLine : MonoBehaviour
         if (MathTool.Between(frameIndex, startPos.x, endPos.x))
         {
             rulerX = (frameIndex - startPos.x) / rulerLength;
-            x = rulerX * area.sizeDelta.x;
-            x += area.anchoredPosition.x;
-            y = -area.anchoredPosition.y;
-            p = new Vector2(x, y);
+            p.x = areaP.x + rulerX * area.sizeDelta.x;
             GLUI.commandOrder = 1;
-            GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, lineWidth, Color.green + ASColor.H * 0.2f);
+            GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, lineWidth, Color.green);
         }
     }
     private void Update()
@@ -208,6 +195,9 @@ public class UITimeLine : MonoBehaviour
     private void MouseDrag(MouseButton button)
     {
         use = true;
+        var deltaV = ASUI.mousePositionRef - oldPos;
+        deltaV = MathTool.Divide(deltaV, area.sizeDelta);
+        deltaV = Vector2.Scale(deltaV, new Vector2(rulerLength, 0));
         switch (button)
         {
             case MouseButton.Left:
@@ -216,21 +206,19 @@ public class UITimeLine : MonoBehaviour
                 lx = lx / area.sizeDelta.x;
                 lx = Mathf.Clamp01(lx);
                 frameIndex = (int)startPos.x + Mathf.RoundToInt(lx * rulerLength);
-
                 break;
+
             case MouseButton.Right:
 
                 break;
 
             case MouseButton.Middle:
 
-                var deltaV = ASUI.mousePositionRef - oldPos;
-                startPos -= deltaV * moveSensitivity;
-                oldPos = ASUI.mousePositionRef;
-
+                startPos -= deltaV;
                 break;
             default: throw null;
         }
+        oldPos = ASUI.mousePositionRef;
     }
     Vector2 oldPos;
     bool use, left, right, middle, shift, ctrl;
@@ -238,12 +226,15 @@ public class UITimeLine : MonoBehaviour
     {
         var shift = Events.shift;
         var ctrl = Events.ctrl;
+        var alt = Events.Alt;
         use = false;
         var over = ASUI.MouseOver(area, ruler);
-        if (Events.MouseDown(MouseButton.Middle) && over) { oldPos = ASUI.mousePositionRef; MouseDown(MouseButton.Middle); middle = true; }
-        if (Events.MouseDown(MouseButton.Left) && over) { oldPos = ASUI.mousePositionRef; MouseDown(MouseButton.Left); left = true; }
-        if (!Events.Mouse(MouseButton.Middle)) middle = false;
-        if (!Events.Mouse(MouseButton.Left)) left = false;
+        var simMidDown = Events.MouseDown(MouseButton.Left) && alt;
+        if ((Events.MouseDown(MouseButton.Middle) || simMidDown) && over) { oldPos = ASUI.mousePositionRef; MouseDown(MouseButton.Middle); middle = true; }
+        if (Events.MouseDown(MouseButton.Left) && over && !simMidDown) { oldPos = ASUI.mousePositionRef; MouseDown(MouseButton.Left); left = true; }
+        var simMid = Events.Mouse(MouseButton.Left) && alt;
+        if (!Events.Mouse(MouseButton.Middle) && !simMid) middle = false;
+        if (!Events.Mouse(MouseButton.Left) || simMid) left = false;
         if (middle) MouseDrag(MouseButton.Middle);
         if (left) MouseDrag(MouseButton.Left);
         float delta = Events.Axis("Mouse ScrollWheel");
@@ -301,7 +292,7 @@ public class UITimeLine : MonoBehaviour
     {
         switch (insertType)
         {
-            case InsertKeyType.EulPos: clip.AddEulerPos(curve, frameIndex, euler, pos); break;
+            case InsertKeyType.EulPos: clip.AddEulerPos(objCurve, frameIndex, euler, pos); break;
             case InsertKeyType.Eul: break;
             case InsertKeyType.Pos: break;
             default: throw null;
@@ -309,6 +300,6 @@ public class UITimeLine : MonoBehaviour
     }
     private void RemoveKey()
     {
-        clip.RemoveKey(curve, frameIndex);
+        clip.RemoveKey(objCurve, frameIndex);
     }
 }

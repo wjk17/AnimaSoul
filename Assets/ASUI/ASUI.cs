@@ -23,7 +23,7 @@ public static class ASUI
     {
         var tmp = c1; c1 = c2; c2 = tmp;
     }
-    public static Vector2[] Offset(this RectTransform rt)
+    public static Vector2[] Rect(this RectTransform rt)
     {
         var v = MathTool.ReverseY(rt.anchoredPosition);
         return new Vector2[] { v, v + rt.sizeDelta };
@@ -193,12 +193,17 @@ public static class ASUI
     internal static bool MouseOver(params RectTransform[] rts)
     {
         var ip = Input.mousePosition;
-        ip *= ASUI.facterToReference;
-        ip.y = ASUI.scaler.referenceResolution.y - ip.y;
+        ip *= facterToReference;
+        ip.y = scaler.referenceResolution.y - ip.y;
         foreach (var rt in rts)
         {
             var rect = rt.rect;
             rect.position = Vector2.Scale(rt.anchoredPosition, Vector2.one.SetY(-1));
+            if (rt.name != "Area")
+            {
+                rect.position += Vector2.Scale((rt.parent as RectTransform).anchoredPosition, Vector2.one.SetY(-1));
+                rect.position += new Vector2(-rt.pivot.x * rt.sizeDelta.x, -(1 - rt.pivot.y) * rt.sizeDelta.y);
+            }
             if (rect.Contains(ip)) return true;
         }
         return false;

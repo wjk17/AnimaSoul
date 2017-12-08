@@ -149,6 +149,10 @@ public static class MathTool
     {
         return (index >= min) && (index <= max);
     }
+    internal static bool Between(float index, float min, float max)
+    {
+        return (index >= min) && (index <= max);
+    }
 }
 public static class QuaternionTool
 {

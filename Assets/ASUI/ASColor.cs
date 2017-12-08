@@ -5,11 +5,23 @@ public class ASColor
     public float h;
     public float s;
     public float v;
-    public ASColor(float h, float s, int v)
+    public ASColor(float h, float s, float v)
     {
         this.h = h;
         this.s = s;
         this.v = v;
+    }
+    public static ASColor R
+    {
+        get { return (ASColor)Color.red; }
+    }
+    public static ASColor G
+    {
+        get { return (ASColor)Color.green; }
+    }
+    public static ASColor B
+    {
+        get { return (ASColor)Color.blue; }
     }
     public static ASColor H
     {
@@ -30,6 +42,12 @@ public class ASColor
     public static explicit operator Color(ASColor color)
     {
         return color.ToColor();
+    }
+    public static explicit operator ASColor(Color color)
+    {
+        float h, s, v;
+        Color.RGBToHSV(color, out h, out s, out v);
+        return new ASColor(h, s, v);
     }
     public static ASColor operator *(float f, ASColor asc)
     {

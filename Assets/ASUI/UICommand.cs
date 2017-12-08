@@ -13,16 +13,19 @@ public class GLUICommand : Command
     public GLUICmdType type;
 }
 [Serializable]
-public abstract class Command
+public class Command
 {
     public int order;
     public object[] args;
 }
-public abstract class CommandHandler
+[Serializable]
+public class CommandHandler
 {
+    public RectTransform owner;
     public CommandHandler() { }
+    public CommandHandler(RectTransform owner) { this.owner = owner; }
     public List<Command> commands = new List<Command>();
-    public abstract void ExecuteCommand(Command cmd);
+    public virtual void ExecuteCommand(Command cmd) {}
     public virtual int SortList(Command a, Command b)
     {
         if (a.order > b.order) { return 1; }
@@ -32,14 +35,7 @@ public abstract class CommandHandler
     public void Execute()
     {
         commands.Sort(SortList);
-        foreach (var hdl in ASUI.I.glHandlers)
-        {
-            if (this == hdl.Value)
-            {
-                ASUI.I.owner = hdl.Key;
-                break;
-            }
-        }
+        ASUI.I.owner = owner;
         foreach (var command in commands)
         {
             ExecuteCommand(command);
@@ -90,8 +86,11 @@ public abstract class CommandHandler
         return true;
     }
 }
+[Serializable]
 public class GLUIHandler : CommandHandler
 {
+    public GLUIHandler() : base() { }
+    public GLUIHandler(RectTransform owner) : base(owner) { }
     public override void ExecuteCommand(Command command)
     {
         var cmd = command as GLUICommand;
@@ -130,8 +129,11 @@ public class IMUICommand : Command
 {
     public IMUICmdType type;
 }
+[Serializable]
 public class IMUIHandler : CommandHandler
 {
+    public IMUIHandler() : base() { }
+    public IMUIHandler(RectTransform owner) : base(owner) { }
     public override void ExecuteCommand(Command command)
     {
         var cmd = command as IMUICommand;

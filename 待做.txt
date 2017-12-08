@@ -1,3 +1,5 @@
+曲线列表，区域窗口化：描边+可控边框大小
+
 drawsquareSoild
 clip triangle
 draw 多边形

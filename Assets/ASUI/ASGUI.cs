@@ -1,7 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+public static class CmdHdlTool
+{
+    public static bool Contains<T>(this List<T> list, RectTransform item) where T : CommandHandler
+    {
+        foreach (T i in list)
+        {
+            if (i.owner == item) return true;
+        }
+        return false;
+    }
+    public static T Ele<T>(this List<T> list, RectTransform item) where T : CommandHandler
+    {
+        foreach (T i in list)
+        {
+            if (i.owner == item) return i;
+        }
+        return null;
+    }
+    //public static bool Contains(this List<CommandHandler> list, RectTransform item)
+    //{
+    //    foreach (CommandHandler i in list)
+    //    {
+    //        if (i.owner == item) return true;
+    //    }
+    //    return false;
+    //}
+}
 public class ASGUI : MonoBehaviour
 {
     public GameObject inputFieldPrefab;
@@ -12,8 +38,13 @@ public class ASGUI : MonoBehaviour
     public GameObject togglePrefab;
     public new Camera camera;
 
-    public Dictionary<RectTransform, GLUIHandler> glHandlers = new Dictionary<RectTransform, GLUIHandler>();
-    public Dictionary<RectTransform, IMUIHandler> imHandlers = new Dictionary<RectTransform, IMUIHandler>();
+    //public Dictionary<RectTransform, GLUIHandler> glHandlers = new Dictionary<RectTransform, GLUIHandler>();
+    //public Dictionary<RectTransform, IMUIHandler> imHandlers = new Dictionary<RectTransform, IMUIHandler>();
+    [NonSerialized]
+    public List<GLUIHandler> glHandlers = new List<GLUIHandler>();
+    [NonSerialized]
+    public List<IMUIHandler> imHandlers = new List<IMUIHandler>();
+
 
     private RectTransform _owner;
     public RectTransform owner
@@ -21,13 +52,13 @@ public class ASGUI : MonoBehaviour
         set
         {
             _owner = value;
-            if (!glHandlers.ContainsKey(_owner))
+            if (!glHandlers.Contains(_owner))
             {
-                glHandlers.Add(_owner, new GLUIHandler());
+                glHandlers.Add(new GLUIHandler(_owner));
             }
-            if (!imHandlers.ContainsKey(_owner))
+            if (!imHandlers.Contains(_owner))
             {
-                imHandlers.Add(_owner, new IMUIHandler());
+                imHandlers.Add(new IMUIHandler(_owner));
             }
         }
         get { return _owner; }
@@ -36,23 +67,23 @@ public class ASGUI : MonoBehaviour
     {
         foreach (var hdl in imHandlers)
         {
-            hdl.Value.Execute();
+            hdl.Execute();
         }
-    }
+    }    
     public void ClearCmd()
     {
-        glHandlers[owner].commands.Clear();
-        imHandlers[owner].commands.Clear();
+        glHandlers.Ele(owner).commands.Clear();
+        imHandlers.Ele(owner).commands.Clear();
     }
     public void AddCommand(Command command)
     {
         if (command.GetType() == typeof(GLUICommand))
         {
-            glHandlers[owner].commands.Add(command);
+            glHandlers.Ele(owner).commands.Add(command);
         }
         else if (command.GetType() == typeof(IMUICommand))
         {
-            imHandlers[owner].commands.Add(command);
+            imHandlers.Ele(owner).commands.Add(command);
         }
         else throw null;
     }
@@ -61,7 +92,7 @@ public class ASGUI : MonoBehaviour
         GLUI.SetLineMaterial();
         foreach (var hdl in glHandlers)
         {
-            hdl.Value.Execute();
+            hdl.Execute();
         }
     }
     private void Start()
