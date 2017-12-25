@@ -23,10 +23,72 @@ public static class ASUI
     {
         var tmp = c1; c1 = c2; c2 = tmp;
     }
+    internal static Vector2 Abs(RectTransform rt)
+    {
+        var pr = rt.parent as RectTransform;
+        var anchorSize = Vector2.Scale(pr.rect.size, (rt.anchorMax - rt.anchorMin));
+        var size = anchorSize - rt.sizeDelta;
+        var pos = rt.anchoredPosition - anchorSize;
+        return pos;
+        //return MathTool.ReverseY(p);
+    }
+    public static Vector2 AbsRefPos(RectTransform rt)
+    {
+        var rtParent = rt.parent as RectTransform;
+        Vector2 posParent = MathTool.ReverseY(rtParent.anchoredPosition);
+        Vector2 pos = posParent;
+        Vector2 anchorPos;
+        var amin = rt.anchorMin;
+        var amax = rt.anchorMax;
+        var omin = rt.offsetMin;
+        var omax = rt.offsetMax;
+
+        if (amin == amax) // 九宫格锚点模式
+        {
+            anchorPos = Vector2.Scale(amin, rtParent.rect.size);
+            pos += anchorPos + new Vector2(omin.x, -omax.y);// rt.anchoredPosition;
+        }
+        else if (amin == new Vector2(0, 0) && amax == new Vector2(1, 0))
+        {
+            pos.y += rtParent.rect.height;
+            pos += MathTool.ReverseY(rt.anchoredPosition);
+
+            //amin.y = 1 - amin.y;
+            //anchorPos = Vector2.Scale(amin, rtParent.rect.size);
+            //pos.y += anchorPos.y - omax.y;
+            //pos.x += omin.x;
+        }
+        else if (amin == new Vector2(0, 0) && amax == new Vector2(0, 1))
+        {
+            anchorPos = MathTool.ReverseY(rt.anchoredPosition);
+            pos += anchorPos;
+        }
+        else
+        {
+            pos += new Vector2(omin.x, -omax.y);// rt.anchoredPosition;
+        }
+
+        //p.y = scaler.referenceResolution.y - p.y;
+        return pos;
+    }
+    public static Vector2 AbsPos(this RectTransform rt)
+    {
+        var pos = rt.anchoredPosition;
+        if (canvasRT == null) throw null;
+        var parent = rt.parent as RectTransform;
+        if (parent == null) throw null;
+        while (parent != canvasRT)
+        {
+            pos += parent.anchoredPosition;
+            parent = parent.parent as RectTransform;
+        }
+        pos.y *= -1;
+        return pos;
+    }
     public static Vector2[] Rect(this RectTransform rt)
     {
-        var v = MathTool.ReverseY(rt.anchoredPosition);
-        return new Vector2[] { v, v + rt.sizeDelta };
+        var v = AbsRefPos(rt);
+        return new Vector2[] { v, v + rt.rect.size };
     }
     public static Color labelColor = Color.black;
     public static Color floatLabelColor = Color.black;
@@ -48,6 +110,26 @@ public static class ASUI
             return _instance;
         }
     }
+    private static RectTransform _canvasRT;
+    public static RectTransform canvasRT
+    {
+        get
+        {
+            if (_canvasRT == null) _canvasRT = canvas.transform as RectTransform;
+            return _canvasRT;
+        }
+        set { _canvasRT = value; }
+    }
+    private static Canvas _canvas;
+    public static Canvas canvas
+    {
+        get
+        {
+            if (_canvas == null) _canvas = Obj.FindObjectOfType<Canvas>();
+            return _canvas;
+        }
+        set { _canvas = value; }
+    }
     private static CanvasScaler _scaler;
     public static CanvasScaler scaler
     {
@@ -56,10 +138,7 @@ public static class ASUI
             if (_scaler == null) _scaler = Obj.FindObjectOfType<CanvasScaler>();
             return _scaler;
         }
-        set
-        {
-            _scaler = value;
-        }
+        set { _scaler = value; }
     }
     public static float facterToRealPixel
     {
@@ -94,16 +173,16 @@ public static class ASUI
     }
     public static void EndHorizon()//不能无UIEndHorizon，否则分母为0
     {
-        var xScale = (parent as RectTransform).sizeDelta.x / horizon.right;
+        var xScale = (parent as RectTransform).rect.width / horizon.right;
         foreach (var rt in horizon.rts)
         {
             rt.anchoredPosition = rt.anchoredPosition.SetX(rt.anchoredPosition.x * xScale);
-            rt.sizeDelta = rt.sizeDelta.SetX(rt.sizeDelta.x * xScale);
+            rt.sizeDelta = rt.sizeDelta.SetX(rt.rect.width * xScale);
         }
     }
     public static void Toggle(string labelStr, UnityAction<bool> onToggle = null)
     {
-        Toggle(labelStr, I.togglePrefab.GetComponent<RectTransform>().sizeDelta.x, onToggle);
+        Toggle(labelStr, I.togglePrefab.GetComponent<RectTransform>().rect.width, onToggle);
     }
     public static void Toggle(string labelStr, float width, UnityAction<bool> onToggle = null)
     {
@@ -162,7 +241,7 @@ public static class ASUI
     }
     public static void LabelField(string labelStr)
     {
-        LabelField(labelStr, (I.labelPrefab.transform as RectTransform).sizeDelta.x);
+        LabelField(labelStr, (I.labelPrefab.transform as RectTransform).rect.width);
     }
     public static void LabelField(string labelStr, float width)
     {
@@ -197,15 +276,22 @@ public static class ASUI
         ip.y = scaler.referenceResolution.y - ip.y;
         foreach (var rt in rts)
         {
-            var rect = rt.rect;
-            rect.position = Vector2.Scale(rt.anchoredPosition, Vector2.one.SetY(-1));
-            if (rt.name != "Area")
-            {
-                rect.position += Vector2.Scale((rt.parent as RectTransform).anchoredPosition, Vector2.one.SetY(-1));
-                rect.position += new Vector2(-rt.pivot.x * rt.sizeDelta.x, -(1 - rt.pivot.y) * rt.sizeDelta.y);
-            }
+            var rect = GetAbsRect(rt);
             if (rect.Contains(ip)) return true;
         }
         return false;
+    }
+    private static Rect GetAbsRect(RectTransform rt)
+    {
+        var rect = rt.rect;
+        rect.position = AbsRefPos(rt);
+        //rect.position = MathTool.ReverseY(rt.anchoredPosition);
+        //if (rt.name != "Area")
+        //{
+        //    //rect.position += Vector2.Scale((rt.parent as RectTransform).anchoredPosition, Vector2.one.SetY(-1));
+        //    //rect.position += new Vector2(-rt.pivot.x * rt.rect.width, -(1 - rt.pivot.y) * rt.rect.height);
+        //    rect.position = AbsRefPos(rt);
+        //}
+        return rect;
     }
 }

@@ -605,11 +605,11 @@
       <bone>thigh_l</bone>
       <count>1</count>
       <twistMin>0</twistMin>
-      <twistMax>50</twistMax>
+      <twistMax>0</twistMax>
       <swingXMin>-125</swingXMin>
       <swingXMax>25</swingXMax>
-      <swingZMin>0</swingZMin>
-      <swingZMax>0</swingZMax>
+      <swingZMin>-30</swingZMin>
+      <swingZMax>30</swingZMax>
     </ASDOF>
     <ASDOF>
       <bone>thigh_r</bone>

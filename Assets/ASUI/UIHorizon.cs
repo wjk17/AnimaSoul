@@ -8,11 +8,11 @@ public class UIHorizon
     float y;
     public float bottom
     {
-        get { return current.anchoredPosition.y - (current == null ? 0 : current.sizeDelta.y); }
+        get { return current.anchoredPosition.y - (current == null ? 0 : current.rect.height); }
     }
     public float right
     {
-        get { return current == null ? 0 : current.anchoredPosition.x + current.sizeDelta.x; }
+        get { return current == null ? 0 : current.anchoredPosition.x + current.rect.width; }
     }
     public void Add(GameObject go)
     {

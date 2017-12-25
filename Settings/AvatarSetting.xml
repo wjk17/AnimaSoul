@@ -177,7 +177,7 @@
         </right>
       </coord>
       <euler>
-        <x>0</x>
+        <x>40</x>
         <y>0</y>
         <z>0</z>
       </euler>
@@ -2554,11 +2554,11 @@
         <bone>thigh_l</bone>
         <count>1</count>
         <twistMin>0</twistMin>
-        <twistMax>50</twistMax>
+        <twistMax>0</twistMax>
         <swingXMin>-125</swingXMin>
         <swingXMax>25</swingXMax>
-        <swingZMin>0</swingZMin>
-        <swingZMax>0</swingZMax>
+        <swingZMin>-30</swingZMin>
+        <swingZMax>30</swingZMax>
       </dof>
       <coord>
         <up>
@@ -2578,9 +2578,9 @@
         </right>
       </coord>
       <euler>
-        <x>-86.9280853</x>
+        <x>-25</x>
         <y>0</y>
-        <z>0</z>
+        <z>-20</z>
       </euler>
       <right>
         <x>1</x>
@@ -2627,7 +2627,7 @@
         </right>
       </coord>
       <euler>
-        <x>121.169777</x>
+        <x>90</x>
         <y>0</y>
         <z>0</z>
       </euler>

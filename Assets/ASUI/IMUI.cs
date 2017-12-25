@@ -30,7 +30,7 @@ public static class IMUI
     public static void DrawTextIM(string content, Vector2 pos)
     {
         //Debug.Log(ASUI.owner.parent.name);
-        pos += MathTool.ReverseY(ASUI.owner.anchoredPosition);
+        //pos += MathTool.ReverseY(ASUI.owner.anchoredPosition);
         pos *= ASUI.facterToRealPixel;
         fontStyle.fontSize = Mathf.RoundToInt(fontSize * ASUI.facterToRealPixel);
         Vector2 size = fontStyle.CalcSize(new GUIContent(content)); // 计算对应样式的字符尺寸  
@@ -39,7 +39,7 @@ public static class IMUI
     public static void DrawTextIM(string content, Vector2 pos, Vector2 pivot)
     {
         //Debug.Log(ASUI.owner.parent.name);
-        pos += MathTool.ReverseY(ASUI.owner.anchoredPosition);
+        //pos += MathTool.ReverseY(ASUI.owner.anchoredPosition);
         pos *= ASUI.facterToRealPixel;
         fontStyle.fontSize = Mathf.RoundToInt(fontSize * ASUI.facterToRealPixel);
         Vector2 size = fontStyle.CalcSize(new GUIContent(content));

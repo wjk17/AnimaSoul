@@ -118,7 +118,7 @@ public class UICurve : MonoBehaviour
             if (showControlPoints && keys[i].inMode == CurveMode.Bezier)//插值模式不是贝塞尔就不画
             {
                 GLUI.DrawLine(ConvertV(keys[i]), ConvertV(keys[i].inTangentAbs), lineWidth, controlLineColor);
-                DrawPointOnArea(keys[i].inTangentAbs, controlPointColor);
+                DrawPointOnArea(keys[i].inTangentAbs, controlPointColor); //画点
             }
             if (showControlPoints && keys[i].outMode == CurveMode.Bezier)
             {
@@ -216,9 +216,10 @@ public class UICurve : MonoBehaviour
         {
             var d = v - startPos;
             var n = MathTool.Divide(d, range);
-            var x = n.x * area.sizeDelta.x;// + area.anchoredPosition.x;
-            var y = -n.y * area.sizeDelta.y + area.sizeDelta.y; //-area.anchoredPosition.y;
-            GLUI.DrawSquare(new Vector2(x, y), squareSize, lineWidth, color);
+            var x = n.x * area.rect.width;// + area.anchoredPosition.x;
+            var y = -n.y * area.rect.height + area.rect.height; //-area.anchoredPosition.y;
+
+            GLUI.DrawSquare(ASUI.AbsRefPos(area) + new Vector2(x, y), squareSize, lineWidth, color);
         }
     }
     void Start()
@@ -230,13 +231,14 @@ public class UICurve : MonoBehaviour
 
         ASUI.I.inputCallBacks.Add(new ASGUI.InputCallBack(GetInput, 2));
     }
+    public bool over;
     public void GetInput()
     {
         shift = Events.shift;
         ctrl = Events.ctrl;
         alt = Events.Alt;
         use = false;
-        var over = ASUI.MouseOver(area, rulerX, rulerY);
+        over = ASUI.MouseOver(area, rulerX, rulerY);
         var simMidDown = Events.MouseDown(MouseButton.Left) && alt;
         if ((Events.MouseDown(MouseButton.Middle) || simMidDown) && over) { oldPos = ASUI.mousePositionRef; MouseDown(MouseButton.Middle); middle = true; }
         if (Events.MouseDown(MouseButton.Left) && over && !simMidDown) { oldPos = ASUI.mousePositionRef; MouseDown(MouseButton.Left); left = true; }
@@ -326,14 +328,14 @@ public class UICurve : MonoBehaviour
             ind = -1;
             for (int i = 0; i < keys.Count; i++)
             {
-                if (ASUI.mouseDistLT(ConvertV2(keys[i])) < clickDist) { ind = i; tt = 0; }
+                if (ASUI.mouseDistLT(ConvertV(keys[i])) < clickDist) { ind = i; tt = 0; }
                 if (showControlPoints && keys[i].inMode == CurveMode.Bezier)//不是贝塞尔就不控制切点
                 {
-                    if (ASUI.mouseDistLT(ConvertV2(keys[i].inTangentAbs)) < clickDist) { ind = i; tt = -1; }
+                    if (ASUI.mouseDistLT(ConvertV(keys[i].inTangentAbs)) < clickDist) { ind = i; tt = -1; }
                 }
                 if (showControlPoints && keys[i].outMode == CurveMode.Bezier)
                 {
-                    if (ASUI.mouseDistLT(ConvertV2(keys[i].outTangentAbs)) < clickDist) { ind = i; tt = 1; }
+                    if (ASUI.mouseDistLT(ConvertV(keys[i].outTangentAbs)) < clickDist) { ind = i; tt = 1; }
                 }
             }
             MouseDrag(button);
@@ -343,14 +345,15 @@ public class UICurve : MonoBehaviour
     {
         use = true;
         var deltaV = ASUI.mousePositionRef - oldPos;
-        deltaV = MathTool.Divide(deltaV, area.sizeDelta);
+        deltaV = MathTool.Divide(deltaV, area.rect.size);
         deltaV = Vector2.Scale(deltaV, rulerLength);
+
         switch (button)
         {
             case MouseButton.Left:
-                var l = ASUI.mousePositionRefLT - new Vector2(area.anchoredPosition.x, -area.anchoredPosition.y);
-                l.y = area.sizeDelta.y - l.y;
-                l = MathTool.Divide(l, area.sizeDelta);
+                var l = ASUI.mousePositionRefLT - ASUI.AbsRefPos(area);
+                l.y = area.rect.height - l.y;
+                l = MathTool.Divide(l, area.rect.size);
                 p = (startPos + Vector2.Scale(l, rulerLength));
                 if (ind > -1)
                 {
@@ -368,7 +371,7 @@ public class UICurve : MonoBehaviour
                         if (ctrl != flipTwoSideTangent) curve.SetKeysOutTangent(ind, -inT);
                         else if (shift != (syncTwoSideTangentDir && inT.normalized.magnitude > 0.001f)) curve.SetKeysOutTangent(ind, -inT.normalized * outT.magnitude);//相反的方向移动，保持原来的长度
                     }
-                    // 0.001f防止在当前切点位置为0时，normalized也是0，因此归0了反方向切点位置的问题。
+                    // 0.001f防止在当前切点位置为0时，normalized也是0，因此使反方向切点位置归0的问题。
                     else if (tt == 1)
                     {
                         inT = keys[ind].inTangent;
@@ -397,9 +400,13 @@ public class UICurve : MonoBehaviour
         oldPos = ASUI.mousePositionRef;
     }
     int lastFrameIndex;
+    public Vector2 min;
+    public Vector2 max;
     void Update()
     {
         ASUI.owner = area;
+        min = ASUI.Rect(ASUI.owner)[0];
+        max = ASUI.Rect(ASUI.owner)[1];
         GLUI.BeginOrtho();
         UpdateASUI();
         GLUI.BeginOrder(1);
@@ -417,19 +424,19 @@ public class UICurve : MonoBehaviour
     {
         var d = v - startPos;
         var n = MathTool.Divide(d, range);
-        var x = n.x * area.sizeDelta.x;// + area.anchoredPosition.x;
-        var y = area.sizeDelta.y - n.y * area.sizeDelta.y;// -area.anchoredPosition.y;
+        var x = n.x * area.rect.width;// + area.anchoredPosition.x;
+        var y = area.rect.height - n.y * area.rect.height;// -area.anchoredPosition.y;
 
-        return new Vector2(x, y);
+        return ASUI.AbsRefPos(area) + new Vector2(x, y);
     }
     Vector2 ConvertV2(Vector2 v)
     {
         var d = v - startPos;
         var n = MathTool.Divide(d, range);
-        var x = n.x * area.sizeDelta.x + area.anchoredPosition.x;
-        var y = area.sizeDelta.y - n.y * area.sizeDelta.y -area.anchoredPosition.y;
+        var x = n.x * area.rect.width + area.anchoredPosition.x;
+        var y = area.rect.height - n.y * area.rect.height - area.anchoredPosition.y;
 
-        return new Vector2(x, y);
+        return ASUI.AbsRefPos(area) + new Vector2(x, y);
     }
     private void InitASUI()
     {
@@ -440,54 +447,69 @@ public class UICurve : MonoBehaviour
         float nX, nY;
         Vector2 p;
         int num;
+        var areaP = ASUI.AbsRefPos(area);
+        var rulerYP = ASUI.AbsRefPos(rulerY);
+        var rulerXP = ASUI.AbsRefPos(rulerX);
         for (int i = 0; i < rulerLength.y; i++)
         {
             nY = i / rulerLength.y;
             num = startPosInt.y + i;
-            p = MathTool.ReverseY(rulerY.anchoredPosition);
             if ((num % spaceInRulerY) == 0)
             {
-                p.y += rulerY.sizeDelta.y - nY * rulerY.sizeDelta.y;
-                IMUI.DrawText(num.ToString(), p, Vector2.one * 0.5f);
-                GLUI.DrawLine(p, p + Vector2.right * area.sizeDelta.x, Color.grey - ASColor.V * 0.3f);
+                p = rulerYP;
+                p.x += rulerY.rect.width * 0.5f;
+                p.y += rulerY.rect.height - nY * rulerY.rect.height;
+                IMUI.DrawText(num.ToString(), p, Vector2.one * 0.5f); // 画字
+
+                p = areaP;
+                p.y += area.rect.height - nY * area.rect.height;
+                GLUI.DrawLine(p, p + Vector2.right * area.rect.width, Color.grey - ASColor.V * 0.3f); // 画横线
             }
             else if ((num % spaceLineInRulerY) == 0)
             {
-                p.y += rulerY.sizeDelta.y - nY * rulerY.sizeDelta.y;
-                GLUI.DrawLine(p, p + Vector2.right * area.sizeDelta.x, Color.grey - ASColor.V * 0.2f);
+                p = areaP;
+                p.y += area.rect.height - nY * area.rect.height;
+                GLUI.DrawLine(p, p + Vector2.right * area.rect.width, Color.grey - ASColor.V * 0.2f); // 画横线
             }
         }
         for (int i = 0; i < rulerLength.x; i++)
         {
             num = startPosInt.x + i;
             nX = i / rulerLength.x;
-            p = MathTool.ReverseY(rulerX.anchoredPosition);
+            var dX = nX * area.rect.width;
             if ((num % spaceInRulerX) == 0)
             {
-                p.x += nX * rulerX.sizeDelta.x;
-                IMUI.DrawText(num.ToString(), p, Vector2.one * 0.5f);
-                p.y = 0;
-                GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, Color.grey - ASColor.V * 0.3f);
+                p = rulerXP;
+                p.x += dX;
+                p.y += rulerX.rect.height * 0.5f;//居中
+                IMUI.DrawText(num.ToString(), p, Vector2.one * 0.5f);//画字
+
+                p = areaP;
+                p.x += dX;
+                GLUI.DrawLine(p, p + Vector2.up * area.rect.height, Color.grey - ASColor.V * 0.3f);
             }
             else if ((num % spaceLineInRulerX) == 0)
             {
-                p.x += nX * area.sizeDelta.x;
-                GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, Color.grey - ASColor.V * 0.2f);
+                p = areaP;
+                p.x += nX * area.rect.width;
+                GLUI.DrawLine(p, p + Vector2.up * area.rect.height, Color.grey - ASColor.V * 0.2f);
             }
         }
         if (MathTool.Between(UITimeLine.FrameIndex, startPos.x, endPos.x))
         {
             nX = (UITimeLine.FrameIndex - startPos.x) / rulerLength.x;
-            p = new Vector2(nX * area.sizeDelta.x, 0);
+            p = areaP;
+            p.x += nX * area.rect.width;
             GLUI.commandOrder = 2;
-            GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, lineWidth, rulerIndexLineColor);
+            GLUI.DrawLine(p, p + Vector2.up * area.rect.height, lineWidth, rulerIndexLineColor);
         }
         if (MathTool.Between(UITimeLine.FrameValue, startPos.y, endPos.y))
         {
             nY = (UITimeLine.FrameValue - startPos.y) / rulerLength.y;
-            p = new Vector2(0, area.sizeDelta.y - nY * area.sizeDelta.y);
+            p = areaP;
+            p.y += area.rect.height - nY * area.rect.height;
             GLUI.commandOrder = 1;
-            GLUI.DrawLine(p, p + Vector2.right * area.sizeDelta.x, lineWidth, rulerValueLineColor);
+            GLUI.DrawLine(p, p + Vector2.right * area.rect.width, lineWidth, rulerValueLineColor);
         }
     }
 }

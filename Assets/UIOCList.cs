@@ -25,12 +25,12 @@ public class UIOCList : MonoBehaviour
             var n = c.trans.name.ToString();
             IMUI.DrawText(n, p);
             p += Vector2.up * IMUI.CalSize(n).y;
-            if (p.y > -area.anchoredPosition.y + area.sizeDelta.y) break;
+            if (p.y > -area.anchoredPosition.y + area.rect.height) break;
         }
         p = MathTool.ReverseY(area.anchoredPosition);
-        p.x += area.sizeDelta.x * 0.5f;
+        p.x += area.rect.width * 0.5f;
         var showN = (float)i / UITimeLine.Clip.curves.Count;
-        p2 = p + Vector2.up * showN * area.sizeDelta.y;
+        p2 = p + Vector2.up * showN * area.rect.height;
         GLUI.DrawLine(p, p2, width, Color.black);
         GLUI.DrawLine(new Vector2(), new Vector2(1600, 900), width, Color.black);
 

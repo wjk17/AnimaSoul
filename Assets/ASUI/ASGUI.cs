@@ -40,9 +40,9 @@ public class ASGUI : MonoBehaviour
 
     //public Dictionary<RectTransform, GLUIHandler> glHandlers = new Dictionary<RectTransform, GLUIHandler>();
     //public Dictionary<RectTransform, IMUIHandler> imHandlers = new Dictionary<RectTransform, IMUIHandler>();
-    [NonSerialized]
+    //[NonSerialized]
     public List<GLUIHandler> glHandlers = new List<GLUIHandler>();
-    [NonSerialized]
+    //[NonSerialized]
     public List<IMUIHandler> imHandlers = new List<IMUIHandler>();
 
 

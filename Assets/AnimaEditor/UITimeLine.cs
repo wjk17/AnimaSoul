@@ -4,6 +4,7 @@ using UnityEngine.UI;
 // UI控件
 public class UITimeLine : MonoBehaviour
 {
+    #region 属性和成员
     public static UITimeLine I
     {
         get
@@ -34,12 +35,13 @@ public class UITimeLine : MonoBehaviour
     public float fps = 60;
     public float realtime;
     public float normalizedTime;
-    public int xSpaceInRuler; // 标尺每隔多少帧有一个帧数数字
+    public int xSpaceTextInRuler; // 标尺每隔多少帧有一个帧数数字
     public int xSpaceLineInRuler; // 多少帧画一条线
     public float rulerScalerSensitivity = 20;
     public float rulerLength = 200;
     public Canvas canvas;
     private RectTransform area;
+    private RectTransform topBar;
     private RectTransform ruler;
 
     private float leftTimer;
@@ -120,11 +122,13 @@ public class UITimeLine : MonoBehaviour
     Vector3 pos
     {
         get { return trans.localPosition; }
-    }
+    } 
+    #endregion
     void Start()
     {
         frameIndex = 0;
         area = transform.Search("Area") as RectTransform;
+        topBar = transform.Search("TopBar") as RectTransform;
         ruler = transform.Search("Ruler X") as RectTransform;
         InitASUI();
         ASUI.I.inputCallBacks.Add(new ASGUI.InputCallBack(GetInput, 1));
@@ -144,6 +148,9 @@ public class UITimeLine : MonoBehaviour
         ASUI.BeginHorizon();
         ASUI.EndHorizon();
     }
+    public Vector2 areaP;
+    public Vector2 topBarP;
+    public Vector2 rulerP;
     void UpdateASUI()
     {
         ASUI.owner = area;
@@ -151,36 +158,41 @@ public class UITimeLine : MonoBehaviour
 
         float rulerX;
         int num;
-        var areaP = Vector2.zero;
-        var p = areaP;
+        areaP = ASUI.AbsRefPos(area);
+        topBarP = ASUI.AbsRefPos(topBar);
+        rulerP = ASUI.AbsRefPos(ruler);
+        Vector2 p;
         for (int i = 0; i < rulerLength; i++)
         {
             num = startPosInt.x + i;
             rulerX = i / rulerLength;
-            if ((num % xSpaceInRuler) == 0)
+            var dX = rulerX * ruler.rect.width;
+            if ((num % xSpaceTextInRuler) == 0)
             {
-                p.x = areaP.x + rulerX * ruler.sizeDelta.x;
-                IMUI.DrawText(num.ToString(), p + MathTool.ReverseY(ruler.anchoredPosition), Vector2.one * 0.5f);
-                GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, Color.grey - ASColor.V * 0.3f);
+                p = new Vector2(rulerP.x + dX, rulerP.y + ruler.rect.height * 0.5f);
+                IMUI.DrawText(num.ToString(), p, Vector2.one * 0.5f); // 画字 帧号标签
+
+                p = new Vector2(areaP.x + dX, areaP.y);
+                GLUI.DrawLine(p, p + Vector2.up * area.rect.height, Color.grey - ASColor.V * 0.3f); // 画线
             }
             else if ((num % xSpaceLineInRuler) == 0)
             {
-                p.x = areaP.x + rulerX * area.sizeDelta.x;
-                GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, Color.grey - ASColor.V * 0.2f);
+                p = new Vector2(areaP.x + dX, areaP.y);
+                GLUI.DrawLine(p, p + Vector2.up * area.rect.height, Color.grey - ASColor.V * 0.2f);//画线
             }
             if (clip.HasKey(objCurve, num))
             {
-                p.x = areaP.x + rulerX * area.sizeDelta.x;
+                p = new Vector2(areaP.x + dX, areaP.y);
                 GLUI.commandOrder = 2;
-                GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, lineWidth * 0.45f, Color.yellow - ASColor.V * 0.2f);
+                GLUI.DrawLine(p, p + Vector2.up * area.rect.height, lineWidth * 0.45f, Color.yellow - ASColor.V * 0.2f);//画线
             }
         }
         if (MathTool.Between(frameIndex, startPos.x, endPos.x))
         {
             rulerX = (frameIndex - startPos.x) / rulerLength;
-            p.x = areaP.x + rulerX * area.sizeDelta.x;
+            p = new Vector2(areaP.x + rulerX * area.rect.width, areaP.y);
             GLUI.commandOrder = 1;
-            GLUI.DrawLine(p, p + Vector2.up * area.sizeDelta.y, lineWidth, Color.green);
+            GLUI.DrawLine(p, p + Vector2.up * area.rect.height, lineWidth, Color.green);
         }
     }
     private void Update()
@@ -192,18 +204,19 @@ public class UITimeLine : MonoBehaviour
         use = true;
         MouseDrag(button);
     }
+    public float lx;
     private void MouseDrag(MouseButton button)
     {
         use = true;
         var deltaV = ASUI.mousePositionRef - oldPos;
-        deltaV = MathTool.Divide(deltaV, area.sizeDelta);
+        deltaV = MathTool.Divide(deltaV, area.rect.size);
         deltaV = Vector2.Scale(deltaV, new Vector2(rulerLength, 0));
         switch (button)
         {
             case MouseButton.Left:
 
-                var lx = ASUI.mousePositionRef.x - area.anchoredPosition.x;
-                lx = lx / area.sizeDelta.x;
+                lx = ASUI.mousePositionRef.x - area.anchoredPosition.x;
+                lx = lx / area.rect.width;
                 lx = Mathf.Clamp01(lx);
                 frameIndex = (int)startPos.x + Mathf.RoundToInt(lx * rulerLength);
                 break;
@@ -222,13 +235,14 @@ public class UITimeLine : MonoBehaviour
     }
     Vector2 oldPos;
     bool use, left, right, middle, shift, ctrl;
+    public bool over;
     void GetInput()
     {
         var shift = Events.shift;
         var ctrl = Events.ctrl;
         var alt = Events.Alt;
         use = false;
-        var over = ASUI.MouseOver(area, ruler);
+        over = ASUI.MouseOver(area, ruler);
         var simMidDown = Events.MouseDown(MouseButton.Left) && alt;
         if ((Events.MouseDown(MouseButton.Middle) || simMidDown) && over) { oldPos = ASUI.mousePositionRef; MouseDown(MouseButton.Middle); middle = true; }
         if (Events.MouseDown(MouseButton.Left) && over && !simMidDown) { oldPos = ASUI.mousePositionRef; MouseDown(MouseButton.Left); left = true; }

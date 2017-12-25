@@ -101,8 +101,8 @@ public static class GLUI
     // 控制粗细的线条实际是画四边形，不一定与坐标轴垂直。
     public static void DrawLineWidth(Vector2 p1, Vector2 p2, float width, Color color)
     {
-        p1 += MathTool.ReverseY(ASUI.owner.anchoredPosition);
-        p2 += MathTool.ReverseY(ASUI.owner.anchoredPosition);
+        //p1 += MathTool.ReverseY(ASUI.owner.anchoredPosition);
+        //p2 += MathTool.ReverseY(ASUI.owner.anchoredPosition);
         //clip
         var rect = ASUI.Rect(ASUI.owner);
         if (LineClip.ClipCohSuth(rect[0], rect[1], ref p1, ref p2) == LineClip.Result.discard) return ;
@@ -126,8 +126,12 @@ public static class GLUI
     }
     public static void DrawLineOrtho(Vector2 p1, Vector2 p2, Color color)
     {
-        p1 += MathTool.ReverseY(ASUI.owner.anchoredPosition);
-        p2 += MathTool.ReverseY(ASUI.owner.anchoredPosition);
+        //p1 += ASUI.AbsPos(ASUI.owner);
+        //p2 += ASUI.AbsPos(ASUI.owner);
+
+        //p1 += MathTool.ReverseY(ASUI.owner.anchoredPosition);
+        //p2 += MathTool.ReverseY(ASUI.owner.anchoredPosition);
+
         //clip
         var rect = ASUI.Rect(ASUI.owner);
         if (LineClip.ClipCohSuth(rect[0], rect[1], ref p1, ref p2) == LineClip.Result.discard) return;
