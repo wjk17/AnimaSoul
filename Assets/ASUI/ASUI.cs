@@ -165,6 +165,8 @@ public static class ASUI
     static UIHorizon horizon;
     static float ySpace = 10f;
     public static Transform parent;
+    internal static float Epsilon = 0.000001f;
+
     public static void BeginHorizon()
     {
         if (horizons == null) horizons = new List<UIHorizon>();

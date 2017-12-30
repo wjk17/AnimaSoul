@@ -121,6 +121,10 @@ public static class MathTool
                 return Vector3.zero;
         }
     }
+    internal static Vector2 ReverseX(Vector2 a)
+    {
+        return new Vector2(a.x * -1, a.y);
+    }
     internal static Vector2 ReverseY(Vector2 a)
     {
         return new Vector2(a.x, a.y * -1);

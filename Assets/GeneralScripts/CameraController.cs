@@ -85,11 +85,16 @@ public class CameraController : MonoBehaviour
 
         mouseDragEvent(Input.mousePosition);
     }
-
+    public Camera cam { get { return GetComponent<Camera>(); } }
+    public Vector2 size
+    {
+        get { var h = cam.orthographicSize * 2f; var w = h * cam.aspect; return new Vector2(w, h); }
+    }
     void mouseDragEvent(Vector3 mousePos)
     {
         Vector3 diff = mousePos - oldPos;
-
+        Vector2 diffN = new Vector2(diff.x / Screen.width, diff.y / Screen.height);
+        Vector2 diffWorld = Vector2.Scale(diffN, size);
         if (Events.Mouse(MouseButton.Left))
         {
             //Operation for Mac : "Left Alt + Left Command + LMB Drag" is Track
@@ -97,7 +102,7 @@ public class CameraController : MonoBehaviour
                 || Events.Key(KeyCode.LeftAlt) && Events.Key(KeyCode.LeftControl))
             {
                 if (diff.magnitude > Vector3.kEpsilon)
-                    cameraTranslate(-diff / 100.0f);
+                    cameraTranslate(-diffWorld);
             }
             //Operation for Mac : "Left Alt + LMB Drag" is Tumble
             else if (Events.Key(KeyCode.LeftAlt))
@@ -111,7 +116,8 @@ public class CameraController : MonoBehaviour
         else if (Events.Mouse(MouseButton.Middle))
         {
             if (diff.magnitude > Vector3.kEpsilon)
-                cameraTranslate(-diff / 100.0f);
+                //cameraTranslate(-diff / 100.0f);
+                cameraTranslate(-diffWorld);
         }
         //Tumble
         else if (Events.Mouse(MouseButton.Right))

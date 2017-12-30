@@ -157,7 +157,7 @@
         <swingXMin>-15</swingXMin>
         <swingXMax>40</swingXMax>
         <swingZMin>-25</swingZMin>
-        <swingZMax>25</swingZMax>
+        <swingZMax>0</swingZMax>
       </dof>
       <coord>
         <up>
@@ -177,7 +177,7 @@
         </right>
       </coord>
       <euler>
-        <x>40</x>
+        <x>0</x>
         <y>0</y>
         <z>0</z>
       </euler>
@@ -2557,8 +2557,8 @@
         <twistMax>0</twistMax>
         <swingXMin>-125</swingXMin>
         <swingXMax>25</swingXMax>
-        <swingZMin>-30</swingZMin>
-        <swingZMax>30</swingZMax>
+        <swingZMin>0</swingZMin>
+        <swingZMax>0</swingZMax>
       </dof>
       <coord>
         <up>
@@ -2578,9 +2578,9 @@
         </right>
       </coord>
       <euler>
-        <x>-25</x>
+        <x>0</x>
         <y>0</y>
-        <z>-20</z>
+        <z>0</z>
       </euler>
       <right>
         <x>1</x>
@@ -2627,7 +2627,7 @@
         </right>
       </coord>
       <euler>
-        <x>90</x>
+        <x>0</x>
         <y>0</y>
         <z>0</z>
       </euler>

@@ -111,6 +111,8 @@ public class UIDOFEditor : MonoBehaviour
         ASUI.labelColor = labelColor;
         ASUI.floatFieldColor = floatFieldColor;
         ASUI.floatLabelColor = floatLabelColor;
+
+        dofSet.Load();
         dof = dofSet[bone];
         ast = avatar[bone];
         dofP = new DOFProp(dof);
@@ -166,12 +168,12 @@ public class UIDOFEditor : MonoBehaviour
         ASUI.EndHorizon();
 
         ASUI.BeginHorizon();
-        ASUI.Toggle("使用IK", 80f, OnToggle);
+        ASUI.Toggle("使用IK", 80f, OnIKToggle);
         ASUI.Button("IK目标设为当前位置", OnIKSnap);
         ASUI.EndHorizon();
 
         ASUI.I.inputCallBacks.Add(new ASGUI.InputCallBack(GetInput, 1));
-
+        
         UpdateDOF();
     }
 
@@ -188,12 +190,12 @@ public class UIDOFEditor : MonoBehaviour
     }
     void SaveAvatarSetting()
     {
-        // 先修改DOF集，再引用到当前化身。不同化身，如不同化身（但骨架形状类似）的人物，生物可能使用相同的DOF集。
+        // 先修改DOF集，再引用到当前化身（Avatar）。不同化身，如不同化身（但骨架形状类似）的人物，生物可能使用相同的DOF集。
         dofSet.Save();
         avatar.LoadFromDOFMgr();
         avatar.SaveASTs();
     }
-    void OnToggle(bool value)
+    void OnIKToggle(bool value)
     {
 
     }
