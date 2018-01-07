@@ -19,17 +19,18 @@ public class UIOCList : MonoBehaviour
         GLUI.BeginOrtho();
         p = MathTool.ReverseY(area.anchoredPosition);
         int i = 0;
-        for (; i < UITimeLine.Clip.curves.Count; i++)
+        for (; i < UIClip.clip.curves.Count; i++)
         {
-            var c = UITimeLine.Clip.curves[i];
-            var n = c.trans.name.ToString();
+            var c = UIClip.clip.curves[i];
+            //var n = c.trans.name.ToString();
+            var n = c.ast.transform.name.ToString();
             IMUI.DrawText(n, p);
             p += Vector2.up * IMUI.CalSize(n).y;
             if (p.y > -area.anchoredPosition.y + area.rect.height) break;
         }
         p = MathTool.ReverseY(area.anchoredPosition);
         p.x += area.rect.width * 0.5f;
-        var showN = (float)i / UITimeLine.Clip.curves.Count;
+        var showN = (float)i / UIClip.clip.curves.Count;
         p2 = p + Vector2.up * showN * area.rect.height;
         GLUI.DrawLine(p, p2, width, Color.black);
         GLUI.DrawLine(new Vector2(), new Vector2(1600, 900), width, Color.black);

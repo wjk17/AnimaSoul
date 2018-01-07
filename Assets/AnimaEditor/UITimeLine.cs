@@ -18,11 +18,6 @@ public class UITimeLine : MonoBehaviour
         get { return I.frameIndex; }
         set { I.frameIndex = value; }
     }
-    public static ASClip Clip
-    {
-        get { return I.clip; }
-        set { I.clip = value; }
-    }
     public static float Fps
     {
         get { return I.fps; }
@@ -87,15 +82,6 @@ public class UITimeLine : MonoBehaviour
     public string folder = "Clips/";
     public string fileName = "default.xml";
     string rootPath { get { return Application.dataPath + "/../"; } }
-    public ASClip clip
-    {
-        get
-        {
-            if (_clip == null) I.InitClip(); return _clip;
-        }
-        set { _clip = value; }
-    }
-    ASClip _clip;
     public InsertKeyType insertType;
     public enum InsertKeyType
     {
@@ -103,25 +89,35 @@ public class UITimeLine : MonoBehaviour
         Eul,
         Pos,
     }
+    //public static ASObjectCurve ObjCurve
+    //{
+    //    get { return UIClip.clip[I.trans]; }
+    //}
     public static ASObjectCurve ObjCurve
     {
-        get { return I.clip[I.trans]; }
+        get { return UIClip.clip[I.ast]; }
     }
     ASObjectCurve objCurve
     {
-        get { return clip[trans]; }
+        //get { return UIClip.clip[trans]; }
+        get { return UIClip.clip[ast]; }
     }
-    Transform trans
+    ASTransDOF ast
     {
-        get { return UIDOFEditor.I.ast.transform; }
+        get { return UIDOFEditor.I.ast; }
     }
+    //Transform trans
+    //{
+    //    get { return UIDOFEditor.I.ast.transform; }
+    //}
     Vector3 euler
     {
         get { return UIDOFEditor.I.ast.euler; }
     }
     Vector3 pos
     {
-        get { return trans.localPosition; }
+        //get { return trans.localPosition; }
+        get { return ast.transform.localPosition; }
     } 
     #endregion
     void Start()
@@ -132,14 +128,6 @@ public class UITimeLine : MonoBehaviour
         ruler = transform.Search("Ruler X") as RectTransform;
         InitASUI();
         ASUI.I.inputCallBacks.Add(new ASGUI.InputCallBack(GetInput, 1));
-    }
-    private void InitClip()
-    {
-        clip = new ASClip();
-        foreach (var ast in UIDOFEditor.I.avatar.setting.asts)
-        {
-            clip.AddCurve(ast.transform);
-        }
     }
     private void InitASUI()
     {
@@ -180,7 +168,7 @@ public class UITimeLine : MonoBehaviour
                 p = new Vector2(areaP.x + dX, areaP.y);
                 GLUI.DrawLine(p, p + Vector2.up * area.rect.height, Color.grey - ASColor.V * 0.2f);//画线
             }
-            if (clip.HasKey(objCurve, num))
+            if (UIClip.clip.HasKey(objCurve, num))
             {
                 p = new Vector2(areaP.x + dX, areaP.y);
                 GLUI.commandOrder = 2;
@@ -294,19 +282,20 @@ public class UITimeLine : MonoBehaviour
     public void Load()
     {
         path = rootPath + folder + fileName;
-        clip = Serializer.XMLDeSerialize<ASClip>(path);
+        UIClip.clip = Serializer.XMLDeSerialize<ASClip>(path);
     }
     [ContextMenu("Save")]
     public void Save()
     {
         path = rootPath + folder + fileName;
-        Serializer.XMLSerialize(clip, path);
+        Serializer.XMLSerialize(UIClip.clip, path);
     }
     private void InsertKey()
     {
         switch (insertType)
         {
-            case InsertKeyType.EulPos: clip.AddEulerPos(objCurve, frameIndex, euler, pos); break;
+            //case InsertKeyType.EulPos: UIClip.clip.AddEulerPos(objCurve, frameIndex, euler, pos); break;
+            case InsertKeyType.EulPos: UIClip.clip.AddEulerPosAllCurve(frameIndex); break;
             case InsertKeyType.Eul: break;
             case InsertKeyType.Pos: break;
             default: throw null;
@@ -314,6 +303,6 @@ public class UITimeLine : MonoBehaviour
     }
     private void RemoveKey()
     {
-        clip.RemoveKey(objCurve, frameIndex);
+        UIClip.clip.RemoveKey(objCurve, frameIndex);
     }
 }

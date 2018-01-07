@@ -97,6 +97,7 @@ public class UIDOFEditor : MonoBehaviour
     public Color floatFieldColor = Color.black;
     public Color floatLabelColor = Color.black;
     public ASBone bone = ASBone.chest; // 给出个初始值
+    public ASIKTarget ikTarget = ASIKTarget.LeftHand;
     public DOFProp dofP;
     public ASDOF dof;
     public ASDOFMgr dofSet;
@@ -160,23 +161,47 @@ public class UIDOFEditor : MonoBehaviour
         ASUI.EndHorizon();
 
         ASUI.BeginHorizon();
-        ASUI.Button("保存", SaveAvatarSetting);
+        ASUI.Button("保存DOF", SaveAvatarSetting);
+        ASUI.EndHorizon();
+
+        ASUI.BeginHorizon();
+        ASUI.Button("保存Clip", SaveClip);
+        ASUI.EndHorizon();
+
+        ASUI.BeginHorizon();
+        ASUI.Button("插入关键帧", InsertKeyToAllCurves);
         ASUI.EndHorizon();
 
         ASUI.BeginHorizon();
         ASUI.Slider(swingZ, dofP.swingZMin, dofP.swingZMax, OnIKBoneLengthChanged);
         ASUI.EndHorizon();
 
+
         ASUI.BeginHorizon();
-        ASUI.Toggle("使用IK", 80f, OnIKToggle);
+        ASUI.LabelField("IK目标", headWidth);
+        ikTarget = ASIKTarget.LeftHand;
+        ASUI.DropdownEnum(ikTarget, (int)ASIKTarget.Count, ikTargetNames, IKTargetChange);
+        IKTargetChange((int)ikTarget);
+        ASUI.EndHorizon();
+
+        ASUI.BeginHorizon();
+        ASUI.Toggle("使用IK", 80f, IK, OnIKToggle);
         ASUI.Button("IK目标设为当前位置", OnIKSnap);
         ASUI.EndHorizon();
 
         ASUI.I.inputCallBacks.Add(new ASGUI.InputCallBack(GetInput, 1));
-        
+
         UpdateDOF();
     }
-
+    string[] ikTargetNames = new string[] { "左手", "右手", "左脚", "右脚" };
+    public enum ASIKTarget
+    {
+        LeftHand,
+        RightHand,
+        LeftLeg,
+        RightLeg,
+        Count
+    }
     void GetInput()
     {
         if (Events.Click && ASUI.MouseOver(transform.Search("Area") as RectTransform)) Events.Use();//拦截点击事件，防止穿透
@@ -187,6 +212,20 @@ public class UIDOFEditor : MonoBehaviour
     }
     private void OnIKSnap()
     {
+        var gizmos = FindObjectOfType<GizmosAxis>();
+        gizmos.transform.position = end.position;
+        target.position = end.position;
+    }
+    public void InsertKeyToAllCurves()
+    {
+        foreach (var curve in UIClip.clip.curves)
+        {
+            UIClip.clip.AddEulerPos(curve, UITimeLine.FrameIndex, curve.ast.euler, curve.ast.transform.localPosition);
+        }
+    }
+    void SaveClip()
+    {
+        UIClip.I.Save();
     }
     void SaveAvatarSetting()
     {
@@ -197,7 +236,7 @@ public class UIDOFEditor : MonoBehaviour
     }
     void OnIKToggle(bool value)
     {
-
+        IK = value;
     }
     void OnRangeChanged(float v, FloatFieldWrapper o)
     {
@@ -215,6 +254,39 @@ public class UIDOFEditor : MonoBehaviour
         ast.euler.y = twist;
         ast.euler.x = swingX;
         ast.euler.z = swingZ;
+    }
+    void IKTargetChange(int index)
+    {
+        var ikTarget = (ASIKTarget)index;
+        switch (ikTarget)
+        {
+            case ASIKTarget.RightHand:
+                joints.Add(ASBone.hand_r);
+                joints.Add(ASBone.forearm_r);
+                joints.Add(ASBone.upperarm_r);
+                end = avatar[ASBone.hand_r].transform;
+                break;
+            case ASIKTarget.LeftHand:
+                joints.Add(ASBone.hand_l);
+                joints.Add(ASBone.forearm_l);
+                joints.Add(ASBone.upperarm_l);
+                end = avatar[ASBone.hand_l].transform;
+                break;
+            case ASIKTarget.RightLeg:
+                joints.Add(ASBone.foot_r);
+                joints.Add(ASBone.shin_r);
+                joints.Add(ASBone.thigh_r);
+                end = avatar[ASBone.foot_r].transform;
+                break;
+            case ASIKTarget.LeftLeg:
+                joints.Add(ASBone.foot_l);
+                joints.Add(ASBone.shin_l);
+                joints.Add(ASBone.thigh_l);
+                end = avatar[ASBone.foot_l].transform;
+                break;
+            default: throw null;
+        }
+        OnIKSnap();
     }
     void DropdownChange(int index)
     {
@@ -243,21 +315,14 @@ public class UIDOFEditor : MonoBehaviour
     public float alpha; // 逼近的步长
     public float theta0;
     public float theta1;
+    public List<ASBone> joints;
     void Update()
     {
         if (IK)
         {
-            var hand = avatar[ASBone.hand_l];
-            var forearm = avatar[ASBone.forearm_l];
-            var uparm = avatar[ASBone.upperarm_l];
-            var joints = new List<ASBone>();
-            joints.Add(ASBone.foot_l);
-            joints.Add(ASBone.shin_l);
-            joints.Add(ASBone.thigh_l);
-            end = avatar[ASBone.foot_l].transform;
             IKSolve(joints.ToArray());
             //IKSolve(forearm, uparm, hand);
-            uparm.coord.DrawRay(uparm.transform, uparm.euler, 0.5f, false);
+            //uparm.coord.DrawRay(uparm.transform, uparm.euler, 0.5f, false);
         }
     }
     float Dist()

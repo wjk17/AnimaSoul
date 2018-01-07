@@ -8,8 +8,10 @@ using System.Xml.Serialization;
 public class ASObjectCurve
 {
     public string name;
+    //[XmlIgnore]
+    //public Transform trans;
     [XmlIgnore]
-    public Transform trans;
+    public ASTransDOF ast;
     public ASCurve[] eulerAngles;//x,y,z
     public ASCurve[] localPosition;//x,y,z
     public ASCurve timeCurve;
@@ -27,11 +29,16 @@ public class ASObjectCurve
         localPosition = new ASCurve[3] { new ASCurve(), new ASCurve(), new ASCurve() };
         timeCurve = new ASCurve();
     }
-    public ASObjectCurve(Transform trans) : this()
+    public ASObjectCurve(ASTransDOF ast) : this()
     {
-        this.trans = trans;
-        this.name = trans.name;
+        this.ast = ast;
+        this.name = ast.transform.name;
     }
+    //public ASObjectCurve(Transform trans) : this()
+    //{
+    //    this.trans = trans;
+    //    this.name = trans.name;
+    //}
     public ASObjectCurve Clone()
     {
         var n = new ASObjectCurve();
@@ -66,9 +73,10 @@ public class ASObjectCurve
         //}
         if (i < timeCurve.keys.Count) timeCurve.keys[i].inTangent = vector2;
     }
-    internal int SetKeysPoint(int i, int frameIndex, float v)
+    //设置指定listIndex的key的frameIndex和值
+    internal int SetKeysPoint(int listIndex, int frameIndex, float v)
     {
-        if (i < 0) throw null;
+        if (listIndex < 0) throw null;
         //foreach (var c in eulerAngles)
         //{
         //    if (i < c.keys.Count) { c.keys[i].value = v; c.SetIndex(i, frameIndex); }
@@ -78,12 +86,13 @@ public class ASObjectCurve
         //    if (i < c.keys.Count) { c.keys[i].value = v; c.SetIndex(i, frameIndex); }
         //}
         var tc = timeCurve;
-        if (i < tc.keys.Count)
+        if (listIndex < tc.keys.Count)
         {
-            tc.keys[i].value = v; tc.SetIndex(i, frameIndex);
+            tc.keys[listIndex].value = v;
+            tc.SetIndex(listIndex, frameIndex);
             return tc.IndexOf(frameIndex);
         }
-        return i;
+        return listIndex;
     }
 }
 public enum CurveMode
@@ -173,6 +182,10 @@ public class ASCurve
         }
         return false;
     }
+    public void InsertKeyOrigin(int index, float value)
+    {
+        InsertKeyOrigin(new ASKey(index, value));
+    }
     public void InsertKey(int index, float value)
     {
         InsertKey(new ASKey(index, value));
@@ -185,6 +198,70 @@ public class ASCurve
     }
     public static float tangentSlopeCalDeltaX = 0.0000001f;
     //public static bool print = true;
+    public void InsertKeyOrigin(ASKey newKey) // 根据帧序号插入。已有此帧则修改值
+    {
+        if (!hasKey)//初始化
+        {
+            keys = new List<ASKey>();
+            keys.Add(newKey);
+            return;
+        }
+        for (int i = 0; i < keys.Count; i++)
+        {
+            if (newKey.frameIndex == keys[i].frameIndex)
+            {
+                keys[i].value = newKey.value;//覆盖帧（修改值）                
+                return;
+            }
+            if (newKey.frameIndex < keys[i].frameIndex)
+            {
+                if (i == 0)//插入到最左边
+                {
+                    var b = keys[i];
+                    if (b.inMode == CurveMode.None)
+                    {
+                        b.inMode = CurveMode.Bezier;
+                        b.inTangentAbs = Vector2.Lerp(b, newKey, 0.3333333f);
+                    }
+                    newKey.outMode = CurveMode.Bezier;
+                    newKey.outTangentAbs = Vector2.Lerp(newKey, b, 0.3333333f);
+                }
+                else if (i > 0 && i < keys.Count)//插在两个帧之间
+                {
+                    var a = keys[i - 1];
+                    if (a.outMode == CurveMode.None)
+                    {
+                        a.outMode = CurveMode.Bezier;
+                        a.outTangentAbs = Vector2.Lerp(a, newKey, 0.3333333f);
+                    }
+                    newKey.outMode = CurveMode.Bezier;
+                    newKey.outTangentAbs = Vector2.Lerp(newKey, a, 0.3333333f);
+
+                    var b = keys[i];
+                    if (b.inMode == CurveMode.None)
+                    {
+                        b.inMode = CurveMode.Bezier;
+                        b.inTangentAbs = Vector2.Lerp(b, newKey, 0.3333333f);
+                    }
+                    newKey.outMode = CurveMode.Bezier;
+                    newKey.outTangentAbs = Vector2.Lerp(newKey, b, 0.3333333f);
+                }
+                keys.Insert(i, newKey);//插入帧到对应时间
+                return;
+            }
+        }
+        { // 插入到末尾
+            var a = keys[keys.Count - 1];
+            if (a.outMode == CurveMode.None)
+            {
+                a.outMode = CurveMode.Bezier;
+                a.outTangentAbs = Vector2.Lerp(a, newKey, 0.3333333f);
+            }
+            newKey.inMode = CurveMode.Bezier;
+            newKey.inTangentAbs = Vector2.Lerp(newKey, a, 0.3333333f);
+            keys.Add(newKey);
+        }
+    }
     public void InsertKey(ASKey newKey) // 根据帧序号插入。已有此帧则修改值
     {
         if (!hasKey)//初始化
@@ -431,25 +508,36 @@ public class ASCurve
                 throw null;
         }
     }
-    internal void MoveKey(int indO, int ind, float v)
+    //返回移动后的列表索引
+    internal int MoveKey(int frameIndexOrigin, int frameIndexNew)
     {
-        var i = IndexOf(indO);
+        var i = IndexOf(frameIndexOrigin);
         if (i > -1)
         {
-            var k = keys[IndexOf(indO)];
+            SetIndex(i, frameIndexNew);
+            return IndexOf(frameIndexOrigin);
+        }
+        return -1;
+    }
+    internal void MoveKey(int frameIndexOrigin, int frameIndex, float v)
+    {
+        var i = IndexOf(frameIndexOrigin);
+        if (i > -1)
+        {
+            var k = keys[IndexOf(frameIndexOrigin)];
             var inT = k.inTangent - k;
             var outT = k.outTangent - k;
-            RemoveKey(indO);
-            var n = new ASKey(ind, v);
+            RemoveKey(frameIndexOrigin);
+            var n = new ASKey(frameIndex, v);
             n.inTangent = n + inT;
             n.outTangent = n + outT;
             InsertKey(n);
         }
-        else InsertKey(ind, v);
+        else InsertKey(frameIndex, v);
     }
-    public void SetIndex(int i, int frameIndex)
+    public void SetIndex(int listIndex, int frameIndex)
     {
-        keys[i].frameIndex = frameIndex;
+        keys[listIndex].frameIndex = frameIndex;
         keys.Sort(SortList);
     }
     private int SortList(ASKey a, ASKey b)

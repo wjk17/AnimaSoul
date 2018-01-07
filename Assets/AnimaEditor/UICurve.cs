@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 public class UICurve : MonoBehaviour
 {
+    public static UICurve I
+    { get { if (instance == null) instance = FindObjectOfType<UICurve>(); return instance; } }
+    private static UICurve instance;
     private RectTransform area;
     private RectTransform rulerX;
     private RectTransform rulerY;
@@ -61,7 +64,7 @@ public class UICurve : MonoBehaviour
     public Vector2 inT;
     public Vector2 outT;
     public float timeCurveN;
-    float GenerateRealTime(float t)
+    public float GenerateRealTime(float t)
     {
         Vector2 a = Vector2.zero, b = Vector2.zero;
         int rInd = -1;
@@ -96,6 +99,7 @@ public class UICurve : MonoBehaviour
     }
     void DrawBezier()
     {
+        if (curve == null || keys.Count == 0) return;
         // 绘制插值曲线        
         ASCurve.tangentSlopeCalDeltaX = tangentSlopeCalDeltaX;
         float t0 = startPos.x, t1, y;
@@ -319,9 +323,38 @@ public class UICurve : MonoBehaviour
                 }
             }
         }
+        if (code == KeyCode.X)
+        {
+            var type = 0;
+            var index = -1;
+            for (int i = 0; i < keys.Count; i++)
+            {
+                if (ASUI.mouseDistLT(ConvertV(keys[i])) < clickDist) { index = i; type = 0; }
+                if (showControlPoints && keys[i].inMode == CurveMode.Bezier)//不是贝塞尔就不控制切点
+                {
+                    if (ASUI.mouseDistLT(ConvertV(keys[i].inTangentAbs)) < clickDist) { index = i; type = -1; }
+                }
+                if (showControlPoints && keys[i].outMode == CurveMode.Bezier)
+                {
+                    if (ASUI.mouseDistLT(ConvertV(keys[i].outTangentAbs)) < clickDist) { index = i; type = 1; }
+                }
+            }
+            if (index > -1)
+            {
+                var frameIndex = keys[index].frameIndex;
+                if (type == 0)
+                {
+                    foreach (var curve in UIClip.clip.curves)
+                    {
+                        UIClip.clip.RemoveKey(curve, frameIndex);
+                    }
+                }
+            }
+        }
     }
     private void MouseDown(MouseButton button)
     {
+        if (curve == null || keys.Count == 0) return;
         use = true;
         if (button == MouseButton.Left)
         {
@@ -339,6 +372,63 @@ public class UICurve : MonoBehaviour
                 }
             }
             MouseDrag(button);
+        }
+    }
+    int SetAllKeysPointFrameIndex(int frameIndexOrigin, int frameIndexNew)
+    {
+        int r = -1;
+        int i;
+        foreach (var curve in UIClip.clip.curves)
+        {
+            i = -1;
+            i = curve.timeCurve.MoveKey(frameIndexOrigin, frameIndexNew);
+            if (i > -1) r = i;
+            i = -1;
+            i = curve.eulerAngles[0].MoveKey(frameIndexOrigin, frameIndexNew);
+            if (i > -1) r = i;
+            i = -1;
+            i = curve.eulerAngles[1].MoveKey(frameIndexOrigin, frameIndexNew);
+            if (i > -1) r = i;
+            i = -1;
+            i = curve.eulerAngles[2].MoveKey(frameIndexOrigin, frameIndexNew);
+            if (i > -1) r = i;
+            i = -1;
+            i = curve.localPosition[0].MoveKey(frameIndexOrigin, frameIndexNew);
+            if (i > -1) r = i;
+            i = -1;
+            i = curve.localPosition[1].MoveKey(frameIndexOrigin, frameIndexNew);
+            if (i > -1) r = i;
+            i = -1;
+            i = curve.localPosition[2].MoveKey(frameIndexOrigin, frameIndexNew);
+            if (i > -1) r = i;
+        }
+        return r;
+    }
+    int SetAllKeysPoint(int i, int frameIndex, float v)
+    {
+        int frameIndexAfter = -1;
+        foreach (var curve in UIClip.clip.curves)
+        {
+            frameIndexAfter = curve.SetKeysPoint(i, frameIndex, v);
+        }
+        if (frameIndexAfter == -1)
+        {
+            frameIndexAfter = frameIndex;
+        }
+        return frameIndexAfter;
+    }
+    void SetAllKeysInTangent(int i, Vector2 vector2)
+    {
+        foreach (var curve in UIClip.clip.curves)
+        {
+            curve.SetKeysInTangent(i, vector2);
+        }
+    }
+    void SetAllKeysOutTangent(int i, Vector2 vector2)
+    {
+        foreach (var curve in UIClip.clip.curves)
+        {
+            curve.SetKeysOutTangent(i, vector2);
         }
     }
     private void MouseDrag(MouseButton button)
@@ -360,6 +450,8 @@ public class UICurve : MonoBehaviour
                     if (tt == 0)
                     {
                         //控制位置改变后的索引，比如第1帧移动到了第10帧，此时返回索引是10
+                        //ind = curve.SetKeysPoint(ind, keys[ind].frameIndex + Mathf.RoundToInt(deltaV.x), keys[ind].value + (controlY ? deltaV.y : 0f));
+                        SetAllKeysPointFrameIndex(keys[ind].frameIndex, keys[ind].frameIndex + Mathf.RoundToInt(deltaV.x));
                         ind = curve.SetKeysPoint(ind, keys[ind].frameIndex + Mathf.RoundToInt(deltaV.x), keys[ind].value + (controlY ? deltaV.y : 0f));
                     }
                     else if (tt == -1)
@@ -367,9 +459,12 @@ public class UICurve : MonoBehaviour
                         inT = keys[ind].inTangent + deltaV;
                         inT.x = Mathf.Clamp(inT.x, float.NegativeInfinity, 0);
                         outT = keys[ind].outTangent;
-                        curve.SetKeysInTangent(ind, inT);
-                        if (ctrl != flipTwoSideTangent) curve.SetKeysOutTangent(ind, -inT);
-                        else if (shift != (syncTwoSideTangentDir && inT.normalized.magnitude > 0.001f)) curve.SetKeysOutTangent(ind, -inT.normalized * outT.magnitude);//相反的方向移动，保持原来的长度
+                        //curve.SetKeysInTangent(ind, inT);
+                        //if (ctrl != flipTwoSideTangent) curve.SetKeysOutTangent(ind, -inT);
+                        //else if (shift != (syncTwoSideTangentDir && inT.normalized.magnitude > 0.001f)) curve.SetKeysOutTangent(ind, -inT.normalized * outT.magnitude);//相反的方向移动，保持原来的长度
+                        SetAllKeysInTangent(ind, inT);
+                        if (ctrl != flipTwoSideTangent) SetAllKeysOutTangent(ind, -inT);
+                        else if (shift != (syncTwoSideTangentDir && inT.normalized.magnitude > 0.001f)) SetAllKeysOutTangent(ind, -inT.normalized * outT.magnitude);//相反的方向移动，保持原来的长度
                     }
                     // 0.001f防止在当前切点位置为0时，normalized也是0，因此使反方向切点位置归0的问题。
                     else if (tt == 1)
@@ -377,9 +472,12 @@ public class UICurve : MonoBehaviour
                         inT = keys[ind].inTangent;
                         outT = keys[ind].outTangent + deltaV;
                         outT.x = Mathf.Clamp(outT.x, 0, float.PositiveInfinity);
-                        curve.SetKeysOutTangent(ind, outT);
-                        if (ctrl != flipTwoSideTangent) curve.SetKeysInTangent(ind, -outT);
-                        else if (shift != (syncTwoSideTangentDir && outT.normalized.magnitude > 0.001f)) curve.SetKeysInTangent(ind, -outT.normalized * inT.magnitude);
+                        //curve.SetKeysOutTangent(ind, outT);
+                        //if (ctrl != flipTwoSideTangent) curve.SetKeysInTangent(ind, -outT);
+                        //else if (shift != (syncTwoSideTangentDir && outT.normalized.magnitude > 0.001f)) curve.SetKeysInTangent(ind, -outT.normalized * inT.magnitude);
+                        SetAllKeysOutTangent(ind, outT);
+                        if (ctrl != flipTwoSideTangent) SetAllKeysInTangent(ind, -outT);
+                        else if (shift != (syncTwoSideTangentDir && outT.normalized.magnitude > 0.001f)) SetAllKeysInTangent(ind, -outT.normalized * inT.magnitude);
                     }
                 }
                 else // timeline
@@ -417,8 +515,10 @@ public class UICurve : MonoBehaviour
     }
     private void OnFrameIndexChanged()
     {
-        var trueTime = GenerateRealTime(UITimeLine.FrameIndex);
-        UIDOFEditor.I.ast.euler = UITimeLine.ObjCurve.EulerAngles(trueTime);
+        //if (curve == null || keys.Count == 0) return;
+        UIClip.I.UpdateAllCurve();
+        //var trueTime = GenerateRealTime(UITimeLine.FrameIndex);
+        //UIDOFEditor.I.ast.euler = UITimeLine.ObjCurve.EulerAngles(trueTime);
     }
     Vector2 ConvertV(Vector2 v)
     {

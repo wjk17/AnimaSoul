@@ -107,17 +107,16 @@ public class GizmosAxis : MonoBehaviour
             AxisTranslate(screenProj * sensitivity);
         }
 
-
         oldPos = mousePos;
     }
     public float length = 100;
     public Vector2 p1, p2;
     public Vector2 p3, p4;
-    private void OnRenderObject()
-    {
-        GLUI.DrawLineWidthIns(p3, p4, 5, Color.red);
-        GLUI.DrawLineWidthIns(p1, p2, 5);
-    }
+    //private void OnRenderObject()
+    //{
+    //    GLUI.DrawLineWidthIns(p3, p4, 5, Color.red);
+    //    GLUI.DrawLineWidthIns(p1, p2, 5);
+    //}
     private void AxisTranslate(float len)
     {
         Axis axis = (Axis)axisIndex;

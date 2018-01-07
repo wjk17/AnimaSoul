@@ -182,13 +182,14 @@ public static class ASUI
             rt.sizeDelta = rt.sizeDelta.SetX(rt.rect.width * xScale);
         }
     }
-    public static void Toggle(string labelStr, UnityAction<bool> onToggle = null)
+    public static void Toggle(string labelStr, bool isOn, UnityAction<bool> onToggle = null)
     {
-        Toggle(labelStr, I.togglePrefab.GetComponent<RectTransform>().rect.width, onToggle);
+        Toggle(labelStr, I.togglePrefab.GetComponent<RectTransform>().rect.width, isOn, onToggle);
     }
-    public static void Toggle(string labelStr, float width, UnityAction<bool> onToggle = null)
+    public static void Toggle(string labelStr, float width, bool isOn, UnityAction<bool> onToggle = null)
     {
         var toggle = Obj.Instantiate(I.togglePrefab, parent).GetComponent<Toggle>();
+        toggle.isOn = isOn;
         var rt = toggle.GetComponent<RectTransform>();
         rt.sizeDelta = rt.sizeDelta.SetX(width);
         toggle.onValueChanged.AddListener(onToggle);
