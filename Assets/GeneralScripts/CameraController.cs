@@ -50,6 +50,12 @@ public class CameraController : MonoBehaviour
         {
             cam.orthographicSize = orthoCamSize;
         }
+        var gizmos = FindObjectOfType<GizmosAxis>();
+        if (gizmos != null)
+        {
+            var factor = orthoCamSize / 2.5f;
+            gizmos.transform.localScale = Vector3.one * factor;
+        }
     }
     void GetInput()
     {

@@ -98,6 +98,7 @@ public class UIDOFEditor : MonoBehaviour
     public Color floatLabelColor = Color.black;
     public ASBone bone = ASBone.chest; // 给出个初始值
     public ASIKTarget ikTarget = ASIKTarget.LeftHand;
+    public ASIKTargetSingle ikTargetSingle = ASIKTargetSingle.LeftElbow;
     public DOFProp dofP;
     public ASDOF dof;
     public ASDOFMgr dofSet;
@@ -106,9 +107,22 @@ public class UIDOFEditor : MonoBehaviour
     public FloatValueR twist;
     public FloatValueR swingX;
     public FloatValueR swingZ;
-    public bool IK = true;
+    public BoolValueToggle IK;
+    public BoolValueToggle IKSingle;
+    //[NonSerialized]
+    public StringValueIF strif;
+    [NonSerialized]
+    private StringValueLabel clipNameLabel;
     void Start()
     {
+        IK = new BoolValueToggle(false);
+        IKSingle = new BoolValueToggle(false);
+
+        strif = new StringValueIF("New");
+        clipNameLabel = new StringValueLabel(UIClip.clip.clipName);
+        clipNameLabel.Update();
+        //Debug.Log(clipNameLabel.label.text);
+
         ASUI.labelColor = labelColor;
         ASUI.floatFieldColor = floatFieldColor;
         ASUI.floatLabelColor = floatLabelColor;
@@ -121,6 +135,10 @@ public class UIDOFEditor : MonoBehaviour
         ASUI.parent = transform.Search("Area");
 
         float headWidth = 40f;
+
+        ASUI.BeginHorizon();
+        ASUI.LabelField(clipNameLabel);
+        ASUI.EndHorizon();
 
         ASUI.BeginHorizon();
         ASUI.LabelField("自转");
@@ -169,6 +187,18 @@ public class UIDOFEditor : MonoBehaviour
         ASUI.EndHorizon();
 
         ASUI.BeginHorizon();
+        ASUI.StringField("文件名", strif, OnFileNameChanged);
+        ASUI.EndHorizon();
+
+        ASUI.BeginHorizon();
+        ASUI.Button("打开文件", LoadClip);
+        ASUI.EndHorizon();
+
+        ASUI.BeginHorizon();
+        ASUI.Button("新建Clip", NewClip);
+        ASUI.EndHorizon();
+
+        ASUI.BeginHorizon();
         ASUI.Button("插入关键帧", InsertKeyToAllCurves);
         ASUI.EndHorizon();
 
@@ -189,10 +219,39 @@ public class UIDOFEditor : MonoBehaviour
         ASUI.Button("IK目标设为当前位置", OnIKSnap);
         ASUI.EndHorizon();
 
+
+        ASUI.BeginHorizon();
+        ASUI.LabelField("IK单关节目标", headWidth);
+        ikTargetSingle = ASIKTargetSingle.LeftHand;
+        ASUI.DropdownEnum(ikTargetSingle, (int)ASIKTargetSingle.Count, ikTargetSingleNames, IKSingleTargetChange);
+        IKTargetChange((int)ikTargetSingle);
+        ASUI.EndHorizon();
+
+        ASUI.BeginHorizon();
+        ASUI.Toggle("使用单关节IK", 80f, IKSingle, OnIKSingleToggle);
+        ASUI.Button("单关节IK目标设为当前位置", OnIKSingleSnap);
+        ASUI.EndHorizon();
+
+
+
         ASUI.I.inputCallBacks.Add(new ASGUI.InputCallBack(GetInput, 1));
 
         UpdateDOF();
     }
+
+    private void OnFileNameChanged(string arg0, StringFieldWrapper arg1)
+    {
+        //strif.value = arg1.field.text;
+    }
+
+    private void NewClip()
+    {
+        UIClip.I.New(strif.field.text);
+        clipNameLabel.value = UIClip.clip.clipName;
+        clipNameLabel.Update();
+        Debug.Log(clipNameLabel.value);
+    }
+
     string[] ikTargetNames = new string[] { "左手", "右手", "左脚", "右脚" };
     public enum ASIKTarget
     {
@@ -200,6 +259,19 @@ public class UIDOFEditor : MonoBehaviour
         RightHand,
         LeftLeg,
         RightLeg,
+        Count
+    }
+    string[] ikTargetSingleNames = new string[] { "左手", "左手肘", "右手", "右手肘", "左脚", "左膝", "右脚", "右膝" };
+    public enum ASIKTargetSingle
+    {
+        LeftHand,
+        LeftElbow,
+        RightHand,
+        RightElbow,
+        LeftLeg,
+        LeftKnee,
+        RightLeg,
+        RightKnee,
         Count
     }
     void GetInput()
@@ -210,7 +282,27 @@ public class UIDOFEditor : MonoBehaviour
     {
 
     }
+    void OnIKToggle(bool value)
+    {
+        IK.value = value;
+        if (value) { IKSingle.value = false; IKSingle.toggle.isOn = false; }
+        //IK = value;
+        //if (value) IKSingle = false;
+    }
+    void OnIKSingleToggle(bool value)
+    {
+        IKSingle.value = value;
+        if (value) { IK.value = false; IK.toggle.isOn = false; }
+        //IKSingle = value;
+        //if (value) IK = false;
+    }
     private void OnIKSnap()
+    {
+        var gizmos = FindObjectOfType<GizmosAxis>();
+        gizmos.transform.position = end.position;
+        target.position = end.position;
+    }
+    private void OnIKSingleSnap()
     {
         var gizmos = FindObjectOfType<GizmosAxis>();
         gizmos.transform.position = end.position;
@@ -223,9 +315,17 @@ public class UIDOFEditor : MonoBehaviour
             UIClip.clip.AddEulerPos(curve, UITimeLine.FrameIndex, curve.ast.euler, curve.ast.transform.localPosition);
         }
     }
+    void LoadClip()
+    {
+        UIClip.I.Load(strif.field.text);
+        clipNameLabel.value = UIClip.clip.clipName;
+        clipNameLabel.Update();
+        Debug.Log("load " + clipNameLabel.value);
+    }
     void SaveClip()
     {
         UIClip.I.Save();
+        Debug.Log("save " + clipNameLabel.value);
     }
     void SaveAvatarSetting()
     {
@@ -233,10 +333,6 @@ public class UIDOFEditor : MonoBehaviour
         dofSet.Save();
         avatar.LoadFromDOFMgr();
         avatar.SaveASTs();
-    }
-    void OnIKToggle(bool value)
-    {
-        IK = value;
     }
     void OnRangeChanged(float v, FloatFieldWrapper o)
     {
@@ -250,13 +346,14 @@ public class UIDOFEditor : MonoBehaviour
     void OnDofValueChanged(float v, SliderWrapper s)
     {
         if (ast == null) return;
-        if (IK) return;
+        //if (IK) return;
         ast.euler.y = twist;
         ast.euler.x = swingX;
         ast.euler.z = swingZ;
     }
     void IKTargetChange(int index)
     {
+        joints = new List<ASBone>();
         var ikTarget = (ASIKTarget)index;
         switch (ikTarget)
         {
@@ -288,6 +385,56 @@ public class UIDOFEditor : MonoBehaviour
         }
         OnIKSnap();
     }
+    void IKSingleTargetChange(int index)
+    {
+        joints = new List<ASBone>();
+        var ikSingleTarget = (ASIKTargetSingle)index;
+        switch (ikSingleTarget)
+        {
+            case ASIKTargetSingle.RightElbow:
+                joints.Add(ASBone.forearm_r);
+                joints.Add(ASBone.upperarm_r);
+                end = avatar[ASBone.forearm_r].transform;
+                break;
+            case ASIKTargetSingle.RightHand:
+                joints.Add(ASBone.hand_r);
+                joints.Add(ASBone.forearm_r);
+                end = avatar[ASBone.hand_r].transform;
+                break;
+            case ASIKTargetSingle.LeftElbow:
+                joints.Add(ASBone.forearm_l);
+                joints.Add(ASBone.upperarm_l);
+                end = avatar[ASBone.forearm_l].transform;
+                break;
+            case ASIKTargetSingle.LeftHand:
+                joints.Add(ASBone.hand_l);
+                joints.Add(ASBone.forearm_l);
+                end = avatar[ASBone.hand_l].transform;
+                break;
+            case ASIKTargetSingle.RightKnee:
+                joints.Add(ASBone.shin_r);
+                joints.Add(ASBone.thigh_r);
+                end = avatar[ASBone.shin_r].transform;
+                break;
+            case ASIKTargetSingle.RightLeg:
+                joints.Add(ASBone.foot_r);
+                joints.Add(ASBone.shin_r);
+                end = avatar[ASBone.foot_r].transform;
+                break;
+            case ASIKTargetSingle.LeftKnee:
+                joints.Add(ASBone.shin_l);
+                joints.Add(ASBone.thigh_l);
+                end = avatar[ASBone.shin_l].transform;
+                break;
+            case ASIKTargetSingle.LeftLeg:
+                joints.Add(ASBone.foot_l);
+                joints.Add(ASBone.shin_l);
+                end = avatar[ASBone.foot_l].transform;
+                break;
+            default: throw null;
+        }
+        OnIKSingleSnap();
+    }
     void DropdownChange(int index)
     {
         if (dof != null) dofP.SaveASDOF(dof);//先保存
@@ -312,13 +459,14 @@ public class UIDOFEditor : MonoBehaviour
     public Transform end;
     public int iter;
     public ASTransDOF ast;
+    public ASTransDOF astIK;
     public float alpha; // 逼近的步长
     public float theta0;
     public float theta1;
     public List<ASBone> joints;
     void Update()
     {
-        if (IK)
+        if (IK || IKSingle)
         {
             IKSolve(joints.ToArray());
             //IKSolve(forearm, uparm, hand);
@@ -327,8 +475,8 @@ public class UIDOFEditor : MonoBehaviour
     }
     float Dist()
     {
-        var endDir = end.position - ast.transform.position; // 当前终端方向与目标方向的距离
-        var targetDir = target.position - ast.transform.position;
+        var endDir = end.position - astIK.transform.position; // 当前终端方向与目标方向的距离
+        var targetDir = target.position - astIK.transform.position;
         var dist = Vector3.Distance(endDir, targetDir);
         return dist;
     }
@@ -349,7 +497,7 @@ public class UIDOFEditor : MonoBehaviour
         foreach (var i in dict)
         {
             SetIterValue(i.Value);
-            ast.Rotate();
+            astIK.Rotate();
             break;
         }
         theta1 = GetIterValue();
@@ -365,9 +513,9 @@ public class UIDOFEditor : MonoBehaviour
     {
         switch (iter)
         {
-            case 0: return ast.euler.z;
-            case 1: return ast.euler.x;
-            case 2: return ast.euler.y;
+            case 0: return astIK.euler.z;
+            case 1: return astIK.euler.x;
+            case 2: return astIK.euler.y;
             default: throw null;
         }
     }
@@ -375,12 +523,12 @@ public class UIDOFEditor : MonoBehaviour
     {
         switch (iter)
         {
-            case 0: ast.euler.z = value; break;
-            case 1: ast.euler.x = value; break;
-            case 2: ast.euler.y = value; break;
+            case 0: astIK.euler.z = value; break;
+            case 1: astIK.euler.x = value; break;
+            case 2: astIK.euler.y = value; break;
             default: throw null;
         }
-        ast.Rotate();
+        astIK.Rotate();
     }
     private void IKSolve(params ASBone[] bones)
     {
@@ -401,7 +549,7 @@ public class UIDOFEditor : MonoBehaviour
         {
             foreach (var joi in joints)
             {
-                ast = joi;
+                astIK = joi;
                 iter = 0;
                 int c2 = axisIterCount;
                 while (true)

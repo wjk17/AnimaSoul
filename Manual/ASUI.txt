@@ -1,0 +1,6 @@
+OnChanged里
+
+修改Value类后调用Update方法
+
+
+value类加[NonSerialized]不然蛋疼
