@@ -1407,7 +1407,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>45</value>
+              <value>0</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -1420,11 +1420,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>45</y>
+                <y>0</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>45</y>
+                <y>0</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -1434,7 +1434,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>-85</value>
+              <value>0</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -1447,11 +1447,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>-85</y>
+                <y>0</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>-85</y>
+                <y>0</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -1576,7 +1576,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>-10</value>
+              <value>0</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -1589,11 +1589,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>-10</y>
+                <y>0</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>-10</y>
+                <y>0</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -5888,7 +5888,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>-5</value>
+              <value>0</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -5901,11 +5901,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>-5</y>
+                <y>0</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>-5</y>
+                <y>0</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -5915,7 +5915,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>75</value>
+              <value>0</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -5928,11 +5928,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>75</y>
+                <y>0</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>75</y>
+                <y>0</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -5942,7 +5942,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>-95</value>
+              <value>0</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -5955,11 +5955,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>-95</y>
+                <y>0</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>-95</y>
+                <y>0</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -6084,7 +6084,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>-5</value>
+              <value>0</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -6097,11 +6097,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>-5</y>
+                <y>0</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>-5</y>
+                <y>0</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -6111,7 +6111,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>-15</value>
+              <value>0</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -6124,11 +6124,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>-15</y>
+                <y>0</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>-15</y>
+                <y>0</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -6672,7 +6672,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>0</value>
+              <value>-19.2</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -6685,11 +6685,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-19.2</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-19.2</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -6868,7 +6868,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>0</value>
+              <value>-51.2</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -6881,11 +6881,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-51.2</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-51.2</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -7064,7 +7064,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>0</value>
+              <value>-53.6000023</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -7077,11 +7077,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -7260,7 +7260,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>0</value>
+              <value>-53.6000023</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -7273,11 +7273,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -7456,7 +7456,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>0</value>
+              <value>-68.8</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -7469,11 +7469,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-68.8</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-68.8</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -7652,7 +7652,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>0</value>
+              <value>-53.6000023</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -7665,11 +7665,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -8044,7 +8044,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>0</value>
+              <value>-53.6000023</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -8057,11 +8057,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -8240,7 +8240,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>0</value>
+              <value>-68.8</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -8253,11 +8253,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-68.8</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-68.8</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -8436,7 +8436,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>0</value>
+              <value>-53.6000023</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -8449,11 +8449,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -8828,7 +8828,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>0</value>
+              <value>-53.6000023</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -8841,11 +8841,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -9024,7 +9024,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>0</value>
+              <value>-68.8</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -9037,11 +9037,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-68.8</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-68.8</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -9220,7 +9220,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>0</value>
+              <value>-53.6000023</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -9233,11 +9233,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -9612,7 +9612,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>0</value>
+              <value>-53.6000023</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -9625,11 +9625,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -9808,7 +9808,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>0</value>
+              <value>-68.8</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -9821,11 +9821,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-68.8</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-68.8</y>
               </outTangentAbs>
             </ASKey>
           </keys>
@@ -10004,7 +10004,7 @@
           <keys>
             <ASKey>
               <frameIndex>0</frameIndex>
-              <value>0</value>
+              <value>-53.6000023</value>
               <inTangent>
                 <x>0</x>
                 <y>0</y>
@@ -10017,11 +10017,11 @@
               <outMode>None</outMode>
               <inTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </inTangentAbs>
               <outTangentAbs>
                 <x>0</x>
-                <y>0</y>
+                <y>-53.6000023</y>
               </outTangentAbs>
             </ASKey>
           </keys>

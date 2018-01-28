@@ -226,20 +226,20 @@
       <count>1</count>
       <twistMin>0</twistMin>
       <twistMax>0</twistMax>
-      <swingXMin>-100</swingXMin>
-      <swingXMax>0</swingXMax>
-      <swingZMin>0</swingZMin>
-      <swingZMax>0</swingZMax>
+      <swingXMin>-80</swingXMin>
+      <swingXMax>30</swingXMax>
+      <swingZMin>-10</swingZMin>
+      <swingZMax>10</swingZMax>
     </ASDOF>
     <ASDOF>
       <bone>index1_r</bone>
       <count>1</count>
       <twistMin>0</twistMin>
       <twistMax>0</twistMax>
-      <swingXMin>-100</swingXMin>
-      <swingXMax>0</swingXMax>
-      <swingZMin>0</swingZMin>
-      <swingZMax>0</swingZMax>
+      <swingXMin>-80</swingXMin>
+      <swingXMax>30</swingXMax>
+      <swingZMin>-10</swingZMin>
+      <swingZMax>10</swingZMax>
     </ASDOF>
     <ASDOF>
       <bone>middle1_l</bone>
@@ -384,8 +384,8 @@
     <ASDOF>
       <bone>hand_l</bone>
       <count>2</count>
-      <twistMin>0</twistMin>
-      <twistMax>0</twistMax>
+      <twistMin>-10</twistMin>
+      <twistMax>145</twistMax>
       <swingXMin>-90</swingXMin>
       <swingXMax>90</swingXMax>
       <swingZMin>-25</swingZMin>
@@ -394,8 +394,8 @@
     <ASDOF>
       <bone>hand_r</bone>
       <count>2</count>
-      <twistMin>0</twistMin>
-      <twistMax>0</twistMax>
+      <twistMin>-10</twistMin>
+      <twistMax>145</twistMax>
       <swingXMin>-90</swingXMin>
       <swingXMax>90</swingXMax>
       <swingZMin>-25</swingZMin>
@@ -404,21 +404,21 @@
     <ASDOF>
       <bone>forearm_l</bone>
       <count>2</count>
-      <twistMin>-145</twistMin>
-      <twistMax>10</twistMax>
-      <swingXMin>-150</swingXMin>
+      <twistMin>0</twistMin>
+      <twistMax>0</twistMax>
+      <swingXMin>0</swingXMin>
       <swingXMax>0</swingXMax>
-      <swingZMin>0</swingZMin>
+      <swingZMin>-150</swingZMin>
       <swingZMax>0</swingZMax>
     </ASDOF>
     <ASDOF>
       <bone>forearm_r</bone>
       <count>2</count>
-      <twistMin>-145</twistMin>
-      <twistMax>10</twistMax>
-      <swingXMin>-150</swingXMin>
+      <twistMin>0</twistMin>
+      <twistMax>0</twistMax>
+      <swingXMin>0</swingXMin>
       <swingXMax>0</swingXMax>
-      <swingZMin>0</swingZMin>
+      <swingZMin>-150</swingZMin>
       <swingZMax>0</swingZMax>
     </ASDOF>
     <ASDOF>
@@ -486,18 +486,18 @@
       <count>3</count>
       <twistMin>-40</twistMin>
       <twistMax>40</twistMax>
-      <swingXMin>-15</swingXMin>
-      <swingXMax>40</swingXMax>
+      <swingXMin>-40</swingXMin>
+      <swingXMax>15</swingXMax>
       <swingZMin>-25</swingZMin>
-      <swingZMax>0</swingZMax>
+      <swingZMax>25</swingZMax>
     </ASDOF>
     <ASDOF>
       <bone>spine</bone>
       <count>3</count>
       <twistMin>-40</twistMin>
       <twistMax>40</twistMax>
-      <swingXMin>-15</swingXMin>
-      <swingXMax>40</swingXMax>
+      <swingXMin>-40</swingXMin>
+      <swingXMax>15</swingXMax>
       <swingZMin>-25</swingZMin>
       <swingZMax>25</swingZMax>
     </ASDOF>
@@ -614,12 +614,12 @@
     <ASDOF>
       <bone>thigh_r</bone>
       <count>1</count>
-      <twistMin>0</twistMin>
-      <twistMax>0</twistMax>
+      <twistMin>-50</twistMin>
+      <twistMax>50</twistMax>
       <swingXMin>-125</swingXMin>
-      <swingXMax>25</swingXMax>
-      <swingZMin>0</swingZMin>
-      <swingZMax>0</swingZMax>
+      <swingXMax>60</swingXMax>
+      <swingZMin>-20</swingZMin>
+      <swingZMax>85</swingZMax>
     </ASDOF>
     <ASDOF>
       <bone>hips</bone>

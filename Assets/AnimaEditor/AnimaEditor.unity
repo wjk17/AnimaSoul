@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 8
+  serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -39,6 +39,7 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -54,11 +55,10 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 9
+    serializedVersion: 10
     m_Resolution: 2
     m_BakeResolution: 40
-    m_TextureWidth: 1024
-    m_TextureHeight: 1024
+    m_AtlasSize: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -158,6 +158,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 6dbc194668ec9584696b82f4ea164fae, type: 2}
   m_StaticBatchInfo:
@@ -331,6 +332,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -406,6 +408,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -510,6 +513,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: e14bee8336b157248b9ce9aeaab5af0b, type: 2}
   - {fileID: 2100000, guid: 1136d902f34d8024cad78a23a2192a96, type: 2}
@@ -761,6 +765,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -865,8 +870,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 482839493}
   m_HandleRect: {fileID: 482839492}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -952,6 +957,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: a0d8e02f2e63a0f45a0966dc3ee2d771, type: 2}
   m_StaticBatchInfo:
@@ -1244,6 +1250,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -1421,6 +1428,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -1525,6 +1533,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: da77629ac9bc30943a0ba2165cb59868, type: 2}
   - {fileID: 2100000, guid: 1f650d80bc3acd941b90767bfdc44f3a, type: 2}
@@ -1767,6 +1776,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -1904,6 +1914,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 3220c27535b27584ebc60e451ef55733, type: 2}
   m_StaticBatchInfo:
@@ -1978,6 +1989,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 6dbc194668ec9584696b82f4ea164fae, type: 2}
   m_StaticBatchInfo:
@@ -2570,12 +2582,12 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 1
@@ -2711,7 +2723,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 447.57, y: 334.94995}
+  m_AnchoredPosition: {x: 554, y: -307}
   m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &229839754
@@ -2735,7 +2747,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -2829,6 +2841,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 6dbc194668ec9584696b82f4ea164fae, type: 2}
   m_StaticBatchInfo:
@@ -3299,18 +3312,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_FontSize: 22
     m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: asdddd
 --- !u!222 &363876855
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3472,7 +3485,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -3597,6 +3610,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: a71c51c5001e82c48918ce290264fe75, type: 2}
   m_StaticBatchInfo:
@@ -3692,8 +3706,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 635.5499, y: 334.94995}
-  m_SizeDelta: {x: 206.8, y: 40}
+  m_AnchoredPosition: {x: 554, y: -421}
+  m_SizeDelta: {x: 206.8, y: 32}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &437531846
 MonoBehaviour:
@@ -3868,6 +3882,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -3974,6 +3989,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -4066,7 +4082,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4115,7 +4131,7 @@ GameObject:
   m_Layer: 5
   m_Name: UICurve
   m_TagString: Untagged
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -4135,7 +4151,7 @@ RectTransform:
   - {fileID: 677850439}
   - {fileID: 2006952673}
   m_Father: {fileID: 976285354}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -4168,42 +4184,60 @@ MonoBehaviour:
   acurve:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 0.9925995
       inSlope: -1.388137
       outSlope: -1.388137
       tangentMode: 0
-    - serializedVersion: 2
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 0.26096773
       value: 0.9903051
       inSlope: 0.8380413
       outSlope: 0.8380413
       tangentMode: 1
-    - serializedVersion: 2
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 0.4346137
       value: 1.0694942
       inSlope: 0.056954168
       outSlope: 0.13430329
       tangentMode: 1
-    - serializedVersion: 2
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 0.56922615
       value: 0.9970534
       inSlope: -1.661992
       outSlope: -1.8468499
       tangentMode: 1
-    - serializedVersion: 2
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 0.8542732
       value: 0.87752795
       inSlope: 2.1618605
       outSlope: 2.1618605
       tangentMode: 0
-    - serializedVersion: 2
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 0.9972534
       value: 0.99507904
       inSlope: 3.368744
       outSlope: 3.368744
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
@@ -4414,7 +4448,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -4540,6 +4574,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -4962,6 +4997,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -5277,6 +5313,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 8ce7a0cd2489f834a8f65a05bcba2708, type: 2}
   m_StaticBatchInfo:
@@ -5475,6 +5512,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 29af619a9358e634ea756e1d77042c54, type: 2}
   m_StaticBatchInfo:
@@ -5659,7 +5697,7 @@ RectTransform:
   m_Children:
   - {fileID: 835054773}
   m_Father: {fileID: 976285354}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -5715,7 +5753,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 976285354}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5773,7 +5811,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 534.99994, y: 374.95004}
-  m_SizeDelta: {x: 160, y: 40}
+  m_SizeDelta: {x: 160, y: 32}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &776434903
 MonoBehaviour:
@@ -5903,6 +5941,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -5978,6 +6017,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: ec9971e587a179441b6860ad33f6985f, type: 2}
   m_StaticBatchInfo:
@@ -6143,6 +6183,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 6dbc194668ec9584696b82f4ea164fae, type: 2}
   m_StaticBatchInfo:
@@ -6368,7 +6409,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000137, y: 1.0000137, z: 1.0000137}
   m_Children: []
   m_Father: {fileID: 976285354}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -6587,17 +6628,17 @@ MonoBehaviour:
         count: 3
         twistMin: -40
         twistMax: 40
-        swingXMin: -15
-        swingXMax: 40
+        swingXMin: -40
+        swingXMax: 15
         swingZMin: -25
         swingZMax: 25
       coord:
         up: {x: -0.000000047741842, y: 0.97974616, z: -0.20024383}
         forward: {x: -0.000000004828891, y: 0.20024389, z: 0.97974634}
-        right: {x: 1.0000001, y: 0.000000047741864, z: -0.000000004828877}
+        right: {x: -1.0000001, y: -0.000000047741864, z: 0.000000004828877}
         origin: {x: -0.100632735, y: -2.1944679e-14, z: 0.000000023992712, w: 0.99492365}
       euler: {x: 0, y: 0, z: 0}
-      right: {x: 1, y: 0, z: 0}
+      right: {x: -1, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
       forward: {x: 0, y: 0, z: 1}
     - transform: {fileID: 1666642752}
@@ -6606,17 +6647,17 @@ MonoBehaviour:
         count: 3
         twistMin: -40
         twistMax: 40
-        swingXMin: -15
-        swingXMax: 40
+        swingXMin: -40
+        swingXMax: 15
         swingZMin: -25
-        swingZMax: 0
+        swingZMax: 25
       coord:
         up: {x: -0.000000046379686, y: 0.9808965, z: -0.1945306}
         forward: {x: -0.000000004554612, y: 0.19453068, z: 0.9808968}
-        right: {x: 1.0000002, y: 0.00000004637972, z: -0.0000000045546713}
+        right: {x: -1.0000002, y: -0.00000004637972, z: 0.0000000045546713}
         origin: {x: -0.09773314, y: -8.5577145e-15, z: 0.000000023301395, w: 0.9952127}
       euler: {x: 0, y: 0, z: 0}
-      right: {x: 1, y: 0, z: 0}
+      right: {x: -1, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
       forward: {x: 0, y: 0, z: 1}
     - transform: {fileID: 1656034849}
@@ -6632,10 +6673,10 @@ MonoBehaviour:
       coord:
         up: {x: 0.000000087535014, y: 0.93016255, z: 0.3671484}
         forward: {x: -0.000000016650556, y: -0.36714837, z: 0.9301626}
-        right: {x: 1.0000002, y: -0.000000087534964, z: -0.000000016650642}
+        right: {x: -1.0000002, y: 0.000000087534964, z: 0.000000016650642}
         origin: {x: 0.18686573, y: 4.687068e-15, z: -0.00000004455226, w: 0.98238546}
       euler: {x: 0, y: 0, z: 0}
-      right: {x: 1, y: 0, z: 0}
+      right: {x: -1, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
       forward: {x: 0, y: 0, z: 1}
     - transform: {fileID: 1973672921}
@@ -6651,10 +6692,10 @@ MonoBehaviour:
       coord:
         up: {x: -0.000000070711366, y: 0.95500636, z: -0.29658508}
         forward: {x: -0.000000010727287, y: 0.29658523, z: 0.95500654}
-        right: {x: 1.0000001, y: 0.00000007071137, z: -0.0000000107273435}
+        right: {x: -1.0000001, y: -0.00000007071137, z: 0.0000000107273435}
         origin: {x: -0.14998919, y: -4.6666946e-15, z: 0.000000035760202, w: 0.98868763}
       euler: {x: 0, y: 0, z: 0}
-      right: {x: 1, y: 0, z: 0}
+      right: {x: -1, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
       forward: {x: 0, y: 0, z: 1}
     - transform: {fileID: 1706859459}
@@ -6669,13 +6710,13 @@ MonoBehaviour:
         swingZMax: 20
       coord:
         up: {x: -0.88516504, y: 0.038807448, z: -0.4636558}
-        forward: {x: -0.0007617569, y: 0.9963933, z: 0.08485079}
+        forward: {x: 0.0007617569, y: -0.9963933, z: -0.08485079}
         right: {x: 0.4652762, y: 0.07546026, z: -0.881943}
         origin: {x: -0.5791412, y: 0.3495282, z: 0.38104045, w: 0.63026476}
       euler: {x: 0, y: 0, z: 0}
       right: {x: 1, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0, y: 0, z: 1}
+      forward: {x: 0, y: 0, z: -1}
     - transform: {fileID: 445751839}
       dof:
         bone: 42
@@ -6699,11 +6740,11 @@ MonoBehaviour:
       dof:
         bone: 40
         count: 2
-        twistMin: -145
-        twistMax: 10
-        swingXMin: -150
+        twistMin: 0
+        twistMax: 0
+        swingXMin: 0
         swingXMax: 0
-        swingZMin: 0
+        swingZMin: -150
         swingZMax: 0
       coord:
         up: {x: -0.036935985, y: 0.9989227, z: 0.0281035}
@@ -6718,7 +6759,7 @@ MonoBehaviour:
       dof:
         bone: 38
         count: 2
-        twistMin: 0
+        twistMin: -145
         twistMax: 0
         swingXMin: -90
         swingXMax: 90
@@ -7136,11 +7177,11 @@ MonoBehaviour:
       dof:
         bone: 41
         count: 2
-        twistMin: -145
-        twistMax: 10
-        swingXMin: -150
+        twistMin: 0
+        twistMax: 0
+        swingXMin: 0
         swingXMax: 0
-        swingZMin: 0
+        swingZMin: -150
         swingZMax: 0
       coord:
         up: {x: -0.036936134, y: -0.9989226, z: -0.028103322}
@@ -7155,8 +7196,8 @@ MonoBehaviour:
       dof:
         bone: 39
         count: 2
-        twistMin: 0
-        twistMax: 0
+        twistMin: -145
+        twistMax: 10
         swingXMin: -90
         swingXMax: 90
         swingZMin: -25
@@ -7751,21 +7792,22 @@ MonoBehaviour:
         swingZMin: 0
         swingZMax: 0
       coord:
-        up: {x: -0.029126808, y: 0.7637939, z: 0.64480275}
-        forward: {x: 0.9989813, y: 0.00000024586916, z: 0.04512531}
-        right: {x: -0.034466296, y: -0.6454603, z: 0.763016}
-        origin: {x: -0.63449514, y: 0.64793307, z: -0.31211528, w: -0.28316548}
+        up: {x: -0.029126704, y: 0.7637943, z: 0.6448028}
+        forward: {x: 0.99898154, y: 0.000000059604645, z: 0.04512499}
+        right: {x: -0.0344664, y: -0.64546055, z: 0.7630162}
+        origin: {x: -0.6344952, y: 0.6479331, z: -0.3121153, w: -0.2831655}
       euler: {x: 0, y: 0, z: 0}
       right: {x: 1, y: 0, z: 0}
       up: {x: 0, y: 0, z: -1}
       forward: {x: 0, y: -1, z: 0}
     name: Default Avatar Setting
-  path: G:/yx/Unity/AnimaSoul/Assets/../Settings/AvatarSetting.xml
+  path: G:/yx/Unity/AnimaSoul/Assets/../Settings/FeiqiziAvatar.xml
   folder: Settings/
-  fileName: AvatarSetting.xml
-  selectBone: 0
+  fileName: FeiqiziAvatar.xml
+  selectBone: 63
   drawLineLength: 0.5
-  depthTest: 0
+  depthTest: 1
+  drawLine: 1
 --- !u!114 &922352773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8632,6 +8674,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -9044,7 +9087,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1790258388}
   - {fileID: 1017906914}
   - {fileID: 764335216}
   - {fileID: 1802281330}
@@ -9052,6 +9094,7 @@ RectTransform:
   - {fileID: 483539893}
   - {fileID: 1475540247}
   - {fileID: 765402817}
+  - {fileID: 1790258388}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9421,6 +9464,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017906914}
   - component: {fileID: 1017906915}
+  - component: {fileID: 1017906916}
   m_Layer: 5
   m_Name: UIDOFEditor
   m_TagString: Untagged
@@ -9441,7 +9485,7 @@ RectTransform:
   - {fileID: 599652992}
   - {fileID: 751326557}
   m_Father: {fileID: 976285354}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9515,6 +9559,15 @@ MonoBehaviour:
   strif:
     value: 
     field: {fileID: 0}
+  twistFloatProp:
+    value: 0
+    field: {fileID: 0}
+  swingXFloatProp:
+    value: 0
+    field: {fileID: 0}
+  swingZFloatProp:
+    value: 0
+    field: {fileID: 0}
   target: {fileID: 1782756310}
   end: {fileID: 1188804957}
   iter: 1
@@ -9562,9 +9615,22 @@ MonoBehaviour:
   theta0: -10
   theta1: -10
   joints: 
-  approxRange: 0.00001
   jointIterCount: 10
   axisIterCount: 20
+--- !u!114 &1017906916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1017906913}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf50799a84294c43b1d59c52f0a6a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  avatar: {fileID: 922352772}
+  handCloseValue: 0
+  rightHand: 1
 --- !u!1 &1025483822
 GameObject:
   m_ObjectHideFlags: 0
@@ -9858,6 +9924,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -9931,6 +9998,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 3b6d682713c653d4da7eab452ff51c5a, type: 2}
   m_StaticBatchInfo:
@@ -10054,7 +10122,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10320,6 +10388,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -10405,12 +10474,12 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 1
@@ -10498,6 +10567,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 3220c27535b27584ebc60e451ef55733, type: 2}
   m_StaticBatchInfo:
@@ -10702,6 +10772,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -10821,7 +10892,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -11094,7 +11165,7 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1279193097}
-  m_LocalRotation: {x: -0.63449514, y: 0.64793307, z: -0.31211528, w: -0.28316548}
+  m_LocalRotation: {x: -0.6344952, y: 0.6479331, z: -0.3121153, w: -0.2831655}
   m_LocalPosition: {x: 0.03492135, y: 0.054618817, z: 0.06901279}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -11179,6 +11250,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 50d6dffb433eabb4cbf526fe60d1326d, type: 2}
   m_StaticBatchInfo:
@@ -11284,6 +11356,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 50032067296110e4ca7ea1067b875415, type: 2}
   m_StaticBatchInfo:
@@ -11426,6 +11499,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: e65a4e5d36439ca49a3bc3c1c2eb9cd1, type: 2}
   m_StaticBatchInfo:
@@ -11488,6 +11562,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: e65a4e5d36439ca49a3bc3c1c2eb9cd1, type: 2}
   m_StaticBatchInfo:
@@ -11633,6 +11708,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 3220c27535b27584ebc60e451ef55733, type: 2}
   m_StaticBatchInfo:
@@ -11708,6 +11784,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -11845,6 +11922,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -11967,7 +12045,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 10.58}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -12111,6 +12189,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: e65a4e5d36439ca49a3bc3c1c2eb9cd1, type: 2}
   m_StaticBatchInfo:
@@ -12250,6 +12329,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: da77629ac9bc30943a0ba2165cb59868, type: 2}
   - {fileID: 2100000, guid: 1f650d80bc3acd941b90767bfdc44f3a, type: 2}
@@ -12660,6 +12740,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -12794,7 +12875,7 @@ GameObject:
   m_Layer: 5
   m_Name: UITimeline
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -12814,7 +12895,7 @@ RectTransform:
   - {fileID: 652913578}
   - {fileID: 1242647409}
   m_Father: {fileID: 976285354}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -12885,7 +12966,7 @@ MonoBehaviour:
   offsetMax: {x: 1268.8999, y: -759.4}
   anchorMin: {x: 0, y: 1}
   anchorMax: {x: 0, y: 1}
-  AbsRefPos: {x: 0, y: 1658.4001}
+  AbsRefPos: {x: 0, y: 1658.4}
 --- !u!1 &1489369704
 GameObject:
   m_ObjectHideFlags: 0
@@ -12972,12 +13053,12 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_FontSize: 22
     m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
@@ -13159,6 +13240,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: da77629ac9bc30943a0ba2165cb59868, type: 2}
   m_StaticBatchInfo:
@@ -13332,6 +13414,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 3220c27535b27584ebc60e451ef55733, type: 2}
   m_StaticBatchInfo:
@@ -13616,6 +13699,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: b6986d83a4078ee4b89aa8f2a20aee6b, type: 2}
   - {fileID: 2100000, guid: 3b6d682713c653d4da7eab452ff51c5a, type: 2}
@@ -13746,7 +13830,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00004196167}
+  m_AnchoredPosition: {x: 0, y: 0.000019073486}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1636883140
@@ -13901,9 +13985,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1650496463
 MonoBehaviour:
@@ -14121,6 +14205,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -14289,6 +14374,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -14562,6 +14648,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 50d6dffb433eabb4cbf526fe60d1326d, type: 2}
   m_StaticBatchInfo:
@@ -14666,6 +14753,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 50032067296110e4ca7ea1067b875415, type: 2}
   - {fileID: 2100000, guid: ae7cc098283894341aea89dbea5324bd, type: 2}
@@ -14837,6 +14925,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 06c8747457675cf4bb11cecd97bc09e8, type: 2}
   m_StaticBatchInfo:
@@ -14936,7 +15025,7 @@ RectTransform:
   m_Children:
   - {fileID: 932138202}
   m_Father: {fileID: 976285354}
-  m_RootOrder: 0
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -15021,7 +15110,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 976285354}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -15087,6 +15176,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -15225,6 +15315,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 3b6d682713c653d4da7eab452ff51c5a, type: 2}
   - {fileID: 2100000, guid: 46e7b2fec094a594ca5b7bc391fff747, type: 2}
@@ -15367,6 +15458,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: da77629ac9bc30943a0ba2165cb59868, type: 2}
   m_StaticBatchInfo:
@@ -15598,6 +15690,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: b78ebd76e8d2a53438887a1ccee36c3c, type: 2}
   m_StaticBatchInfo:
@@ -15729,8 +15822,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 635.54987, y: 334.95016}
-  m_SizeDelta: {x: 206.8, y: 40}
+  m_AnchoredPosition: {x: 554, y: -364}
+  m_SizeDelta: {x: 206.8, y: 32}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1892628008
 MonoBehaviour:
@@ -16026,6 +16119,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -16132,6 +16226,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: a0d8e02f2e63a0f45a0966dc3ee2d771, type: 2}
   m_StaticBatchInfo:
@@ -16399,6 +16494,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 48746c2fc8f19a24982f3e22df8ae79e, type: 2}
   m_StaticBatchInfo:
@@ -16597,6 +16693,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 3220c27535b27584ebc60e451ef55733, type: 2}
   - {fileID: 2100000, guid: da77629ac9bc30943a0ba2165cb59868, type: 2}
@@ -16945,6 +17042,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 30224e981227fb4449f2ac6590d02431, type: 2}
   m_StaticBatchInfo:
@@ -17107,8 +17205,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 438.05005, y: 260.99988}
-  m_SizeDelta: {x: 160, y: 38.700012}
+  m_AnchoredPosition: {x: 548, y: -232}
+  m_SizeDelta: {x: 160, y: 32}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2115092430
 MonoBehaviour:
@@ -17270,7 +17368,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -17457,6 +17555,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 29af619a9358e634ea756e1d77042c54, type: 2}
   m_StaticBatchInfo:

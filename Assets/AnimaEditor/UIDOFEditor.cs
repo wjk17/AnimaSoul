@@ -5,7 +5,7 @@ using System;
 using UnityEditor;
 #endif
 [Serializable]
-public class DOFProp
+public class DOFProp // DOF控件
 {
     public DOFProp(ASDOF dof)
     {
@@ -113,6 +113,23 @@ public class UIDOFEditor : MonoBehaviour
     public StringValueIF strif;
     [NonSerialized]
     private StringValueLabel clipNameLabel;
+
+    public FloatValueIF twistFloatProp;
+    public FloatValueIF swingXFloatProp;
+    public FloatValueIF swingZFloatProp;
+
+    public Transform target;
+    public Transform end;
+    public int iter;
+    public ASTransDOF ast;
+    public ASTransDOF astIK;
+    public float alpha; // 逼近的步长
+    public float theta0;
+    public float theta1;
+    public List<ASBone> joints;
+    public int jointIterCount = 10;
+    public int axisIterCount = 20; 
+
     void Start()
     {
         IK = new BoolValueToggle(false);
@@ -135,6 +152,8 @@ public class UIDOFEditor : MonoBehaviour
         ASUI.parent = transform.Search("Area");
 
         float headWidth = 40f;
+        float valueWidth = 50f;
+        float RWidth = 30f;
 
         ASUI.BeginHorizon();
         ASUI.LabelField(clipNameLabel);
@@ -142,35 +161,41 @@ public class UIDOFEditor : MonoBehaviour
 
         ASUI.BeginHorizon();
         ASUI.LabelField("自转");
-        ASUI.FloatField("向内", dofP.twistMin, OnRangeChanged);
-        ASUI.FloatField("向外", dofP.twistMax, OnRangeChanged);
+        ASUI.FloatField("向内", dofP.twistMin, 360, OnRangeChanged);
+        ASUI.FloatField("向外", dofP.twistMax, 360, OnRangeChanged);
         ASUI.EndHorizon();
 
         ASUI.BeginHorizon();
-        ASUI.LabelField("", headWidth);
-        dofP.twistSlider = ASUI.Slider(twist, dofP.twistMin, dofP.twistMax, OnDofValueChanged);
+        //ASUI.LabelField("", headWidth);
+        ASUI.Button("R", RWidth, OnTwistReset);
+        dofP.twistSlider = ASUI.Slider(twist, dofP.twistMin, dofP.twistMax, OnEulerValueChanged);
+        ASUI.FloatFieldWithOutLabel(valueWidth, twistFloatProp, OnTwistValueChanged);
         ASUI.EndHorizon();
 
         ASUI.BeginHorizon();
         ASUI.LabelField("摆动");
-        ASUI.FloatField("向前", dofP.swingXMin, OnRangeChanged);
-        ASUI.FloatField("向后", dofP.swingXMax, OnRangeChanged);
+        ASUI.FloatField("向前", dofP.swingXMin, 360, OnRangeChanged);
+        ASUI.FloatField("向后", dofP.swingXMax, 360, OnRangeChanged);
         ASUI.EndHorizon();
 
         ASUI.BeginHorizon();
-        ASUI.LabelField("", headWidth);
-        dofP.swingXSlider = ASUI.Slider(swingX, dofP.swingXMin, dofP.swingXMax, OnDofValueChanged);
+        //ASUI.LabelField("", headWidth);
+        ASUI.Button("R", RWidth, OnSwingXReset);
+        dofP.swingXSlider = ASUI.Slider(swingX, dofP.swingXMin, dofP.swingXMax, OnEulerValueChanged);
+        ASUI.FloatFieldWithOutLabel(valueWidth, swingXFloatProp, OnSwingXValueChanged);
         ASUI.EndHorizon();
 
         ASUI.BeginHorizon();
         ASUI.LabelField("");
-        ASUI.FloatField("向内", dofP.swingZMin, OnRangeChanged);
-        ASUI.FloatField("向外", dofP.swingZMax, OnRangeChanged);
+        ASUI.FloatField("向内", dofP.swingZMin, 360, OnRangeChanged);
+        ASUI.FloatField("向外", dofP.swingZMax, 360, OnRangeChanged);
         ASUI.EndHorizon();
 
         ASUI.BeginHorizon();
-        ASUI.LabelField("", headWidth);
-        dofP.swingZSlider = ASUI.Slider(swingZ, dofP.swingZMin, dofP.swingZMax, OnDofValueChanged);
+        //ASUI.LabelField("", headWidth);
+        ASUI.Button("R", RWidth, OnSwingZReset);
+        dofP.swingZSlider = ASUI.Slider(swingZ, dofP.swingZMin, dofP.swingZMax, OnEulerValueChanged);
+        ASUI.FloatFieldWithOutLabel(valueWidth, swingZFloatProp, OnSwingZValueChanged);
         ASUI.EndHorizon();
 
         ASUI.BeginHorizon();
@@ -208,42 +233,60 @@ public class UIDOFEditor : MonoBehaviour
 
 
         ASUI.BeginHorizon();
-        ASUI.LabelField("IK目标", headWidth);
+        ASUI.LabelField("IK目标", headWidth * 4);
         ikTarget = ASIKTarget.LeftHand;
         ASUI.DropdownEnum(ikTarget, (int)ASIKTarget.Count, ikTargetNames, IKTargetChange);
         IKTargetChange((int)ikTarget);
         ASUI.EndHorizon();
 
         ASUI.BeginHorizon();
-        ASUI.Toggle("使用IK", 80f, IK, OnIKToggle);
-        ASUI.Button("IK目标设为当前位置", OnIKSnap);
+        ASUI.Toggle("使用IK", 80f * 2, IK, OnIKToggle);
+        ASUI.Button("Snap", OnIKSnap); //IK目标设为当前位置
         ASUI.EndHorizon();
 
 
         ASUI.BeginHorizon();
-        ASUI.LabelField("IK单关节目标", headWidth);
+        ASUI.LabelField("IK目标(单关节)", headWidth * 4);
         ikTargetSingle = ASIKTargetSingle.LeftHand;
         ASUI.DropdownEnum(ikTargetSingle, (int)ASIKTargetSingle.Count, ikTargetSingleNames, IKSingleTargetChange);
         IKTargetChange((int)ikTargetSingle);
         ASUI.EndHorizon();
 
         ASUI.BeginHorizon();
-        ASUI.Toggle("使用单关节IK", 80f, IKSingle, OnIKSingleToggle);
-        ASUI.Button("单关节IK目标设为当前位置", OnIKSingleSnap);
+        ASUI.Toggle("使用IK(单关节)", 80f * 3, IKSingle, OnIKSingleToggle);
+        ASUI.Button("Snap", OnIKSingleSnap);
+        //ASUI.Button("单关节IK目标设为当前位置", OnIKSingleSnap);
         ASUI.EndHorizon();
-
-
 
         ASUI.I.inputCallBacks.Add(new ASGUI.InputCallBack(GetInput, 1));
 
         UpdateDOF();
     }
-
+    private void OnTwistReset()
+    {
+        if (ast == null) return;
+        twist.value = 0;
+        dofP.twistSlider.slider.value = twist.value;
+        ast.euler.y = twist;
+    }
+    private void OnSwingXReset()
+    {
+        if (ast == null) return;
+        swingX.value = 0;
+        dofP.swingXSlider.slider.value = swingX.value;
+        ast.euler.x = swingX;
+    }
+    private void OnSwingZReset()
+    {
+        if (ast == null) return;
+        swingZ.value = 0;
+        dofP.swingZSlider.slider.value = swingZ.value;
+        ast.euler.z = swingZ;
+    }
     private void OnFileNameChanged(string arg0, StringFieldWrapper arg1)
     {
         //strif.value = arg1.field.text;
     }
-
     private void NewClip()
     {
         UIClip.I.New(strif.field.text);
@@ -251,7 +294,6 @@ public class UIDOFEditor : MonoBehaviour
         clipNameLabel.Update();
         Debug.Log(clipNameLabel.value);
     }
-
     string[] ikTargetNames = new string[] { "左手", "右手", "左脚", "右脚" };
     public enum ASIKTarget
     {
@@ -341,12 +383,57 @@ public class UIDOFEditor : MonoBehaviour
         twist.value = dofP.twistSlider.slider.value;
         swingX.value = dofP.swingXSlider.slider.value;
         swingZ.value = dofP.swingZSlider.slider.value;
-        OnDofValueChanged(0, null);
+        OnEulerValueChanged(0, null);
     }
-    void OnDofValueChanged(float v, SliderWrapper s)
+    private void OnTwistValueChanged(float arg0, FloatFieldWrapper arg1)
+    {
+        if (ast == null) return;
+        float result;
+        bool success = float.TryParse(twistFloatProp.field.text, out result);
+        if (success)
+        {
+            result = Mathf.Clamp(result, dofP.twistMin, dofP.twistMax); // 只有解析成功的值会赋值
+            twist.value = result;
+            twistFloatProp.field.text = result.ToString();
+            dofP.twistSlider.slider.value = result;
+            ast.euler.y = result;
+        }
+    }
+    private void OnSwingXValueChanged(float arg0, FloatFieldWrapper arg1)
+    {
+        if (ast == null) return;
+        float result;
+        bool success = float.TryParse(swingXFloatProp.field.text, out result);
+        if (success)
+        {
+            result = Mathf.Clamp(result, dofP.swingXMin, dofP.swingXMax);
+            swingX.value = result;
+            swingXFloatProp.field.text = result.ToString();
+            dofP.swingXSlider.slider.value = result;
+            ast.euler.x = result;
+        }
+    }
+    private void OnSwingZValueChanged(float arg0, FloatFieldWrapper arg1)
+    {
+        if (ast == null) return;
+        float result;
+        bool success = float.TryParse(swingZFloatProp.field.text, out result);
+        if (success)
+        {
+            result = Mathf.Clamp(result, dofP.swingZMin, dofP.swingZMax);
+            swingZ.value = result;
+            swingZFloatProp.field.text = result.ToString();
+            dofP.swingZSlider.slider.value = result;
+            ast.euler.z = result;
+        }
+    }
+    void OnEulerValueChanged(float v, SliderWrapper s)
     {
         if (ast == null) return;
         //if (IK) return;
+        twistFloatProp.field.text = twist.ToString();
+        swingXFloatProp.field.text = swingX.ToString();
+        swingZFloatProp.field.text = swingZ.ToString();
         ast.euler.y = twist;
         ast.euler.x = swingX;
         ast.euler.z = swingZ;
@@ -455,15 +542,6 @@ public class UIDOFEditor : MonoBehaviour
             dofP.swingZSlider.slider.value = ast.euler.z;
         }
     }
-    public Transform target;
-    public Transform end;
-    public int iter;
-    public ASTransDOF ast;
-    public ASTransDOF astIK;
-    public float alpha; // 逼近的步长
-    public float theta0;
-    public float theta1;
-    public List<ASBone> joints;
     void Update()
     {
         if (IK || IKSingle)
@@ -501,14 +579,9 @@ public class UIDOFEditor : MonoBehaviour
             break;
         }
         theta1 = GetIterValue();
-        return Approx(theta0, theta1); // 是否已经接近最佳值
+        return MathTool.Approx(theta0, theta1); // 是否已经接近最佳值
     }
-    public float approxRange = 0.00001f;
-    bool Approx(float a, float b)
-    {
-        var r = Mathf.Abs(a - b) < approxRange;
-        return r;
-    }
+
     float GetIterValue()
     {
         switch (iter)
@@ -539,8 +612,6 @@ public class UIDOFEditor : MonoBehaviour
         }
         IKSolve(joints.ToArray());
     }
-    public int jointIterCount = 10;
-    public int axisIterCount = 20;
     private void IKSolve(params ASTransDOF[] joints)
     {
         //带DOF的IK思路：把欧拉旋转拆分为三个旋转分量，像迭代关节一样按照旋转顺序进行循环下降迭代。

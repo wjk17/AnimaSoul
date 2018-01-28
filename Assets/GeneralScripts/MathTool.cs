@@ -121,6 +121,12 @@ public static class MathTool
                 return Vector3.zero;
         }
     }
+    public static float approxRange = 0.00001f;
+    public static bool Approx(float a, float b)
+    {
+        var r = Mathf.Abs(a - b) < approxRange;
+        return r;
+    }
     internal static Vector2 ReverseX(Vector2 a)
     {
         return new Vector2(a.x * -1, a.y);

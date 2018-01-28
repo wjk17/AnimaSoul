@@ -190,7 +190,7 @@ public static class ASUI
     {
         var toggle = Obj.Instantiate(I.togglePrefab, parent).GetComponent<Toggle>();
         toggle.isOn = value;
-        value.toggle = toggle;        
+        value.toggle = toggle;
         var rt = toggle.GetComponent<RectTransform>();
         rt.sizeDelta = rt.sizeDelta.SetX(width);
         toggle.onValueChanged.AddListener(onToggle);
@@ -199,13 +199,40 @@ public static class ASUI
         label.color = labelColor;
         horizon.Add(toggle);
     }
-    public static void Button(string labelStr, UnityAction onClick = null)
+    public static void Button(string labelStr)
+    {
+        Button(labelStr, default(UnityAction));
+    }
+    public static void Button(string labelStr, UnityAction onClick)
+    {
+        Button(labelStr, (I.buttonPrefab.transform as RectTransform).rect.width, onClick);
+    }
+    public static void Button(string labelStr, UnityAction<ButtonWrapper> onClick)
+    {
+        Button(labelStr, (I.buttonPrefab.transform as RectTransform).rect.width, onClick);
+    }
+    public static void Button(string labelStr, float width, UnityAction onClick)
     {
         var button = Obj.Instantiate(I.buttonPrefab, parent).GetComponent<Button>();
         button.onClick.AddListener(onClick);
         var label = button.GetComponentInChildren<Text>(true);
         label.text = labelStr;
         label.color = labelColor;
+        var rt = button.GetComponent<RectTransform>();
+        rt.sizeDelta = rt.sizeDelta.SetX(width);
+        horizon.Add(button);
+    }
+    public static void Button(string labelStr, float width, UnityAction<ButtonWrapper> onClick)
+    {
+        var button = Obj.Instantiate(I.buttonPrefab, parent).GetComponent<Button>();
+        var wrapper = new ButtonWrapper(button);
+        button.onClick.AddListener(wrapper.OnClick);
+        wrapper.onClick = onClick;
+        var label = button.GetComponentInChildren<Text>(true);
+        label.text = labelStr;
+        label.color = labelColor;
+        var rt = button.GetComponent<RectTransform>();
+        rt.sizeDelta = rt.sizeDelta.SetX(width);
         horizon.Add(button);
     }
     internal static SliderWrapper IntSlider(FloatValue value, FloatValue min, FloatValue max, UnityAction<float, SliderWrapper> onSliderValueChanged)
@@ -275,7 +302,26 @@ public static class ASUI
         label.color = labelColor;
         horizon.Add(label);
     }
+    public static float FloatFieldWithOutLabel(float width, FloatValueIF value, UnityAction<float, FloatFieldWrapper> onValueChanged = null)
+    {
+        var inputField = Obj.Instantiate(I.floatFieldPrefab, parent).GetComponent<InputField>();
+        var rt = inputField.transform as RectTransform;
+        rt.sizeDelta = rt.sizeDelta.SetX(width);
+        inputField.contentType = InputField.ContentType.DecimalNumber;
+        inputField.textComponent.color = floatFieldColor;
+        inputField.text = value.ToString();
+        var wrapper = new FloatFieldWrapper(inputField, value);
+        wrapper.onValueChanged = onValueChanged;
+        inputField.onValueChanged.AddListener(wrapper.OnValueChanged);
+        value.field = inputField;
+        horizon.Add(inputField);
+        return 0f;
+    }
     public static float FloatField(string labelStr, FloatValueIF value, UnityAction<float, FloatFieldWrapper> onValueChanged = null)
+    {
+        return FloatField(labelStr, value, float.MaxValue, onValueChanged);
+    }
+    public static float FloatField(string labelStr, FloatValueIF value, float maxRange, UnityAction<float, FloatFieldWrapper> onValueChanged = null)
     {
         var label = Obj.Instantiate(I.labelPrefab, parent).GetComponent<Text>();
         label.text = labelStr;
@@ -284,7 +330,7 @@ public static class ASUI
         inputField.contentType = InputField.ContentType.DecimalNumber;
         inputField.textComponent.color = floatFieldColor;
         inputField.text = value.ToString();
-        var wrapper = new FloatFieldWrapper(inputField, value);
+        var wrapper = new FloatFieldWrapper(inputField, value, maxRange);
         wrapper.onValueChanged = onValueChanged;
         inputField.onValueChanged.AddListener(wrapper.OnValueChanged);
         value.field = inputField;
@@ -300,7 +346,6 @@ public static class ASUI
         var inputField = Obj.Instantiate(I.stringFieldPrefab, parent).GetComponent<InputField>();
         inputField.textComponent.color = floatFieldColor;
         inputField.text = value.ToString();
-        //return 0 ;
         var wrapper = new StringFieldWrapper(inputField, value);
         wrapper.onValueChanged = onValueChanged;
         inputField.onValueChanged.AddListener(wrapper.OnValueChanged);

@@ -250,7 +250,23 @@ public class ASAvatarEditor : Editor
         }
         if (GUILayout.Button("Match"))
         {
-            o.Match();
+            o.Match(true);
+        }
+        if (GUILayout.Button("Match(not Init)"))
+        {
+            o.Match(false);
+        }
+        if (GUILayout.Button("ClearTrans"))
+        {
+            o.ClearTrans();
+        }
+        if (GUILayout.Button("UpdateCoord"))
+        {
+            o.UpdateCoord();
+        }
+        if (GUILayout.Button("SetOrigin"))
+        {
+            o.SetOrigin();
         }
         if (GUILayout.Button("ChildrenSwap Y & Z (exclude self)"))
         {
@@ -325,13 +341,28 @@ public class ASAvatar : MonoBehaviour
     public ASBone selectBone;
     public void UpdateCoord()
     {
-        Start();
+        int count = 0;
+        //Start();
         foreach (var t in setting.asts)
         {
-            t.Init();
-            t.UpdateCoord();
+            //t.Init();
+            if (t != null || t.transform != null)
+            {
+                t.UpdateCoord();
+                count++;
+            }
         }
+        Debug.Log("UpdateCoords " + count.ToString());
     }
+    //public void UpdateCoord()
+    //{
+    //    var td = GetTransDOF(selectBone);
+    //    if (td == null || td.transform == null) return;
+
+    //    td.UpdateCoord();
+
+    //    Debug.Log("updateCoord " + td.transform.name);
+    //}
     public void ChildrenSwapYAndZ()
     {
         var td = GetTransDOF(selectBone);
@@ -345,7 +376,7 @@ public class ASAvatar : MonoBehaviour
             transD.up = transD.forward;
             transD.forward = up;
             transD.UpdateCoord();
-            Debug.Log(transD.transform.name);
+            Debug.Log("swap " + transD.transform.name);
         }
     }
     public void Reset()
@@ -386,8 +417,15 @@ public class ASAvatar : MonoBehaviour
     //    }
     //    return ASBone.other;
     //}
+    public void ClearTrans()
+    {
+        foreach (var t in setting.asts)
+        {
+            t.transform = null;
+        }
+    }
     [ContextMenu("Match")]
-    public void Match()
+    public void Match(bool init)
     {
         var _dic = new Dictionary<ASBone, Transform>();
         _dic.Add(ASBone.root, rig);
@@ -402,7 +440,7 @@ public class ASAvatar : MonoBehaviour
                 Debug.Log("match: " + ast.transform.name);
             }
         }
-        Start();
+        if (init) Start();
     }
     public void LoadFromDOFMgr()
     {
@@ -416,20 +454,30 @@ public class ASAvatar : MonoBehaviour
     {
         foreach (var t in setting.asts)
         {
-            t.Init();
+            t.Init(); // 获取坐标轴的初始值
         }
     }
     public float drawLineLength = 0.5f;
     public bool depthTest = false;
+    public bool drawLine = false;
     public void Update()
     {
         foreach (var t in setting.asts)
         {
 #if UNITY_EDITOR
-            t.coord.DrawRay(t.transform, t.euler, drawLineLength, depthTest);
+            if (drawLine && t.transform != null)
+                t.coord.DrawRay(t.transform, t.euler, drawLineLength, depthTest);
             if (Application.isPlaying)
 #endif
                 t.Update();
+        }
+    }
+    public void SetOrigin()
+    {
+        foreach (var t in setting.asts)
+        {
+            if (t != null && t.transform != null)
+                t.coord.origin = t.transform.localRotation;
         }
     }
 }

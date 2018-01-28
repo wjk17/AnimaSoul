@@ -15,6 +15,7 @@ public class ASTransDOF // 带关节限制（DOF）的变换。其实是一个�
     public Transform transform;
     public ASDOF dof;
     public Coordinate coord;
+    [XmlIgnore]
     public Vector3 euler;
     public Vector3 right = new Vector3(1, 0, 0); // 用来转换坐标轴
     public Vector3 up = new Vector3(0, 1, 0);
@@ -84,7 +85,7 @@ public class Coordinate
     public void DrawRay(Transform t, Vector3 euler, float length, bool depthTest = false)
     {
         var n = World(t, euler);
-        var origin = Gizmos.color;
+        var origin = Gizmos.color;        
         Debug.DrawRay(t.position, n.forward * length, Color.blue, 0, depthTest);
         Debug.DrawRay(t.position, n.right * length, Color.red, 0, depthTest);
         Debug.DrawRay(t.position, n.up * length, Color.green, 0, depthTest);

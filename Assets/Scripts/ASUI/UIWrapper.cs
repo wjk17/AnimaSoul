@@ -1,6 +1,19 @@
 ﻿using UnityEngine.Events;
 using UnityEngine.UI;
-
+using UnityEngine;
+public class ButtonWrapper
+{
+    public Button button;
+    public UnityAction<ButtonWrapper> onClick;
+    public ButtonWrapper(Button f)
+    {
+        button = f;
+    }
+    public void OnClick()
+    {
+        if (onClick != null) onClick(this);
+    }
+}
 public class LabelWrapper
 {
     public Text label;
@@ -16,15 +29,27 @@ public class FloatFieldWrapper
     public UnityAction<float, FloatFieldWrapper> onValueChanged;
     public InputField field;
     public FloatValue value;
+    public float maxRange;
     public FloatFieldWrapper(InputField f, FloatValue v)
     {
         field = f;
         value = v;
     }
+    public FloatFieldWrapper(InputField f, FloatValue v, float maxRange)
+    {
+        field = f;
+        value = v;
+        this.maxRange = maxRange;
+    }
     public void OnValueChanged(string s)
     {
-        float.TryParse(s, out value.value);
-        if (onValueChanged != null) onValueChanged(value, this);
+        float result;
+        var success = float.TryParse(s, out result);
+        if (success)
+        {
+            value.value = Mathf.Clamp(result, -maxRange, maxRange);            
+            if (onValueChanged != null) onValueChanged(value, this);
+        }
     }
 }
 public class StringFieldWrapper
