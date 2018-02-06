@@ -189,11 +189,11 @@ public static class ASUI
     public static void Toggle(string labelStr, float width, BoolValueToggle value, UnityAction<bool> onToggle = null)
     {
         var toggle = Obj.Instantiate(I.togglePrefab, parent).GetComponent<Toggle>();
-        toggle.isOn = value;
+        toggle.isOn = value.defaultValue;
         value.toggle = toggle;
+        toggle.onValueChanged.AddListener(onToggle);
         var rt = toggle.GetComponent<RectTransform>();
         rt.sizeDelta = rt.sizeDelta.SetX(width);
-        toggle.onValueChanged.AddListener(onToggle);
         var label = toggle.GetComponentInChildren<Text>(true);
         label.text = labelStr;
         label.color = labelColor;
@@ -249,6 +249,21 @@ public static class ASUI
         slider.onValueChanged.AddListener(wrapper.OnSliderChanged);
         horizon.Add(slider);
         return wrapper;
+    }
+    public static void DropdownInt(int defaultValue, int count, string[] names, UnityAction<int> onValueChanged)
+    {
+        var drop = Obj.Instantiate(I.dropdownPrefab, parent).GetComponent<Dropdown>();
+        drop.gameObject.AddComponent<DropDownLocateSelectedItem>();
+        drop.onValueChanged.AddListener(onValueChanged);
+        for (int i = 0; i < count; i++)
+        {
+            drop.options.Add(new Dropdown.OptionData(names[i]));
+        }
+        var v = Mathf.Clamp(defaultValue, 0, drop.options.Count - 1);
+        drop.value = v;
+        drop.itemText.color = dropdownColor;
+        drop.captionText.text = drop.options[v].text;
+        horizon.Add(drop);
     }
     public static void DropdownEnum(Enum enumValue, int count, string[] names, UnityAction<int> onValueChanged)
     {

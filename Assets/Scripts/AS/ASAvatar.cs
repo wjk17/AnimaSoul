@@ -57,7 +57,7 @@ public static class ASBoneTool
     "大腿(左)", "大腿(右)",
     "屁股",
     "根",
-    "其他",
+    //"其他",
     };
 }
 public enum ASBone
@@ -242,7 +242,7 @@ public class ASAvatarEditor : Editor
         base.OnInspectorGUI();
         if (GUILayout.Button("Load"))
         {
-            o.OpenASTs();
+            o.LoadASTs();
         }
         if (GUILayout.Button("Save"))
         {
@@ -330,7 +330,7 @@ public class ASAvatar : MonoBehaviour
         path = rootPath + folder + fileName;
         Serializer.XMLSerialize(setting, path);
     }
-    public void OpenASTs()
+    public void LoadASTs()
     {
         var dataPath = Application.dataPath;
         var rootPath = dataPath + "/../";

@@ -2,34 +2,31 @@
 using System;
 
 [Serializable]
-public class BoolValueToggle: BoolValue
+public class BoolValueToggle
 {
+    public bool Value
+    {
+        get { return toggle.isOn; }
+        set { toggle.isOn = value; }
+    }
+    public bool defaultValue;
     public Toggle toggle;
-    public BoolValueToggle(bool f) : base(f) { }
-    public override void Update()
+    public BoolValueToggle(Toggle toggle, bool b)
     {
-        if (toggle != null)
-        {
-            toggle.isOn = value;
-        }
+        this.toggle = toggle;
+        toggle.isOn = b;
     }
-}
-[Serializable]
-public abstract class BoolValue
-{
-    public bool value;
-    public abstract void Update();
-    public BoolValue(bool b)
+    public BoolValueToggle(bool b)
     {
-        value = b;
-    }
+        defaultValue = b;
+    }    
     public override string ToString()
     {
-        return value.ToString();
+        return Value.ToString();
     }
-    public static implicit operator bool(BoolValue v)
+    public static implicit operator bool(BoolValueToggle v)
     {
-        return v.value;
+        return v.Value;
     }
 }
 [Serializable]

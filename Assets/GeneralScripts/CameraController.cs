@@ -10,9 +10,24 @@
 //Change : Add the operation for Mac
 //
 
-
 using UnityEngine;
 using System.Collections;
+#if UNITY_EDITOR
+using UnityEditor;
+[CustomEditor(typeof(CameraController))]
+public class CameraControllerEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        var o = (CameraController)target;
+        base.OnInspectorGUI();
+        if (GUILayout.Button("ResetRotation"))
+        {
+            o.ResetRotation();
+        }
+    }
+}
+#endif
 
 public class CameraController : MonoBehaviour
 {
@@ -32,9 +47,15 @@ public class CameraController : MonoBehaviour
     public float wheelSensitivity = 0.25f;
     public float dragSensitivity = 0.5f;
     public float trackSensitivity = 0.7f;
+    private Quaternion originRotation;
+    public void ResetRotation()
+    {
+        pivotGO.transform.rotation = originRotation;
+    }
     private void Awake()
     {
-        pivotGO.transform.rotation = transform.rotation;//否则轴与摄像机旋转不一致会导致cameraRotate方向异常。
+        originRotation = transform.rotation;
+        pivotGO.transform.rotation = originRotation;//否则轴与摄像机旋转不一致会导致cameraRotate方向异常。
         transform.SetParent(pivotGO.transform);
     }
     private void Start()
@@ -77,7 +98,7 @@ public class CameraController : MonoBehaviour
             GUI.Label(new Rect(x + 10, y + 70, 200, 30), "滚轮 / 2 指滑动: 推拉");
         }
     }
-
+    public bool camRotate;
     void mouseEvent()
     {
         float delta = Events.Axis("Mouse ScrollWheel");
@@ -89,7 +110,10 @@ public class CameraController : MonoBehaviour
             Events.MouseDown(MouseButton.Right))
             oldPos = Input.mousePosition;
 
-        mouseDragEvent(Input.mousePosition);
+        if (Events.Mouse(MouseButton.Left) ||
+            Events.Mouse(MouseButton.Middle) ||
+            Events.Mouse(MouseButton.Right))
+            mouseDragEvent(Input.mousePosition); 
     }
     public Camera cam { get { return GetComponent<Camera>(); } }
     public Vector2 size
@@ -166,6 +190,7 @@ public class CameraController : MonoBehaviour
 
     public void cameraRotate(Vector3 eulerAngle)
     {
+        if (!camRotate) return;
         //Use Quaternion to prevent rotation flips on XY plane
         //Quaternion q = Quaternion.identity;
 

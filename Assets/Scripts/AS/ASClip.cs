@@ -7,6 +7,9 @@ public class ASClip
 {
     [XmlIgnore]
     public string clipName;
+    [XmlIgnore]
+    public Vector2Int frameRange;
+
     public List<ASObjectCurve> curves;
     public ASClip() { curves = new List<ASObjectCurve>(); }
     public ASClip(string clipName) { this.clipName = clipName; curves = new List<ASObjectCurve>(); }

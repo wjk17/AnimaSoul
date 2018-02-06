@@ -22,6 +22,7 @@ public class UIClip : MonoBehaviour
     public string path;
     public string folder = "Clips/";
     public string clipName = "Default";
+    // 拖动时间轴绿色线（当前帧）时会更新所有曲线
     public void UpdateAllCurve()
     {
         var trueTime = UICurve.I.GenerateRealTime(UITimeLine.FrameIndex);
@@ -38,7 +39,15 @@ public class UIClip : MonoBehaviour
         //}
         foreach (var curve in clip.curves)
         {
-            if (curve.ast != null) curve.ast.euler = curve.EulerAngles(trueTime);
+            if (curve.ast != null)
+            {
+                curve.ast.euler = curve.EulerAngles(trueTime);
+                if (curve.ast.dof.bone == UIDOFEditor.I.ast.dof.bone)//把值实时显示到UIDOF编辑器
+                {
+                    UIDOFEditor.I.UpdateValueDisplay();
+                    //UIDOFEditor.I.ast.euler = curve.ast.euler;
+                }
+            }
         }
     }
 
@@ -111,7 +120,7 @@ public class UIClip : MonoBehaviour
     {
         var dataPath = Application.dataPath;
         var rootPath = dataPath + "/../";
-        path = rootPath + folder + clip.clipName +".clip";
+        path = rootPath + folder + clip.clipName + ".clip";
         Serializer.XMLSerialize(clip, path);
     }
 }

@@ -128,7 +128,7 @@ public class UIDOFEditor : MonoBehaviour
     public float theta1;
     public List<ASBone> joints;
     public int jointIterCount = 10;
-    public int axisIterCount = 20; 
+    public int axisIterCount = 20;
 
     void Start()
     {
@@ -200,7 +200,11 @@ public class UIDOFEditor : MonoBehaviour
 
         ASUI.BeginHorizon();
         ASUI.LabelField("骨骼", headWidth);
-        ASUI.DropdownEnum(bone, (int)ASBone.root, ASBoneTool.names, DropdownChange);
+        var nameList = new List<string>();
+        nameList.AddRange(ASBoneTool.names);
+        nameList.Add("手枪");
+        ASUI.DropdownInt(0, avatar.setting.asts.Count, nameList.ToArray(), DropdownChange);
+        //ASUI.DropdownEnum(bone, avatar.setting.asts.Count - 1, nameList.ToArray(), DropdownChange);
         ASUI.EndHorizon();
 
         ASUI.BeginHorizon();
@@ -258,9 +262,54 @@ public class UIDOFEditor : MonoBehaviour
         //ASUI.Button("单关节IK目标设为当前位置", OnIKSingleSnap);
         ASUI.EndHorizon();
 
+        ASUI.BeginHorizon();
+        ASUI.Toggle("武器IK", 80f * 2, GunIKBoolValueToggle, OnWeaponIK);
+        ASUI.EndHorizon();
+
         ASUI.I.inputCallBacks.Add(new ASGUI.InputCallBack(GetInput, 1));
 
         UpdateDOF();
+        gun = avatar[ASBone.other].transform;
+    }
+    public Transform gun;
+    public BoolValueToggle GunIKBoolValueToggle;
+    public void GunIK()
+    {
+        if (GunIKBoolValueToggle.Value)
+        {
+            var targetPos = target.position + Gun2LeftHand;
+            joints = new List<ASBone>();
+            joints.Add(ASBone.hand_l);
+            joints.Add(ASBone.forearm_l);
+            joints.Add(ASBone.upperarm_l);
+            end = avatar[ASBone.hand_l].transform;
+            IKSolve(targetPos, joints.ToArray());
+
+            targetPos = target.position + Gun2RightHand;
+            joints = new List<ASBone>();
+            joints.Add(ASBone.hand_r);
+            joints.Add(ASBone.forearm_r);
+            joints.Add(ASBone.upperarm_r);
+            end = avatar[ASBone.hand_r].transform;
+            IKSolve(targetPos, joints.ToArray());
+
+        }
+    }
+    public Vector3 Gun2LeftHand;
+    public Vector3 Gun2RightHand;
+    public void OnWeaponIK(bool value)
+    {
+        if (value)
+        {
+            Gun2LeftHand = avatar[ASBone.hand_l].transform.position - gun.position;
+            Gun2RightHand = avatar[ASBone.hand_r].transform.position - gun.position;
+
+            FindObjectOfType<GizmosAxis>().transform.position = gun.position;
+            target.position = gun.position;//只有拖动gizmosaxis时才更新，所以这里手动更新
+
+            IK.Value = false;
+            IKSingle.Value = false;
+        }
     }
     private void OnTwistReset()
     {
@@ -326,17 +375,13 @@ public class UIDOFEditor : MonoBehaviour
     }
     void OnIKToggle(bool value)
     {
-        IK.value = value;
-        if (value) { IKSingle.value = false; IKSingle.toggle.isOn = false; }
-        //IK = value;
-        //if (value) IKSingle = false;
+        IK.Value = value;
+        if (value) { IKSingle.Value = false; }
     }
     void OnIKSingleToggle(bool value)
     {
-        IKSingle.value = value;
-        if (value) { IK.value = false; IK.toggle.isOn = false; }
-        //IKSingle = value;
-        //if (value) IK = false;
+        IKSingle.Value = value;
+        if (value) { IK.Value = false; }
     }
     private void OnIKSnap()
     {
@@ -438,6 +483,24 @@ public class UIDOFEditor : MonoBehaviour
         ast.euler.x = swingX;
         ast.euler.z = swingZ;
     }
+    internal void UpdateValueDisplay()
+    {
+        if (ast == null) return;
+        twistFloatProp.field.text = twist.ToString();
+        swingXFloatProp.field.text = swingX.ToString();
+        swingZFloatProp.field.text = swingZ.ToString();
+
+        twist.value = ast.euler.y;
+        swingX.value = ast.euler.x;
+        swingZ.value = ast.euler.z;
+        dofP.twistSlider.slider.value = twist;
+        dofP.swingXSlider.slider.value = swingX;
+        dofP.swingZSlider.slider.value = swingZ;
+
+        //ast.euler.y = twist;
+        //ast.euler.x = swingX;
+        //ast.euler.z = swingZ;
+    }
     void IKTargetChange(int index)
     {
         joints = new List<ASBone>();
@@ -525,9 +588,14 @@ public class UIDOFEditor : MonoBehaviour
     void DropdownChange(int index)
     {
         if (dof != null) dofP.SaveASDOF(dof);//先保存
-        var bone = (ASBone)index;
-        dof = dofSet[bone];
-        ast = avatar[bone];
+        var boneInt = (ASBone)index;
+        //if (boneInt < ASBone.other)
+        //{
+        //    dof = dofSet[boneInt];
+        //    ast = avatar[boneInt];
+        //}
+        dof = dofSet[boneInt];
+        ast = avatar[boneInt];
         UpdateDOF();
     }
     void UpdateDOF()
@@ -550,26 +618,31 @@ public class UIDOFEditor : MonoBehaviour
             //IKSolve(forearm, uparm, hand);
             //uparm.coord.DrawRay(uparm.transform, uparm.euler, 0.5f, false);
         }
+        else GunIK();
     }
-    float Dist()
+    float Dist(Vector3 targetPos)
     {
         var endDir = end.position - astIK.transform.position; // 当前终端方向与目标方向的距离
-        var targetDir = target.position - astIK.transform.position;
+        var targetDir = targetPos - astIK.transform.position;
         var dist = Vector3.Distance(endDir, targetDir);
         return dist;
     }
     public bool Iteration()
     {
+        return Iteration(target.position);
+    }
+    public bool Iteration(Vector3 targetPos)
+    {
         var dict = new SortedDictionary<float, float>();
         theta0 = GetIterValue();
-        dict.Add(Dist(), GetIterValue()); // 计算当前距离并存放到字典里，以距离作为Key排序
+        dict.Add(Dist(targetPos), GetIterValue()); // 计算当前距离并存放到字典里，以距离作为Key排序
 
         SetIterValue(theta0 + alpha); // 计算向前步进后的距离，放进字典
-        var dist = Dist();
+        var dist = Dist(targetPos);
         if (!dict.ContainsKey(dist)) dict.Add(dist, GetIterValue()); //（字典里的值是被DOF限制后的）
 
         SetIterValue(theta0 - alpha); // 反向
-        dist = Dist();
+        dist = Dist(targetPos);
         if (!dict.ContainsKey(dist)) dict.Add(dist, GetIterValue());
 
         foreach (var i in dict)
@@ -603,6 +676,15 @@ public class UIDOFEditor : MonoBehaviour
         }
         astIK.Rotate();
     }
+    private void IKSolve(Vector3 targetPos, params ASBone[] bones)
+    {
+        var joints = new List<ASTransDOF>();
+        foreach (var bone in bones)
+        {
+            joints.Add(avatar[bone]);
+        }
+        IKSolve(targetPos, joints.ToArray());
+    }
     private void IKSolve(params ASBone[] bones)
     {
         var joints = new List<ASTransDOF>();
@@ -613,6 +695,10 @@ public class UIDOFEditor : MonoBehaviour
         IKSolve(joints.ToArray());
     }
     private void IKSolve(params ASTransDOF[] joints)
+    {
+        IKSolve(target.position, joints);
+    }
+    private void IKSolve(Vector3 targetPos, params ASTransDOF[] joints)
     {
         //带DOF的IK思路：把欧拉旋转拆分为三个旋转分量，像迭代关节一样按照旋转顺序进行循环下降迭代。
         int c = jointIterCount;
@@ -625,7 +711,7 @@ public class UIDOFEditor : MonoBehaviour
                 int c2 = axisIterCount;
                 while (true)
                 {
-                    if (Iteration() || c2 <= 0)
+                    if (Iteration(targetPos) || c2 <= 0)
                     {
                         iter++;
                         if (iter > 2) break;

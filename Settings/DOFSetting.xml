@@ -624,22 +624,22 @@
     <ASDOF>
       <bone>hips</bone>
       <count>0</count>
-      <twistMin>0</twistMin>
-      <twistMax>0</twistMax>
-      <swingXMin>0</swingXMin>
-      <swingXMax>0</swingXMax>
-      <swingZMin>0</swingZMin>
-      <swingZMax>0</swingZMax>
+      <twistMin>-90</twistMin>
+      <twistMax>90</twistMax>
+      <swingXMin>-90</swingXMin>
+      <swingXMax>90</swingXMax>
+      <swingZMin>-90</swingZMin>
+      <swingZMax>90</swingZMax>
     </ASDOF>
     <ASDOF>
       <bone>root</bone>
       <count>0</count>
-      <twistMin>0</twistMin>
-      <twistMax>0</twistMax>
-      <swingXMin>0</swingXMin>
-      <swingXMax>0</swingXMax>
-      <swingZMin>0</swingZMin>
-      <swingZMax>0</swingZMax>
+      <twistMin>-180</twistMin>
+      <twistMax>180</twistMax>
+      <swingXMin>-180</swingXMin>
+      <swingXMax>180</swingXMax>
+      <swingZMin>-180</swingZMin>
+      <swingZMax>180</swingZMax>
     </ASDOF>
     <ASDOF>
       <bone>other</bone>
