@@ -147,8 +147,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_AnchoredPosition: {x: 0, y: -5}
+  m_SizeDelta: {x: 28, y: -10}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &76747963
 MonoBehaviour:
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 482839492}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 0.9351702
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -321,7 +321,7 @@ MonoBehaviour:
   offsetMax: {x: 36, y: 0}
   anchorMin: {x: 0, y: 0}
   anchorMax: {x: 0, y: 1}
-  AbsRefPos: {x: 0, y: 464.45}
+  AbsRefPos: {x: 0, y: 455.6}
 --- !u!1 &101461351
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,6 +784,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &340828607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 340828608}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &340828608
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 340828607}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 964817744}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &348436714
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,7 +1271,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 0.9351702}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1316,7 +1344,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -464.45}
+  m_AnchoredPosition: {x: 0, y: -455.6}
   m_SizeDelta: {x: 1273.2, y: 295}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &483539894
@@ -1664,7 +1692,7 @@ MonoBehaviour:
   offsetMax: {x: 0, y: 36}
   anchorMin: {x: 0, y: 0}
   anchorMax: {x: 1, y: 0}
-  AbsRefPos: {x: 36, y: 723.45}
+  AbsRefPos: {x: 36, y: 714.6}
 --- !u!1 &648183425
 GameObject:
   m_ObjectHideFlags: 0
@@ -1757,7 +1785,7 @@ MonoBehaviour:
   offsetMax: {x: 0, y: 36}
   anchorMin: {x: 0, y: 0}
   anchorMax: {x: 1, y: 0}
-  AbsRefPos: {x: 0, y: 864}
+  AbsRefPos: {x: 0, y: 859.6}
 --- !u!1 &652913577
 GameObject:
   m_ObjectHideFlags: 0
@@ -1991,17 +2019,17 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[0].coord.origin.x
-      value: 0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[0].coord.origin.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[0].coord.origin.w
-      value: 0
+      value: 0.7071067
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -2081,22 +2109,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[1].coord.origin.x
-      value: 0
+      value: 0.8084118
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[1].coord.origin.y
-      value: 0
+      value: -0.000000070168646
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[1].coord.origin.z
-      value: 0
+      value: -0.00000009637017
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[1].coord.origin.w
-      value: 0
+      value: 0.58861744
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -2146,22 +2174,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[2].coord.origin.x
-      value: 0
+      value: -0.100632735
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[2].coord.origin.y
-      value: 0
+      value: -2.1944679e-14
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[2].coord.origin.z
-      value: 0
+      value: 0.000000023992712
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[2].coord.origin.w
-      value: 0
+      value: 0.99492365
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -2206,22 +2234,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[3].coord.origin.x
-      value: 0
+      value: -0.09773314
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[3].coord.origin.y
-      value: 0
+      value: -8.5577145e-15
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[3].coord.origin.z
-      value: 0
+      value: 0.000000023301395
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[3].coord.origin.w
-      value: 0
+      value: 0.9952127
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -2266,22 +2294,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[4].coord.origin.x
-      value: 0
+      value: 0.18686573
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[4].coord.origin.y
-      value: 0
+      value: 4.687068e-15
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[4].coord.origin.z
-      value: 0
+      value: -0.00000004455226
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[4].coord.origin.w
-      value: 0
+      value: 0.98238546
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -2321,22 +2349,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[5].coord.origin.x
-      value: 0
+      value: -0.14998919
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[5].coord.origin.y
-      value: 0
+      value: -4.6666946e-15
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[5].coord.origin.z
-      value: 0
+      value: 0.000000035760202
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[5].coord.origin.w
-      value: 0
+      value: 0.98868763
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -2376,22 +2404,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[6].coord.origin.x
-      value: 0
+      value: -0.5791412
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[6].coord.origin.y
-      value: 0
+      value: 0.3495282
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[6].coord.origin.z
-      value: 0
+      value: 0.38104045
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[6].coord.origin.w
-      value: 0
+      value: 0.63026476
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -2441,22 +2469,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[7].coord.origin.x
-      value: 0
+      value: 0.024408262
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[7].coord.origin.y
-      value: 0
+      value: -0.69912136
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[7].coord.origin.z
-      value: 0
+      value: 0.3312514
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[7].coord.origin.w
-      value: 0
+      value: 0.63317156
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -2506,22 +2534,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[8].coord.origin.x
-      value: 0
+      value: 0.013991949
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[8].coord.origin.y
-      value: 0
+      value: 0.0034326005
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[8].coord.origin.z
-      value: 0
+      value: 0.018521013
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[8].coord.origin.w
-      value: 0
+      value: 0.9997247
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -2571,22 +2599,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[9].coord.origin.x
-      value: 0
+      value: 0.018239101
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[9].coord.origin.y
-      value: 0
+      value: -0.71093255
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[9].coord.origin.z
-      value: 0
+      value: 0.050577626
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[9].coord.origin.w
-      value: 0
+      value: 0.7012019
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -2631,22 +2659,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[10].coord.origin.x
-      value: 0
+      value: 0.00092707155
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[10].coord.origin.y
-      value: 0
+      value: 0.002790083
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[10].coord.origin.z
-      value: 0
+      value: -0.05115563
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[10].coord.origin.w
-      value: 0
+      value: 0.9986864
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -2686,22 +2714,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[11].coord.origin.x
-      value: 0
+      value: 0.05564813
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[11].coord.origin.y
-      value: 0
+      value: -0.6552459
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[11].coord.origin.z
-      value: 0
+      value: -0.46712598
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[11].coord.origin.w
-      value: 0
+      value: 0.59105796
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -2746,22 +2774,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[12].coord.origin.x
-      value: 0
+      value: 0.18670781
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[12].coord.origin.y
-      value: 0
+      value: 0.067802124
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[12].coord.origin.z
-      value: 0
+      value: -0.04229775
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[12].coord.origin.w
-      value: 0
+      value: 0.97915983
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -2806,22 +2834,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[13].coord.origin.x
-      value: 0
+      value: 0.022428138
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[13].coord.origin.y
-      value: 0
+      value: 0.042971168
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[13].coord.origin.z
-      value: 0
+      value: 0.052345708
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[13].coord.origin.w
-      value: 0
+      value: 0.99745196
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -2871,22 +2899,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[14].coord.origin.x
-      value: 0
+      value: 0.00069504505
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[14].coord.origin.y
-      value: 0
+      value: -0.052629415
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[14].coord.origin.z
-      value: 0
+      value: 0.019747904
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[14].coord.origin.w
-      value: 0
+      value: 0.9984186
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -2931,22 +2959,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[15].coord.origin.x
-      value: 0
+      value: 0.08187372
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[15].coord.origin.y
-      value: 0
+      value: -0.0004906564
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[15].coord.origin.z
-      value: 0
+      value: 0.060144685
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[15].coord.origin.w
-      value: 0
+      value: 0.9948262
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -2996,22 +3024,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[16].coord.origin.x
-      value: 0
+      value: 0.073350236
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[16].coord.origin.y
-      value: 0
+      value: -0.02046609
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[16].coord.origin.z
-      value: 0
+      value: 0.0003914696
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[16].coord.origin.w
-      value: 0
+      value: 0.9970962
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -3061,22 +3089,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[17].coord.origin.x
-      value: 0
+      value: 0.0005588448
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[17].coord.origin.y
-      value: 0
+      value: 0.008948697
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[17].coord.origin.z
-      value: 0
+      value: -0.0270573
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[17].coord.origin.w
-      value: 0
+      value: 0.9995937
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -3116,22 +3144,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[18].coord.origin.x
-      value: 0
+      value: 0.039654978
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[18].coord.origin.y
-      value: 0
+      value: -0.024134042
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[18].coord.origin.z
-      value: 0
+      value: 0.060896672
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[18].coord.origin.w
-      value: 0
+      value: 0.997064
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -3181,22 +3209,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[19].coord.origin.x
-      value: 0
+      value: 0.10381339
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[19].coord.origin.y
-      value: 0
+      value: 0.014592851
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[19].coord.origin.z
-      value: 0
+      value: 0.008915971
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[19].coord.origin.w
-      value: 0
+      value: 0.9944498
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -3246,22 +3274,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[20].coord.origin.x
-      value: 0
+      value: 0.009779591
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[20].coord.origin.y
-      value: 0
+      value: 0.015415252
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[20].coord.origin.z
-      value: 0
+      value: 0.030830005
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[20].coord.origin.w
-      value: 0
+      value: 0.99935794
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -3306,22 +3334,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[21].coord.origin.x
-      value: 0
+      value: -0.003558625
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[21].coord.origin.y
-      value: 0
+      value: 0.024831077
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[21].coord.origin.z
-      value: 0
+      value: 0.02759228
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[21].coord.origin.w
-      value: 0
+      value: 0.9993045
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -3371,22 +3399,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[22].coord.origin.x
-      value: 0
+      value: 0.098947026
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[22].coord.origin.y
-      value: 0
+      value: 0.0060953246
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[22].coord.origin.z
-      value: 0
+      value: -0.005550772
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[22].coord.origin.w
-      value: 0
+      value: 0.99505854
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -3436,22 +3464,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[23].coord.origin.x
-      value: 0
+      value: 0.053748377
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[23].coord.origin.y
-      value: 0
+      value: 0.011903367
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[23].coord.origin.z
-      value: 0
+      value: 0.055033367
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[23].coord.origin.w
-      value: 0
+      value: 0.9969658
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -3501,22 +3529,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[24].coord.origin.x
-      value: 0
+      value: 0.054780688
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[24].coord.origin.y
-      value: 0
+      value: 0.017175326
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[24].coord.origin.z
-      value: 0
+      value: 0.005604393
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[24].coord.origin.w
-      value: 0
+      value: 0.99833494
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -3556,22 +3584,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[25].coord.origin.x
-      value: 0
+      value: -0.0104601905
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[25].coord.origin.y
-      value: 0
+      value: 0.0069609163
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[25].coord.origin.z
-      value: 0
+      value: 0.10315749
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[25].coord.origin.w
-      value: 0
+      value: 0.9945857
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -3621,22 +3649,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[26].coord.origin.x
-      value: 0
+      value: 0.115923405
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[26].coord.origin.y
-      value: 0
+      value: 0.074767925
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[26].coord.origin.z
-      value: 0
+      value: -0.058600396
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[26].coord.origin.w
-      value: 0
+      value: 0.988705
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -3681,22 +3709,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[27].coord.origin.x
-      value: 0
+      value: 0.029724281
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[27].coord.origin.y
-      value: 0
+      value: 0.0045984113
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[27].coord.origin.z
-      value: 0
+      value: 0.018430771
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[27].coord.origin.w
-      value: 0
+      value: 0.99937767
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -3746,22 +3774,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[28].coord.origin.x
-      value: 0
+      value: 0.031088362
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[28].coord.origin.y
-      value: 0
+      value: 0.016865669
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[28].coord.origin.z
-      value: 0
+      value: 0.003091299
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[28].coord.origin.w
-      value: 0
+      value: 0.99936956
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -3796,22 +3824,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[29].coord.origin.x
-      value: 0
+      value: -0.57914144
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[29].coord.origin.y
-      value: 0
+      value: -0.3495281
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[29].coord.origin.z
-      value: 0
+      value: -0.38104033
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[29].coord.origin.w
-      value: 0
+      value: 0.6302647
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -3841,22 +3869,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[30].coord.origin.x
-      value: 0
+      value: 0.024408342
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[30].coord.origin.y
-      value: 0
+      value: 0.6991215
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[30].coord.origin.z
-      value: 0
+      value: -0.3312513
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[30].coord.origin.w
-      value: 0
+      value: 0.6331714
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -3901,22 +3929,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[31].coord.origin.x
-      value: 0
+      value: 0.013991917
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[31].coord.origin.y
-      value: 0
+      value: -0.0034327428
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[31].coord.origin.z
-      value: 0
+      value: -0.018521056
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[31].coord.origin.w
-      value: 0
+      value: 0.9997247
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -3966,22 +3994,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[32].coord.origin.x
-      value: 0
+      value: 0.018239152
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[32].coord.origin.y
-      value: 0
+      value: 0.71093243
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[32].coord.origin.z
-      value: 0
+      value: -0.05057766
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[32].coord.origin.w
-      value: 0
+      value: 0.70120203
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -4031,22 +4059,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[33].coord.origin.x
-      value: 0
+      value: 0.0009270487
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[33].coord.origin.y
-      value: 0
+      value: -0.00279002
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[33].coord.origin.z
-      value: 0
+      value: 0.051155612
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[33].coord.origin.w
-      value: 0
+      value: 0.9986864
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -4096,22 +4124,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[34].coord.origin.x
-      value: 0
+      value: 0.055648033
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[34].coord.origin.y
-      value: 0
+      value: 0.65524584
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[34].coord.origin.z
-      value: 0
+      value: 0.467126
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[34].coord.origin.w
-      value: 0
+      value: 0.59105796
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -4151,22 +4179,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[35].coord.origin.x
-      value: 0
+      value: 0.18670776
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[35].coord.origin.y
-      value: 0
+      value: -0.06780206
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[35].coord.origin.z
-      value: 0
+      value: 0.042297915
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[35].coord.origin.w
-      value: 0
+      value: 0.97915983
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -4216,22 +4244,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[36].coord.origin.x
-      value: 0
+      value: 0.022428125
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[36].coord.origin.y
-      value: 0
+      value: -0.04297119
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[36].coord.origin.z
-      value: 0
+      value: -0.052345734
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[36].coord.origin.w
-      value: 0
+      value: 0.99745196
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -4281,22 +4309,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[37].coord.origin.x
-      value: 0
+      value: 0.0006950449
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[37].coord.origin.y
-      value: 0
+      value: 0.05262942
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[37].coord.origin.z
-      value: 0
+      value: -0.019747885
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[37].coord.origin.w
-      value: 0
+      value: 0.9984186
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -4346,22 +4374,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[38].coord.origin.x
-      value: 0
+      value: 0.0818737
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[38].coord.origin.y
-      value: 0
+      value: 0.00049064844
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[38].coord.origin.z
-      value: 0
+      value: -0.060144674
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[38].coord.origin.w
-      value: 0
+      value: 0.9948262
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -4411,22 +4439,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[39].coord.origin.x
-      value: 0
+      value: 0.07335019
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[39].coord.origin.y
-      value: 0
+      value: 0.020466076
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[39].coord.origin.z
-      value: 0
+      value: -0.0003914738
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[39].coord.origin.w
-      value: 0
+      value: 0.9970962
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -4476,22 +4504,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[40].coord.origin.x
-      value: 0
+      value: 0.0005588442
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[40].coord.origin.y
-      value: 0
+      value: -0.008948633
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[40].coord.origin.z
-      value: 0
+      value: 0.02705729
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[40].coord.origin.w
-      value: 0
+      value: 0.9995937
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -4541,22 +4569,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[41].coord.origin.x
-      value: 0
+      value: 0.039654996
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[41].coord.origin.y
-      value: 0
+      value: 0.024134045
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[41].coord.origin.z
-      value: 0
+      value: -0.060896654
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[41].coord.origin.w
-      value: 0
+      value: 0.997064
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -4606,22 +4634,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[42].coord.origin.x
-      value: 0
+      value: 0.103813335
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[42].coord.origin.y
-      value: 0
+      value: -0.014592857
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[42].coord.origin.z
-      value: 0
+      value: -0.008915982
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[42].coord.origin.w
-      value: 0
+      value: 0.9944498
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -4671,22 +4699,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[43].coord.origin.x
-      value: 0
+      value: 0.0097796405
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[43].coord.origin.y
-      value: 0
+      value: -0.01541524
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[43].coord.origin.z
-      value: 0
+      value: -0.030829996
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[43].coord.origin.w
-      value: 0
+      value: 0.99935794
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -4736,22 +4764,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[44].coord.origin.x
-      value: 0
+      value: -0.003558626
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[44].coord.origin.y
-      value: 0
+      value: -0.024831014
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[44].coord.origin.z
-      value: 0
+      value: -0.027592259
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[44].coord.origin.w
-      value: 0
+      value: 0.9993045
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -4801,22 +4829,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[45].coord.origin.x
-      value: 0
+      value: 0.098947026
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[45].coord.origin.y
-      value: 0
+      value: -0.0060953232
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[45].coord.origin.z
-      value: 0
+      value: 0.0055507575
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[45].coord.origin.w
-      value: 0
+      value: 0.99505854
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -4856,22 +4884,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[46].coord.origin.x
-      value: 0
+      value: 0.053748406
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[46].coord.origin.y
-      value: 0
+      value: -0.01190337
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[46].coord.origin.z
-      value: 0
+      value: -0.055033356
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[46].coord.origin.w
-      value: 0
+      value: 0.9969658
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -4916,22 +4944,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[47].coord.origin.x
-      value: 0
+      value: 0.054780696
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[47].coord.origin.y
-      value: 0
+      value: -0.017175313
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[47].coord.origin.z
-      value: 0
+      value: -0.0056043956
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[47].coord.origin.w
-      value: 0
+      value: 0.99833494
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -4976,22 +5004,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[48].coord.origin.x
-      value: 0
+      value: -0.010460152
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[48].coord.origin.y
-      value: 0
+      value: -0.0069608586
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[48].coord.origin.z
-      value: 0
+      value: -0.10315742
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[48].coord.origin.w
-      value: 0
+      value: 0.9945857
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -5041,22 +5069,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[49].coord.origin.x
-      value: 0
+      value: 0.11592329
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[49].coord.origin.y
-      value: 0
+      value: -0.07476793
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[49].coord.origin.z
-      value: 0
+      value: 0.058600347
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[49].coord.origin.w
-      value: 0
+      value: 0.98870504
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -5106,22 +5134,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[50].coord.origin.x
-      value: 0
+      value: 0.029724222
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[50].coord.origin.y
-      value: 0
+      value: -0.004598418
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[50].coord.origin.z
-      value: 0
+      value: -0.018430762
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[50].coord.origin.w
-      value: 0
+      value: 0.99937767
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -5171,22 +5199,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[51].coord.origin.x
-      value: 0
+      value: 0.031088367
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[51].coord.origin.y
-      value: 0
+      value: -0.01686567
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[51].coord.origin.z
-      value: 0
+      value: -0.0030912978
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[51].coord.origin.w
-      value: 0
+      value: 0.99936956
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -5236,22 +5264,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[52].coord.origin.x
-      value: 0
+      value: 0.9888135
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[52].coord.origin.y
-      value: 0
+      value: -0.0024857218
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[52].coord.origin.z
-      value: 0
+      value: 0.000056149023
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[52].coord.origin.w
-      value: 0
+      value: 0.14913641
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -5296,22 +5324,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[53].coord.origin.x
-      value: 0
+      value: -0.007426573
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[53].coord.origin.y
-      value: 0
+      value: -0.000004837688
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[53].coord.origin.z
-      value: 0
+      value: 0.005454698
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[53].coord.origin.w
-      value: 0
+      value: 0.99995756
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -5351,22 +5379,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[54].coord.origin.x
-      value: 0
+      value: -0.48321438
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[54].coord.origin.y
-      value: 0
+      value: 0.016294403
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[54].coord.origin.z
-      value: 0
+      value: 0.015190289
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[54].coord.origin.w
-      value: 0
+      value: 0.87521863
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -5416,22 +5444,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[55].coord.origin.x
-      value: 0
+      value: -0.00431761
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[55].coord.origin.y
-      value: 0
+      value: 0.96113086
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[55].coord.origin.z
-      value: 0
+      value: -0.27564856
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[55].coord.origin.w
-      value: 0
+      value: -0.015056713
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -5481,22 +5509,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[56].coord.origin.x
-      value: 0
+      value: 0.025464084
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[56].coord.origin.y
-      value: 0
+      value: 0.93852824
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[56].coord.origin.z
-      value: 0
+      value: 0.34423614
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[56].coord.origin.w
-      value: 0
+      value: -0.0042237593
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -5546,22 +5574,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[57].coord.origin.x
-      value: 0
+      value: 0.63449514
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[57].coord.origin.y
-      value: 0
+      value: 0.64793307
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[57].coord.origin.z
-      value: 0
+      value: -0.31211522
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[57].coord.origin.w
-      value: 0
+      value: 0.28316554
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -5611,22 +5639,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[58].coord.origin.x
-      value: 0
+      value: 0.9888135
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[58].coord.origin.y
-      value: 0
+      value: 0.0024857845
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[58].coord.origin.z
-      value: 0
+      value: -0.000056386314
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[58].coord.origin.w
-      value: 0
+      value: 0.14913641
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -5671,22 +5699,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[59].coord.origin.x
-      value: 0
+      value: -0.007426573
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[59].coord.origin.y
-      value: 0
+      value: 0.0000048370066
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[59].coord.origin.z
-      value: 0
+      value: -0.005454682
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[59].coord.origin.w
-      value: 0
+      value: 0.99995756
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -5736,22 +5764,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[60].coord.origin.x
-      value: 0
+      value: -0.48321438
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[60].coord.origin.y
-      value: 0
+      value: -0.016294403
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[60].coord.origin.z
-      value: 0
+      value: -0.015190289
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[60].coord.origin.w
-      value: 0
+      value: 0.87521863
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -5791,22 +5819,22 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[61].coord.origin.x
-      value: 0
+      value: 0.004316631
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[61].coord.origin.y
-      value: 0
+      value: 0.9611308
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[61].coord.origin.z
-      value: 0
+      value: -0.2756487
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[61].coord.origin.w
-      value: 0
+      value: 0.01505873
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -5851,87 +5879,87 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[62].coord.origin.x
-      value: 0
+      value: -0.025464088
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[62].coord.origin.y
-      value: 0
+      value: 0.93852824
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[62].coord.origin.z
-      value: 0
+      value: 0.34423614
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[62].coord.origin.w
-      value: 0
+      value: 0.004223758
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[63].coord.up.x
-      value: -0.029126808
+      value: -0.029126704
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[63].coord.up.y
-      value: 0.7637939
+      value: 0.7637943
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[63].coord.up.z
-      value: 0.64480275
+      value: 0.6448028
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[63].coord.forward.x
-      value: 0.9989813
+      value: 0.99898154
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[63].coord.forward.y
-      value: 0.00000024586916
+      value: 0.000000059604645
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[63].coord.forward.z
-      value: 0.04512531
+      value: 0.04512499
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[63].coord.right.x
-      value: -0.034466296
+      value: -0.0344664
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[63].coord.right.y
-      value: -0.6454603
+      value: -0.64546055
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[63].coord.right.z
-      value: 0.763016
+      value: 0.7630162
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[63].coord.origin.x
-      value: 0
+      value: -0.6344952
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[63].coord.origin.y
-      value: 0
+      value: 0.6479331
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[63].coord.origin.z
-      value: 0
+      value: -0.3121153
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[63].coord.origin.w
-      value: 0
+      value: -0.2831655
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -5971,67 +5999,67 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[64].coord.up.x
-      value: 0.096030444
+      value: 0.8109567
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[64].coord.up.y
-      value: 0.9946043
+      value: -0.5803057
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[64].coord.up.z
-      value: 0.039260775
+      value: -0.07479636
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[64].coord.forward.x
-      value: -0.99533993
+      value: 0.060827047
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[64].coord.forward.y
-      value: 0.09630085
+      value: -0.043526545
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[64].coord.forward.z
-      value: -0.005069256
+      value: 0.9971988
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[64].coord.right.x
-      value: 0.008822516
+      value: 0.5819358
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[64].coord.right.y
-      value: 0.038591366
+      value: 0.8132348
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[64].coord.right.z
-      value: -0.9992169
+      value: -0.00000008940697
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[64].coord.origin.x
-      value: 0
+      value: -0.60489935
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[64].coord.origin.y
-      value: 0
+      value: -0.31096402
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[64].coord.origin.z
-      value: 0
+      value: 0.3351619
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[64].coord.origin.w
-      value: 0
+      value: 0.65196985
       objectReference: {fileID: 0}
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
@@ -6081,6 +6109,21 @@ Prefab:
     - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
         type: 2}
       propertyPath: setting.asts.Array.data[0].forward.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
+        type: 2}
+      propertyPath: setting.asts.Array.data[0].coord.right.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
+        type: 2}
+      propertyPath: setting.asts.Array.data[0].coord.right.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114186401817001266, guid: d3bca32cb680a664e8a2c372ab643c9f,
+        type: 2}
+      propertyPath: drawLine
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -6154,6 +6197,34 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 692386022}
+--- !u!1 &745539813
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 745539814}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &745539814
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 745539813}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 964817744}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &751326556
 GameObject:
   m_ObjectHideFlags: 0
@@ -6184,7 +6255,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 160.7, y: -317.5}
+  m_AnchoredPosition: {x: 160.7, y: -293}
   m_SizeDelta: {x: 301.4, y: 615}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &764335215
@@ -6220,7 +6291,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 6547, y: -3682.6875}
   m_SizeDelta: {x: 1600, y: 900}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &764335217
@@ -6516,7 +6587,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 10, y: -10.000122}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0, y: 1}
 --- !u!61 &869043479
@@ -6743,7 +6814,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: -20}
+  m_SizeDelta: {x: -20, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &958266362
 GameObject:
@@ -6838,7 +6909,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.35205078, y: 1.8225098, z: 0.078125}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 340828608}
+  - {fileID: 745539814}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6986,6 +7059,7 @@ GameObject:
   - component: {fileID: 976285353}
   - component: {fileID: 976285352}
   - component: {fileID: 976285351}
+  - component: {fileID: 976285355}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -7076,6 +7150,34 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &976285355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 976285350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32f03a7322e4034408216c08b4a07030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dict:
+  - key: {fileID: 1017906914}
+    value: {x: 468.9, y: -0.000047684}
+  - key: {fileID: 1802281330}
+    value: {x: 0, y: 0}
+  - key: {fileID: 869043478}
+    value: {x: 0, y: 0}
+  - key: {fileID: 483539893}
+    value: {x: 0, y: -455.6}
+  - key: {fileID: 1475540247}
+    value: {x: 0, y: -755}
+  - key: {fileID: 765402817}
+    value: {x: 0, y: 0}
+  - key: {fileID: 1790258388}
+    value: {x: 0, y: 0}
+  log: 0
+  set: 1
 --- !u!1 &979271823
 GameObject:
   m_ObjectHideFlags: 0
@@ -7265,6 +7367,8 @@ MonoBehaviour:
   bone: 48
   ikTarget: 1
   ikTargetSingle: 1
+  lockPos1: {x: 0, y: 0, z: 0}
+  lockPos2: {x: 0, y: 0, z: 0}
   dofP:
     bone: 0
     count: 1
@@ -7310,6 +7414,12 @@ MonoBehaviour:
     defaultValue: 0
     toggle: {fileID: 0}
   IKSingle:
+    defaultValue: 0
+    toggle: {fileID: 0}
+  lockOneSide:
+    defaultValue: 0
+    toggle: {fileID: 0}
+  lockMirror:
     defaultValue: 0
     toggle: {fileID: 0}
   strif:
@@ -7371,6 +7481,7 @@ MonoBehaviour:
   theta0: -10
   theta1: -10
   joints: 
+  joints2: 
   jointIterCount: 10
   axisIterCount: 30
   gun: {fileID: 0}
@@ -7860,7 +7971,7 @@ MonoBehaviour:
   offsetMax: {x: 0, y: -36}
   anchorMin: {x: 0, y: 0}
   anchorMax: {x: 1, y: 1}
-  AbsRefPos: {x: 0, y: 795.4}
+  AbsRefPos: {x: 0, y: 791}
 --- !u!114 &1242647413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8095,7 +8206,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -759.4}
+  m_AnchoredPosition: {x: 0, y: -755}
   m_SizeDelta: {x: 1268.8999, y: 140.59998}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1475540248
@@ -8156,13 +8267,13 @@ MonoBehaviour:
     y: -140.59998
     width: 1268.8999
     height: 140.59998
-  anchoredPosition: {x: 0, y: -759.4}
+  anchoredPosition: {x: 0, y: -755}
   sizeDelta: {x: 1268.8999, y: 140.59998}
-  offsetMin: {x: 0, y: -900}
-  offsetMax: {x: 1268.8999, y: -759.4}
+  offsetMin: {x: 0, y: -895.6}
+  offsetMax: {x: 1268.8999, y: -755}
   anchorMin: {x: 0, y: 1}
   anchorMax: {x: 0, y: 1}
-  AbsRefPos: {x: 0, y: 1658.4}
+  AbsRefPos: {x: 0, y: 1654}
 --- !u!1 &1492364305
 GameObject:
   m_ObjectHideFlags: 0
@@ -8268,7 +8379,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000019073486}
+  m_AnchoredPosition: {x: 0, y: 0.000011444092}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1636883140
@@ -8425,7 +8536,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 0}
+  m_SizeDelta: {x: -25, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1650496463
 MonoBehaviour:
@@ -9156,7 +9267,7 @@ MonoBehaviour:
   offsetMax: {x: 0, y: 0}
   anchorMin: {x: 0, y: 0}
   anchorMax: {x: 1, y: 1}
-  AbsRefPos: {x: 36, y: 464.45}
+  AbsRefPos: {x: 36, y: 455.6}
 --- !u!1 &2090837451
 GameObject:
   m_ObjectHideFlags: 0
@@ -9502,4 +9613,4 @@ MonoBehaviour:
   offsetMax: {x: 0, y: 0}
   anchorMin: {x: 0, y: 1}
   anchorMax: {x: 1, y: 1}
-  AbsRefPos: {x: 0, y: 759.4}
+  AbsRefPos: {x: 0, y: 755}

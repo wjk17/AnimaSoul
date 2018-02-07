@@ -99,6 +99,10 @@ public class UIDOFEditor : MonoBehaviour
     public ASBone bone = ASBone.chest; // 给出个初始值
     public ASIKTarget ikTarget = ASIKTarget.LeftHand;
     public ASIKTargetSingle ikTargetSingle = ASIKTargetSingle.LeftElbow;
+
+    public Vector3 lockPos1;
+    public Vector3 lockPos2;
+
     public DOFProp dofP;
     public ASDOF dof;
     public ASDOFMgr dofSet;
@@ -109,6 +113,8 @@ public class UIDOFEditor : MonoBehaviour
     public FloatValueR swingZ;
     public BoolValueToggle IK;
     public BoolValueToggle IKSingle;
+    public BoolValueToggle lockOneSide;
+    public BoolValueToggle lockMirror;
     //[NonSerialized]
     public StringValueIF strif;
     [NonSerialized]
@@ -127,6 +133,7 @@ public class UIDOFEditor : MonoBehaviour
     public float theta0;
     public float theta1;
     public List<ASBone> joints;
+    public List<ASBone> joints2;
     public int jointIterCount = 10;
     public int axisIterCount = 20;
 
@@ -253,7 +260,7 @@ public class UIDOFEditor : MonoBehaviour
         ASUI.LabelField("IK目标(单关节)", headWidth * 4);
         ikTargetSingle = ASIKTargetSingle.LeftHand;
         ASUI.DropdownEnum(ikTargetSingle, (int)ASIKTargetSingle.Count, ikTargetSingleNames, IKSingleTargetChange);
-        IKTargetChange((int)ikTargetSingle);
+        IKSingleTargetChange((int)ikTargetSingle);
         ASUI.EndHorizon();
 
         ASUI.BeginHorizon();
@@ -266,34 +273,114 @@ public class UIDOFEditor : MonoBehaviour
         ASUI.Toggle("武器IK", 80f * 2, GunIKBoolValueToggle, OnWeaponIK);
         ASUI.EndHorizon();
 
+        ASUI.BeginHorizon();
+        ASUI.Toggle("锁定骨骼位置", 160, lockOneSide, LockOneSideToggle);
+        ASUI.DropdownEnum(ASIKTarget.LeftLeg, (int)ASIKTarget.Count, ikTargetNames, LockTargetChange);
+        LockTargetChange((int)ASIKTarget.LeftLeg);
+        ASUI.EndHorizon();
+
+        ASUI.BeginHorizon();
+        ASUI.Toggle("锁定骨骼位置(对称)", 160, lockMirror, LockMirrorToggle);
+        ASUI.DropdownEnum(ASIKTargetMirror.Leg, (int)ASIKTargetMirror.Count, ikTargetMirrorNames, LockMirrorTargetChange);
+        LockMirrorTargetChange((int)ASIKTargetMirror.Leg);
+        ASUI.EndHorizon();
+
         ASUI.I.inputCallBacks.Add(new ASGUI.InputCallBack(GetInput, 1));
 
         UpdateDOF();
         gun = avatar[ASBone.other].transform;
     }
+
+    private void LockOneSideToggle(bool value)
+    {
+        lockOneSide.Value = value;
+        if (value) { lockMirror.Value = IKSingle.Value = IK.Value = false; }
+    }
+
+    private void LockMirrorToggle(bool value)
+    {
+        lockMirror.Value = value;
+        if (value) { lockOneSide.Value = IKSingle.Value = IK.Value = false; }
+    }
+
+    private void LockTargetChange(int index)
+    {
+        joints = new List<ASBone>();
+        var lockTarget = (ASIKTarget)index;
+        switch (lockTarget)
+        {
+            case ASIKTarget.RightHand:
+                joints.Add(ASBone.hand_r);
+                joints.Add(ASBone.forearm_r);
+                joints.Add(ASBone.upperarm_r);
+                break;
+            case ASIKTarget.LeftHand:
+                joints.Add(ASBone.hand_l);
+                joints.Add(ASBone.forearm_l);
+                joints.Add(ASBone.upperarm_l);
+                break;
+            case ASIKTarget.RightLeg:
+                joints.Add(ASBone.foot_r);
+                joints.Add(ASBone.shin_r);
+                joints.Add(ASBone.thigh_r);
+                break;
+            case ASIKTarget.LeftLeg:
+                joints.Add(ASBone.foot_l);
+                joints.Add(ASBone.shin_l);
+                joints.Add(ASBone.thigh_l);
+                break;
+            default: throw null;
+        }
+        lockPos1 = avatar[joints[0]].transform.position;
+    }
+    void LockMirrorTargetChange(int index)
+    {
+        joints = new List<ASBone>();
+        joints2 = new List<ASBone>();
+        var lockTargetMirror = (ASIKTargetMirror)index;
+        switch (lockTargetMirror)
+        {
+            case ASIKTargetMirror.Hand:
+                joints.Add(ASBone.hand_l);
+                joints.Add(ASBone.forearm_l);
+                joints.Add(ASBone.upperarm_l);
+                lockPos1 = avatar[ASBone.hand_l].transform.position;
+                lockPos2 = avatar[ASBone.hand_r].transform.position;
+                break;
+            case ASIKTargetMirror.Leg:
+                joints.Add(ASBone.foot_l);
+                joints.Add(ASBone.shin_l);
+                joints.Add(ASBone.thigh_l);
+                lockPos1 = avatar[ASBone.foot_l].transform.position;
+                lockPos2 = avatar[ASBone.foot_r].transform.position;
+                break;
+            default: throw null;
+        }
+        foreach (var j in joints)
+        {
+            joints2.Add(j + 1); // right side
+        }
+    }
+
     public Transform gun;
     public BoolValueToggle GunIKBoolValueToggle;
     public void GunIK()
     {
-        if (GunIKBoolValueToggle.Value)
-        {
-            var targetPos = target.position + Gun2LeftHand;
-            joints = new List<ASBone>();
-            joints.Add(ASBone.hand_l);
-            joints.Add(ASBone.forearm_l);
-            joints.Add(ASBone.upperarm_l);
-            end = avatar[ASBone.hand_l].transform;
-            IKSolve(targetPos, joints.ToArray());
+        var targetPos = target.position + Gun2LeftHand;
+        joints = new List<ASBone>();
+        joints.Add(ASBone.hand_l);
+        joints.Add(ASBone.forearm_l);
+        joints.Add(ASBone.upperarm_l);
+        end = avatar[ASBone.hand_l].transform;
+        IKSolve(targetPos, joints.ToArray());
 
-            targetPos = target.position + Gun2RightHand;
-            joints = new List<ASBone>();
-            joints.Add(ASBone.hand_r);
-            joints.Add(ASBone.forearm_r);
-            joints.Add(ASBone.upperarm_r);
-            end = avatar[ASBone.hand_r].transform;
-            IKSolve(targetPos, joints.ToArray());
-
-        }
+        targetPos = target.position + Gun2RightHand;
+        joints = new List<ASBone>();
+        joints.Add(ASBone.hand_r);
+        joints.Add(ASBone.forearm_r);
+        joints.Add(ASBone.upperarm_r);
+        end = avatar[ASBone.hand_r].transform;
+        IKSolve(targetPos, joints.ToArray());
     }
     public Vector3 Gun2LeftHand;
     public Vector3 Gun2RightHand;
@@ -344,6 +431,7 @@ public class UIDOFEditor : MonoBehaviour
         Debug.Log(clipNameLabel.value);
     }
     string[] ikTargetNames = new string[] { "左手", "右手", "左脚", "右脚" };
+    string[] ikTargetMirrorNames = new string[] { "双手", "双脚" };
     public enum ASIKTarget
     {
         LeftHand,
@@ -352,7 +440,14 @@ public class UIDOFEditor : MonoBehaviour
         RightLeg,
         Count
     }
+    public enum ASIKTargetMirror
+    {
+        Hand,
+        Leg,
+        Count
+    }
     string[] ikTargetSingleNames = new string[] { "左手", "左手肘", "右手", "右手肘", "左脚", "左膝", "右脚", "右膝" };
+    string[] ikTargetSingleMirrorNames = new string[] { "双手", "双肘", "双脚", "双膝" };
     public enum ASIKTargetSingle
     {
         LeftHand,
@@ -363,6 +458,14 @@ public class UIDOFEditor : MonoBehaviour
         LeftKnee,
         RightLeg,
         RightKnee,
+        Count
+    }
+    public enum ASIKTargetSingleMirror
+    {
+        Hand,
+        Elbow,
+        Leg,
+        Knee,
         Count
     }
     void GetInput()
@@ -376,12 +479,12 @@ public class UIDOFEditor : MonoBehaviour
     void OnIKToggle(bool value)
     {
         IK.Value = value;
-        if (value) { IKSingle.Value = false; }
+        if (value) { IKSingle.Value = lockOneSide.Value = lockMirror.Value = false; }
     }
     void OnIKSingleToggle(bool value)
     {
         IKSingle.Value = value;
-        if (value) { IK.Value = false; }
+        if (value) { IK.Value = lockOneSide.Value = lockMirror.Value = false; }
     }
     private void OnIKSnap()
     {
@@ -497,7 +600,7 @@ public class UIDOFEditor : MonoBehaviour
         dofP.swingXSlider.slider.value = swingX;
         dofP.swingZSlider.slider.value = swingZ;
 
-        //ast.euler.y = twist;
+        //ast.euler.y = twist; //似乎ast跟asts表里的指针指向同一实例，所以不需要更新
         //ast.euler.x = swingX;
         //ast.euler.z = swingZ;
     }
@@ -511,28 +614,25 @@ public class UIDOFEditor : MonoBehaviour
                 joints.Add(ASBone.hand_r);
                 joints.Add(ASBone.forearm_r);
                 joints.Add(ASBone.upperarm_r);
-                end = avatar[ASBone.hand_r].transform;
                 break;
             case ASIKTarget.LeftHand:
                 joints.Add(ASBone.hand_l);
                 joints.Add(ASBone.forearm_l);
                 joints.Add(ASBone.upperarm_l);
-                end = avatar[ASBone.hand_l].transform;
                 break;
             case ASIKTarget.RightLeg:
                 joints.Add(ASBone.foot_r);
                 joints.Add(ASBone.shin_r);
                 joints.Add(ASBone.thigh_r);
-                end = avatar[ASBone.foot_r].transform;
                 break;
             case ASIKTarget.LeftLeg:
                 joints.Add(ASBone.foot_l);
                 joints.Add(ASBone.shin_l);
                 joints.Add(ASBone.thigh_l);
-                end = avatar[ASBone.foot_l].transform;
                 break;
             default: throw null;
         }
+        end = avatar[joints[0]].transform;
         OnIKSnap();
     }
     void IKSingleTargetChange(int index)
@@ -544,45 +644,38 @@ public class UIDOFEditor : MonoBehaviour
             case ASIKTargetSingle.RightElbow:
                 joints.Add(ASBone.forearm_r);
                 joints.Add(ASBone.upperarm_r);
-                end = avatar[ASBone.forearm_r].transform;
                 break;
             case ASIKTargetSingle.RightHand:
                 joints.Add(ASBone.hand_r);
                 joints.Add(ASBone.forearm_r);
-                end = avatar[ASBone.hand_r].transform;
                 break;
             case ASIKTargetSingle.LeftElbow:
                 joints.Add(ASBone.forearm_l);
                 joints.Add(ASBone.upperarm_l);
-                end = avatar[ASBone.forearm_l].transform;
                 break;
             case ASIKTargetSingle.LeftHand:
                 joints.Add(ASBone.hand_l);
                 joints.Add(ASBone.forearm_l);
-                end = avatar[ASBone.hand_l].transform;
                 break;
             case ASIKTargetSingle.RightKnee:
                 joints.Add(ASBone.shin_r);
                 joints.Add(ASBone.thigh_r);
-                end = avatar[ASBone.shin_r].transform;
                 break;
             case ASIKTargetSingle.RightLeg:
                 joints.Add(ASBone.foot_r);
                 joints.Add(ASBone.shin_r);
-                end = avatar[ASBone.foot_r].transform;
                 break;
             case ASIKTargetSingle.LeftKnee:
                 joints.Add(ASBone.shin_l);
                 joints.Add(ASBone.thigh_l);
-                end = avatar[ASBone.shin_l].transform;
                 break;
             case ASIKTargetSingle.LeftLeg:
                 joints.Add(ASBone.foot_l);
                 joints.Add(ASBone.shin_l);
-                end = avatar[ASBone.foot_l].transform;
                 break;
             default: throw null;
         }
+        end = avatar[joints[0]].transform;
         OnIKSingleSnap();
     }
     void DropdownChange(int index)
@@ -618,7 +711,17 @@ public class UIDOFEditor : MonoBehaviour
             //IKSolve(forearm, uparm, hand);
             //uparm.coord.DrawRay(uparm.transform, uparm.euler, 0.5f, false);
         }
-        else GunIK();
+        else if (lockOneSide || lockMirror)
+        {
+            end = avatar[joints[0]].transform;
+            IKSolve(lockPos1, joints.ToArray());
+            if (lockMirror)
+            {
+                end = avatar[joints2[0]].transform;
+                IKSolve(lockPos2, joints2.ToArray());
+            }
+        }
+        else if (GunIKBoolValueToggle) GunIK();
     }
     float Dist(Vector3 targetPos)
     {
@@ -676,6 +779,10 @@ public class UIDOFEditor : MonoBehaviour
         }
         astIK.Rotate();
     }
+    private void IKSolve(params ASBone[] bones)
+    {
+        IKSolve(target.position, bones);
+    }
     private void IKSolve(Vector3 targetPos, params ASBone[] bones)
     {
         var joints = new List<ASTransDOF>();
@@ -684,15 +791,6 @@ public class UIDOFEditor : MonoBehaviour
             joints.Add(avatar[bone]);
         }
         IKSolve(targetPos, joints.ToArray());
-    }
-    private void IKSolve(params ASBone[] bones)
-    {
-        var joints = new List<ASTransDOF>();
-        foreach (var bone in bones)
-        {
-            joints.Add(avatar[bone]);
-        }
-        IKSolve(joints.ToArray());
     }
     private void IKSolve(params ASTransDOF[] joints)
     {

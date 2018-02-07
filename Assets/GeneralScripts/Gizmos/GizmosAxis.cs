@@ -17,8 +17,7 @@ public class GizmosAxis : MonoBehaviour
         set
         {
             _controlObj = value;
-            if (value == null) return;
-            transform.position = value.position;
+            if (value != null) transform.position = value.position;
         }
         get { return _controlObj; }
     }

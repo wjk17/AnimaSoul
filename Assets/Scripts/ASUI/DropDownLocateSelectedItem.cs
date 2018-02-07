@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class DropDownLocateSelectedItem : MonoBehaviour, IPointerClickHandler
 {
     public Dropdown drop;
+    public RectTransform scrollbar;
+    public Transform list;
     public void OnPointerClick(PointerEventData eventData)
     {
         LocateSelectedItem();
@@ -14,10 +16,29 @@ public class DropDownLocateSelectedItem : MonoBehaviour, IPointerClickHandler
     void Start()
     {
         drop = GetComponent<Dropdown>();
+        list = transform.Search("Dropdown List");
+    }
+    void Update()
+    {
+        if (list != null)
+        {
+            scrollbar = list.Search("Scrollbar") as RectTransform;
+
+            if (scrollbar != null)
+            {
+                scrollbar.anchoredPosition = scrollbar.anchoredPosition.SetX(0);
+                scrollbar.sizeDelta = scrollbar.sizeDelta.SetX(28);
+                //var slidingArea = scrollbar.Search("Sliding Area") as RectTransform;
+                //if (slidingArea != null)
+                //{
+                //    slidingArea.anchoredPosition
+                //}
+            }
+        }
     }
     void LocateSelectedItem()
     {
-        var list = transform.Search("Dropdown List");
+        list = transform.Search("Dropdown List");
         if (list != null)
         {
             var content = list.Search("Content");
