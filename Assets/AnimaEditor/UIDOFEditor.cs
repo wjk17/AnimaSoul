@@ -239,6 +239,10 @@ public class UIDOFEditor : MonoBehaviour
         ASUI.EndHorizon();
 
         ASUI.BeginHorizon();
+        ASUI.Button("插入丢失曲线", InsertMissCurve);
+        ASUI.EndHorizon();       
+
+        ASUI.BeginHorizon();
         ASUI.Slider(swingZ, dofP.swingZMin, dofP.swingZMax, OnIKBoneLengthChanged);
         ASUI.EndHorizon();
 
@@ -498,10 +502,43 @@ public class UIDOFEditor : MonoBehaviour
         gizmos.transform.position = end.position;
         target.position = end.position;
     }
+    void ifInsert(ASCurve asc, float v)
+    {
+        if (asc.keys != null && asc.keys.Count > 0)
+        {
+            if (asc.IndexOf(UITimeLine.FrameIndex) > -1)
+            {
+                asc.InsertKey(UITimeLine.FrameIndex, v);
+            }
+        }
+    }
+    bool MissAst(ASTransDOF t) // ast是否存在于当前clip
+    {
+        foreach (var curve in UIClip.clip.curves)
+        {
+            if (curve.ast == t) return false;
+        }
+        return true;
+    }
+    void InsertMissCurve()
+    {
+        foreach (var ast in avatar.setting.asts)
+        {
+            if (MissAst(ast)) // 插入新增的（化身ast表里有，clip里却没有的）曲线
+            {
+                UIClip.clip.curves.Add(new ASObjectCurve(ast));
+            }
+        }
+    }
     public void InsertKeyToAllCurves()
     {
         foreach (var curve in UIClip.clip.curves)
         {
+            //var pos = curve.ast.transform.localPosition;
+            //ifInsert(curve.localPosition[0], pos.x);
+            //ifInsert(curve.localPosition[1], pos.y);
+            //ifInsert(curve.localPosition[2], pos.z);
+            //UIClip.clip.AddEulerCurve(curve, UITimeLine.FrameIndex, curve.ast.euler);
             UIClip.clip.AddEulerPos(curve, UITimeLine.FrameIndex, curve.ast.euler, curve.ast.transform.localPosition);
         }
     }

@@ -423,7 +423,8 @@ Shader "UnityChan/Standard_ZTestOff" {
                 float3 lightColor = _LightColor0.rgb;
                 float3 halfDirection = normalize(viewDirection+lightDirection);
 ////// Lighting:
-                float attenuation = LIGHT_ATTENUATION(i);
+                //float attenuation = LIGHT_ATTENUATION(i);
+				UNITY_LIGHT_ATTENUATION(attenuation, i, i.posWorld.xyz);
                 float2 node_6858 = Set_UV0;
                 float4 _BaseMap_var = tex2D(_BaseMap,TRANSFORM_TEX(node_6858, _BaseMap));
                 float3 node_9970 = (_BaseColor.rgb*_BaseMap_var.rgb);

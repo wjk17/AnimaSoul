@@ -80,32 +80,32 @@ Shader "UnityChan/UCTS_Standard_StencilMask" {
             "Queue"="AlphaTest-1"    //StencilMask Opaque and _Clipping
             "RenderType"="Opaque"
         }
-        // Pass {
-        //     Name "Outline"
-        //     Tags {
-        //     }
-        //     Cull Front
+        Pass {
+            Name "Outline"
+            Tags {
+            }
+            Cull Front
             
-        //     Stencil {
-        //         Ref[_StencilNo]
-        //         Comp Greater
-        //         Pass Replace
-        //         Fail Keep
-        //     }
+            Stencil {
+                Ref[_StencilNo]
+                Comp Always
+                Pass Replace
+                Fail Replace
+            }
             
-        //     CGPROGRAM
-        //     #pragma vertex vert
-        //     #pragma fragment frag
-        //     #include "UnityCG.cginc"
-        //     //#pragma fragmentoption ARB_precision_hint_fastest
-        //     //#pragma multi_compile_shadowcaster
-        //     //#pragma multi_compile_fog
-        //     #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal xboxone ps4 switch
-        //     #pragma target 3.0
-        //     //�A�E�g���C�������͈ȉ���cginc��.
-        //     #include "UCTS_Outline.cginc"
-        //     ENDCG
-        // }
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include "UnityCG.cginc"
+            //#pragma fragmentoption ARB_precision_hint_fastest
+            //#pragma multi_compile_shadowcaster
+            //#pragma multi_compile_fog
+            #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal xboxone ps4 switch
+            #pragma target 3.0
+            //�A�E�g���C�������͈ȉ���cginc��.
+            #include "UCTS_Outline.cginc"
+            ENDCG
+        }
 //ToonCoreStart
         Pass {
             Name "FORWARD"
@@ -116,9 +116,9 @@ Shader "UnityChan/UCTS_Standard_StencilMask" {
             
             Stencil {
                 Ref[_StencilNo]
-                Comp Greater
+                Comp Always
                 Pass Replace
-                Fail Keep
+                Fail Replace
             }
             
             CGPROGRAM
@@ -457,7 +457,8 @@ Shader "UnityChan/UCTS_Standard_StencilMask" {
                 float3 lightColor = _LightColor0.rgb;
                 float3 halfDirection = normalize(viewDirection+lightDirection);
 ////// Lighting:
-                float attenuation = LIGHT_ATTENUATION(i);
+                //float attenuation = LIGHT_ATTENUATION(i);
+                UNITY_LIGHT_ATTENUATION(attenuation, i, i.posWorld.xyz);
                 float2 node_6858 = Set_UV0;
                 float4 _BaseMap_var = tex2D(_BaseMap,TRANSFORM_TEX(node_6858, _BaseMap));
                 float3 node_9970 = (_BaseColor.rgb*_BaseMap_var.rgb);

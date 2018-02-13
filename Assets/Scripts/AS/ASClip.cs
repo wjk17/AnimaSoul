@@ -123,9 +123,17 @@ public class ASClip
     public void AddEulerPos(ASObjectCurve curve, int frameIndex, Vector3 euler, Vector3 pos)
     {
         curve.timeCurve.InsertKey(frameIndex, 0);
+        AddEulerCurve(curve, frameIndex, euler);
+        AddPositionCurve(curve, frameIndex, pos);
+    }
+    public void AddEulerCurve(ASObjectCurve curve, int frameIndex, Vector3 euler)
+    {
         curve.eulerAngles[0].InsertKey(frameIndex, euler.x);
         curve.eulerAngles[1].InsertKey(frameIndex, euler.y);
         curve.eulerAngles[2].InsertKey(frameIndex, euler.z);
+    }
+    public void AddPositionCurve(ASObjectCurve curve, int frameIndex, Vector3 pos)
+    {
         curve.localPosition[0].InsertKey(frameIndex, pos.x);
         curve.localPosition[1].InsertKey(frameIndex, pos.y);
         curve.localPosition[2].InsertKey(frameIndex, pos.z);

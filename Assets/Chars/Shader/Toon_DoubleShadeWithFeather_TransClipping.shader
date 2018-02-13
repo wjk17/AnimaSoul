@@ -35,7 +35,7 @@ Shader "UnityChanToonShader/Toon_DoubleShadeWithFeather_TransClipping" {
         [MaterialToggle] _Is_BlendAddToHiColor ("Is_BlendAddToHiColor", Float ) = 0
         [MaterialToggle] _Is_UseTweakHighColorOnShadow ("Is_UseTweakHighColorOnShadow", Float ) = 0
         _TweakHighColorOnShadow ("TweakHighColorOnShadow", Range(0, 1)) = 0
-//ƒnƒCƒJƒ‰[ƒ}ƒXƒN.
+//ï¿½nï¿½Cï¿½Jï¿½ï¿½ï¿½[ï¿½}ï¿½Xï¿½N.
         _Set_HighColorMask ("Set_HighColorMask", 2D) = "white" {}
         _Tweak_HighColorMaskLevel ("Tweak_HighColorMaskLevel", Range(-1, 1)) = 0
         [MaterialToggle] _RimLight ("RimLight", Float ) = 0
@@ -45,7 +45,7 @@ Shader "UnityChanToonShader/Toon_DoubleShadeWithFeather_TransClipping" {
         _RimLight_Power ("RimLight_Power", Range(0, 1)) = 0.1
         _RimLight_InsideMask ("RimLight_InsideMask", Range(0.0001, 1)) = 0.0001
         [MaterialToggle] _RimLight_FeatherOff ("RimLight_FeatherOff", Float ) = 0
-//ƒŠƒ€ƒ‰ƒCƒg’Ç‰ÁƒvƒƒpƒeƒB.
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½gï¿½Ç‰ï¿½ï¿½vï¿½ï¿½ï¿½pï¿½eï¿½B.
         [MaterialToggle] _LightDirection_MaskOn ("LightDirection_MaskOn", Float ) = 0
         _Tweak_LightDirection_MaskLevel ("Tweak_LightDirection_MaskLevel", Range(0, 0.5)) = 0
         [MaterialToggle] _Add_Antipodean_RimLight ("Add_Antipodean_RimLight", Float ) = 0
@@ -53,10 +53,10 @@ Shader "UnityChanToonShader/Toon_DoubleShadeWithFeather_TransClipping" {
         [MaterialToggle] _Is_LightColor_Ap_RimLight ("Is_LightColor_Ap_RimLight", Float ) = 1
         _Ap_RimLight_Power ("Ap_RimLight_Power", Range(0, 1)) = 0.1
         [MaterialToggle] _Ap_RimLight_FeatherOff ("Ap_RimLight_FeatherOff", Float ) = 0
-//ƒŠƒ€ƒ‰ƒCƒgƒ}ƒXƒN.
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½gï¿½}ï¿½Xï¿½N.
         _Set_RimLightMask ("Set_RimLightMask", 2D) = "white" {}
         _Tweak_RimLightMaskLevel ("Tweak_RimLightMaskLevel", Range(-1, 1)) = 0
-//‚±‚±‚Ü‚Å.
+//ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½.
         [MaterialToggle] _MatCap ("MatCap", Float ) = 0
         _MatCap_Sampler ("MatCap_Sampler", 2D) = "black" {}
         _MatCapColor ("MatCapColor", Color) = (1,1,1,1)
@@ -100,7 +100,7 @@ Shader "UnityChanToonShader/Toon_DoubleShadeWithFeather_TransClipping" {
             //#pragma multi_compile_fog
             #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal xboxone ps4 switch
             #pragma target 3.0
-            //ƒAƒEƒgƒ‰ƒCƒ“ˆ—‚ÍˆÈ‰º‚Ìcginc‚Ö.
+            //ï¿½Aï¿½Eï¿½gï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍˆÈ‰ï¿½ï¿½ï¿½cgincï¿½ï¿½.
             #include "UCTS_Outline.cginc"
             ENDCG
         }
@@ -469,7 +469,8 @@ Shader "UnityChanToonShader/Toon_DoubleShadeWithFeather_TransClipping" {
                 float3 lightColor = _LightColor0.rgb;
                 float3 halfDirection = normalize(viewDirection+lightDirection);
 ////// Lighting:
-                float attenuation = LIGHT_ATTENUATION(i);
+                //float attenuation = LIGHT_ATTENUATION(i);
+                UNITY_LIGHT_ATTENUATION(attenuation, i, i.posWorld.xyz);
                 float3 node_9970 = (_BaseColor.rgb*_BaseMap_var.rgb);
                 float3 Set_LightColor = _LightColor0.rgb;
                 float3 Set_BaseColor = lerp( node_9970, (node_9970*Set_LightColor), _Is_LightColor_Base );

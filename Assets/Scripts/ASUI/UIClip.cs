@@ -42,10 +42,17 @@ public class UIClip : MonoBehaviour
             if (curve.ast != null)
             {
                 curve.ast.euler = curve.EulerAngles(trueTime);
-                if (curve.ast.dof.bone == UIDOFEditor.I.ast.dof.bone)//把值实时显示到UIDOF编辑器
+                if (UITranslator.I.update.isOn)
+                {
+                    if (curve.localPosition[0].keys != null && curve.localPosition[0].keys.Count > 0)//有位置曲线才更新位置
+                    {
+                        curve.ast.transform.localPosition = curve.LocalPosition(trueTime);
+                    }
+                }
+                if (curve.ast.dof.bone == UIDOFEditor.I.ast.dof.bone)//把值实时显示到两个编辑器
                 {
                     UIDOFEditor.I.UpdateValueDisplay();
-                    //UIDOFEditor.I.ast.euler = curve.ast.euler;
+                    UITranslator.I.UpdateValueDisplay();
                 }
             }
         }

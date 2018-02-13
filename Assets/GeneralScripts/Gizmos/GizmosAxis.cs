@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class GizmosAxis : MonoBehaviour
 {
+    public static GizmosAxis I
+    {
+        get { if (_i == null) _i = FindObjectOfType<GizmosAxis>(); return _i; }
+    }
+    static GizmosAxis _i;
     public Transform[] handles;
     public Material[] mats;
     public Material selected;
@@ -17,7 +22,7 @@ public class GizmosAxis : MonoBehaviour
         set
         {
             _controlObj = value;
-            if (value != null) transform.position = value.position;
+            if (value != null) this.transform.position = value.position;
         }
         get { return _controlObj; }
     }

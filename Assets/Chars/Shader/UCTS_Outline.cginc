@@ -5,7 +5,7 @@
 // カメラオフセット付きアウトライン（BaseColorライトカラー反映修正版）
 // 2017/06/05 PS4対応版
 //
-            uniform float4 _LightColor0;
+            uniform float4 _LightColor0; 
             uniform float4 _BaseColor;
             uniform sampler2D _BaseMap; uniform float4 _BaseMap_ST;
             uniform float _Outline_Width;
