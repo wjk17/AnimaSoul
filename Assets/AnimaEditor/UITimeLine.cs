@@ -9,10 +9,10 @@ public class UITimeLine : MonoBehaviour
     {
         get
         {
-            if (instance == null) instance = FindObjectOfType<UITimeLine>(); return instance;
+            if (_i == null) _i = FindObjectOfType<UITimeLine>(); return _i;
         }
     }
-    private static UITimeLine instance;
+    private static UITimeLine _i;
     public static int FrameIndex
     {
         get { return I.frameIndex; }
@@ -41,9 +41,12 @@ public class UITimeLine : MonoBehaviour
 
     private float leftTimer;
     private float rightTimer;
+    private float upTimer;
+    private float downTimer;
     public float continuousKeyTime = 0.5f; // 上下左右键连发延迟
     public float continuousKeyInterval = 0.01f; // 间隔（其实0.01通常约等于每帧触发）
     public Text uiFrameIndex;
+    public Text uiFrameIndexN;
     public Vector3 mousePos;
     public Rect uiRect;
     public Vector2 pos2D;
@@ -65,19 +68,40 @@ public class UITimeLine : MonoBehaviour
     private Vector2 startPos;
 
     public static float FrameValue;
-    private int _frameIndex;
     public int frameIndex
     {
         get
         {
-            return _frameIndex;
+            return Mathf.RoundToInt(frameIndexF);
         }
         set
         {
-            _frameIndex = value;
-            uiFrameIndex.text = "帧：" + _frameIndex.ToString();
+            frameIndexF = value;
         }
     }
+    private float _frameIndexFloat;
+    public float frameIndexF
+    {
+        get
+        {
+            return _frameIndexFloat;
+        }
+        set
+        {
+            _frameIndexFloat = value;
+            uiFrameIndex.text = "帧：" + frameIndex.ToString();
+            uiFrameIndexN.text = "n：" + frameIndexN.ToString("0.00");
+        }
+    }
+    public float frameIndexN
+    {
+        get
+        {
+            var end = UIClip.clip.frameRange.y;
+            return end == 0 ? 0 : GTool.Round(frameIndexF / end, indexNAccuracy);
+        }
+    }
+    public int indexNAccuracy = 3;
     public string path;
     public string folder = "Clips/";
     public string fileName = "default.xml";
@@ -118,7 +142,7 @@ public class UITimeLine : MonoBehaviour
     {
         //get { return trans.localPosition; }
         get { return ast.transform.localPosition; }
-    } 
+    }
     #endregion
     void Start()
     {
@@ -256,6 +280,16 @@ public class UITimeLine : MonoBehaviour
             rightTimer += Time.deltaTime;
         }
         else { rightTimer = 0; }
+        if (Events.Key(KeyCode.UpArrow))
+        {
+            upTimer += Time.deltaTime;
+        }
+        else { upTimer = 0; }
+        if (Events.Key(KeyCode.DownArrow))
+        {
+            downTimer += Time.deltaTime;
+        }
+        else { downTimer = 0; }
         if (leftTimer > continuousKeyTime || Events.KeyDown(KeyCode.LeftArrow))
         {
             leftTimer -= continuousKeyInterval;
@@ -265,6 +299,38 @@ public class UITimeLine : MonoBehaviour
         {
             rightTimer -= continuousKeyInterval;
             frameIndex++;
+        }
+        else if (upTimer > continuousKeyTime * 1.5f || Events.KeyDown(KeyCode.UpArrow))
+        {
+            upTimer -= continuousKeyInterval * 1.5f;
+            if (UIClip.clip.curves.Count > 0)
+            {
+                var keys = UIClip.clip.curves[0].timeCurve.keys;
+                for (int i = keys.Count - 1; i >= 0; i--)
+                {
+                    if (keys[i].frameIndex < frameIndex)
+                    {
+                        frameIndex = keys[i].frameIndex;
+                        break;
+                    }
+                }
+            }
+        }
+        else if (downTimer > continuousKeyTime * 1.5f || Events.KeyDown(KeyCode.DownArrow))
+        {
+            downTimer -= continuousKeyInterval * 1.5f;
+            if (UIClip.clip.curves.Count > 0)
+            {
+                var keys = UIClip.clip.curves[0].timeCurve.keys;
+                for (int i = 0; i < keys.Count; i++)
+                {
+                    if (keys[i].frameIndex > frameIndex)
+                    {
+                        frameIndex = keys[i].frameIndex;
+                        break;
+                    }
+                }
+            }
         }
         if (Events.KeyDown(KeyCode.I))
         {
@@ -300,6 +366,7 @@ public class UITimeLine : MonoBehaviour
             case InsertKeyType.Pos: break;
             default: throw null;
         }
+        ASClipTool.GetFrameRange(UIClip.clip);
     }
     private void RemoveKey()
     {

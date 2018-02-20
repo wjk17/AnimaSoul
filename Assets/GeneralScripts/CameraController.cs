@@ -98,7 +98,6 @@ public class CameraController : MonoBehaviour
             GUI.Label(new Rect(x + 10, y + 70, 200, 30), "滚轮 / 2 指滑动: 推拉");
         }
     }
-    public bool camRotate;
     void mouseEvent()
     {
         float delta = Events.Axis("Mouse ScrollWheel");
@@ -190,7 +189,7 @@ public class CameraController : MonoBehaviour
 
     public void cameraRotate(Vector3 eulerAngle)
     {
-        if (!camRotate) return;
+        if (!FindObjectOfType<UICamera>().toggleRotate.isOn) return;
         //Use Quaternion to prevent rotation flips on XY plane
         //Quaternion q = Quaternion.identity;
 

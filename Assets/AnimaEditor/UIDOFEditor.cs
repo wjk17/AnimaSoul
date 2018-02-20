@@ -142,7 +142,8 @@ public class UIDOFEditor : MonoBehaviour
         IK = new BoolValueToggle(false);
         IKSingle = new BoolValueToggle(false);
 
-        strif = new StringValueIF("New");
+        var cname = PlayerPrefs.GetString("LastOpenClipName", "New");
+        strif = new StringValueIF(cname);
         clipNameLabel = new StringValueLabel(UIClip.clip.clipName);
         clipNameLabel.Update();
         //Debug.Log(clipNameLabel.label.text);
@@ -152,6 +153,7 @@ public class UIDOFEditor : MonoBehaviour
         ASUI.floatLabelColor = floatLabelColor;
 
         dofSet.Load();
+        avatar.LoadFromDOFMgr();
         dof = dofSet[bone];
         ast = avatar[bone];
         dofP = new DOFProp(dof);
@@ -237,10 +239,6 @@ public class UIDOFEditor : MonoBehaviour
         ASUI.BeginHorizon();
         ASUI.Button("插入关键帧", InsertKeyToAllCurves);
         ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.Button("插入丢失曲线", InsertMissCurve);
-        ASUI.EndHorizon();       
 
         ASUI.BeginHorizon();
         ASUI.Slider(swingZ, dofP.swingZMin, dofP.swingZMax, OnIKBoneLengthChanged);
@@ -512,24 +510,6 @@ public class UIDOFEditor : MonoBehaviour
             }
         }
     }
-    bool MissAst(ASTransDOF t) // ast是否存在于当前clip
-    {
-        foreach (var curve in UIClip.clip.curves)
-        {
-            if (curve.ast == t) return false;
-        }
-        return true;
-    }
-    void InsertMissCurve()
-    {
-        foreach (var ast in avatar.setting.asts)
-        {
-            if (MissAst(ast)) // 插入新增的（化身ast表里有，clip里却没有的）曲线
-            {
-                UIClip.clip.curves.Add(new ASObjectCurve(ast));
-            }
-        }
-    }
     public void InsertKeyToAllCurves()
     {
         foreach (var curve in UIClip.clip.curves)
@@ -717,13 +697,8 @@ public class UIDOFEditor : MonoBehaviour
     }
     void DropdownChange(int index)
     {
-        if (dof != null) dofP.SaveASDOF(dof);//先保存
+        if (dof != null) dofP.SaveASDOF(dof);//先保存改变前的 骨骼dof
         var boneInt = (ASBone)index;
-        //if (boneInt < ASBone.other)
-        //{
-        //    dof = dofSet[boneInt];
-        //    ast = avatar[boneInt];
-        //}
         dof = dofSet[boneInt];
         ast = avatar[boneInt];
         UpdateDOF();
@@ -740,8 +715,82 @@ public class UIDOFEditor : MonoBehaviour
             dofP.swingZSlider.slider.value = ast.euler.z;
         }
     }
+    public frame frameClipBoard;
+    private void CopyFrame()
+    {
+        frame n = new frame();
+        n.keys = new List<key>();
+        foreach (var curve in UIClip.clip.curves)
+        {
+            var rot = curve.ast.euler;
+            var pos = curve.ast.transform.localPosition;
+            var t = new Tran2E(pos, rot);
+            key k = new key();
+            k.bone = curve.ast.dof.bone;
+            k.t2 = t;
+            n.keys.Add(k);
+        }
+        Debug.Log("copy " + n.keys.Count.ToString() + " keys");
+        frameClipBoard = n;
+    }
+    ASObjectCurve GetCurve(ASBone bone)
+    {
+        foreach (var curve in UIClip.clip.curves)
+        {
+            if (curve.ast.dof.bone == bone)
+            {
+                return curve;
+            }
+        }
+        return null;
+    }
+    public void PasteFrame()
+    {
+        PasteFrame(null);
+    }
+    public void PasteFrame(ICollection<ASBone> bones)
+    {
+        if (frameClipBoard == null) return;
+        var c = 0;
+        foreach (var key in frameClipBoard.keys)
+        {
+            var curve = GetCurve(key.bone);
+            if (curve != null && (bones == null || bones.Count == 0 || bones.Contains(curve.ast.dof.bone)))
+            {
+                c++;
+                curve.ast.transform.localPosition = key.t2.pos;
+                curve.ast.euler = key.t2.rot;
+            }
+        }
+        Debug.Log("paste " + c + " keys");
+    }
+    public void PasteFrameAllFrame(ICollection<ASBone> bones)
+    {
+        if (frameClipBoard == null) return;
+        var c = 0;
+        foreach (var key in frameClipBoard.keys)
+        {
+            var curve = GetCurve(key.bone);
+            if (curve != null && (bones == null || bones.Count == 0 || bones.Contains(curve.ast.dof.bone)))
+            {
+                c++;
+                curve.ast.transform.localPosition = key.t2.pos;
+                curve.ast.euler = key.t2.rot;
+            }
+        }
+        Debug.Log("paste " + c + " keys");
+    }
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            CopyFrame();
+        }
+        else if (Input.GetKeyDown(KeyCode.V))
+        {
+            PasteFrame();
+        }
+
         if (IK || IKSingle)
         {
             IKSolve(joints.ToArray());

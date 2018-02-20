@@ -15,6 +15,8 @@ public class ASObjectCurve
     public ASCurve[] eulerAngles;//x,y,z
     public ASCurve[] localPosition;//x,y,z
     public ASCurve timeCurve;
+    [XmlIgnore]
+    public ASObjectCurve pair;
     public Vector3 EulerAngles(float frameIndex)
     {
         return new Vector3(eulerAngles[0].Evaluate(frameIndex), eulerAngles[1].Evaluate(frameIndex), eulerAngles[2].Evaluate(frameIndex));
@@ -110,32 +112,33 @@ public class ASKey
         return a.ToVector2();
     }
     public int frameIndex;
-    public float time
-    {
-        get { return frameIndex * UITimeLine.timePerFrame; }
-    }
+    //public float time
+    //{
+    //    get { return frameIndex * UITimeLine.timePerFrame; }
+    //}
     public float value;
     public Vector2 inTangent;
     public Vector2 inTangentAbs { set { inTangent = value - this; } get { return this + inTangent; } }
-    public Vector2 inTangentKey
-    {
-        get { return new Vector2(inTangent.x * UITimeLine.Fps, inTangent.y); }
-    }
+    //public Vector2 inTangentKey
+    //{
+    //    get { return new Vector2(inTangent.x * UITimeLine.Fps, inTangent.y); }
+    //}
     public Vector2 outTangentAbs { set { outTangent = value - this; } get { return this + outTangent; } }
     public Vector2 outTangent;
-    public Vector2 outTangentKey
-    {
-        get { return new Vector2(outTangent.x * UITimeLine.Fps, outTangent.y); }
-    }
+    //public Vector2 outTangentKey
+    //{
+    //    get { return new Vector2(outTangent.x * UITimeLine.Fps, outTangent.y); }
+    //}
     public CurveMode inMode = CurveMode.None;
     public CurveMode outMode = CurveMode.None;
     public Vector2 ToVector2(float fps)
     {
         return new Vector2(frameIndex * (1 / fps), value);
     }
+    public static float fps = 60;
     public Vector2 ToVector2(bool convert = false)
     {
-        if (convert) return new Vector2(frameIndex * (1 / UITimeLine.Fps), value);
+        if (convert) return new Vector2(frameIndex * (1 / fps), value);
         else return new Vector2(frameIndex, value);
     }
     public ASKey() { }

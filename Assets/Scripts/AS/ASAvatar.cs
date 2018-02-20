@@ -20,6 +20,17 @@ public enum ZHumanPart
 }
 public static class ASBoneTool
 {
+    public static ASBone[] arms = new ASBone[]
+    {
+        ASBone.forearm_l,
+        ASBone.forearm_r,
+        ASBone.hand_l,
+        ASBone.hand_r,
+        ASBone.upperarm_l,
+        ASBone.upperarm_r,
+        ASBone.shoulder_l,
+        ASBone.shoulder_r
+    };
     public static string[] names = new string[]
     {
     "拇指3(左)", "拇指3(右)",

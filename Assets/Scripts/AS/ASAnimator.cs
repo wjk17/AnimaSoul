@@ -50,6 +50,10 @@ public class ASAnimator : MonoBehaviour
         {
             var c = Serializer.XMLDeSerialize<ASClip>(fi.FullName);
             c.clipName = fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
+
+            ASClipTool.GetPairs(c.curves);
+            ASClipTool.GetFrameRange(c);
+
             clips.Add(c);
         }
     }

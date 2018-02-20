@@ -444,8 +444,8 @@
     <ASDOF>
       <bone>shoulder_l</bone>
       <count>2</count>
-      <twistMin>0</twistMin>
-      <twistMax>0</twistMax>
+      <twistMin>-20</twistMin>
+      <twistMax>20</twistMax>
       <swingXMin>-20</swingXMin>
       <swingXMax>20</swingXMax>
       <swingZMin>-20</swingZMin>
@@ -454,8 +454,8 @@
     <ASDOF>
       <bone>shoulder_r</bone>
       <count>2</count>
-      <twistMin>0</twistMin>
-      <twistMax>0</twistMax>
+      <twistMin>-20</twistMin>
+      <twistMax>20</twistMax>
       <swingXMin>-20</swingXMin>
       <swingXMax>20</swingXMax>
       <swingZMin>-20</swingZMin>

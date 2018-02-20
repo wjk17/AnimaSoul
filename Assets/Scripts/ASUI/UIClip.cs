@@ -25,28 +25,103 @@ public class UIClip : MonoBehaviour
     // 拖动时间轴绿色线（当前帧）时会更新所有曲线
     public void UpdateAllCurve()
     {
-        var trueTime = UICurve.I.GenerateRealTime(UITimeLine.FrameIndex);
-        //foreach (var ast in UIDOFEditor.I.avatar.setting.asts)
-        //{
-        //    ast.euler = 
-        //}
-        //foreach (var curve in clip.curves)
-        //{
-        //    if (curve.trans != null)
-        //    {
-        //        UIDOFEditor.I.avatar.GetTransDOF(curve.trans).euler = curve.EulerAngles(trueTime);
-        //    }
-        //}
+        var index = UITimeLine.FrameIndex;
+        float trueTime = 0, trueTime2 = 0, trueTime3 = 0;
+        float maxIndex = 0;
+        if (UICurve.I.keys.Count >= 1)
+        {
+            maxIndex = UICurve.I.keys[UICurve.I.keys.Count - 1].frameIndex;
+        }
+        float n = maxIndex == 0 ? 0 : index / maxIndex;
+        float t = 0;
+        if (!UIPlayer.I.toggleFlip.isOn)
+        {
+            trueTime3 = UICurve.I.GenerateRealTime(index);
+        }
+        //n = Mathf.Repeat(0, 1.25f);
+        //n = Mathf.Clamp(n, 0, 1.25f);
+        //n = Mathf.Repeat(n, 1.25f);
+        index = Mathf.RoundToInt(n * maxIndex);
+        if (MathTool.Between(n, 0, 1))
+        {
+            trueTime = UICurve.I.GenerateRealTime(index);
+        }
+        else if (MathTool.Between(n, 1, 1.25f))
+        {
+            trueTime = UICurve.I.GenerateRealTime(maxIndex);
+            trueTime2 = UICurve.I.GenerateRealTime(0);
+            t = (n - 1) / 0.25f;
+        }
+        else if (MathTool.Between(n, 1.25f, 2.25f))
+        {
+            n -= 1.25f;
+            trueTime2 = n * maxIndex;
+            t = 1;
+        }
+        else if (MathTool.Between(n, 2.25f, 2.5f))
+        {
+            trueTime = maxIndex;
+            trueTime2 = 0;
+            t = (n - 2.25f) / 0.25f;
+        }
+        else
+        {
+            trueTime = UICurve.I.GenerateRealTime(index);
+        }
+
+        Vector3 v1, v2;
         foreach (var curve in clip.curves)
         {
             if (curve.ast != null)
             {
-                curve.ast.euler = curve.EulerAngles(trueTime);
+                if (!UIPlayer.I.toggleFlip.isOn)
+                {
+                    v1 = curve.EulerAngles(trueTime3);
+                    v2 = Vector3.zero;
+                    t = 0;
+                }
+                else if (n > 2.25f)
+                {
+                    v2 = curve.EulerAngles(trueTime2);
+                    if (curve.pair != null)
+                    {
+                        v1 = curve.pair.EulerAngles(trueTime);
+                    }
+                    else
+                    {
+                        v1 = curve.EulerAngles(trueTime);
+                        if (curve.ast.dof.bone != ASBone.root)
+                        {
+                            v1.y = -v1.y;
+                            v1.z = -v1.z;
+                        }
+                    }
+                }
+                else
+                {
+                    v1 = curve.EulerAngles(trueTime);
+                    if (curve.pair != null)
+                    {
+                        v2 = curve.pair.EulerAngles(trueTime2);
+                    }
+                    else
+                    {
+                        v2 = curve.EulerAngles(trueTime2);
+                        if (curve.ast.dof.bone != ASBone.root)
+                        {
+                            v2.y = -v2.y;
+                            v2.z = -v2.z;
+                        }
+                    }
+                }
+                curve.ast.euler = Vector3.Lerp(v1, v2, t);
                 if (UITranslator.I.update.isOn)
                 {
                     if (curve.localPosition[0].keys != null && curve.localPosition[0].keys.Count > 0)//有位置曲线才更新位置
                     {
-                        curve.ast.transform.localPosition = curve.LocalPosition(trueTime);
+                        v1 = curve.LocalPosition(trueTime);
+                        v2 = curve.LocalPosition(trueTime2);
+                        curve.ast.transform.localPosition = Vector3.Lerp(v1, v2, t);
                     }
                 }
                 if (curve.ast.dof.bone == UIDOFEditor.I.ast.dof.bone)//把值实时显示到两个编辑器
@@ -73,6 +148,12 @@ public class UIClip : MonoBehaviour
                 var trans = UIDOFEditor.I.avatar.transform.Search(curve.name);
                 curve.ast = UIDOFEditor.I.avatar.GetTransDOF(trans);
             }
+            ASClipTool.GetPairs(_clip.curves);
+            ASClipTool.GetFrameRange(_clip);
+
+            PlayerPrefs.SetString("LastOpenClipName", clipName);
+            PlayerPrefs.Save();
+
             return true;
         }
         else
@@ -96,6 +177,10 @@ public class UIClip : MonoBehaviour
                 var trans = UIDOFEditor.I.avatar.transform.Search(curve.name);
                 curve.ast = UIDOFEditor.I.avatar.GetTransDOF(trans);
             }
+            ASClipTool.GetPairs(_clip.curves);
+            ASClipTool.GetFrameRange(_clip);
+            //PlayerPrefs.SetString("LastOpenClipName", clipName);
+            //PlayerPrefs.Save();
             return true;
         }
         else  // 不存在clip文件则新建一个
@@ -106,6 +191,10 @@ public class UIClip : MonoBehaviour
                 //_clip.AddCurve(ast.transform);
                 _clip.AddCurve(ast);
             }
+            ASClipTool.GetPairs(_clip.curves);
+            ASClipTool.GetFrameRange(_clip);
+            //PlayerPrefs.SetString("LastOpenClipName", clipName);
+            //PlayerPrefs.Save();
             return false;
         }
     }
@@ -116,6 +205,10 @@ public class UIClip : MonoBehaviour
         {
             c.AddCurve(ast);
         }
+        ASClipTool.GetPairs(c.curves);
+        ASClipTool.GetFrameRange(c);
+        PlayerPrefs.SetString("LastOpenClipName", clipName);
+        PlayerPrefs.Save();
 
         var dataPath = Application.dataPath;
         var rootPath = dataPath + "/../";

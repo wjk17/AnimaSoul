@@ -1301,6 +1301,15 @@ public static class GTool
         (Floor(f1, factor) == Floor(f2, factor)) ||
         (Ceil(f1, factor) == Floor(f2, factor));
     }
+
+    public static float Round(float f,float dec)//四舍五入
+    {
+        float factor = Mathf.Pow(10, dec);
+        f *= factor;
+        f = Mathf.Round(f);
+        f /= factor;
+        return f;
+    }
     public static float Ceil(float f, float factor)//进一
     {
         f *= factor;

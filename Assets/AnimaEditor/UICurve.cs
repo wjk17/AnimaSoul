@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 public class UICurve : MonoBehaviour
 {
     public static UICurve I
@@ -54,9 +56,9 @@ public class UICurve : MonoBehaviour
     public int tt; // -1 intan 0 point 1 outtan
     public float clickDist = 5;
     public Vector2 p;
-    public bool showTrueTimeArea;
     public bool showTrueTimeCurve;
-    public bool showControlPoints;
+    public Toggle toggleTrueTimeArea;
+    public Toggle toggleControlPoints;
     public bool syncTwoSideTangentDir;
     public bool flipTwoSideTangent;
     public bool controlY;
@@ -119,12 +121,12 @@ public class UICurve : MonoBehaviour
         for (int i = 0; i < keys.Count; i++)
         {
             DrawPointOnArea(keys[i].ToVector2(), keyPointColor);
-            if (showControlPoints && keys[i].inMode == CurveMode.Bezier)//插值模式不是贝塞尔就不画
+            if (toggleControlPoints.isOn && keys[i].inMode == CurveMode.Bezier)//插值模式不是贝塞尔就不画
             {
                 GLUI.DrawLine(ConvertV(keys[i]), ConvertV(keys[i].inTangentAbs), lineWidth, controlLineColor);
                 DrawPointOnArea(keys[i].inTangentAbs, controlPointColor); //画点
             }
-            if (showControlPoints && keys[i].outMode == CurveMode.Bezier)
+            if (toggleControlPoints.isOn && keys[i].outMode == CurveMode.Bezier)
             {
                 GLUI.DrawLine(ConvertV(keys[i]), ConvertV(keys[i].outTangentAbs), lineWidth, controlLineColor);
                 DrawPointOnArea(keys[i].outTangentAbs, controlPointColor);
@@ -134,7 +136,7 @@ public class UICurve : MonoBehaviour
         Vector2 aV, bV, topV, btmV;
         float len;
         GLUI.BeginOrder(1);
-        if (!showTrueTimeArea) return;
+        if (!toggleTrueTimeArea.isOn) return;
         //int rInd = -1;
         //for (int i = 1; i < keys.Count; i++)
         //{
@@ -178,7 +180,7 @@ public class UICurve : MonoBehaviour
             bV = ConvertV(b);
             topV = ConvertV(top);
             btmV = ConvertV(btm);
-            if (showTrueTimeArea)
+            if (toggleTrueTimeArea.isOn)
             {
                 GLUI.DrawLine(aV, topV, trueTimeRhombusEdgeColor); // 菱形的真实时间区域
                 GLUI.DrawLine(topV, bV, trueTimeRhombusEdgeColor);
@@ -273,13 +275,13 @@ public class UICurve : MonoBehaviour
             if (ASUI.MouseOver(area, rulerX))
             {
                 use = true;
-                if (shift || ctrl) rulerLength.y -= delta * rulerScalerSensitivity;
+                if (shift || !ctrl) rulerLength.y -= delta * rulerScalerSensitivity;
                 if (!shift) rulerLength.x -= delta * rulerScalerSensitivity;
             }
             if (ASUI.MouseOver(rulerY))
             {
                 use = true;
-                if (ctrl) rulerLength.x -= delta * rulerScalerSensitivity;
+                if (!ctrl) rulerLength.x -= delta * rulerScalerSensitivity;
                 rulerLength.y -= delta * rulerScalerSensitivity;
             }
             rulerLength.x = Mathf.Clamp(rulerLength.x, 1, Mathf.Infinity);
@@ -302,11 +304,11 @@ public class UICurve : MonoBehaviour
             for (int i = 0; i < keys.Count; i++)
             {
                 if (ASUI.mouseDistLT(ConvertV(keys[i])) < clickDist) { index = i; type = 0; }
-                if (showControlPoints && keys[i].inMode == CurveMode.Bezier)//不是贝塞尔就不控制切点
+                if (toggleControlPoints.isOn && keys[i].inMode == CurveMode.Bezier)//不是贝塞尔就不控制切点
                 {
                     if (ASUI.mouseDistLT(ConvertV(keys[i].inTangentAbs)) < clickDist) { index = i; type = -1; }
                 }
-                if (showControlPoints && keys[i].outMode == CurveMode.Bezier)
+                if (toggleControlPoints.isOn && keys[i].outMode == CurveMode.Bezier)
                 {
                     if (ASUI.mouseDistLT(ConvertV(keys[i].outTangentAbs)) < clickDist) { index = i; type = 1; }
                 }
@@ -330,11 +332,11 @@ public class UICurve : MonoBehaviour
             for (int i = 0; i < keys.Count; i++)
             {
                 if (ASUI.mouseDistLT(ConvertV(keys[i])) < clickDist) { index = i; type = 0; }
-                if (showControlPoints && keys[i].inMode == CurveMode.Bezier)//不是贝塞尔就不控制切点
+                if (toggleControlPoints.isOn && keys[i].inMode == CurveMode.Bezier)//不是贝塞尔就不控制切点
                 {
                     if (ASUI.mouseDistLT(ConvertV(keys[i].inTangentAbs)) < clickDist) { index = i; type = -1; }
                 }
-                if (showControlPoints && keys[i].outMode == CurveMode.Bezier)
+                if (toggleControlPoints.isOn && keys[i].outMode == CurveMode.Bezier)
                 {
                     if (ASUI.mouseDistLT(ConvertV(keys[i].outTangentAbs)) < clickDist) { index = i; type = 1; }
                 }
@@ -362,15 +364,16 @@ public class UICurve : MonoBehaviour
             for (int i = 0; i < keys.Count; i++)
             {
                 if (ASUI.mouseDistLT(ConvertV(keys[i])) < clickDist) { ind = i; tt = 0; }
-                if (showControlPoints && keys[i].inMode == CurveMode.Bezier)//不是贝塞尔就不控制切点
+                if (toggleControlPoints.isOn && keys[i].inMode == CurveMode.Bezier)//不是贝塞尔就不控制切点
                 {
                     if (ASUI.mouseDistLT(ConvertV(keys[i].inTangentAbs)) < clickDist) { ind = i; tt = -1; }
                 }
-                if (showControlPoints && keys[i].outMode == CurveMode.Bezier)
+                if (toggleControlPoints.isOn && keys[i].outMode == CurveMode.Bezier)
                 {
                     if (ASUI.mouseDistLT(ConvertV(keys[i].outTangentAbs)) < clickDist) { ind = i; tt = 1; }
                 }
             }
+            if (ind > -1) frameIndexTemp = keys[ind].frameIndex;
             MouseDrag(button);
         }
     }
@@ -402,6 +405,7 @@ public class UICurve : MonoBehaviour
             i = curve.localPosition[2].MoveKey(frameIndexOrigin, frameIndexNew);
             if (i > -1) r = i;
         }
+        ASClipTool.GetFrameRange(UIClip.clip);
         return r;
     }
     int SetAllKeysPoint(int i, int frameIndex, float v)
@@ -431,13 +435,17 @@ public class UICurve : MonoBehaviour
             curve.SetKeysOutTangent(i, vector2);
         }
     }
+    public float frameIndexTemp;
+    public int frameIndexTempInt
+    {
+        get { return Mathf.RoundToInt(frameIndexTemp); }
+    }
     private void MouseDrag(MouseButton button)
     {
         use = true;
         var deltaV = ASUI.mousePositionRef - oldPos;
         deltaV = MathTool.Divide(deltaV, area.rect.size);
         deltaV = Vector2.Scale(deltaV, rulerLength);
-
         switch (button)
         {
             case MouseButton.Left:
@@ -449,10 +457,11 @@ public class UICurve : MonoBehaviour
                 {
                     if (tt == 0)
                     {
+                        frameIndexTemp += deltaV.x;
                         //控制位置改变后的索引，比如第1帧移动到了第10帧，此时返回索引是10
                         //ind = curve.SetKeysPoint(ind, keys[ind].frameIndex + Mathf.RoundToInt(deltaV.x), keys[ind].value + (controlY ? deltaV.y : 0f));
-                        SetAllKeysPointFrameIndex(keys[ind].frameIndex, keys[ind].frameIndex + Mathf.RoundToInt(deltaV.x));
-                        ind = curve.SetKeysPoint(ind, keys[ind].frameIndex + Mathf.RoundToInt(deltaV.x), keys[ind].value + (controlY ? deltaV.y : 0f));
+                        SetAllKeysPointFrameIndex(keys[ind].frameIndex, frameIndexTempInt);
+                        ind = curve.SetKeysPoint(ind, frameIndexTempInt, keys[ind].value + (controlY ? deltaV.y : 0f));
                     }
                     else if (tt == -1)
                     {
@@ -462,7 +471,7 @@ public class UICurve : MonoBehaviour
                         //curve.SetKeysInTangent(ind, inT);
                         //if (ctrl != flipTwoSideTangent) curve.SetKeysOutTangent(ind, -inT);
                         //else if (shift != (syncTwoSideTangentDir && inT.normalized.magnitude > 0.001f)) curve.SetKeysOutTangent(ind, -inT.normalized * outT.magnitude);//相反的方向移动，保持原来的长度
-                        SetAllKeysInTangent(ind, inT);
+                        SetAllKeysInTangent(ind, inT); // 改变所有曲线中当前序号key的控制点，这里假设了所有曲线帧数和时间都是一致的
                         if (ctrl != flipTwoSideTangent) SetAllKeysOutTangent(ind, -inT);
                         else if (shift != (syncTwoSideTangentDir && inT.normalized.magnitude > 0.001f)) SetAllKeysOutTangent(ind, -inT.normalized * outT.magnitude);//相反的方向移动，保持原来的长度
                     }
