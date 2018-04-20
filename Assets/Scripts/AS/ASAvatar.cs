@@ -305,6 +305,24 @@ public class AvatarSetting
 [ExecuteInEditMode]
 public class ASAvatar : MonoBehaviour
 {
+    public ASTransDOF this[Transform t]
+    {
+        get
+        {
+            try
+            {
+                return GetTransDOF(t);
+            }
+            catch
+            {
+#if UNITY_EDITOR
+                throw;
+#else
+                return null;
+#endif
+            }
+        }
+    }
     public ASTransDOF this[ASBone bone]
     {
         get
@@ -317,8 +335,9 @@ public class ASAvatar : MonoBehaviour
             {
 #if UNITY_EDITOR
                 throw;
-#endif
+#else
                 return null;
+#endif
             }
         }
     }

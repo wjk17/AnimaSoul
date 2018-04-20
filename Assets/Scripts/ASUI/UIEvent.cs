@@ -8,7 +8,15 @@ public static class Events
     {
         used = true;
     }
-    public static bool ctrl
+    public static bool Command
+    {
+        get
+        {
+            var command = Input.GetKey(KeyCode.LeftCommand) || Input.GetKey(KeyCode.RightCommand);
+            return !used && command;
+        }
+    }
+    public static bool Ctrl
     {
         get
         {
@@ -16,7 +24,7 @@ public static class Events
             return !used && ctrl;
         }
     }
-    public static bool shift
+    public static bool Shift
     {
         get
         {

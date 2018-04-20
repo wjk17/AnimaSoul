@@ -2,13 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIClip : MonoBehaviour
+public class UIClip : MonoBehaviourInstance<UIClip>
 {
-    public static UIClip I
-    {
-        get { if (instance == null) instance = FindObjectOfType<UIClip>(); return instance; }
-    }
-    private static UIClip instance;
     public static ASClip clip
     {
         get
@@ -70,11 +65,12 @@ public class UIClip : MonoBehaviour
         }
 
         Vector3 v1, v2;
+        int c = 0;
         foreach (var curve in clip.curves)
         {
             if (curve.ast != null)
             {
-                if (!UIPlayer.I.toggleFlip.isOn)
+                if (!UIPlayer.I.toggleFlip.isOn) // 如果打开了翻转动画
                 {
                     v1 = curve.EulerAngles(trueTime3);
                     v2 = Vector3.zero;
@@ -121,8 +117,19 @@ public class UIClip : MonoBehaviour
                     {
                         v1 = curve.LocalPosition(trueTime);
                         v2 = curve.LocalPosition(trueTime2);
-                        curve.ast.transform.localPosition = Vector3.Lerp(v1, v2, t);
+
+                        //var os = new Vector3();
+                        //if (UIFrameMgr2.I.tPoseList != null && c < UIFrameMgr2.I.tPoseList.Count)
+                        //{
+                        //    os = UIFrameMgr2.I.tPoseList[c];
+                        //}
+                        var os = curve.ast.coord.originPos;
+                        curve.ast.transform.localPosition = os + Vector3.Lerp(v1, v2, t);
                     }
+                }
+                if (UIDOFEditor.I.ast == null || UIDOFEditor.I.ast.dof == null)
+                {
+                    int a = 0;
                 }
                 if (curve.ast.dof.bone == UIDOFEditor.I.ast.dof.bone)//把值实时显示到两个编辑器
                 {
@@ -130,7 +137,9 @@ public class UIClip : MonoBehaviour
                     UITranslator.I.UpdateValueDisplay();
                 }
             }
+            c++;
         }
+        UIPlayer.I.Mirror();
     }
 
     public bool Load(string clipName)//不存在文件则返回false
@@ -144,7 +153,6 @@ public class UIClip : MonoBehaviour
             _clip.clipName = clipName;
             foreach (var curve in _clip.curves)
             {
-                //curve.trans = UIDOFEditor.I.avv atar.transform.Search(curve.name);
                 var trans = UIDOFEditor.I.avatar.transform.Search(curve.name);
                 curve.ast = UIDOFEditor.I.avatar.GetTransDOF(trans);
             }
@@ -215,6 +223,13 @@ public class UIClip : MonoBehaviour
         path = rootPath + folder + clipName + ".clip";
         Serializer.XMLSerialize(c, path);
         clip = c;
+    }
+    public void Save(string clipName)
+    {
+        var dataPath = Application.dataPath;
+        var rootPath = dataPath + "/../";
+        path = rootPath + folder + clipName + ".clip";
+        Serializer.XMLSerialize(clip, path);
     }
     public void Save()
     {

@@ -1,77 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 #if UNITY_EDITOR
 using UnityEditor;
-#endif
-[Serializable]
-public class DOFProp // DOF控件
-{
-    public DOFProp(ASDOF dof)
-    {
-        bone = dof.bone;
-        count = dof.count;
-        twistMin = new FloatValueIF(dof.twistMin);
-        twistMax = new FloatValueIF(dof.twistMax);
-        swingXMin = new FloatValueIF(dof.swingXMin);
-        swingXMax = new FloatValueIF(dof.swingXMax);
-        swingZMin = new FloatValueIF(dof.swingZMin);
-        swingZMax = new FloatValueIF(dof.swingZMax);
-    }
-    public void SetValues(ASDOF dof)
-    {
-        bone = dof.bone;
-        count = dof.count;
-        twistMin.value = dof.twistMin;
-        twistMax.value = dof.twistMax;
-        swingXMin.value = dof.swingXMin;
-        swingXMax.value = dof.swingXMax;
-        swingZMin.value = dof.swingZMin;
-        swingZMax.value = dof.swingZMax;
-    }
-    public ASDOF ToASDOF()
-    {
-        var dof = new ASDOF();
-        return SaveASDOF(dof);
-    }
-    public ASDOF SaveASDOF(ASDOF dof)
-    {
-        dof.bone = bone;
-        dof.count = count;
-        dof.twistMin = twistMin;
-        dof.twistMax = twistMax;
-        dof.swingXMin = swingXMin;
-        dof.swingXMax = swingXMax;
-        dof.swingZMin = swingZMin;
-        dof.swingZMax = swingZMax;
-        return dof;
-    }
-    public ASBone bone;
-    public int count;
-    public FloatValueIF twistMin;
-    public FloatValueIF twistMax;
-    public FloatValueIF swingXMin;
-    public FloatValueIF swingXMax;
-    public FloatValueIF swingZMin;
-    public FloatValueIF swingZMax;
-    public SliderWrapper twistSlider;
-    public SliderWrapper swingXSlider;
-    public SliderWrapper swingZSlider;
-    public void Update(ASDOF dof)
-    {
-        SetValues(dof);
-        twistMin.Update();
-        twistMax.Update();
-        swingXMin.Update();
-        swingXMax.Update();
-        swingZMin.Update();
-        swingZMax.Update();
-        twistSlider.UpdateRange();
-        swingXSlider.UpdateRange();
-        swingZSlider.UpdateRange();
-    }
-}
-#if UNITY_EDITOR
 [CustomEditor(typeof(UIDOFEditor))]
 public class UIDOFEditorEditor : Editor
 {
@@ -86,352 +18,8 @@ public class UIDOFEditorEditor : Editor
     }
 }
 #endif
-public class UIDOFEditor : MonoBehaviour
+public class UIDOFEditor : MonoBehaviourInstance<UIDOFEditor>
 {
-    public static UIDOFEditor I
-    {
-        get { if (instance == null) instance = FindObjectOfType<UIDOFEditor>(); return instance; }
-    }
-    static UIDOFEditor instance;
-    public Color labelColor = Color.black;
-    public Color floatFieldColor = Color.black;
-    public Color floatLabelColor = Color.black;
-    public ASBone bone = ASBone.chest; // 给出个初始值
-    public ASIKTarget ikTarget = ASIKTarget.LeftHand;
-    public ASIKTargetSingle ikTargetSingle = ASIKTargetSingle.LeftElbow;
-
-    public Vector3 lockPos1;
-    public Vector3 lockPos2;
-
-    public DOFProp dofP;
-    public ASDOF dof;
-    public ASDOFMgr dofSet;
-    public ASAvatar avatar;
-
-    public FloatValueR twist;
-    public FloatValueR swingX;
-    public FloatValueR swingZ;
-    public BoolValueToggle IK;
-    public BoolValueToggle IKSingle;
-    public BoolValueToggle lockOneSide;
-    public BoolValueToggle lockMirror;
-    //[NonSerialized]
-    public StringValueIF strif;
-    [NonSerialized]
-    private StringValueLabel clipNameLabel;
-
-    public FloatValueIF twistFloatProp;
-    public FloatValueIF swingXFloatProp;
-    public FloatValueIF swingZFloatProp;
-
-    public Transform target;
-    public Transform end;
-    public int iter;
-    public ASTransDOF ast;
-    public ASTransDOF astIK;
-    public float alpha; // 逼近的步长
-    public float theta0;
-    public float theta1;
-    public List<ASBone> joints;
-    public List<ASBone> joints2;
-    public int jointIterCount = 10;
-    public int axisIterCount = 20;
-
-    void Start()
-    {
-        IK = new BoolValueToggle(false);
-        IKSingle = new BoolValueToggle(false);
-
-        var cname = PlayerPrefs.GetString("LastOpenClipName", "New");
-        strif = new StringValueIF(cname);
-        clipNameLabel = new StringValueLabel(UIClip.clip.clipName);
-        clipNameLabel.Update();
-        //Debug.Log(clipNameLabel.label.text);
-
-        ASUI.labelColor = labelColor;
-        ASUI.floatFieldColor = floatFieldColor;
-        ASUI.floatLabelColor = floatLabelColor;
-
-        dofSet.Load();
-        avatar.LoadFromDOFMgr();
-        dof = dofSet[bone];
-        ast = avatar[bone];
-        dofP = new DOFProp(dof);
-
-        ASUI.parent = transform.Search("Area");
-
-        float headWidth = 40f;
-        float valueWidth = 50f;
-        float RWidth = 30f;
-
-        ASUI.BeginHorizon();
-        ASUI.LabelField(clipNameLabel);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.LabelField("自转");
-        ASUI.FloatField("向内", dofP.twistMin, 360, OnRangeChanged);
-        ASUI.FloatField("向外", dofP.twistMax, 360, OnRangeChanged);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        //ASUI.LabelField("", headWidth);
-        ASUI.Button("R", RWidth, OnTwistReset);
-        dofP.twistSlider = ASUI.Slider(twist, dofP.twistMin, dofP.twistMax, OnEulerValueChanged);
-        ASUI.FloatFieldWithOutLabel(valueWidth, twistFloatProp, OnTwistValueChanged);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.LabelField("摆动");
-        ASUI.FloatField("向前", dofP.swingXMin, 360, OnRangeChanged);
-        ASUI.FloatField("向后", dofP.swingXMax, 360, OnRangeChanged);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        //ASUI.LabelField("", headWidth);
-        ASUI.Button("R", RWidth, OnSwingXReset);
-        dofP.swingXSlider = ASUI.Slider(swingX, dofP.swingXMin, dofP.swingXMax, OnEulerValueChanged);
-        ASUI.FloatFieldWithOutLabel(valueWidth, swingXFloatProp, OnSwingXValueChanged);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.LabelField("");
-        ASUI.FloatField("向内", dofP.swingZMin, 360, OnRangeChanged);
-        ASUI.FloatField("向外", dofP.swingZMax, 360, OnRangeChanged);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        //ASUI.LabelField("", headWidth);
-        ASUI.Button("R", RWidth, OnSwingZReset);
-        dofP.swingZSlider = ASUI.Slider(swingZ, dofP.swingZMin, dofP.swingZMax, OnEulerValueChanged);
-        ASUI.FloatFieldWithOutLabel(valueWidth, swingZFloatProp, OnSwingZValueChanged);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.LabelField("骨骼", headWidth);
-        var nameList = new List<string>();
-        nameList.AddRange(ASBoneTool.names);
-        nameList.Add("手枪");
-        ASUI.DropdownInt(0, avatar.setting.asts.Count, nameList.ToArray(), DropdownChange);
-        //ASUI.DropdownEnum(bone, avatar.setting.asts.Count - 1, nameList.ToArray(), DropdownChange);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.Button("保存DOF", SaveAvatarSetting);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.Button("保存Clip", SaveClip);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.StringField("文件名", strif, OnFileNameChanged);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.Button("打开文件", LoadClip);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.Button("新建Clip", NewClip);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.Button("插入关键帧", InsertKeyToAllCurves);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.Slider(swingZ, dofP.swingZMin, dofP.swingZMax, OnIKBoneLengthChanged);
-        ASUI.EndHorizon();
-
-
-        ASUI.BeginHorizon();
-        ASUI.LabelField("IK目标", headWidth * 4);
-        ikTarget = ASIKTarget.LeftHand;
-        ASUI.DropdownEnum(ikTarget, (int)ASIKTarget.Count, ikTargetNames, IKTargetChange);
-        IKTargetChange((int)ikTarget);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.Toggle("使用IK", 80f * 2, IK, OnIKToggle);
-        ASUI.Button("Snap", OnIKSnap); //IK目标设为当前位置
-        ASUI.EndHorizon();
-
-
-        ASUI.BeginHorizon();
-        ASUI.LabelField("IK目标(单关节)", headWidth * 4);
-        ikTargetSingle = ASIKTargetSingle.LeftHand;
-        ASUI.DropdownEnum(ikTargetSingle, (int)ASIKTargetSingle.Count, ikTargetSingleNames, IKSingleTargetChange);
-        IKSingleTargetChange((int)ikTargetSingle);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.Toggle("使用IK(单关节)", 80f * 3, IKSingle, OnIKSingleToggle);
-        ASUI.Button("Snap", OnIKSingleSnap);
-        //ASUI.Button("单关节IK目标设为当前位置", OnIKSingleSnap);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.Toggle("武器IK", 80f * 2, GunIKBoolValueToggle, OnWeaponIK);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.Toggle("锁定骨骼位置", 160, lockOneSide, LockOneSideToggle);
-        ASUI.DropdownEnum(ASIKTarget.LeftLeg, (int)ASIKTarget.Count, ikTargetNames, LockTargetChange);
-        LockTargetChange((int)ASIKTarget.LeftLeg);
-        ASUI.EndHorizon();
-
-        ASUI.BeginHorizon();
-        ASUI.Toggle("锁定骨骼位置(对称)", 160, lockMirror, LockMirrorToggle);
-        ASUI.DropdownEnum(ASIKTargetMirror.Leg, (int)ASIKTargetMirror.Count, ikTargetMirrorNames, LockMirrorTargetChange);
-        LockMirrorTargetChange((int)ASIKTargetMirror.Leg);
-        ASUI.EndHorizon();
-
-        ASUI.I.inputCallBacks.Add(new ASGUI.InputCallBack(GetInput, 1));
-
-        UpdateDOF();
-        gun = avatar[ASBone.other].transform;
-    }
-
-    private void LockOneSideToggle(bool value)
-    {
-        lockOneSide.Value = value;
-        if (value) { lockMirror.Value = IKSingle.Value = IK.Value = false; }
-    }
-
-    private void LockMirrorToggle(bool value)
-    {
-        lockMirror.Value = value;
-        if (value) { lockOneSide.Value = IKSingle.Value = IK.Value = false; }
-    }
-
-    private void LockTargetChange(int index)
-    {
-        joints = new List<ASBone>();
-        var lockTarget = (ASIKTarget)index;
-        switch (lockTarget)
-        {
-            case ASIKTarget.RightHand:
-                joints.Add(ASBone.hand_r);
-                joints.Add(ASBone.forearm_r);
-                joints.Add(ASBone.upperarm_r);
-                break;
-            case ASIKTarget.LeftHand:
-                joints.Add(ASBone.hand_l);
-                joints.Add(ASBone.forearm_l);
-                joints.Add(ASBone.upperarm_l);
-                break;
-            case ASIKTarget.RightLeg:
-                joints.Add(ASBone.foot_r);
-                joints.Add(ASBone.shin_r);
-                joints.Add(ASBone.thigh_r);
-                break;
-            case ASIKTarget.LeftLeg:
-                joints.Add(ASBone.foot_l);
-                joints.Add(ASBone.shin_l);
-                joints.Add(ASBone.thigh_l);
-                break;
-            default: throw null;
-        }
-        lockPos1 = avatar[joints[0]].transform.position;
-    }
-    void LockMirrorTargetChange(int index)
-    {
-        joints = new List<ASBone>();
-        joints2 = new List<ASBone>();
-        var lockTargetMirror = (ASIKTargetMirror)index;
-        switch (lockTargetMirror)
-        {
-            case ASIKTargetMirror.Hand:
-                joints.Add(ASBone.hand_l);
-                joints.Add(ASBone.forearm_l);
-                joints.Add(ASBone.upperarm_l);
-                lockPos1 = avatar[ASBone.hand_l].transform.position;
-                lockPos2 = avatar[ASBone.hand_r].transform.position;
-                break;
-            case ASIKTargetMirror.Leg:
-                joints.Add(ASBone.foot_l);
-                joints.Add(ASBone.shin_l);
-                joints.Add(ASBone.thigh_l);
-                lockPos1 = avatar[ASBone.foot_l].transform.position;
-                lockPos2 = avatar[ASBone.foot_r].transform.position;
-                break;
-            default: throw null;
-        }
-        foreach (var j in joints)
-        {
-            joints2.Add(j + 1); // right side
-        }
-    }
-
-    public Transform gun;
-    public BoolValueToggle GunIKBoolValueToggle;
-    public void GunIK()
-    {
-        var targetPos = target.position + Gun2LeftHand;
-        joints = new List<ASBone>();
-        joints.Add(ASBone.hand_l);
-        joints.Add(ASBone.forearm_l);
-        joints.Add(ASBone.upperarm_l);
-        end = avatar[ASBone.hand_l].transform;
-        IKSolve(targetPos, joints.ToArray());
-
-        targetPos = target.position + Gun2RightHand;
-        joints = new List<ASBone>();
-        joints.Add(ASBone.hand_r);
-        joints.Add(ASBone.forearm_r);
-        joints.Add(ASBone.upperarm_r);
-        end = avatar[ASBone.hand_r].transform;
-        IKSolve(targetPos, joints.ToArray());
-    }
-    public Vector3 Gun2LeftHand;
-    public Vector3 Gun2RightHand;
-    public void OnWeaponIK(bool value)
-    {
-        if (value)
-        {
-            Gun2LeftHand = avatar[ASBone.hand_l].transform.position - gun.position;
-            Gun2RightHand = avatar[ASBone.hand_r].transform.position - gun.position;
-
-            FindObjectOfType<GizmosAxis>().transform.position = gun.position;
-            target.position = gun.position;//只有拖动gizmosaxis时才更新，所以这里手动更新
-
-            IK.Value = false;
-            IKSingle.Value = false;
-        }
-    }
-    private void OnTwistReset()
-    {
-        if (ast == null) return;
-        twist.value = 0;
-        dofP.twistSlider.slider.value = twist.value;
-        ast.euler.y = twist;
-    }
-    private void OnSwingXReset()
-    {
-        if (ast == null) return;
-        swingX.value = 0;
-        dofP.swingXSlider.slider.value = swingX.value;
-        ast.euler.x = swingX;
-    }
-    private void OnSwingZReset()
-    {
-        if (ast == null) return;
-        swingZ.value = 0;
-        dofP.swingZSlider.slider.value = swingZ.value;
-        ast.euler.z = swingZ;
-    }
-    private void OnFileNameChanged(string arg0, StringFieldWrapper arg1)
-    {
-        //strif.value = arg1.field.text;
-    }
-    private void NewClip()
-    {
-        UIClip.I.New(strif.field.text);
-        clipNameLabel.value = UIClip.clip.clipName;
-        clipNameLabel.Update();
-        Debug.Log(clipNameLabel.value);
-    }
     string[] ikTargetNames = new string[] { "左手", "右手", "左脚", "右脚" };
     string[] ikTargetMirrorNames = new string[] { "双手", "双脚" };
     public enum ASIKTarget
@@ -470,6 +58,282 @@ public class UIDOFEditor : MonoBehaviour
         Knee,
         Count
     }
+    public ASBone bone = ASBone.chest; // 给出个初始值
+
+    public Vector3 lockPos1;
+    public Vector3 lockPos2;
+
+    public ASDOF dof;
+    public ASDOFMgr dofSet;
+    public ASAvatar avatar;
+
+    public Transform target;
+    public Transform end;
+    public int iter;
+    public ASTransDOF ast;
+    public ASTransDOF astIK;
+    public float alpha; // 逼近的步长
+    public float theta0;
+    public float theta1;
+    public List<ASBone> joints;
+    public List<ASBone> joints2;
+    public int jointIterCount = 10;
+    public int axisIterCount = 20;
+
+    public Transform gun;
+    public frame frameClipBoard;
+
+    public Vector3 Gun2LeftHand;
+    public Vector3 Gun2RightHand;
+
+    public InputField inputTwistMin;
+    public InputField inputTwistMax;
+    public Button buttonOnTwistReset;
+    public Slider sliderTwist;
+    public InputField inputTwist;
+
+    public InputField inputSwingXMin;
+    public InputField inputSwingXMax;
+    public Button buttonOnSwingXReset;
+    public Slider sliderSwingX;
+    public InputField inputSwingX;
+
+    public InputField inputSwingZMin;
+    public InputField inputSwingZMax;
+    public Button buttonSwingZReset;
+    public Slider sliderSwingZ;
+    public InputField inputSwingZ;
+
+    public Toggle toggleIKSingle;
+    public Button buttonIKSingleSnap;
+    public Button buttonSaveAvatarSetting;
+    public Button buttonSaveClip;
+    public Text labelFileName;
+    public InputField inputFileName;
+    public Button buttonLoadClip;
+    public Button buttonNewClip;
+    public Button buttonInsertKeyToAllCurves;
+
+    public Toggle toggleIK;
+    public Button buttonIKSnap;
+    public Toggle toggleWeaponIK;
+
+    public Toggle toggleLockOneSide;
+    public Toggle toggleLockMirror;
+
+    public Dropdown dropBone;
+    public Dropdown dropIKTarget;
+    public Dropdown dropIKSingleTarget;
+    public Dropdown dropLockTarget;
+    public Dropdown dropLockMirrorTarget;
+
+    public Button btnEulerReset;
+
+    public bool ignoreChanged;
+    void Start()
+    {
+        foreach (var curve in UIClip.clip.curves)
+        {
+            curve.ast.coord.originPos = curve.ast.transform.localPosition;
+        }
+
+        dofSet.Load();
+        //avatar.LoadFromDOFMgr();
+        dof = dofSet[bone];
+        ast = avatar[bone];
+
+        ASUI.parent = transform.Search("Area");
+
+        // 自转  向内
+        inputTwistMin.Init(360, OnInputTMinChanged);
+        // 自转  向外
+        inputTwistMax.Init(360, OnInputTMaxChanged);
+        // R按钮  重置
+        buttonOnTwistReset.Init(OnTwistReset);
+
+        sliderTwist.Init(OnTwistSliderChanged);
+        inputTwist.Init(0, OnTwistInputChanged);
+
+        // 摆动  向前
+        inputSwingXMin.Init(OnInputXMinChanged);
+        // 摆动  向后
+        inputSwingXMax.Init(OnInputXMaxChanged);
+        // R按钮  重置
+        buttonOnSwingXReset.Init(OnSwingXReset);
+
+        sliderSwingX.Init(OnSwingXSliderChanged);
+        inputSwingX.Init(OnSwingXInputChanged);
+
+        // 摆动  向内
+        inputSwingZMin.Init(OnInputZMinChanged);
+        // 摆动  向外
+        inputSwingZMax.Init(OnInputZMaxChanged);
+        // R按钮  重置
+        buttonSwingZReset.Init(OnSwingZReset);
+
+        sliderSwingZ.Init(OnSwingZSliderChanged);
+        inputSwingZ.Init(OnSwingZInputChanged);
+
+        // 骨骼
+        dropBone.Init((int)ASBone.root, ASUI.Combine(ASBoneTool.names, "手枪"), OnDropdownChanged);
+        dropBone.gameObject.AddComponent<DropDownLocateSelectedItem>();
+        // 保存DOF
+        buttonSaveAvatarSetting.Init(SaveAvatarSetting);
+        // 保存Clip
+        buttonSaveClip.Init(SaveClip);
+        // 文件名
+        var cname = PlayerPrefs.GetString("LastOpenClipName", "New");
+        inputFileName.Init(cname, OnFileNameChanged);
+        // 打开文件
+        buttonLoadClip.Init(LoadClip);
+        // 新建Clip
+        buttonNewClip.Init(NewClip);
+        // 插入关键帧
+        buttonInsertKeyToAllCurves.Init(InsertKeyToAllCurves);
+        // IK目标
+        dropIKTarget.Init(0, ikTargetNames, OnIKTargetChanged, true);
+        dropIKTarget.gameObject.AddComponent<DropDownLocateSelectedItem>();
+        // 使用IK
+        toggleIK.Init(OnIKToggle);
+        // Snap
+        buttonIKSnap.Init(OnIKSnap); //IK目标设为当前位置
+        // IK目标(单关节)
+        dropIKSingleTarget.Init(0, ikTargetSingleNames, IKSingleTargetChange, true);
+        // 使用IK(单关节)
+        toggleIKSingle.Init(OnIKSingleToggle);
+        // Snap
+        buttonIKSingleSnap.Init(OnIKSingleSnap);
+        // 武器IK
+        toggleWeaponIK.Init(OnWeaponIK);
+        // 锁定骨骼位置
+        toggleLockOneSide.Init(OnLockOneSideToggle);
+        dropLockTarget.Init(0, ikTargetNames, OnLockTargetChange, true);
+        // 锁定骨骼位置(对称)
+        toggleLockMirror.Init(OnLockMirrorToggle);
+        dropLockMirrorTarget.Init(0, ikTargetMirrorNames, OnLockMirrorTargetChange, true);
+
+        btnEulerReset.Init(delegate { OnSwingXReset(); OnSwingZReset(); OnTwistReset(); });
+
+        ASUI.I.inputCallBacks.Add(new ASGUI.InputCallBack(GetInput, 1));
+
+        UpdateDOF();
+        gun = avatar[ASBone.other].transform;
+    }
+    private void OnLockOneSideToggle(bool value)
+    {
+        toggleLockOneSide.isOn = value;
+        if (value) { toggleLockMirror.isOn = toggleIKSingle.isOn = toggleIK.isOn = false; }
+    }
+    private void OnLockMirrorToggle(bool value)
+    {
+        toggleLockMirror.isOn = value;
+        if (value) { toggleLockOneSide.isOn = toggleIKSingle.isOn = toggleIK.isOn = false; }
+    }
+    private void OnLockTargetChange(int index)
+    {
+        joints = new List<ASBone>();
+        var lockTarget = (ASIKTarget)index;
+        switch (lockTarget)
+        {
+            case ASIKTarget.RightHand:
+                joints.Add(ASBone.hand_r);
+                joints.Add(ASBone.forearm_r);
+                joints.Add(ASBone.upperarm_r);
+                break;
+            case ASIKTarget.LeftHand:
+                joints.Add(ASBone.hand_l);
+                joints.Add(ASBone.forearm_l);
+                joints.Add(ASBone.upperarm_l);
+                break;
+            case ASIKTarget.RightLeg:
+                joints.Add(ASBone.foot_r);
+                joints.Add(ASBone.shin_r);
+                joints.Add(ASBone.thigh_r);
+                break;
+            case ASIKTarget.LeftLeg:
+                joints.Add(ASBone.foot_l);
+                joints.Add(ASBone.shin_l);
+                joints.Add(ASBone.thigh_l);
+                break;
+            default: throw null;
+        }
+        lockPos1 = avatar[joints[0]].transform.position;
+    }
+    void OnLockMirrorTargetChange(int index)
+    {
+        joints = new List<ASBone>();
+        joints2 = new List<ASBone>();
+        var lockTargetMirror = (ASIKTargetMirror)index;
+        switch (lockTargetMirror)
+        {
+            case ASIKTargetMirror.Hand:
+                joints.Add(ASBone.hand_l);
+                joints.Add(ASBone.forearm_l);
+                joints.Add(ASBone.upperarm_l);
+                lockPos1 = avatar[ASBone.hand_l].transform.position;
+                lockPos2 = avatar[ASBone.hand_r].transform.position;
+                break;
+            case ASIKTargetMirror.Leg:
+                joints.Add(ASBone.foot_l);
+                joints.Add(ASBone.shin_l);
+                joints.Add(ASBone.thigh_l);
+                lockPos1 = avatar[ASBone.foot_l].transform.position;
+                lockPos2 = avatar[ASBone.foot_r].transform.position;
+                break;
+            default: throw null;
+        }
+        foreach (var j in joints)
+        {
+            joints2.Add(j + 1); // right side
+        }
+    }
+    public void GunIK()
+    {
+        var targetPos = target.position + Gun2LeftHand;
+        joints = new List<ASBone>();
+        joints.Add(ASBone.hand_l);
+        joints.Add(ASBone.forearm_l);
+        joints.Add(ASBone.upperarm_l);
+        end = avatar[ASBone.hand_l].transform;
+        IKSolve(targetPos, joints.ToArray());
+
+        targetPos = target.position + Gun2RightHand;
+        joints = new List<ASBone>();
+        joints.Add(ASBone.hand_r);
+        joints.Add(ASBone.forearm_r);
+        joints.Add(ASBone.upperarm_r);
+        end = avatar[ASBone.hand_r].transform;
+        IKSolve(targetPos, joints.ToArray());
+    }
+    public void OnWeaponIK(bool value)
+    {
+        if (value)
+        {
+            Gun2LeftHand = avatar[ASBone.hand_l].transform.position - gun.position;
+            Gun2RightHand = avatar[ASBone.hand_r].transform.position - gun.position;
+
+            FindObjectOfType<GizmosAxis>().transform.position = gun.position;
+            target.position = gun.position;//只有拖动gizmosaxis时才更新，所以这里手动更新
+
+            toggleIK.isOn = false;
+            toggleIKSingle.isOn = false;
+        }
+    }
+    private void OnTwistReset()
+    {
+        sliderTwist.value = 0;
+        if (ast == null) ast.euler.y = sliderTwist.value;
+    }
+    private void OnSwingXReset()
+    {
+        sliderSwingX.value = 0;
+        if (ast == null) ast.euler.x = sliderSwingX.value;
+    }
+    private void OnSwingZReset()
+    {
+        sliderSwingZ.value = 0;
+        if (ast == null) ast.euler.z = sliderSwingZ.value;
+    }
     void GetInput()
     {
         if (Events.Click && ASUI.MouseOver(transform.Search("Area") as RectTransform)) Events.Use();//拦截点击事件，防止穿透
@@ -480,13 +344,13 @@ public class UIDOFEditor : MonoBehaviour
     }
     void OnIKToggle(bool value)
     {
-        IK.Value = value;
-        if (value) { IKSingle.Value = lockOneSide.Value = lockMirror.Value = false; }
+        toggleIK.isOn = value;
+        if (value) { toggleIKSingle.isOn = toggleLockOneSide.isOn = toggleLockMirror.isOn = false; }
     }
     void OnIKSingleToggle(bool value)
     {
-        IKSingle.Value = value;
-        if (value) { IK.Value = lockOneSide.Value = lockMirror.Value = false; }
+        toggleIKSingle.isOn = value;
+        if (value) { toggleIK.isOn = toggleLockOneSide.isOn = toggleLockMirror.isOn = false; }
     }
     private void OnIKSnap()
     {
@@ -500,39 +364,31 @@ public class UIDOFEditor : MonoBehaviour
         gizmos.transform.position = end.position;
         target.position = end.position;
     }
-    void ifInsert(ASCurve asc, float v)
-    {
-        if (asc.keys != null && asc.keys.Count > 0)
-        {
-            if (asc.IndexOf(UITimeLine.FrameIndex) > -1)
-            {
-                asc.InsertKey(UITimeLine.FrameIndex, v);
-            }
-        }
-    }
     public void InsertKeyToAllCurves()
     {
-        foreach (var curve in UIClip.clip.curves)
-        {
-            //var pos = curve.ast.transform.localPosition;
-            //ifInsert(curve.localPosition[0], pos.x);
-            //ifInsert(curve.localPosition[1], pos.y);
-            //ifInsert(curve.localPosition[2], pos.z);
-            //UIClip.clip.AddEulerCurve(curve, UITimeLine.FrameIndex, curve.ast.euler);
-            UIClip.clip.AddEulerPos(curve, UITimeLine.FrameIndex, curve.ast.euler, curve.ast.transform.localPosition);
-        }
+        UITimeLine.I.InsertKey();
+    }
+    private void OnFileNameChanged(string v)
+    {
+
+    }
+    private void NewClip()
+    {
+        UIClip.I.New(inputFileName.text);
+        labelFileName.text = inputFileName.text;
+        Debug.Log("新建 " + labelFileName.text);
     }
     void LoadClip()
     {
-        UIClip.I.Load(strif.field.text);
-        clipNameLabel.value = UIClip.clip.clipName;
-        clipNameLabel.Update();
-        Debug.Log("load " + clipNameLabel.value);
+        UIClip.I.Load(inputFileName.text);
+        labelFileName.text = inputFileName.text;
+        UIClip.I.UpdateAllCurve();
+        Debug.Log("读取 " + labelFileName.text);
     }
     void SaveClip()
     {
-        UIClip.I.Save();
-        Debug.Log("save " + clipNameLabel.value);
+        UIClip.I.Save(inputFileName.text);
+        Debug.Log("保存 " + inputFileName.text);
     }
     void SaveAvatarSetting()
     {
@@ -541,87 +397,171 @@ public class UIDOFEditor : MonoBehaviour
         avatar.LoadFromDOFMgr();
         avatar.SaveASTs();
     }
-    void OnRangeChanged(float v, FloatFieldWrapper o)
+    private void OnTwistSliderChanged(float v)
     {
-        if (dof != null) dofP.SaveASDOF(dof);
-        dofP.Update(dof);
-        twist.value = dofP.twistSlider.slider.value;
-        swingX.value = dofP.swingXSlider.slider.value;
-        swingZ.value = dofP.swingZSlider.slider.value;
-        OnEulerValueChanged(0, null);
+        if (ignoreChanged) return;
+        if (ast != null) { ast.euler.y = v; UIPlayer.I.Mirror(); }
+        ignoreChanged = true;
+        inputTwist.text = v.ToString();
+        ignoreChanged = false;
     }
-    private void OnTwistValueChanged(float arg0, FloatFieldWrapper arg1)
+    private void OnSwingXSliderChanged(float v)
     {
+        if (ignoreChanged) return;
+        if (ast != null) { ast.euler.x = v; UIPlayer.I.Mirror(); }
+        ignoreChanged = true;
+        inputSwingX.text = v.ToString();
+        ignoreChanged = false;
+    }
+    private void OnSwingZSliderChanged(float v)
+    {
+        if (ignoreChanged) return;
+        if (ast != null) { ast.euler.z = v; UIPlayer.I.Mirror(); }
+        ignoreChanged = true;
+        inputSwingZ.text = v.ToString();
+        ignoreChanged = false;
+    }
+    private void OnTwistInputChanged(string input)
+    {
+        if (ignoreChanged) return;
         if (ast == null) return;
         float result;
-        bool success = float.TryParse(twistFloatProp.field.text, out result);
+        bool success = float.TryParse(input, out result);
         if (success)
         {
-            result = Mathf.Clamp(result, dofP.twistMin, dofP.twistMax); // 只有解析成功的值会赋值
-            twist.value = result;
-            twistFloatProp.field.text = result.ToString();
-            dofP.twistSlider.slider.value = result;
+            result = Mathf.Clamp(result, ast.dof.twistMin, ast.dof.twistMax); // 只有解析成功的值会赋值                        
             ast.euler.y = result;
+            ignoreChanged = true;
+            sliderTwist.value = result;
+            inputTwist.text = result.ToString();
+            ignoreChanged = false;
         }
     }
-    private void OnSwingXValueChanged(float arg0, FloatFieldWrapper arg1)
+    private void OnSwingXInputChanged(string input)
     {
+        if (ignoreChanged) return;
         if (ast == null) return;
         float result;
-        bool success = float.TryParse(swingXFloatProp.field.text, out result);
+        bool success = float.TryParse(input, out result);
         if (success)
         {
-            result = Mathf.Clamp(result, dofP.swingXMin, dofP.swingXMax);
-            swingX.value = result;
-            swingXFloatProp.field.text = result.ToString();
-            dofP.swingXSlider.slider.value = result;
+            result = Mathf.Clamp(result, ast.dof.swingXMin, ast.dof.swingXMax);
             ast.euler.x = result;
+            ignoreChanged = true;
+            sliderSwingX.value = result;
+            inputSwingX.text = result.ToString();
+            ignoreChanged = false;
         }
     }
-    private void OnSwingZValueChanged(float arg0, FloatFieldWrapper arg1)
+    private void OnSwingZInputChanged(string input)
+    {
+        if (ignoreChanged) return;
+        if (ast == null) return;
+        float result;
+        bool success = float.TryParse(input, out result);
+        if (success)
+        {
+            result = Mathf.Clamp(result, ast.dof.swingZMin, ast.dof.swingZMax);
+            ast.euler.z = result;
+            ignoreChanged = true;
+            sliderSwingZ.value = result;
+            inputSwingZ.text = result.ToString();
+            ignoreChanged = false;
+        }
+    }
+    // dof范围 最小值或最大值 文本改变事件
+    void OnInputXMinChanged(string s)
     {
         if (ast == null) return;
         float result;
-        bool success = float.TryParse(swingZFloatProp.field.text, out result);
+        bool success = float.TryParse(inputSwingXMin.text, out result);
         if (success)
         {
-            result = Mathf.Clamp(result, dofP.swingZMin, dofP.swingZMax);
-            swingZ.value = result;
-            swingZFloatProp.field.text = result.ToString();
-            dofP.swingZSlider.slider.value = result;
-            ast.euler.z = result;
+            ast.dof.swingXMin = result;
+            ignoreChanged = true;
+            sliderSwingX.minValue = result;
+            ignoreChanged = false;
         }
     }
-    void OnEulerValueChanged(float v, SliderWrapper s)
+    void OnInputXMaxChanged(string s)
     {
         if (ast == null) return;
-        //if (IK) return;
-        twistFloatProp.field.text = twist.ToString();
-        swingXFloatProp.field.text = swingX.ToString();
-        swingZFloatProp.field.text = swingZ.ToString();
-        ast.euler.y = twist;
-        ast.euler.x = swingX;
-        ast.euler.z = swingZ;
+        float result;
+        bool success = float.TryParse(inputSwingXMax.text, out result);
+        if (success)
+        {
+            ast.dof.swingXMax = result;
+            ignoreChanged = true;
+            sliderSwingX.maxValue = result;
+            ignoreChanged = false;
+        }
     }
+    void OnInputZMinChanged(string s)
+    {
+        if (ast == null) return;
+        float result;
+        bool success = float.TryParse(inputSwingZMin.text, out result);
+        if (success)
+        {
+            ast.dof.swingZMin = result;
+            ignoreChanged = true;
+            sliderSwingZ.minValue = result;
+            ignoreChanged = false;
+        }
+    }
+    void OnInputZMaxChanged(string s)
+    {
+        if (ast == null) return;
+        float result;
+        bool success = float.TryParse(inputSwingZMax.text, out result);
+        if (success)
+        {
+            ast.dof.swingZMax = result;
+            ignoreChanged = true;
+            sliderSwingZ.maxValue = result;
+            ignoreChanged = false;
+        }
+    }
+    void OnInputTMinChanged(string s)
+    {
+        if (ast == null) return;
+        float result;
+        bool success = float.TryParse(inputTwistMin.text, out result);
+        if (success)
+        {
+            ast.dof.twistMin = result;
+            ignoreChanged = true;
+            sliderTwist.minValue = result;
+            ignoreChanged = false;
+        }
+    }
+    void OnInputTMaxChanged(string s)
+    {
+        if (ast == null) return;
+        float result;
+        bool success = float.TryParse(inputTwistMax.text, out result);
+        if (success)
+        {
+            ast.dof.twistMax = result;
+            ignoreChanged = true;
+            sliderTwist.maxValue = result;
+            ignoreChanged = false;
+        }
+    }
+    // 将最新的数值显示到面板
     internal void UpdateValueDisplay()
     {
         if (ast == null) return;
-        twistFloatProp.field.text = twist.ToString();
-        swingXFloatProp.field.text = swingX.ToString();
-        swingZFloatProp.field.text = swingZ.ToString();
-
-        twist.value = ast.euler.y;
-        swingX.value = ast.euler.x;
-        swingZ.value = ast.euler.z;
-        dofP.twistSlider.slider.value = twist;
-        dofP.swingXSlider.slider.value = swingX;
-        dofP.swingZSlider.slider.value = swingZ;
-
-        //ast.euler.y = twist; //似乎ast跟asts表里的指针指向同一实例，所以不需要更新
-        //ast.euler.x = swingX;
-        //ast.euler.z = swingZ;
+        ignoreChanged = true;
+        inputTwist.text = ast.euler.y.ToString();
+        inputSwingX.text = ast.euler.x.ToString();
+        inputSwingZ.text = ast.euler.z.ToString();
+        sliderTwist.value = ast.euler.y;
+        sliderSwingX.value = ast.euler.x;
+        sliderSwingZ.value = ast.euler.z;
+        ignoreChanged = false;
     }
-    void IKTargetChange(int index)
+    void OnIKTargetChanged(int index)
     {
         joints = new List<ASBone>();
         var ikTarget = (ASIKTarget)index;
@@ -695,9 +635,8 @@ public class UIDOFEditor : MonoBehaviour
         end = avatar[joints[0]].transform;
         OnIKSingleSnap();
     }
-    void DropdownChange(int index)
+    void OnDropdownChanged(int index)
     {
-        if (dof != null) dofP.SaveASDOF(dof);//先保存改变前的 骨骼dof
         var boneInt = (ASBone)index;
         dof = dofSet[boneInt];
         ast = avatar[boneInt];
@@ -706,20 +645,23 @@ public class UIDOFEditor : MonoBehaviour
     void UpdateDOF()
     {
         if (dof == null) return;
-        dofP.Update(dof);
-        if (ast != null)
-        {
-            ast.dof = dof;
-            dofP.twistSlider.slider.value = ast.euler.y;
-            dofP.swingXSlider.slider.value = ast.euler.x;
-            dofP.swingZSlider.slider.value = ast.euler.z;
-        }
+        ignoreChanged = true;
+        sliderTwist.value = ast.euler.y;
+        sliderSwingX.value = ast.euler.x;
+        sliderSwingZ.value = ast.euler.z;
+        ignoreChanged = false;
+        inputTwistMin.text = ast.dof.twistMin.ToString();
+        inputTwistMax.text = ast.dof.twistMax.ToString();
+        inputSwingXMin.text = ast.dof.swingXMin.ToString();
+        inputSwingXMax.text = ast.dof.swingXMax.ToString();
+        inputSwingZMin.text = ast.dof.swingZMin.ToString();
+        inputSwingZMax.text = ast.dof.swingZMax.ToString();
     }
-    public frame frameClipBoard;
     private void CopyFrame()
     {
         frame n = new frame();
         n.keys = new List<key>();
+        if (UIClip.clip == null || UIClip.clip.curves == null) return;
         foreach (var curve in UIClip.clip.curves)
         {
             var rot = curve.ast.euler;
@@ -747,6 +689,10 @@ public class UIDOFEditor : MonoBehaviour
     public void PasteFrame()
     {
         PasteFrame(null);
+    }
+    public void PasteFrame(params ASBone[] bones)
+    {
+        PasteFrame((ICollection<ASBone>)bones);
     }
     public void PasteFrame(ICollection<ASBone> bones)
     {
@@ -780,34 +726,37 @@ public class UIDOFEditor : MonoBehaviour
         }
         Debug.Log("paste " + c + " keys");
     }
+    public RectTransform rect;
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        var hover = ASUI.MouseOver(UICurve.I.transform as RectTransform)
+            || ASUI.MouseOver(UICamera.I.rectView as RectTransform);
+        if (hover && Input.GetKeyDown(KeyCode.C))
         {
             CopyFrame();
         }
-        else if (Input.GetKeyDown(KeyCode.V))
+        else if (hover && Input.GetKeyDown(KeyCode.V))
         {
             PasteFrame();
         }
 
-        if (IK || IKSingle)
+        if (toggleIK.isOn || toggleIKSingle.isOn)
         {
             IKSolve(joints.ToArray());
             //IKSolve(forearm, uparm, hand);
             //uparm.coord.DrawRay(uparm.transform, uparm.euler, 0.5f, false);
         }
-        else if (lockOneSide || lockMirror)
+        else if (toggleLockOneSide.isOn || toggleLockMirror.isOn)
         {
             end = avatar[joints[0]].transform;
             IKSolve(lockPos1, joints.ToArray());
-            if (lockMirror)
+            if (toggleLockMirror.isOn)
             {
                 end = avatar[joints2[0]].transform;
                 IKSolve(lockPos2, joints2.ToArray());
             }
         }
-        else if (GunIKBoolValueToggle) GunIK();
+        else if (toggleWeaponIK.isOn) GunIK();
     }
     float Dist(Vector3 targetPos)
     {

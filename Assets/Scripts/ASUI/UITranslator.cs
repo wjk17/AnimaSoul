@@ -27,19 +27,19 @@ public class UITranslator : MonoBehaviour
     }
     private void Start()
     {
-        sliderX.onValueChanged.AddListener(OnSliderChangeX);
-        sliderY.onValueChanged.AddListener(OnSliderChangeY);
-        sliderZ.onValueChanged.AddListener(OnSliderChangeZ);
-        textX.onValueChanged.AddListener(OnTextChangeX);
-        textY.onValueChanged.AddListener(OnTextChangeY);
-        textZ.onValueChanged.AddListener(OnTextChangeZ);
+        sliderX.Init(OnSliderChangeX);
+        sliderY.Init(OnSliderChangeY);
+        sliderZ.Init(OnSliderChangeZ);
+        textX.Init(OnTextChangeX);
+        textY.Init(OnTextChangeY);
+        textZ.Init(OnTextChangeZ);
         sliderX.minValue = -range;
         sliderX.maxValue = range;
         sliderY.minValue = -range;
         sliderY.maxValue = range;
         sliderZ.minValue = -range;
         sliderZ.maxValue = range;
-        control.onValueChanged.AddListener(OnToggle);
+        control.Init(OnToggleControl, true);
     }
     public void OnClick()
     {
@@ -48,12 +48,18 @@ public class UITranslator : MonoBehaviour
             UIClip.clip.AddPositionCurve(curve, UITimeLine.FrameIndex, curve.ast.transform.localPosition);
         }
     }
-    void OnToggle(bool on)
+    void OnToggleControl(bool on)
     {
         if (on)
+        {
+            GizmosAxis.I.gameObject.SetActive(true);
             GizmosAxis.I.controlObj = UIDOFEditor.I.ast.transform;
+        }
         else
+        {
+            GizmosAxis.I.gameObject.SetActive(false);
             GizmosAxis.I.controlObj = UIDOFEditor.I.target;
+        }
     }
     bool ignoreChange;
     internal void UpdateValueDisplay()

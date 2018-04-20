@@ -220,7 +220,7 @@ public class Tran2E
     }
 }
 /// <summary>
-/// 包含Position和Rotation的类型
+/// 包含Position(v3)和Rotation(v4)的类型
 /// 用于快捷操作Transform，缩短成员名
 /// </summary>
 [Serializable]
@@ -289,6 +289,13 @@ public class Tran2 : ICloneable
         t2.pos = parent.TransformPoint(local.pos);
         t2.rot = parent.rotation * local.rot;
         return t2;
+    }
+    // 无视pos以外的变换
+    public static Tran2 Relative2(Transform parent, Transform child)
+    {
+        var localPos = child.position - parent.position;
+        var localRot = Quaternion.Inverse(parent.rotation) * child.rotation;
+        return new Tran2(localPos, localRot);
     }
     // 无视原本父子关系，计算指定的“父子”对象之间的相对坐标和旋转值。
     public static Tran2 Relative(Transform parent, Transform child)

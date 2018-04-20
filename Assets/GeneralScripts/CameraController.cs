@@ -51,6 +51,7 @@ public class CameraController : MonoBehaviour
     public void ResetRotation()
     {
         pivotGO.transform.rotation = originRotation;
+        tX = 0;
     }
     private void Awake()
     {
@@ -112,47 +113,58 @@ public class CameraController : MonoBehaviour
         if (Events.Mouse(MouseButton.Left) ||
             Events.Mouse(MouseButton.Middle) ||
             Events.Mouse(MouseButton.Right))
-            mouseDragEvent(Input.mousePosition); 
+            mouseDragEvent(Input.mousePosition);
     }
     public Camera cam { get { return GetComponent<Camera>(); } }
     public Vector2 size
     {
         get { var h = cam.orthographicSize * 2f; var w = h * cam.aspect; return new Vector2(w, h); }
     }
+    public Vector3 diff;
+    public float mouseMoveTrackFactor = 1f;
     void mouseDragEvent(Vector3 mousePos)
     {
-        Vector3 diff = mousePos - oldPos;
+        diff = mousePos - oldPos;
         Vector2 diffN = new Vector2(diff.x / Screen.width, diff.y / Screen.height);
         Vector2 diffWorld = Vector2.Scale(diffN, size);
-        if (Events.Mouse(MouseButton.Left))
+        if (Events.Mouse(MouseButton.Left) && diff.magnitude > Vector3.kEpsilon)
         {
             //Operation for Mac : "Left Alt + Left Command + LMB Drag" is Track
-            if (Events.Key(KeyCode.LeftAlt) && Events.Key(KeyCode.LeftCommand)
-                || Events.Key(KeyCode.LeftAlt) && Events.Key(KeyCode.LeftControl))
+            if ((Events.Alt && Events.Command) || (Events.Alt && Events.Ctrl))
             {
-                if (diff.magnitude > Vector3.kEpsilon)
-                    cameraTranslate(-diffWorld);
+                var right = Vector3.Dot(diff, Vector2.right);
+                var delta = right * mouseMoveTrackFactor;
+                delta *= wheelSensitivity * dragSensitivity;
+                orthoCamSize -= delta;
+                if (orthoCamSize > orthoCamSizeMOM.z) orthoCamSize = orthoCamSizeMOM.z;
+                else if (orthoCamSize < orthoCamSizeMOM.x) orthoCamSize = orthoCamSizeMOM.x;
+                SyncCamSize();
+
+                var left = Vector3.Dot(diff, Vector2.left);
+                Debug.Log("left " + right.ToString());
+                Debug.Log("right " + right.ToString());
+            }
+            else if (Events.Alt && Events.Shift)
+            {
+                cameraTranslate(-diffWorld);
             }
             //Operation for Mac : "Left Alt + LMB Drag" is Tumble
-            else if (Events.Key(KeyCode.LeftAlt))
+            else if (Events.Alt)
             {
-                if (diff.magnitude > Vector3.kEpsilon)
-                    cameraRotate(new Vector3(diff.y, diff.x, 0.0f));
+                cameraRotate(new Vector3(diff.y, diff.x, 0.0f));
             }
             //Only "LMB Drag" is no action.
         }
         //Track
         else if (Events.Mouse(MouseButton.Middle))
         {
-            if (diff.magnitude > Vector3.kEpsilon)
-                //cameraTranslate(-diff / 100.0f);
-                cameraTranslate(-diffWorld);
+            //cameraTranslate(-diff / 100.0f);
+            cameraTranslate(-diffWorld);
         }
         //Tumble
         else if (Events.Mouse(MouseButton.Right))
         {
-            if (diff.magnitude > Vector3.kEpsilon)
-                cameraRotate(new Vector3(diff.y, diff.x, 0.0f));
+            cameraRotate(new Vector3(diff.y, diff.x, 0.0f));
         }
         oldPos = mousePos;
     }

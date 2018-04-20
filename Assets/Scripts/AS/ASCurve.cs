@@ -17,6 +17,38 @@ public class ASObjectCurve
     public ASCurve timeCurve;
     [XmlIgnore]
     public ASObjectCurve pair;
+    public Vector3 GetPosByKey(int index)
+    {
+        return new Vector3(localPosition[0].keys[index].value, localPosition[1].keys[index].value, localPosition[2].keys[index].value);
+    }
+    /// <summary>
+    /// euler 0~2, pos 3~5, time 6
+    /// </summary>
+    public ASCurve[] curves
+    {
+        get
+        {
+            return new ASCurve[] {
+                eulerAngles[0], eulerAngles[1], eulerAngles[2],
+                localPosition[0], localPosition[1], localPosition[2], timeCurve
+            };
+        }
+    }
+    public ASCurve GetCurve(int index)
+    {
+        if (MathTool.Between(index, 0, 3))
+            return eulerAngles[index];
+        else if (MathTool.Between(index, 3, 6))
+            return localPosition[index - 3];
+        else if (index == 7)
+            return timeCurve;
+        else throw null;
+    }
+
+    public Tran2E Tran2E(float frameIndex)
+    {
+        return new Tran2E(LocalPosition(frameIndex), EulerAngles(frameIndex));
+    }
     public Vector3 EulerAngles(float frameIndex)
     {
         return new Vector3(eulerAngles[0].Evaluate(frameIndex), eulerAngles[1].Evaluate(frameIndex), eulerAngles[2].Evaluate(frameIndex));

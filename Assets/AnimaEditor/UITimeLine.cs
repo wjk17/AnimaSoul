@@ -250,8 +250,8 @@ public class UITimeLine : MonoBehaviour
     public bool over;
     void GetInput()
     {
-        var shift = Events.shift;
-        var ctrl = Events.ctrl;
+        var shift = Events.Shift;
+        var ctrl = Events.Ctrl;
         var alt = Events.Alt;
         use = false;
         over = ASUI.MouseOver(area, ruler);
@@ -356,7 +356,7 @@ public class UITimeLine : MonoBehaviour
         path = rootPath + folder + fileName;
         Serializer.XMLSerialize(UIClip.clip, path);
     }
-    private void InsertKey()
+    public void InsertKey()
     {
         switch (insertType)
         {

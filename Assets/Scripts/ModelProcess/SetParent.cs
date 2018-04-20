@@ -10,6 +10,16 @@ public class SetParent : MonoBehaviour
     //{
     //    parent = transform;
     //}
+    [ContextMenu("Clear")]
+    void Clear()
+    {
+        var list = new List<Transform>();
+        foreach (var child in childs)
+        {
+            if (child != null) list.Add(child);
+        }
+        childs = list.ToArray();
+    }
     void Awake()
     {
         foreach (var child in childs)

@@ -164,6 +164,7 @@ public static class ASClipTool
     {
         foreach (var curve in curves)
         {
+            if (curve.ast == null) continue;
             switch (curve.ast.dof.bone)
             {
                 case ASBone.thumb3_l:

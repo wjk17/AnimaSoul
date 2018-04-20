@@ -59,6 +59,7 @@ public class UICurve : MonoBehaviour
     public bool showTrueTimeCurve;
     public Toggle toggleTrueTimeArea;
     public Toggle toggleControlPoints;
+    public Button btnUpdateFrame;
     public bool syncTwoSideTangentDir;
     public bool flipTwoSideTangent;
     public bool controlY;
@@ -68,6 +69,7 @@ public class UICurve : MonoBehaviour
     public float timeCurveN;
     public float GenerateRealTime(float t)
     {
+        return t;
         Vector2 a = Vector2.zero, b = Vector2.zero;
         int rInd = -1;
         for (int i = 1; i < keys.Count; i++)
@@ -230,6 +232,8 @@ public class UICurve : MonoBehaviour
     }
     void Start()
     {
+        btnUpdateFrame.Init(UIClip.I.UpdateAllCurve);
+
         area = transform.Search("Area") as RectTransform;
         rulerX = transform.Search("Ruler X") as RectTransform;
         rulerY = transform.Search("Ruler Y") as RectTransform;
@@ -240,8 +244,8 @@ public class UICurve : MonoBehaviour
     public bool over;
     public void GetInput()
     {
-        shift = Events.shift;
-        ctrl = Events.ctrl;
+        shift = Events.Shift;
+        ctrl = Events.Ctrl;
         alt = Events.Alt;
         use = false;
         over = ASUI.MouseOver(area, rulerX, rulerY);

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,16 +19,59 @@ public class UIFrameMgr : MonoBehaviour
     public Button deleteAllCurveButton;
     public Button pasteAllFrameButton;
     public Button pasteToArmButton;
+    public Button pasteToGunButton;
+    public Button pasteLeftHandToAllFrameBtn;
     private void Start()
     {
         insertMissButton.onClick.AddListener(InsertMissCurve);
         deleteAllCurveButton.onClick.AddListener(DeleteAllCurve);
         pasteAllFrameButton.onClick.AddListener(PasteAllFrame);
         pasteToArmButton.onClick.AddListener(PasteToArm);
+        pasteToGunButton.onClick.AddListener(PasteToGun);
+        pasteLeftHandToAllFrameBtn.onClick.AddListener(pasteLeftHandToAllFrame);
+    }
+    private void pasteLeftHandToAllFrame()
+    {
+        UIDOFEditor.I.PasteFrameAllFrame(new ASBone[] { ASBone.shoulder_r, ASBone.upperarm_r, ASBone.forearm_r, ASBone.hand_r });
+    }
+
+    void PasteToGun()
+    {
+        UIDOFEditor.I.PasteFrame(ASBone.other);
     }
     void PasteToArm()
     {
-        UIDOFEditor.I.PasteFrame(ASBoneTool.arms);
+        //UIDOFEditor.I.PasteFrame(ASBoneTool.arms);
+        var list = new List<ASBone>();
+        list.Add(ASBone.thumb1_l);
+        list.Add(ASBone.thumb2_l);
+        list.Add(ASBone.thumb3_l);
+
+        list.Add(ASBone.index1_l);
+        list.Add(ASBone.index2_l);
+        list.Add(ASBone.index3_l);
+
+        list.Add(ASBone.middle1_l);
+        list.Add(ASBone.middle2_l);
+        list.Add(ASBone.middle3_l);
+
+        list.Add(ASBone.ring1_l);
+        list.Add(ASBone.ring2_l);
+        list.Add(ASBone.ring3_l);
+
+        list.Add(ASBone.pinky1_l);
+        list.Add(ASBone.pinky2_l);
+        list.Add(ASBone.pinky3_l);
+
+        //list.Add(ASBone.hand_l);
+
+        var list2 = new List<ASBone>();
+        foreach (var i in list)
+        {
+            list2.Add(i + 1);
+        }
+        list.AddRange(list2);
+        UIDOFEditor.I.PasteFrame(list);
     }
     void PasteAllFrame()
     {

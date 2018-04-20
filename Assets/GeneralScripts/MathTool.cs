@@ -8,10 +8,52 @@ public enum RotSeq
     zyx, zyz, zxy, zxz, yxz, yxy,
     yzx, yzy, xyz, xyx, xzy, xzx
 }
-// 出处：
-// http://bediyap.com/programming/convert-quaternion-to-euler-rotations/
 public static class MathTool
 {
+    public static Vector4 NaNTo0(Vector4 v)
+    {
+        if (float.IsNaN(v.x)) v.x = 0f;
+        if (float.IsNaN(v.y)) v.y = 0f;
+        if (float.IsNaN(v.z)) v.z = 0f;
+        if (float.IsNaN(v.w)) v.w = 0f;
+        return v;
+    }
+    public static Vector3 NaNTo0(Vector3 v)
+    {
+        if (float.IsNaN(v.x)) v.x = 0f;
+        if (float.IsNaN(v.y)) v.y = 0f;
+        if (float.IsNaN(v.z)) v.z = 0f;
+        return v;
+    }
+    public static Vector2 NaNTo0(Vector2 v)
+    {
+        if (float.IsNaN(v.x)) v.x = 0f;
+        if (float.IsNaN(v.y)) v.y = 0f;
+        return v;
+    }
+    public static float NaNTo0(float f)
+    {
+        if (float.IsNaN(f)) f = 0f;
+        return f;
+    }
+    public static bool IsNaN(Quaternion q)
+    {
+        return float.IsNaN(q.x) || float.IsNaN(q.y) || float.IsNaN(q.z) || float.IsNaN(q.w);
+    }
+    public static bool IsNaN(Vector4 v)
+    {
+        return float.IsNaN(v.x) || float.IsNaN(v.y) || float.IsNaN(v.z) || float.IsNaN(v.w);
+    }
+    public static bool IsNaN(Vector3 v)
+    {
+        return float.IsNaN(v.x) || float.IsNaN(v.y) || float.IsNaN(v.z);
+    }
+    public static bool IsNaN(Vector2 v)
+    {
+        return float.IsNaN(v.x) || float.IsNaN(v.y);
+    }
+    // 出处：
+    // http://bediyap.com/programming/convert-quaternion-to-euler-rotations/
     public static Vector3 TwoAxisRot(float r11, float r12, float r21, float r31, float r32)
     {
         Vector3 ret = new Vector3();

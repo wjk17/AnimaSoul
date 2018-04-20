@@ -15,8 +15,51 @@ public class ASTransDOF // 带关节限制（DOF）的变换。其实是一个�
     public Transform transform;
     public ASDOF dof;
     public Coordinate coord;
+
+    public Vector3 upWorld
+    {
+        get
+        {
+            var v = up;
+            if (v.x != 0)
+            {
+                v = v.x * transform.right;
+            }
+            else if (v.y != 0)
+            {
+                v = v.y * transform.up;
+            }
+            else// if (v.z != 0)
+            {
+                v = v.z * transform.forward;
+            }
+            //Debug.Log(transform.up.ToString() + " vs " + v.ToString());
+            //直接计算失败
+            //var upW = transform.localRotation * transform.parent.TransformDirection(coord.up);
+            return transform.up;
+            //右边身体的up会翻转，所以失败
+            //return v;
+        }
+    }
+
     [XmlIgnore]
     public Vector3 euler;
+
+    public float swingX
+    {
+        set { euler.x = dof.swingXMin + value * rangeX; }
+    }
+    public float rangeX { get { return dof.swingXMax - dof.swingXMin; } }
+    public float swingZ
+    {
+        set { euler.z = dof.swingZMin + value * rangeZ; }
+    }
+    public float rangeZ { get { return dof.swingZMax - dof.swingZMin; } }
+    public float twistT
+    {
+        set { euler.x = dof.twistMin + value * rangeY; }
+    }
+    public float rangeY { get { return dof.twistMax - dof.twistMin; } }
     public Vector3 right = new Vector3(1, 0, 0); // 用来转换坐标轴
     public Vector3 up = new Vector3(0, 1, 0);
     public Vector3 forward = new Vector3(0, 0, 1);
@@ -50,22 +93,43 @@ public class ASTransDOF // 带关节限制（DOF）的变换。其实是一个�
     }
     public void Rotate()
     {
+        if (MathTool.IsNaN(euler))
+        {
+            int a = 0;
+        }
+
         euler = DOFLiminator.LimitDOF(euler, dof);
-        transform.localRotation = coord.Rotate(euler);
+
+        if (MathTool.IsNaN(euler))
+        {
+            int a = 0;
+        }
+
+        var rot = coord.Rotate(euler);
+
+        if (MathTool.IsNaN(rot))
+        {
+            int a = 0;
+        }
+        transform.localRotation = rot;
     }
     public void Update()
     {
+        euler = MathTool.NaNTo0(euler);
         Rotate();
     }
 }
 [Serializable]
 public class Coordinate
 {
-    public Vector3 up;
-    public Vector3 forward;
-    public Vector3 right;
+    /// 本地坐标轴
+    public Vector3 up; 
+    public Vector3 forward;/// 本地坐标轴
+    public Vector3 right; /// 本地坐标轴
     [XmlIgnore]//初始姿势euler（0,0,0），不保存，程序开始时获取
     public Quaternion origin;
+    [XmlIgnore]
+    public Vector3 originPos;
     public Coordinate() { }
     public Coordinate World(Transform t, Vector3 euler)
     {
@@ -96,6 +160,7 @@ public class Coordinate
         forward = c.forward;
         right = c.right;
         origin = c.origin;
+        originPos = c.originPos;
     }
     public Coordinate(Transform t)
     {
@@ -105,12 +170,13 @@ public class Coordinate
         forward = p != null ? p.InverseTransformDirection(t.forward) : t.forward;
         right = p != null ? p.InverseTransformDirection(t.right) : t.right;
         origin = t.localRotation;
+        originPos = t.localPosition;
     }
     public Quaternion Rotate(Vector3 euler)
     {
         var n = new Coordinate(this);
         Quaternion result = origin;
-        Quaternion rot;
+        Quaternion rot; 
 
         rot = Quaternion.AngleAxis(euler.z, n.forward);
         result = rot * result;
@@ -123,6 +189,11 @@ public class Coordinate
         rot = Quaternion.AngleAxis(euler.y, n.up);
         result = rot * result;
 
+        //if(MathTool.IsNaN(result))
+        //{
+        //    int a = 0;
+        //}
+        
         return result;
     }
     public static Coordinate operator *(Coordinate coord, Quaternion rot)

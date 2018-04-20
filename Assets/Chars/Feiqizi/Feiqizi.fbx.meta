@@ -1069,7 +1069,16 @@ ModelImporter:
     13700058: Lower.001
     13700060: Wrist.l.001
     13700062: WristWidget.r.001
+    13700064: braid
+    13700066: braid.001
+    13700068: braid.002
+    13700070: braid.003
+    13700072: HairBack
     2186277476908879412: ImportLogs
+    2186277476908879414: ImportLogs
+    2186277476908879416: ImportLogs
+    2186277476908879418: ImportLogs
+    2186277476908879420: ImportLogs
   externalObjects:
   - first:
       type: UnityEngine:Material

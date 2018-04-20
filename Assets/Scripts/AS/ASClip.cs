@@ -138,18 +138,32 @@ public class ASClip
         curve.localPosition[1].InsertKey(frameIndex, pos.y);
         curve.localPosition[2].InsertKey(frameIndex, pos.z);
     }
+    void ifInsert(ASCurve asc, float v)
+    {
+        if (asc.keys != null && asc.keys.Count > 0)
+        {
+            if (asc.IndexOf(UITimeLine.FrameIndex) > -1)
+            {
+                asc.InsertKey(UITimeLine.FrameIndex, v);
+            }
+        }
+    }
     public void AddEulerPosAllCurve(int frameIndex)
     {
+        var c = 0;
         foreach (var curve in UIClip.clip.curves)
         {
-            curve.timeCurve.InsertKey(frameIndex, 0);
-            curve.eulerAngles[0].InsertKey(frameIndex, curve.ast.euler.x);
-            curve.eulerAngles[1].InsertKey(frameIndex, curve.ast.euler.y);
-            curve.eulerAngles[2].InsertKey(frameIndex, curve.ast.euler.z);
-            curve.localPosition[0].InsertKey(frameIndex, curve.ast.transform.localPosition.x);
-            curve.localPosition[1].InsertKey(frameIndex, curve.ast.transform.localPosition.y);
-            curve.localPosition[2].InsertKey(frameIndex, curve.ast.transform.localPosition.z);
+            if (curve.ast == null) continue;
+            //var pos = curve.ast.transform.localPosition;
+            //ifInsert(curve.localPosition[0], pos.x);
+            //ifInsert(curve.localPosition[1], pos.y);
+            //ifInsert(curve.localPosition[2], pos.z);
+            //UIClip.clip.AddEulerCurve(curve, UITimeLine.FrameIndex, curve.ast.euler);
+            var os = curve.ast.coord.originPos;
+            AddEulerPos(curve, UITimeLine.FrameIndex, curve.ast.euler, curve.ast.transform.localPosition - os);
+            c++;
         }
+        Debug.Log("插入到 " + c.ToString() + " 条曲线");
     }
     public void AddEulerPosOrigin(ASObjectCurve curve, int frameIndex, Vector3 euler, Vector3 pos)
     {
