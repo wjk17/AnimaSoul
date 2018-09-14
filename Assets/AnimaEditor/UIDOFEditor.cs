@@ -8,27 +8,27 @@ public class UIDOFEditorEditor : E_ShowButtons<UIDOFEditor> { }
 #endif
 public partial class UIDOFEditor : MonoSingleton<UIDOFEditor>
 {
-    public ASBone bone = ASBone.chest; // 给出个初始值
+    public Bone bone = Bone.chest; // 给出个初始值
 
     public Vector3 lockPos1;
     public Vector3 lockPos2;
 
-    public ASDOF dof;
-    public ASDOFMgr dofSet;
-    public ASAvatar avatar;
+    public DOF dof;
+    public DOFMgr dofSet;
+    public Avator avatar;
 
     public Transform target;
     public Transform end;
     public int iter;
-    public ASTransDOF ast;
-    public ASTransDOF astIK;
+    public TransDOF ast;
+    public TransDOF astIK;
 
     public float alpha; // 逼近的步长
     public float theta0;
     public float theta1;
 
-    public List<ASBone> joints;
-    public List<ASBone> joints2;
+    public List<Bone> joints;
+    public List<Bone> joints2;
     public int jointIterCount = 10;
     public int axisIterCount = 20;
 
@@ -43,7 +43,7 @@ public partial class UIDOFEditor : MonoSingleton<UIDOFEditor>
 
     public int drawOrder = -1;
     void Start()
-    {
+    {        
         foreach (var curve in UIClip.clip.curves)
         {
             curve.ast.coord.originPos = curve.ast.transform.localPosition;
@@ -58,16 +58,15 @@ public partial class UIDOFEditor : MonoSingleton<UIDOFEditor>
 
         InitUI();
 
-        //UI.I.AddInputCB("DOFEditor", GetInput, 1);
-        ASUI.I.inputCallBacks.Add(new ASGUI.InputCallBack(GetInput, 1));
+        UI.I.AddInputCB(name, GetInput, 1);
 
         UpdateDOF();
-        exBone = avatar[ASBone.other].transform;
+        exBone = avatar[Bone.other].transform;
     }
     void GetInput()
     {
         if (Events.Click && ASUI.MouseOver(transform.Search("Area") as RectTransform)) Events.Use();//拦截点击事件，防止穿透
-    }    
+    }
     public void InsertKeyToAllCurves()
     {
         UITimeLine.I.InsertKey();
@@ -101,8 +100,8 @@ public partial class UIDOFEditor : MonoSingleton<UIDOFEditor>
         // 先修改DOF集，再引用到当前化身（Avatar）。不同化身，如不同化身（但骨架形状类似）的人物，生物可能使用相同的DOF集。
         dofSet.Save();
         avatar.LoadFromDOFMgr();
-        avatar.SaveASTs();
-    }    
+        avatar.Save();
+    }
     void Update()
     {
         var hover = ASUI.MouseOver(UICurve.I.transform as RectTransform)
@@ -132,5 +131,5 @@ public partial class UIDOFEditor : MonoSingleton<UIDOFEditor>
             }
         }
         else if (f.toggleWeaponIK.isOn) GunIK();
-    }    
+    }
 }

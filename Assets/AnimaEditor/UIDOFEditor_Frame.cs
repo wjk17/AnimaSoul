@@ -23,7 +23,7 @@ public partial class UIDOFEditor {
         Debug.Log("copy " + n.keys.Count.ToString() + " keys");
         frameClipBoard = n;
     }
-    ASObjectCurve GetCurve(ASBone bone)
+    CurveObj GetCurve(Bone bone)
     {
         foreach (var curve in UIClip.clip.curves)
         {
@@ -38,11 +38,11 @@ public partial class UIDOFEditor {
     {
         PasteFrame(null);
     }
-    public void PasteFrame(params ASBone[] bones)
+    public void PasteFrame(params Bone[] bones)
     {
-        PasteFrame((ICollection<ASBone>)bones);
+        PasteFrame((ICollection<Bone>)bones);
     }
-    public void PasteFrame(ICollection<ASBone> bones)
+    public void PasteFrame(ICollection<Bone> bones)
     {
         if (frameClipBoard == null) return;
         var c = 0;
@@ -58,7 +58,7 @@ public partial class UIDOFEditor {
         }
         Debug.Log("paste " + c + " keys");
     }
-    public void PasteFrameAllFrame(ICollection<ASBone> bones)
+    public void PasteFrameAllFrame(ICollection<Bone> bones)
     {
         if (frameClipBoard == null) return;
         var c = 0;

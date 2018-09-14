@@ -20,7 +20,7 @@ public class UIFliper : MonoBehaviour
     }
     public void SwitchAllExHips()
     {
-        SwitchAllEx(ASBone.root);
+        SwitchAllEx(Bone.root);
     }
     public void SwitchAll()
     {
@@ -34,13 +34,13 @@ public class UIFliper : MonoBehaviour
         }
         return false;
     }
-    public void SwitchAllEx(params ASBone[] bones)
+    public void SwitchAllEx(params Bone[] bones)
     {
         foreach (var t in UIDOFEditor.I.avatar.setting.asts)
         {
-            if (ASClipTool.IsLeftBone(t.dof.bone))
+            if (ClipTool.IsLeftBone(t.dof.bone))
             {
-                var rightBone = ASClipTool.GetPairBone(t.dof.bone);
+                var rightBone = ClipTool.GetPairBone(t.dof.bone);
                 if (rightBone > 0)
                 {
                     var right = GetAstFromAvatar(rightBone);
@@ -54,7 +54,7 @@ public class UIFliper : MonoBehaviour
             }
             else
             {
-                if (ArrayInclude(bones, t.dof.bone) || ASClipTool.IsRightBone(t.dof.bone))
+                if (ArrayInclude(bones, t.dof.bone) || ClipTool.IsRightBone(t.dof.bone))
                 {
                     continue;
                 }
@@ -70,8 +70,8 @@ public class UIFliper : MonoBehaviour
     {
         foreach (var t in UIDOFEditor.I.avatar.setting.asts)
         {
-            if (!ASClipTool.IsLeftBone(t.dof.bone)) continue;
-            var rightBone = ASClipTool.GetPairBone(t.dof.bone);
+            if (!ClipTool.IsLeftBone(t.dof.bone)) continue;
+            var rightBone = ClipTool.GetPairBone(t.dof.bone);
             if (rightBone > 0)
             {
                 var right = GetAstFromAvatar(rightBone);
@@ -88,8 +88,8 @@ public class UIFliper : MonoBehaviour
     {
         foreach (var t in UIDOFEditor.I.avatar.setting.asts)
         {
-            if (!ASClipTool.IsLeftBone(t.dof.bone)) continue;
-            var rightBone = ASClipTool.GetPairBone(t.dof.bone);
+            if (!ClipTool.IsLeftBone(t.dof.bone)) continue;
+            var rightBone = ClipTool.GetPairBone(t.dof.bone);
             if (rightBone > 0)
             {
                 var right = GetAstFromAvatar(rightBone);
@@ -101,8 +101,8 @@ public class UIFliper : MonoBehaviour
     {
         foreach (var t in UIDOFEditor.I.avatar.setting.asts)
         {
-            if (!ASClipTool.IsRightBone(t.dof.bone)) continue;
-            var leftBone = ASClipTool.GetPairBone(t.dof.bone);
+            if (!ClipTool.IsRightBone(t.dof.bone)) continue;
+            var leftBone = ClipTool.GetPairBone(t.dof.bone);
             if (leftBone > 0)
             {
                 var left = GetAstFromAvatar(leftBone);
@@ -110,7 +110,7 @@ public class UIFliper : MonoBehaviour
             }
         }
     }
-    ASTransDOF GetAstFromAvatar(ASBone bone)
+    TransDOF GetAstFromAvatar(Bone bone)
     {
         foreach (var t in UIDOFEditor.I.avatar.setting.asts)
         {

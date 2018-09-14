@@ -60,24 +60,24 @@ public partial class UIDOFEditor{
         }
         astIK.Rotate();
     }
-    private void IKSolve(params ASBone[] bones)
+    private void IKSolve(params Bone[] bones)
     {
         IKSolve(target.position, bones);
     }
-    private void IKSolve(Vector3 targetPos, params ASBone[] bones)
+    private void IKSolve(Vector3 targetPos, params Bone[] bones)
     {
-        var joints = new List<ASTransDOF>();
+        var joints = new List<TransDOF>();
         foreach (var bone in bones)
         {
             joints.Add(avatar[bone]);
         }
         IKSolve(targetPos, joints.ToArray());
     }
-    private void IKSolve(params ASTransDOF[] joints)
+    private void IKSolve(params TransDOF[] joints)
     {
         IKSolve(target.position, joints);
     }
-    private void IKSolve(Vector3 targetPos, params ASTransDOF[] joints)
+    private void IKSolve(Vector3 targetPos, params TransDOF[] joints)
     {
         //带DOF的IK思路：把欧拉旋转拆分为三个旋转分量，像迭代关节一样按照旋转顺序进行循环下降迭代。
         int c = jointIterCount;

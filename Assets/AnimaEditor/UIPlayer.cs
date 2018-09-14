@@ -31,7 +31,7 @@ public class UIPlayer : MonoSingleton<UIPlayer>
     {
         if (I.toggleMirrorPv.isOn || force)//镜像翻转
         {
-            var handledList = new List<ASObjectCurve>();
+            var handledList = new List<CurveObj>();
             foreach (var curve in UIClip.clip.curves)
             {
                 if (handledList.Contains(curve)) continue;
@@ -62,38 +62,18 @@ public class UIPlayer : MonoSingleton<UIPlayer>
     void ApplyTo60Fps()
     {
         var ratio = 60f / UITimeLine.Fps;
-        foreach (var curve in UIClip.clip.curves)
+        foreach (var curveObj in UIClip.clip.curves)
         {
-            foreach (var key in curve.eulerAngles[0].keys)
+            foreach (var curve in curveObj.curves)
             {
-                key.frameIndex = Mathf.RoundToInt(key.frameIndex * ratio);
-            }
-            foreach (var key in curve.eulerAngles[1].keys)
-            {
-                key.frameIndex = Mathf.RoundToInt(key.frameIndex * ratio);
-            }
-            foreach (var key in curve.eulerAngles[2].keys)
-            {
-                key.frameIndex = Mathf.RoundToInt(key.frameIndex * ratio);
-            }
-            foreach (var key in curve.localPosition[0].keys)
-            {
-                key.frameIndex = Mathf.RoundToInt(key.frameIndex * ratio);
-            }
-            foreach (var key in curve.localPosition[1].keys)
-            {
-                key.frameIndex = Mathf.RoundToInt(key.frameIndex * ratio);
-            }
-            foreach (var key in curve.localPosition[2].keys)
-            {
-                key.frameIndex = Mathf.RoundToInt(key.frameIndex * ratio);
-            }
-            foreach (var key in curve.timeCurve.keys)
-            {
-                key.frameIndex = Mathf.RoundToInt(key.frameIndex * ratio);
+                foreach (var key in curve)
+                {
+                    key.time = Mathf.RoundToInt(key.time * ratio);
+                }
+
             }
         }
-        ASClipTool.GetFrameRange(UIClip.clip);
+        ClipTool.GetFrameRange(UIClip.clip);
         UITimeLine.I.frameIndexF *= ratio;
         inputfieldFps.text = "60";
     }
@@ -114,7 +94,7 @@ public class UIPlayer : MonoSingleton<UIPlayer>
     public float speed = 1f;
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             play = !play;
         }
@@ -141,7 +121,7 @@ public class UIPlayer : MonoSingleton<UIPlayer>
                     UITimeLine.I.frameIndex = UIClip.clip.frameRange.x;
                 }
             }
-            else if(togglePingPong.isOn && UITimeLine.I.frameIndexF < UIClip.clip.frameRange.x)
+            else if (togglePingPong.isOn && UITimeLine.I.frameIndexF < UIClip.clip.frameRange.x)
             {
                 speed = Mathf.Abs(speed);
             }

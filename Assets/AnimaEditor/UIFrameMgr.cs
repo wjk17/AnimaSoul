@@ -11,7 +11,7 @@ public class frame
 public class key
 {
     public Tran2E t2;
-    public ASBone bone;
+    public Bone bone;
 }
 public class UIFrameMgr : MonoBehaviour
 {
@@ -32,40 +32,40 @@ public class UIFrameMgr : MonoBehaviour
     }
     private void pasteLeftHandToAllFrame()
     {
-        UIDOFEditor.I.PasteFrameAllFrame(new ASBone[] { ASBone.shoulder_r, ASBone.upperarm_r, ASBone.forearm_r, ASBone.hand_r });
+        UIDOFEditor.I.PasteFrameAllFrame(new Bone[] { Bone.shoulder_r, Bone.upperarm_r, Bone.forearm_r, Bone.hand_r });
     }
 
     void PasteToGun()
     {
-        UIDOFEditor.I.PasteFrame(ASBone.other);
+        UIDOFEditor.I.PasteFrame(Bone.other);
     }
     void PasteToArm()
     {
         //UIDOFEditor.I.PasteFrame(ASBoneTool.arms);
-        var list = new List<ASBone>();
-        list.Add(ASBone.thumb1_l);
-        list.Add(ASBone.thumb2_l);
-        list.Add(ASBone.thumb3_l);
+        var list = new List<Bone>();
+        list.Add(Bone.thumb1_l);
+        list.Add(Bone.thumb2_l);
+        list.Add(Bone.thumb3_l);
 
-        list.Add(ASBone.index1_l);
-        list.Add(ASBone.index2_l);
-        list.Add(ASBone.index3_l);
+        list.Add(Bone.index1_l);
+        list.Add(Bone.index2_l);
+        list.Add(Bone.index3_l);
 
-        list.Add(ASBone.middle1_l);
-        list.Add(ASBone.middle2_l);
-        list.Add(ASBone.middle3_l);
+        list.Add(Bone.middle1_l);
+        list.Add(Bone.middle2_l);
+        list.Add(Bone.middle3_l);
 
-        list.Add(ASBone.ring1_l);
-        list.Add(ASBone.ring2_l);
-        list.Add(ASBone.ring3_l);
+        list.Add(Bone.ring1_l);
+        list.Add(Bone.ring2_l);
+        list.Add(Bone.ring3_l);
 
-        list.Add(ASBone.pinky1_l);
-        list.Add(ASBone.pinky2_l);
-        list.Add(ASBone.pinky3_l);
+        list.Add(Bone.pinky1_l);
+        list.Add(Bone.pinky2_l);
+        list.Add(Bone.pinky3_l);
 
         //list.Add(ASBone.hand_l);
 
-        var list2 = new List<ASBone>();
+        var list2 = new List<Bone>();
         foreach (var i in list)
         {
             list2.Add(i + 1);
@@ -75,32 +75,16 @@ public class UIFrameMgr : MonoBehaviour
     }
     void PasteAllFrame()
     {
-        UIDOFEditor.I.PasteFrameAllFrame(ASBoneTool.arms);
-    }
-    void DeleteASC(ASCurve asc)
-    {
-        if (asc.keys != null && asc.keys.Count > 0)
-        {
-            if (asc.IndexOf(UITimeLine.FrameIndex) > -1)
-            {
-                asc.RemoveKey(UITimeLine.FrameIndex);
-            }
-        }
+        UIDOFEditor.I.PasteFrameAllFrame(BoneTool.arms);
     }
     void DeleteAllCurve()
     {
         foreach (var curve in UIClip.clip.curves)
         {
-            DeleteASC(curve.timeCurve);
-            DeleteASC(curve.eulerAngles[0]);
-            DeleteASC(curve.eulerAngles[1]);
-            DeleteASC(curve.eulerAngles[2]);
-            DeleteASC(curve.localPosition[0]);
-            DeleteASC(curve.localPosition[1]);
-            DeleteASC(curve.localPosition[2]);
+            curve.RemoveAtTime(UITimeLine.I.frameIndex);
         }
     }
-    bool MissAst(ASTransDOF t) // ast是否存在于当前clip
+    bool MissAst(TransDOF t) // ast是否存在于当前clip
     {
         foreach (var curve in UIClip.clip.curves)
         {
@@ -114,7 +98,7 @@ public class UIFrameMgr : MonoBehaviour
         {
             if (MissAst(ast)) // 插入新增的（化身ast表里有，clip里却没有的）曲线
             {
-                UIClip.clip.curves.Add(new ASObjectCurve(ast));
+                UIClip.clip.curves.Add(new CurveObj(ast));
             }
         }
     }

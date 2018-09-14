@@ -24,32 +24,32 @@ public class MultiDOFControl : MonoBehaviour
     public bool section2;
     public bool section3;
 
-    public List<ASBone> list;
-    public List<ASTransDOF> listAST;
+    public List<Bone> list;
+    public List<TransDOF> listAST;
     void Start()
     {
-        list = new List<ASBone>();
-        listAST = new List<ASTransDOF>();
+        list = new List<Bone>();
+        listAST = new List<TransDOF>();
 
-        list.Add(ASBone.thumb1_l);
-        list.Add(ASBone.thumb2_l);
-        list.Add(ASBone.thumb3_l);
+        list.Add(Bone.thumb1_l);
+        list.Add(Bone.thumb2_l);
+        list.Add(Bone.thumb3_l);
 
-        list.Add(ASBone.index1_l);
-        list.Add(ASBone.index2_l);
-        list.Add(ASBone.index3_l);
+        list.Add(Bone.index1_l);
+        list.Add(Bone.index2_l);
+        list.Add(Bone.index3_l);
 
-        list.Add(ASBone.middle1_l);
-        list.Add(ASBone.middle2_l);
-        list.Add(ASBone.middle3_l);
+        list.Add(Bone.middle1_l);
+        list.Add(Bone.middle2_l);
+        list.Add(Bone.middle3_l);
 
-        list.Add(ASBone.ring1_l);
-        list.Add(ASBone.ring2_l);
-        list.Add(ASBone.ring3_l);
+        list.Add(Bone.ring1_l);
+        list.Add(Bone.ring2_l);
+        list.Add(Bone.ring3_l);
 
-        list.Add(ASBone.pinky1_l);
-        list.Add(ASBone.pinky2_l);
-        list.Add(ASBone.pinky3_l);
+        list.Add(Bone.pinky1_l);
+        list.Add(Bone.pinky2_l);
+        list.Add(Bone.pinky3_l);
 
         foreach (var i in list)
         {
@@ -90,7 +90,7 @@ public class MultiDOFControl : MonoBehaviour
     }
     public bool controlX;
     public bool controlZ;
-    void SetASTValue(ASTransDOF ast, float v)
+    void SetASTValue(TransDOF ast, float v)
     {
         if (controlX) ast.euler.x = ast.dof.swingXMin + (ast.dof.swingXMax - ast.dof.swingXMin) * v;
         if (controlZ) ast.euler.z = ast.dof.swingZMin + (ast.dof.swingZMax - ast.dof.swingZMin) * v;

@@ -6,29 +6,29 @@ public partial class UIDOFEditor
 {
     private void OnLockTargetChange(int index)
     {
-        joints = new List<ASBone>();
+        joints = new List<Bone>();
         var lockTarget = (ASIKTarget)index;
         switch (lockTarget)
         {
             case ASIKTarget.RightHand:
-                joints.Add(ASBone.hand_r);
-                joints.Add(ASBone.forearm_r);
-                joints.Add(ASBone.upperarm_r);
+                joints.Add(Bone.hand_r);
+                joints.Add(Bone.forearm_r);
+                joints.Add(Bone.upperarm_r);
                 break;
             case ASIKTarget.LeftHand:
-                joints.Add(ASBone.hand_l);
-                joints.Add(ASBone.forearm_l);
-                joints.Add(ASBone.upperarm_l);
+                joints.Add(Bone.hand_l);
+                joints.Add(Bone.forearm_l);
+                joints.Add(Bone.upperarm_l);
                 break;
             case ASIKTarget.RightLeg:
-                joints.Add(ASBone.foot_r);
-                joints.Add(ASBone.shin_r);
-                joints.Add(ASBone.thigh_r);
+                joints.Add(Bone.foot_r);
+                joints.Add(Bone.shin_r);
+                joints.Add(Bone.thigh_r);
                 break;
             case ASIKTarget.LeftLeg:
-                joints.Add(ASBone.foot_l);
-                joints.Add(ASBone.shin_l);
-                joints.Add(ASBone.thigh_l);
+                joints.Add(Bone.foot_l);
+                joints.Add(Bone.shin_l);
+                joints.Add(Bone.thigh_l);
                 break;
             default: throw null;
         }
@@ -36,24 +36,24 @@ public partial class UIDOFEditor
     }
     void OnLockMirrorTargetChange(int index)
     {
-        joints = new List<ASBone>();
-        joints2 = new List<ASBone>();
+        joints = new List<Bone>();
+        joints2 = new List<Bone>();
         var lockTargetMirror = (ASIKTargetMirror)index;
         switch (lockTargetMirror)
         {
             case ASIKTargetMirror.Hand:
-                joints.Add(ASBone.hand_l);
-                joints.Add(ASBone.forearm_l);
-                joints.Add(ASBone.upperarm_l);
-                lockPos1 = avatar[ASBone.hand_l].transform.position;
-                lockPos2 = avatar[ASBone.hand_r].transform.position;
+                joints.Add(Bone.hand_l);
+                joints.Add(Bone.forearm_l);
+                joints.Add(Bone.upperarm_l);
+                lockPos1 = avatar[Bone.hand_l].transform.position;
+                lockPos2 = avatar[Bone.hand_r].transform.position;
                 break;
             case ASIKTargetMirror.Leg:
-                joints.Add(ASBone.foot_l);
-                joints.Add(ASBone.shin_l);
-                joints.Add(ASBone.thigh_l);
-                lockPos1 = avatar[ASBone.foot_l].transform.position;
-                lockPos2 = avatar[ASBone.foot_r].transform.position;
+                joints.Add(Bone.foot_l);
+                joints.Add(Bone.shin_l);
+                joints.Add(Bone.thigh_l);
+                lockPos1 = avatar[Bone.foot_l].transform.position;
+                lockPos2 = avatar[Bone.foot_r].transform.position;
                 break;
             default: throw null;
         }
@@ -65,46 +65,46 @@ public partial class UIDOFEditor
     public void GunIK()
     {
         var targetPos = target.position + exBone2LeftHand;
-        joints = new List<ASBone>();
-        joints.Add(ASBone.hand_l);
-        joints.Add(ASBone.forearm_l);
-        joints.Add(ASBone.upperarm_l);
-        end = avatar[ASBone.hand_l].transform;
+        joints = new List<Bone>();
+        joints.Add(Bone.hand_l);
+        joints.Add(Bone.forearm_l);
+        joints.Add(Bone.upperarm_l);
+        end = avatar[Bone.hand_l].transform;
         IKSolve(targetPos, joints.ToArray());
 
         targetPos = target.position + exBone2RightHand;
-        joints = new List<ASBone>();
-        joints.Add(ASBone.hand_r);
-        joints.Add(ASBone.forearm_r);
-        joints.Add(ASBone.upperarm_r);
-        end = avatar[ASBone.hand_r].transform;
+        joints = new List<Bone>();
+        joints.Add(Bone.hand_r);
+        joints.Add(Bone.forearm_r);
+        joints.Add(Bone.upperarm_r);
+        end = avatar[Bone.hand_r].transform;
         IKSolve(targetPos, joints.ToArray());
     }
     void OnIKTargetChanged(int index)
     {
-        joints = new List<ASBone>();
+        joints = new List<Bone>();
         var ikTarget = (ASIKTarget)index;
         switch (ikTarget)
         {
             case ASIKTarget.RightHand:
-                joints.Add(ASBone.hand_r);
-                joints.Add(ASBone.forearm_r);
-                joints.Add(ASBone.upperarm_r);
+                joints.Add(Bone.hand_r);
+                joints.Add(Bone.forearm_r);
+                joints.Add(Bone.upperarm_r);
                 break;
             case ASIKTarget.LeftHand:
-                joints.Add(ASBone.hand_l);
-                joints.Add(ASBone.forearm_l);
-                joints.Add(ASBone.upperarm_l);
+                joints.Add(Bone.hand_l);
+                joints.Add(Bone.forearm_l);
+                joints.Add(Bone.upperarm_l);
                 break;
             case ASIKTarget.RightLeg:
-                joints.Add(ASBone.foot_r);
-                joints.Add(ASBone.shin_r);
-                joints.Add(ASBone.thigh_r);
+                joints.Add(Bone.foot_r);
+                joints.Add(Bone.shin_r);
+                joints.Add(Bone.thigh_r);
                 break;
             case ASIKTarget.LeftLeg:
-                joints.Add(ASBone.foot_l);
-                joints.Add(ASBone.shin_l);
-                joints.Add(ASBone.thigh_l);
+                joints.Add(Bone.foot_l);
+                joints.Add(Bone.shin_l);
+                joints.Add(Bone.thigh_l);
                 break;
             default: throw null;
         }
@@ -113,41 +113,41 @@ public partial class UIDOFEditor
     }
     void IKSingleTargetChange(int index)
     {
-        joints = new List<ASBone>();
+        joints = new List<Bone>();
         var ikSingleTarget = (ASIKTargetSingle)index;
         switch (ikSingleTarget)
         {
             case ASIKTargetSingle.RightElbow:
-                joints.Add(ASBone.forearm_r);
-                joints.Add(ASBone.upperarm_r);
+                joints.Add(Bone.forearm_r);
+                joints.Add(Bone.upperarm_r);
                 break;
             case ASIKTargetSingle.RightHand:
-                joints.Add(ASBone.hand_r);
-                joints.Add(ASBone.forearm_r);
+                joints.Add(Bone.hand_r);
+                joints.Add(Bone.forearm_r);
                 break;
             case ASIKTargetSingle.LeftElbow:
-                joints.Add(ASBone.forearm_l);
-                joints.Add(ASBone.upperarm_l);
+                joints.Add(Bone.forearm_l);
+                joints.Add(Bone.upperarm_l);
                 break;
             case ASIKTargetSingle.LeftHand:
-                joints.Add(ASBone.hand_l);
-                joints.Add(ASBone.forearm_l);
+                joints.Add(Bone.hand_l);
+                joints.Add(Bone.forearm_l);
                 break;
             case ASIKTargetSingle.RightKnee:
-                joints.Add(ASBone.shin_r);
-                joints.Add(ASBone.thigh_r);
+                joints.Add(Bone.shin_r);
+                joints.Add(Bone.thigh_r);
                 break;
             case ASIKTargetSingle.RightLeg:
-                joints.Add(ASBone.foot_r);
-                joints.Add(ASBone.shin_r);
+                joints.Add(Bone.foot_r);
+                joints.Add(Bone.shin_r);
                 break;
             case ASIKTargetSingle.LeftKnee:
-                joints.Add(ASBone.shin_l);
-                joints.Add(ASBone.thigh_l);
+                joints.Add(Bone.shin_l);
+                joints.Add(Bone.thigh_l);
                 break;
             case ASIKTargetSingle.LeftLeg:
-                joints.Add(ASBone.foot_l);
-                joints.Add(ASBone.shin_l);
+                joints.Add(Bone.foot_l);
+                joints.Add(Bone.shin_l);
                 break;
             default: throw null;
         }

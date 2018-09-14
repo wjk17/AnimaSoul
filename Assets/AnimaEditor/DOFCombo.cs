@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DOFCombo : MonoBehaviour
 {
-    public ASAvatar avatar;
+    public Avator avatar;
     [Range(0, 1)]
     public float handCloseValue = 0;
     public bool rightHand = true;
@@ -14,23 +14,23 @@ public class DOFCombo : MonoBehaviour
     }
     void UpdateFingersCloseValue()
     {
-        var dofs = new List<ASTransDOF>();
-        var bones = new List<ASBone>();
-        bones.Add(ASBone.index1_l);
-        bones.Add(ASBone.index2_l);
-        bones.Add(ASBone.index3_l);
-        bones.Add(ASBone.thumb1_l);
-        bones.Add(ASBone.thumb2_l);
-        bones.Add(ASBone.thumb3_l);
-        bones.Add(ASBone.middle1_l);
-        bones.Add(ASBone.middle2_l);
-        bones.Add(ASBone.middle3_l);
-        bones.Add(ASBone.ring1_l);
-        bones.Add(ASBone.ring2_l);
-        bones.Add(ASBone.ring3_l);
-        bones.Add(ASBone.pinky1_l);
-        bones.Add(ASBone.pinky2_l);
-        bones.Add(ASBone.pinky3_l);
+        var dofs = new List<TransDOF>();
+        var bones = new List<Bone>();
+        bones.Add(Bone.index1_l);
+        bones.Add(Bone.index2_l);
+        bones.Add(Bone.index3_l);
+        bones.Add(Bone.thumb1_l);
+        bones.Add(Bone.thumb2_l);
+        bones.Add(Bone.thumb3_l);
+        bones.Add(Bone.middle1_l);
+        bones.Add(Bone.middle2_l);
+        bones.Add(Bone.middle3_l);
+        bones.Add(Bone.ring1_l);
+        bones.Add(Bone.ring2_l);
+        bones.Add(Bone.ring3_l);
+        bones.Add(Bone.pinky1_l);
+        bones.Add(Bone.pinky2_l);
+        bones.Add(Bone.pinky3_l);
 
         foreach (var bone in bones)
         {

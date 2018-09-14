@@ -33,7 +33,7 @@ public partial class UIDOFEditor
         f.inputSwingZ.Init(OnSwingZInputChanged);
 
         // 骨骼
-        f.dropBone.Init((int)ASBone.root, ASUI.Combine(ASBoneTool.names, "手枪"), OnDropdownChanged);
+        f.dropBone.Init((int)Bone.root, ASUI.Combine(BoneTool.names, "手枪"), OnDropdownChanged);
         f.dropBone.gameObject.AddComponent<DropDownLocateSelectedItem>();
         // 保存DOF
         f.buttonSaveDOF.Init(SaveAvatarSetting);
@@ -79,8 +79,8 @@ public partial class UIDOFEditor
         Debug.Log("OnWeaponIK");
         if (on)
         {
-            exBone2LeftHand = avatar[ASBone.hand_l].transform.position - exBone.position;
-            exBone2RightHand = avatar[ASBone.hand_r].transform.position - exBone.position;
+            exBone2LeftHand = avatar[Bone.hand_l].transform.position - exBone.position;
+            exBone2RightHand = avatar[Bone.hand_r].transform.position - exBone.position;
 
             GizmosAxis.I.gameObject.SetActive(true);
             GizmosAxis.T.position = exBone.position;

@@ -184,7 +184,7 @@ public partial class UIDOFEditor {
     }
     void OnDropdownChanged(int index)
     {
-        var boneInt = (ASBone)index;
+        var boneInt = (Bone)index;
         dof = dofSet[boneInt];
         ast = avatar[boneInt];
         UpdateDOF();

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UIClip : MonoSingleton<UIClip>
 {
-    public static ASClip clip
+    public static Clip clip
     {
         get
         {
@@ -13,55 +13,58 @@ public class UIClip : MonoSingleton<UIClip>
         }
         set { _clip = value; }
     }
-    private static ASClip _clip;
+    private static Clip _clip;
+    [Header("ReadOnly")]
     public string path;
     public string folder = "Clips/";
     public string clipName = "Default";
     // 拖动时间轴绿色线（当前帧）时会更新所有曲线
     public void UpdateAllCurve()
     {
-        var index = UITimeLine.FrameIndex;
+        var index = UITimeLine.I.frameIndex;
         float trueTime = 0, trueTime2 = 0, trueTime3 = 0;
-        float maxIndex = 0;
-        if (UICurve.I.keys.Count >= 1)
+        float endTime = 0;
+        if (UICurve.I.curr.Count >= 1)
         {
-            maxIndex = UICurve.I.keys[UICurve.I.keys.Count - 1].frameIndex;
+            endTime = UICurve.I.curr.Last().time;
         }
-        float n = maxIndex == 0 ? 0 : index / maxIndex;
+        float n = endTime == 0 ? 0 : index / endTime;
         float t = 0;
         if (!UIPlayer.I.toggleFlip.isOn)
         {
-            trueTime3 = UICurve.I.GenerateRealTime(index);
+            //trueTime3 = UICurve.I.GenerateRealTime(index);
+            trueTime3 = index;
         }
         //n = Mathf.Repeat(0, 1.25f);
         //n = Mathf.Clamp(n, 0, 1.25f);
         //n = Mathf.Repeat(n, 1.25f);
-        index = Mathf.RoundToInt(n * maxIndex);
+        index = Mathf.RoundToInt(n * endTime);
         if (MathTool.Between(n, 0, 1))
         {
-            trueTime = UICurve.I.GenerateRealTime(index);
+            //trueTime = UICurve.I.GenerateRealTime(index);
+            trueTime3 = index;
         }
         else if (MathTool.Between(n, 1, 1.25f))
         {
-            trueTime = UICurve.I.GenerateRealTime(maxIndex);
-            trueTime2 = UICurve.I.GenerateRealTime(0);
+            trueTime = endTime;
+            trueTime2 = 0;
             t = (n - 1) / 0.25f;
         }
         else if (MathTool.Between(n, 1.25f, 2.25f))
         {
             n -= 1.25f;
-            trueTime2 = n * maxIndex;
+            trueTime2 = n * endTime;
             t = 1;
         }
         else if (MathTool.Between(n, 2.25f, 2.5f))
         {
-            trueTime = maxIndex;
+            trueTime = endTime;
             trueTime2 = 0;
             t = (n - 2.25f) / 0.25f;
         }
         else
         {
-            trueTime = UICurve.I.GenerateRealTime(index);
+            trueTime = index;
         }
 
         Vector3 v1, v2;
@@ -72,21 +75,21 @@ public class UIClip : MonoSingleton<UIClip>
             {
                 if (!UIPlayer.I.toggleFlip.isOn) // 如果打开了翻转动画
                 {
-                    v1 = curve.EulerAngles(trueTime3);
+                    v1 = curve.Rot(trueTime3);
                     v2 = Vector3.zero;
                     t = 0;
                 }
                 else if (n > 2.25f)
                 {
-                    v2 = curve.EulerAngles(trueTime2);
+                    v2 = curve.Rot(trueTime2);
                     if (curve.pair != null)
                     {
-                        v1 = curve.pair.EulerAngles(trueTime);
+                        v1 = curve.pair.Rot(trueTime);
                     }
                     else
                     {
-                        v1 = curve.EulerAngles(trueTime);
-                        if (curve.ast.dof.bone != ASBone.root)
+                        v1 = curve.Rot(trueTime);
+                        if (curve.ast.dof.bone != Bone.root)
                         {
                             v1.y = -v1.y;
                             v1.z = -v1.z;
@@ -95,15 +98,15 @@ public class UIClip : MonoSingleton<UIClip>
                 }
                 else
                 {
-                    v1 = curve.EulerAngles(trueTime);
+                    v1 = curve.Rot(trueTime);
                     if (curve.pair != null)
                     {
-                        v2 = curve.pair.EulerAngles(trueTime2);
+                        v2 = curve.pair.Rot(trueTime2);
                     }
                     else
                     {
-                        v2 = curve.EulerAngles(trueTime2);
-                        if (curve.ast.dof.bone != ASBone.root)
+                        v2 = curve.Rot(trueTime2);
+                        if (curve.ast.dof.bone != Bone.root)
                         {
                             v2.y = -v2.y;
                             v2.z = -v2.z;
@@ -113,10 +116,10 @@ public class UIClip : MonoSingleton<UIClip>
                 curve.ast.euler = Vector3.Lerp(v1, v2, t);
                 if (UITranslator.I.update.isOn)
                 {
-                    if (curve.localPosition[0].keys != null && curve.localPosition[0].keys.Count > 0)//有位置曲线才更新位置
+                    if (curve.poss[0].keys != null && curve.poss[0].keys.Count > 0)//有位置曲线才更新位置
                     {
-                        v1 = curve.LocalPosition(trueTime);
-                        v2 = curve.LocalPosition(trueTime2);
+                        v1 = curve.Pos(trueTime);
+                        v2 = curve.Pos(trueTime2);
 
                         //var os = new Vector3();
                         //if (UIFrameMgr2.I.tPoseList != null && c < UIFrameMgr2.I.tPoseList.Count)
@@ -144,20 +147,18 @@ public class UIClip : MonoSingleton<UIClip>
 
     public bool Load(string clipName)//不存在文件则返回false
     {
-        //var dataPath = Application.dataPath;
-        //var rootPath = dataPath + "/../";
         path = UIClipList.I.clipPath + clipName + ".clip";
         if (System.IO.File.Exists(path))
         {
-            _clip = Serializer.XMLDeSerialize<ASClip>(path);
+            _clip = Serializer.XMLDeSerialize<Clip>(path);
             _clip.clipName = clipName;
             foreach (var curve in _clip.curves)
             {
                 var trans = UIDOFEditor.I.avatar.transform.Search(curve.name);
                 curve.ast = UIDOFEditor.I.avatar.GetTransDOF(trans);
             }
-            ASClipTool.GetPairs(_clip.curves);
-            ASClipTool.GetFrameRange(_clip);
+            ClipTool.GetPairs(_clip.curves);
+            ClipTool.GetFrameRange(_clip);
 
             PlayerPrefs.SetString("LastOpenClipName", clipName);
             PlayerPrefs.Save();
@@ -178,7 +179,7 @@ public class UIClip : MonoSingleton<UIClip>
         path = UIClipList.I.clipPath + clipName + ".clip";
         if (System.IO.File.Exists(path))
         {
-            _clip = Serializer.XMLDeSerialize<ASClip>(path);
+            _clip = Serializer.XMLDeSerialize<Clip>(path);
             _clip.clipName = clipName;
             foreach (var curve in _clip.curves)
             {
@@ -186,22 +187,21 @@ public class UIClip : MonoSingleton<UIClip>
                 var trans = UIDOFEditor.I.avatar.transform.Search(curve.name);
                 curve.ast = UIDOFEditor.I.avatar.GetTransDOF(trans);
             }
-            ASClipTool.GetPairs(_clip.curves);
-            ASClipTool.GetFrameRange(_clip);
+            ClipTool.GetPairs(_clip.curves);
+            ClipTool.GetFrameRange(_clip);
             //PlayerPrefs.SetString("LastOpenClipName", clipName);
             //PlayerPrefs.Save();
             return true;
         }
         else  // 不存在clip文件则新建一个
         {
-            _clip = new ASClip(clipName);
+            _clip = new Clip(clipName);
             foreach (var ast in UIDOFEditor.I.avatar.setting.asts)
             {
-                //_clip.AddCurve(ast.transform);
                 _clip.AddCurve(ast);
             }
-            ASClipTool.GetPairs(_clip.curves);
-            ASClipTool.GetFrameRange(_clip);
+            ClipTool.GetPairs(_clip.curves);
+            ClipTool.GetFrameRange(_clip);
             //PlayerPrefs.SetString("LastOpenClipName", clipName);
             //PlayerPrefs.Save();
             return false;
@@ -209,13 +209,13 @@ public class UIClip : MonoSingleton<UIClip>
     }
     public void New(string clipName)
     {
-        var c = new ASClip(clipName);
+        var c = new Clip(clipName);
         foreach (var ast in UIDOFEditor.I.avatar.setting.asts)
         {
             c.AddCurve(ast);
         }
-        ASClipTool.GetPairs(c.curves);
-        ASClipTool.GetFrameRange(c);
+        ClipTool.GetPairs(c.curves);
+        ClipTool.GetFrameRange(c);
         PlayerPrefs.SetString("LastOpenClipName", clipName);
         PlayerPrefs.Save();
 
@@ -227,15 +227,11 @@ public class UIClip : MonoSingleton<UIClip>
     }
     public void Save(string clipName)
     {
-        //var dataPath = Application.dataPath;
-        //var rootPath = dataPath + "/../";
         path = UIClipList.I.clipPath + clipName + ".clip";
         Serializer.XMLSerialize(clip, path);
     }
-    public void Save()
+    public new void Save()
     {
-        //var dataPath = Application.dataPath;
-        //var rootPath = dataPath + "/../";
         path = UIClipList.I.clipPath + clip.clipName + ".clip";
         Serializer.XMLSerialize(clip, path);
     }

@@ -8,13 +8,18 @@ using UnityEngine.UI;
 
 public class UIClipList : MonoSingleton<UIClipList>
 {
-    //public Button button;
     public Button buttonRefresh;
     public int index;
     public List<string> names;
-    //public string folder = "Clips/";
-    public string _clipPath = "/../Clips/";
-    public string clipPath { get { return Application.dataPath + _clipPath; } }
+    public string _clipPath = "Clips/";
+    public string clipPath
+    {
+        get
+        {
+            var path = Path.Combine(Application.streamingAssetsPath, _clipPath);
+            return path;
+        }
+    }
     public GameObject itemPrefab;
     public string currentClipName;
     public List<GameObject> buttons;
@@ -22,7 +27,6 @@ public class UIClipList : MonoSingleton<UIClipList>
 
     void Start()
     {
-        //button.Init(ItemClick);
         buttonRefresh.Init(GetClipNamesInPath, true);
     }
     private void ItemClick()

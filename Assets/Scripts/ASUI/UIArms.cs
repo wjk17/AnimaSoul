@@ -19,7 +19,7 @@ public class UIArms : MonoBehaviour
     public Transform leftUpperarm;
     public Transform rightUpperarm;
     public Transform gun;
-    public ASAvatar ava;
+    public Avator ava;
 
     public float weight = 0.35f;
     public bool lerp = true;
@@ -32,13 +32,13 @@ public class UIArms : MonoBehaviour
         toggleLockTrans.onValueChanged.AddListener(LockTrans);
 
         ava = UIDOFEditor.I.avatar;
-        leftHand = ava[ASBone.hand_l].transform;
-        rightHand = ava[ASBone.hand_r].transform;
-        leftForearm = ava[ASBone.forearm_l].transform;
-        rightForearm = ava[ASBone.forearm_r].transform;
-        leftUpperarm = ava[ASBone.upperarm_l].transform;
-        rightUpperarm = ava[ASBone.upperarm_r].transform;
-        gun = ava[ASBone.other].transform;
+        leftHand = ava[Bone.hand_l].transform;
+        rightHand = ava[Bone.hand_r].transform;
+        leftForearm = ava[Bone.forearm_l].transform;
+        rightForearm = ava[Bone.forearm_r].transform;
+        leftUpperarm = ava[Bone.upperarm_l].transform;
+        rightUpperarm = ava[Bone.upperarm_r].transform;
+        gun = ava[Bone.other].transform;
     }
     private void LockTrans(bool arg0)
     {
@@ -55,7 +55,7 @@ public class UIArms : MonoBehaviour
     void UpdateBone(Transform t)
     {
         var curve = UIClip.clip.GetCurve(ava[t]);
-        var tran2e = curve.Tran2E(UITimeLine.FrameIndex);
+        var tran2e =  curve.Tran2E(UITimeLine.I.frameIndex);
         t.localPosition = tran2e.pos;
         var ast = ava[t];
         ast.euler = tran2e.rot;

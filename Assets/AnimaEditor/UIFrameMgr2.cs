@@ -15,11 +15,11 @@ public class UIFrameMgr2 : MonoSingleton<UIFrameMgr2>
         btnGetTPose.Init(GetTPose);
     }
     void GetTPose()
-    {         
+    {
         tPoseList = new List<Vector3>();
         for (int i = 0; i < UIClip.clip.curves.Count; i++)
         {
-            var pos = UIClip.clip.curves[i].GetPosByKey(0);
+            var pos = UIClip.clip.curves[i].Pos(0);
             tPoseList.Add(pos);
         }
     }
@@ -28,7 +28,7 @@ public class UIFrameMgr2 : MonoSingleton<UIFrameMgr2>
         for (int i = 0; i < UIClip.clip.curves.Count; i++)
         {
             int c = 0;
-            foreach (var curve in UIClip.clip.curves[i].localPosition)
+            foreach (var curve in UIClip.clip.curves[i].poss)
             {
                 foreach (var key in curve.keys)
                 {

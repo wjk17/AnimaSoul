@@ -41,13 +41,13 @@ public class UITranslator : MonoBehaviour
         sliderZ.maxValue = range;
         //control.Init(OnToggleControl, true);
     }
-    public void OnClick()
-    {
-        foreach (var curve in UIClip.clip.curves)
-        {
-            UIClip.clip.AddPositionCurve(curve, UITimeLine.FrameIndex, curve.ast.transform.localPosition);
-        }
-    }
+    //public void OnClick()
+    //{
+    //    foreach (var curve in UIClip.clip.curves)
+    //    {
+    //        UIClip.clip.AddPositionCurve(curve, UITimeLine.FrameIndex, curve.ast.transform.localPosition);
+    //    }
+    //}
     //void OnToggleControl(bool on)
     //{
     //    if (on)
