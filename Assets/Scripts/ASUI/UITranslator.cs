@@ -39,7 +39,7 @@ public class UITranslator : MonoBehaviour
         sliderY.maxValue = range;
         sliderZ.minValue = -range;
         sliderZ.maxValue = range;
-        control.Init(OnToggleControl, true);
+        //control.Init(OnToggleControl, true);
     }
     public void OnClick()
     {
@@ -48,19 +48,19 @@ public class UITranslator : MonoBehaviour
             UIClip.clip.AddPositionCurve(curve, UITimeLine.FrameIndex, curve.ast.transform.localPosition);
         }
     }
-    void OnToggleControl(bool on)
-    {
-        if (on)
-        {
-            GizmosAxis.I.gameObject.SetActive(true);
-            GizmosAxis.I.controlObj = UIDOFEditor.I.ast.transform;
-        }
-        else
-        {
-            GizmosAxis.I.gameObject.SetActive(false);
-            GizmosAxis.I.controlObj = UIDOFEditor.I.target;
-        }
-    }
+    //void OnToggleControl(bool on)
+    //{
+    //    if (on)
+    //    {
+    //        GizmosAxis.I.gameObject.SetActive(true);
+    //        GizmosAxis.I.controlObj = UIDOFEditor.I.ast.transform;
+    //    }
+    //    else
+    //    {
+    //        GizmosAxis.I.gameObject.SetActive(false);
+    //        GizmosAxis.I.controlObj = UIDOFEditor.I.target;
+    //    }
+    //}
     bool ignoreChange;
     internal void UpdateValueDisplay()
     {

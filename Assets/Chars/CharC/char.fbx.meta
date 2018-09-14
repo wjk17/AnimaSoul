@@ -1,0 +1,1767 @@
+fileFormatVersion: 2
+guid: 2cec58970cbdca144a03fc255fb58c20
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Arm
+    100002: Arm.r
+    100004: Armature
+    100006: Armature.001
+    100008: Armature.002
+    100010: Armature.004
+    100012: ArmRope
+    100014: Bag
+    100016: Bag.001
+    100018: BagBeltL
+    100020: BagBeltR
+    100022: BagDoor
+    100024: Bandage
+    100026: Bandage.001
+    100028: Body
+    100030: Bone
+    100032: Bone 1
+    100034: Bone 2
+    100036: Bone 3
+    100038: Bone 4
+    100040: Bone 5
+    100042: Bone 6
+    100044: Bone 7
+    100046: Bone 8
+    100048: Bone 9
+    100050: Bone.001
+    100052: Bone.001 1
+    100054: Bone.001 2
+    100056: Bone.001 3
+    100058: Bone.001 4
+    100060: Bone.001 5
+    100062: Bone.001 6
+    100064: Bone.002
+    100066: Bone.002 1
+    100068: Bone.002 2
+    100070: Bone.002 3
+    100072: Bone.002 4
+    100074: Bone.002 5
+    100076: Bone.002 6
+    100078: Bone.003
+    100080: Bone.003 1
+    100082: Bone.003 2
+    100084: Bone.003 3
+    100086: Bone.003 4
+    100088: Bone.004
+    100090: Bone.004 1
+    100092: Bone.004 2
+    100094: Bone.004 3
+    100096: Bone.004 4
+    100098: Bone.004 5
+    100100: Bone.005
+    100102: Bone.005 1
+    100104: Bone.005 2
+    100106: Bone.005 3
+    100108: Bone.005 4
+    100110: Bone.005 5
+    100112: Bone.005 6
+    100114: Bone.006
+    100116: Bone.006 1
+    100118: Bone.006 2
+    100120: Bone.006 3
+    100122: Bone.006 4
+    100124: Bone.006 5
+    100126: Bone.006 6
+    100128: Bone.007
+    100130: Bone.007 1
+    100132: Bone.007 2
+    100134: Bone.007 3
+    100136: Bone.008
+    100138: Bone.008 1
+    100140: Bone.008 2
+    100142: Bone.008 3
+    100144: Bone.008 4
+    100146: Bone.008 5
+    100148: Bone.009
+    100150: Bone.009 1
+    100152: Bone.009 2
+    100154: Bone.009 3
+    100156: Bone.009 4
+    100158: Bone.009 5
+    100160: Bone.010
+    100162: Bone.010 1
+    100164: Bone.010 2
+    100166: Bone.010 3
+    100168: Bone.010 4
+    100170: Bone.010 5
+    100172: Bone.011
+    100174: Bone.011 1
+    100176: Bone.011 2
+    100178: Bone.011 3
+    100180: Bone.012
+    100182: Bone.012 1
+    100184: Bone.012 2
+    100186: Bone.012 3
+    100188: Bone.012 4
+    100190: Bone.012 5
+    100192: Bone.013
+    100194: Bone.013 1
+    100196: Bone.013 2
+    100198: Bone.013 3
+    100200: Bone.014
+    100202: Bone.014 1
+    100204: Bone.014 2
+    100206: Bone.014 3
+    100208: Bone.014 4
+    100210: Bone.014 5
+    100212: Bone.015
+    100214: Bone.015 1
+    100216: Bone.015 2
+    100218: Bone.015 3
+    100220: Bone.016
+    100222: Bone.016 1
+    100224: Bone.016 2
+    100226: Bone.016 3
+    100228: Bone.016 4
+    100230: Bone.016 5
+    100232: Bone.017
+    100234: Bone.017 1
+    100236: Bone.017 2
+    100238: Bone.017 3
+    100240: Bone.017 4
+    100242: Bone.017 5
+    100244: Bone.018
+    100246: Bone.018 1
+    100248: Bone.018 2
+    100250: Bone.018 3
+    100252: Bone.018 4
+    100254: Bone.018 5
+    100256: Bone.019
+    100258: Bone.019 1
+    100260: Bone.019 2
+    100262: Bone.019 3
+    100264: Bone.019 4
+    100266: Bone.019 5
+    100268: Bone.020
+    100270: Bone.020 1
+    100272: Bone.020 2
+    100274: Bone.020 3
+    100276: Bone.020 4
+    100278: Bone.020 5
+    100280: Bone.021
+    100282: Bone.021 1
+    100284: Bone.021 2
+    100286: Bone.021 3
+    100288: Bone.021 4
+    100290: Bone.021 5
+    100292: Bone.022
+    100294: Bone.022 1
+    100296: Bone.022 2
+    100298: Bone.022 3
+    100300: Bone.022 4
+    100302: Bone.022 5
+    100304: Bone.023
+    100306: Bone.023 1
+    100308: Bone.023 2
+    100310: Bone.023 3
+    100312: Bone.023 4
+    100314: Bone.023 5
+    100316: Bone.024
+    100318: Bone.024 1
+    100320: Bone.024 2
+    100322: Bone.024 3
+    100324: Bone.024 4
+    100326: Bone.024 5
+    100328: Bone.025
+    100330: Bone.025 1
+    100332: Bone.025 2
+    100334: Bone.025 3
+    100336: Bone.025 4
+    100338: Bone.025 5
+    100340: Bone.026
+    100342: Bone.026 1
+    100344: Bone.026 2
+    100346: Bone.026 3
+    100348: Bone.027
+    100350: Bone.027 1
+    100352: Bone.027 2
+    100354: Bone.027 3
+    100356: Bone.028
+    100358: Bone.028 1
+    100360: Bone.028 2
+    100362: Bone.028 3
+    100364: Bone.029
+    100366: Bone.029 1
+    100368: Bone.029 2
+    100370: Bone.029 3
+    100372: Bone.030
+    100374: Bone.030 1
+    100376: Bone.030 2
+    100378: Bone.031
+    100380: Bone.031 1
+    100382: Bone.031 2
+    100384: Bone.l
+    100386: Bone.l.001
+    100388: Bone.l.002
+    100390: Bone.l.003
+    100392: Bone.l.004
+    100394: Bone.l.005
+    100396: Bone.l.006
+    100398: Bone.l.007
+    100400: Bone.r
+    100402: Bone.r.001
+    100404: Bone.r.002
+    100406: Bone.r.003
+    100408: Bone.r.004
+    100410: Bone.r.005
+    100412: Bone.r.006
+    100414: Bone.r.007
+    100416: Bone_0
+    100418: Bone_0 1
+    100420: Bone_0 10
+    100422: Bone_0 11
+    100424: Bone_0 12
+    100426: Bone_0 13
+    100428: Bone_0 14
+    100430: Bone_0 15
+    100432: Bone_0 16
+    100434: Bone_0 17
+    100436: Bone_0 18
+    100438: Bone_0 19
+    100440: Bone_0 2
+    100442: Bone_0 3
+    100444: Bone_0 4
+    100446: Bone_0 5
+    100448: Bone_0 6
+    100450: Bone_0 7
+    100452: Bone_0 8
+    100454: Bone_0 9
+    100456: Bone_1
+    100458: Bone_1 1
+    100460: Bone_1 10
+    100462: Bone_1 11
+    100464: Bone_1 12
+    100466: Bone_1 13
+    100468: Bone_1 14
+    100470: Bone_1 15
+    100472: Bone_1 16
+    100474: Bone_1 17
+    100476: Bone_1 18
+    100478: Bone_1 19
+    100480: Bone_1 2
+    100482: Bone_1 3
+    100484: Bone_1 4
+    100486: Bone_1 5
+    100488: Bone_1 6
+    100490: Bone_1 7
+    100492: Bone_1 8
+    100494: Bone_1 9
+    100496: Bone_2
+    100498: Bone_2 1
+    100500: Bone_2 10
+    100502: Bone_2 11
+    100504: Bone_2 12
+    100506: Bone_2 13
+    100508: Bone_2 14
+    100510: Bone_2 15
+    100512: Bone_2 16
+    100514: Bone_2 17
+    100516: Bone_2 18
+    100518: Bone_2 19
+    100520: Bone_2 2
+    100522: Bone_2 3
+    100524: Bone_2 4
+    100526: Bone_2 5
+    100528: Bone_2 6
+    100530: Bone_2 7
+    100532: Bone_2 8
+    100534: Bone_2 9
+    100536: Bone_3
+    100538: Bone_3 1
+    100540: Bone_3 10
+    100542: Bone_3 11
+    100544: Bone_3 12
+    100546: Bone_3 13
+    100548: Bone_3 14
+    100550: Bone_3 15
+    100552: Bone_3 16
+    100554: Bone_3 17
+    100556: Bone_3 18
+    100558: Bone_3 19
+    100560: Bone_3 2
+    100562: Bone_3 3
+    100564: Bone_3 4
+    100566: Bone_3 5
+    100568: Bone_3 6
+    100570: Bone_3 7
+    100572: Bone_3 8
+    100574: Bone_3 9
+    100576: Bone_4
+    100578: Bone_4 1
+    100580: Bone_4 10
+    100582: Bone_4 11
+    100584: Bone_4 12
+    100586: Bone_4 13
+    100588: Bone_4 14
+    100590: Bone_4 15
+    100592: Bone_4 16
+    100594: Bone_4 17
+    100596: Bone_4 18
+    100598: Bone_4 19
+    100600: Bone_4 2
+    100602: Bone_4 3
+    100604: Bone_4 4
+    100606: Bone_4 5
+    100608: Bone_4 6
+    100610: Bone_4 7
+    100612: Bone_4 8
+    100614: Bone_4 9
+    100616: Bone_5
+    100618: Bone_5 1
+    100620: Bone_5 10
+    100622: Bone_5 11
+    100624: Bone_5 12
+    100626: Bone_5 13
+    100628: Bone_5 14
+    100630: Bone_5 15
+    100632: Bone_5 16
+    100634: Bone_5 17
+    100636: Bone_5 18
+    100638: Bone_5 19
+    100640: Bone_5 2
+    100642: Bone_5 3
+    100644: Bone_5 4
+    100646: Bone_5 5
+    100648: Bone_5 6
+    100650: Bone_5 7
+    100652: Bone_5 8
+    100654: Bone_5 9
+    100656: Buckle
+    100658: Buckle.001
+    100660: Buckle.002
+    100662: Buckle.003
+    100664: //RootNode
+    100666: chest
+    100668: ClothLower
+    100670: ClothLower.001
+    100672: ClothMid.002
+    100674: ClothUpper
+    100676: Cone
+    100678: Cone.001
+    100680: Cone.002
+    100682: Cone.003
+    100684: Cone.004
+    100686: Cone.005
+    100688: Cone.006
+    100690: Cone.008
+    100692: Cone.012
+    100694: Cone.014
+    100696: Cone.015
+    100698: Cone.016
+    100700: Cone.017
+    100702: Cone.022
+    100704: Cone.023
+    100706: Cone.024
+    100708: Cone.025
+    100710: Cone.026
+    100712: Cone.027
+    100714: Cone.028
+    100716: Cone.029
+    100718: Cube
+    100720: Cube.001
+    100722: Cube.002
+    100724: Cube.003
+    100726: Cube.004
+    100728: Cube.015
+    100730: Cube.018
+    100732: Cube.019
+    100734: Ear
+    100736: Eye_l
+    100738: Eye_r
+    100740: EyeBrow
+    100742: EyeLash
+    100744: EyePupil_l
+    100746: EyePupil_r
+    100748: EyeWhite_l
+    100750: EyeWhite_r
+    100752: f_index.01.L
+    100754: f_index.01.R
+    100756: f_index.02.L
+    100758: f_index.02.R
+    100760: f_index.03.L
+    100762: f_index.03.R
+    100764: f_middle.01.L
+    100766: f_middle.01.R
+    100768: f_middle.02.L
+    100770: f_middle.02.R
+    100772: f_middle.03.L
+    100774: f_middle.03.R
+    100776: f_pinky.01.L
+    100778: f_pinky.01.R
+    100780: f_pinky.02.L
+    100782: f_pinky.02.R
+    100784: f_pinky.03.L
+    100786: f_pinky.03.R
+    100788: f_ring.01.L
+    100790: f_ring.01.R
+    100792: f_ring.02.L
+    100794: f_ring.02.R
+    100796: f_ring.03.L
+    100798: f_ring.03.R
+    100800: foot.L
+    100802: foot.R
+    100804: forearm.L
+    100806: forearm.R
+    100808: HairBone
+    100810: HairBone.001
+    100812: HairBone.002
+    100814: HairBone.003
+    100816: HairBone.004
+    100818: HairBone.005
+    100820: HairBone.006
+    100822: HairBone.007
+    100824: HairBone.008
+    100826: HairBone.009
+    100828: HairBone.010
+    100830: HairBone.011
+    100832: HairBone.012
+    100834: HairBone.013
+    100836: HairBone.014
+    100838: HairBone.015
+    100840: HairBone.016
+    100842: HairBone.017
+    100844: HairBone.018
+    100846: HairBone.019
+    100848: HairCurveMeshA.001
+    100850: HairMesh
+    100852: HairMesh.001
+    100854: HairMesh.002
+    100856: HairMesh.003
+    100858: HairMesh.004
+    100860: HairMesh.005
+    100862: HairMesh.006
+    100864: HairMesh.007
+    100866: HairMesh.008
+    100868: HairMesh.009
+    100870: HairMesh.010
+    100872: HairMesh.011
+    100874: HairMesh.012
+    100876: HairMesh.013
+    100878: HairMesh.014
+    100880: HairMesh.015
+    100882: HairMesh.016
+    100884: HairMesh.017
+    100886: HairMesh.018
+    100888: HairMesh.019
+    100890: hand.L
+    100892: hand.R
+    100894: head
+    100896: HeadLower
+    100898: HeadWidget
+    100900: heel.02.L
+    100902: heel.02.R
+    100904: heel.L
+    100906: heel.R
+    100908: hips
+    100910: LampTarget
+    100912: metarig
+    100914: neck
+    100916: palm.01.L
+    100918: palm.01.R
+    100920: palm.02.L
+    100922: palm.02.R
+    100924: palm.03.L
+    100926: palm.03.R
+    100928: palm.04.L
+    100930: palm.04.R
+    100932: Plane
+    100934: Plane.001
+    100936: Plane.002
+    100938: Plane.003
+    100940: Plane.004
+    100942: Plane.005
+    100944: Plane.006
+    100946: Plane.007
+    100948: Plane.008
+    100950: Plane.009
+    100952: Plane.010
+    100954: Plane.012
+    100956: rigBagBeltL
+    100958: rigBagBeltL.001
+    100960: rigScabbard
+    100962: rigShield
+    100964: rigShirtMid
+    100966: rigSword
+    100968: shin.L
+    100970: shin.R
+    100972: Shirt
+    100974: ShirtButton
+    100976: Shoes
+    100978: shoulder.L
+    100980: shoulder.R
+    100982: spine
+    100984: thigh.L
+    100986: thigh.R
+    100988: thumb.01.L
+    100990: thumb.01.R
+    100992: thumb.02.L
+    100994: thumb.02.R
+    100996: thumb.03.L
+    100998: thumb.03.R
+    101000: toe.L
+    101002: toe.R
+    101004: upper_arm.L
+    101006: upper_arm.R
+    101008: Bone.005_end
+    101010: Bone.005_end 1
+    101012: Bone.007_end
+    101014: Bone.029_end
+    101016: Bone.031_end
+    101018: Bone.031_end 1
+    101020: Bone.031_end 2
+    101022: Bone.l.007_end
+    101024: Bone.l_end
+    101026: Bone.r.007_end
+    101028: Bone.r_end
+    101030: Bone_0_end
+    101032: Bone_0_end 1
+    101034: Bone_0_end 10
+    101036: Bone_0_end 11
+    101038: Bone_0_end 12
+    101040: Bone_0_end 13
+    101042: Bone_0_end 14
+    101044: Bone_0_end 15
+    101046: Bone_0_end 16
+    101048: Bone_0_end 17
+    101050: Bone_0_end 18
+    101052: Bone_0_end 19
+    101054: Bone_0_end 2
+    101056: Bone_0_end 3
+    101058: Bone_0_end 4
+    101060: Bone_0_end 5
+    101062: Bone_0_end 6
+    101064: Bone_0_end 7
+    101066: Bone_0_end 8
+    101068: Bone_0_end 9
+    101070: Bone_1_end
+    101072: Bone_1_end 1
+    101074: Bone_1_end 10
+    101076: Bone_1_end 11
+    101078: Bone_1_end 12
+    101080: Bone_1_end 13
+    101082: Bone_1_end 14
+    101084: Bone_1_end 15
+    101086: Bone_1_end 16
+    101088: Bone_1_end 17
+    101090: Bone_1_end 18
+    101092: Bone_1_end 19
+    101094: Bone_1_end 2
+    101096: Bone_1_end 3
+    101098: Bone_1_end 4
+    101100: Bone_1_end 5
+    101102: Bone_1_end 6
+    101104: Bone_1_end 7
+    101106: Bone_1_end 8
+    101108: Bone_1_end 9
+    101110: Bone_2_end
+    101112: Bone_2_end 1
+    101114: Bone_2_end 10
+    101116: Bone_2_end 11
+    101118: Bone_2_end 12
+    101120: Bone_2_end 13
+    101122: Bone_2_end 14
+    101124: Bone_2_end 15
+    101126: Bone_2_end 16
+    101128: Bone_2_end 17
+    101130: Bone_2_end 18
+    101132: Bone_2_end 19
+    101134: Bone_2_end 2
+    101136: Bone_2_end 3
+    101138: Bone_2_end 4
+    101140: Bone_2_end 5
+    101142: Bone_2_end 6
+    101144: Bone_2_end 7
+    101146: Bone_2_end 8
+    101148: Bone_2_end 9
+    101150: Bone_3_end
+    101152: Bone_3_end 1
+    101154: Bone_3_end 10
+    101156: Bone_3_end 11
+    101158: Bone_3_end 12
+    101160: Bone_3_end 13
+    101162: Bone_3_end 14
+    101164: Bone_3_end 15
+    101166: Bone_3_end 16
+    101168: Bone_3_end 17
+    101170: Bone_3_end 18
+    101172: Bone_3_end 19
+    101174: Bone_3_end 2
+    101176: Bone_3_end 3
+    101178: Bone_3_end 4
+    101180: Bone_3_end 5
+    101182: Bone_3_end 6
+    101184: Bone_3_end 7
+    101186: Bone_3_end 8
+    101188: Bone_3_end 9
+    101190: Bone_4_end
+    101192: Bone_4_end 1
+    101194: Bone_4_end 10
+    101196: Bone_4_end 11
+    101198: Bone_4_end 12
+    101200: Bone_4_end 13
+    101202: Bone_4_end 14
+    101204: Bone_4_end 15
+    101206: Bone_4_end 16
+    101208: Bone_4_end 17
+    101210: Bone_4_end 18
+    101212: Bone_4_end 19
+    101214: Bone_4_end 2
+    101216: Bone_4_end 3
+    101218: Bone_4_end 4
+    101220: Bone_4_end 5
+    101222: Bone_4_end 6
+    101224: Bone_4_end 7
+    101226: Bone_4_end 8
+    101228: Bone_4_end 9
+    101230: Bone_5_end
+    101232: Bone_5_end 1
+    101234: Bone_5_end 10
+    101236: Bone_5_end 11
+    101238: Bone_5_end 12
+    101240: Bone_5_end 13
+    101242: Bone_5_end 14
+    101244: Bone_5_end 15
+    101246: Bone_5_end 16
+    101248: Bone_5_end 17
+    101250: Bone_5_end 18
+    101252: Bone_5_end 19
+    101254: Bone_5_end 2
+    101256: Bone_5_end 3
+    101258: Bone_5_end 4
+    101260: Bone_5_end 5
+    101262: Bone_5_end 6
+    101264: Bone_5_end 7
+    101266: Bone_5_end 8
+    101268: Bone_5_end 9
+    101270: Bone_end
+    101272: Bone_end 1
+    101274: Bone_end 2
+    101276: Bone_end 3
+    101278: f_index.03.L_end
+    101280: f_index.03.R_end
+    101282: f_middle.03.L_end
+    101284: f_middle.03.R_end
+    101286: f_pinky.03.L_end
+    101288: f_pinky.03.R_end
+    101290: f_ring.03.L_end
+    101292: f_ring.03.R_end
+    101294: head_end
+    101296: heel.02.L_end
+    101298: heel.02.R_end
+    101300: thumb.03.L_end
+    101302: thumb.03.R_end
+    101304: toe.L_end
+    101306: toe.R_end
+    101308: BuckleBag
+    101310: BuckleBelt
+    101312: BuckleBelt.l
+    101314: BuckleBelt.r
+    101316: BuckleBag.001
+    101318: BuckleBag.002
+    101320: BuckleBag.003
+    101322: BuckleBag.004
+    101324: BuckleBag.000
+    101326: BuckleBag.005
+    101328: BuckleBag.006
+    101330: BuckleBag.007
+    101332: BuckleBag.008
+    400000: Arm
+    400002: Arm.r
+    400004: Armature
+    400006: Armature.001
+    400008: Armature.002
+    400010: Armature.004
+    400012: ArmRope
+    400014: Bag
+    400016: Bag.001
+    400018: BagBeltL
+    400020: BagBeltR
+    400022: BagDoor
+    400024: Bandage
+    400026: Bandage.001
+    400028: Body
+    400030: Bone
+    400032: Bone 1
+    400034: Bone 2
+    400036: Bone 3
+    400038: Bone 4
+    400040: Bone 5
+    400042: Bone 6
+    400044: Bone 7
+    400046: Bone 8
+    400048: Bone 9
+    400050: Bone.001
+    400052: Bone.001 1
+    400054: Bone.001 2
+    400056: Bone.001 3
+    400058: Bone.001 4
+    400060: Bone.001 5
+    400062: Bone.001 6
+    400064: Bone.002
+    400066: Bone.002 1
+    400068: Bone.002 2
+    400070: Bone.002 3
+    400072: Bone.002 4
+    400074: Bone.002 5
+    400076: Bone.002 6
+    400078: Bone.003
+    400080: Bone.003 1
+    400082: Bone.003 2
+    400084: Bone.003 3
+    400086: Bone.003 4
+    400088: Bone.004
+    400090: Bone.004 1
+    400092: Bone.004 2
+    400094: Bone.004 3
+    400096: Bone.004 4
+    400098: Bone.004 5
+    400100: Bone.005
+    400102: Bone.005 1
+    400104: Bone.005 2
+    400106: Bone.005 3
+    400108: Bone.005 4
+    400110: Bone.005 5
+    400112: Bone.005 6
+    400114: Bone.006
+    400116: Bone.006 1
+    400118: Bone.006 2
+    400120: Bone.006 3
+    400122: Bone.006 4
+    400124: Bone.006 5
+    400126: Bone.006 6
+    400128: Bone.007
+    400130: Bone.007 1
+    400132: Bone.007 2
+    400134: Bone.007 3
+    400136: Bone.008
+    400138: Bone.008 1
+    400140: Bone.008 2
+    400142: Bone.008 3
+    400144: Bone.008 4
+    400146: Bone.008 5
+    400148: Bone.009
+    400150: Bone.009 1
+    400152: Bone.009 2
+    400154: Bone.009 3
+    400156: Bone.009 4
+    400158: Bone.009 5
+    400160: Bone.010
+    400162: Bone.010 1
+    400164: Bone.010 2
+    400166: Bone.010 3
+    400168: Bone.010 4
+    400170: Bone.010 5
+    400172: Bone.011
+    400174: Bone.011 1
+    400176: Bone.011 2
+    400178: Bone.011 3
+    400180: Bone.012
+    400182: Bone.012 1
+    400184: Bone.012 2
+    400186: Bone.012 3
+    400188: Bone.012 4
+    400190: Bone.012 5
+    400192: Bone.013
+    400194: Bone.013 1
+    400196: Bone.013 2
+    400198: Bone.013 3
+    400200: Bone.014
+    400202: Bone.014 1
+    400204: Bone.014 2
+    400206: Bone.014 3
+    400208: Bone.014 4
+    400210: Bone.014 5
+    400212: Bone.015
+    400214: Bone.015 1
+    400216: Bone.015 2
+    400218: Bone.015 3
+    400220: Bone.016
+    400222: Bone.016 1
+    400224: Bone.016 2
+    400226: Bone.016 3
+    400228: Bone.016 4
+    400230: Bone.016 5
+    400232: Bone.017
+    400234: Bone.017 1
+    400236: Bone.017 2
+    400238: Bone.017 3
+    400240: Bone.017 4
+    400242: Bone.017 5
+    400244: Bone.018
+    400246: Bone.018 1
+    400248: Bone.018 2
+    400250: Bone.018 3
+    400252: Bone.018 4
+    400254: Bone.018 5
+    400256: Bone.019
+    400258: Bone.019 1
+    400260: Bone.019 2
+    400262: Bone.019 3
+    400264: Bone.019 4
+    400266: Bone.019 5
+    400268: Bone.020
+    400270: Bone.020 1
+    400272: Bone.020 2
+    400274: Bone.020 3
+    400276: Bone.020 4
+    400278: Bone.020 5
+    400280: Bone.021
+    400282: Bone.021 1
+    400284: Bone.021 2
+    400286: Bone.021 3
+    400288: Bone.021 4
+    400290: Bone.021 5
+    400292: Bone.022
+    400294: Bone.022 1
+    400296: Bone.022 2
+    400298: Bone.022 3
+    400300: Bone.022 4
+    400302: Bone.022 5
+    400304: Bone.023
+    400306: Bone.023 1
+    400308: Bone.023 2
+    400310: Bone.023 3
+    400312: Bone.023 4
+    400314: Bone.023 5
+    400316: Bone.024
+    400318: Bone.024 1
+    400320: Bone.024 2
+    400322: Bone.024 3
+    400324: Bone.024 4
+    400326: Bone.024 5
+    400328: Bone.025
+    400330: Bone.025 1
+    400332: Bone.025 2
+    400334: Bone.025 3
+    400336: Bone.025 4
+    400338: Bone.025 5
+    400340: Bone.026
+    400342: Bone.026 1
+    400344: Bone.026 2
+    400346: Bone.026 3
+    400348: Bone.027
+    400350: Bone.027 1
+    400352: Bone.027 2
+    400354: Bone.027 3
+    400356: Bone.028
+    400358: Bone.028 1
+    400360: Bone.028 2
+    400362: Bone.028 3
+    400364: Bone.029
+    400366: Bone.029 1
+    400368: Bone.029 2
+    400370: Bone.029 3
+    400372: Bone.030
+    400374: Bone.030 1
+    400376: Bone.030 2
+    400378: Bone.031
+    400380: Bone.031 1
+    400382: Bone.031 2
+    400384: Bone.l
+    400386: Bone.l.001
+    400388: Bone.l.002
+    400390: Bone.l.003
+    400392: Bone.l.004
+    400394: Bone.l.005
+    400396: Bone.l.006
+    400398: Bone.l.007
+    400400: Bone.r
+    400402: Bone.r.001
+    400404: Bone.r.002
+    400406: Bone.r.003
+    400408: Bone.r.004
+    400410: Bone.r.005
+    400412: Bone.r.006
+    400414: Bone.r.007
+    400416: Bone_0
+    400418: Bone_0 1
+    400420: Bone_0 10
+    400422: Bone_0 11
+    400424: Bone_0 12
+    400426: Bone_0 13
+    400428: Bone_0 14
+    400430: Bone_0 15
+    400432: Bone_0 16
+    400434: Bone_0 17
+    400436: Bone_0 18
+    400438: Bone_0 19
+    400440: Bone_0 2
+    400442: Bone_0 3
+    400444: Bone_0 4
+    400446: Bone_0 5
+    400448: Bone_0 6
+    400450: Bone_0 7
+    400452: Bone_0 8
+    400454: Bone_0 9
+    400456: Bone_1
+    400458: Bone_1 1
+    400460: Bone_1 10
+    400462: Bone_1 11
+    400464: Bone_1 12
+    400466: Bone_1 13
+    400468: Bone_1 14
+    400470: Bone_1 15
+    400472: Bone_1 16
+    400474: Bone_1 17
+    400476: Bone_1 18
+    400478: Bone_1 19
+    400480: Bone_1 2
+    400482: Bone_1 3
+    400484: Bone_1 4
+    400486: Bone_1 5
+    400488: Bone_1 6
+    400490: Bone_1 7
+    400492: Bone_1 8
+    400494: Bone_1 9
+    400496: Bone_2
+    400498: Bone_2 1
+    400500: Bone_2 10
+    400502: Bone_2 11
+    400504: Bone_2 12
+    400506: Bone_2 13
+    400508: Bone_2 14
+    400510: Bone_2 15
+    400512: Bone_2 16
+    400514: Bone_2 17
+    400516: Bone_2 18
+    400518: Bone_2 19
+    400520: Bone_2 2
+    400522: Bone_2 3
+    400524: Bone_2 4
+    400526: Bone_2 5
+    400528: Bone_2 6
+    400530: Bone_2 7
+    400532: Bone_2 8
+    400534: Bone_2 9
+    400536: Bone_3
+    400538: Bone_3 1
+    400540: Bone_3 10
+    400542: Bone_3 11
+    400544: Bone_3 12
+    400546: Bone_3 13
+    400548: Bone_3 14
+    400550: Bone_3 15
+    400552: Bone_3 16
+    400554: Bone_3 17
+    400556: Bone_3 18
+    400558: Bone_3 19
+    400560: Bone_3 2
+    400562: Bone_3 3
+    400564: Bone_3 4
+    400566: Bone_3 5
+    400568: Bone_3 6
+    400570: Bone_3 7
+    400572: Bone_3 8
+    400574: Bone_3 9
+    400576: Bone_4
+    400578: Bone_4 1
+    400580: Bone_4 10
+    400582: Bone_4 11
+    400584: Bone_4 12
+    400586: Bone_4 13
+    400588: Bone_4 14
+    400590: Bone_4 15
+    400592: Bone_4 16
+    400594: Bone_4 17
+    400596: Bone_4 18
+    400598: Bone_4 19
+    400600: Bone_4 2
+    400602: Bone_4 3
+    400604: Bone_4 4
+    400606: Bone_4 5
+    400608: Bone_4 6
+    400610: Bone_4 7
+    400612: Bone_4 8
+    400614: Bone_4 9
+    400616: Bone_5
+    400618: Bone_5 1
+    400620: Bone_5 10
+    400622: Bone_5 11
+    400624: Bone_5 12
+    400626: Bone_5 13
+    400628: Bone_5 14
+    400630: Bone_5 15
+    400632: Bone_5 16
+    400634: Bone_5 17
+    400636: Bone_5 18
+    400638: Bone_5 19
+    400640: Bone_5 2
+    400642: Bone_5 3
+    400644: Bone_5 4
+    400646: Bone_5 5
+    400648: Bone_5 6
+    400650: Bone_5 7
+    400652: Bone_5 8
+    400654: Bone_5 9
+    400656: Buckle
+    400658: Buckle.001
+    400660: Buckle.002
+    400662: Buckle.003
+    400664: //RootNode
+    400666: chest
+    400668: ClothLower
+    400670: ClothLower.001
+    400672: ClothMid.002
+    400674: ClothUpper
+    400676: Cone
+    400678: Cone.001
+    400680: Cone.002
+    400682: Cone.003
+    400684: Cone.004
+    400686: Cone.005
+    400688: Cone.006
+    400690: Cone.008
+    400692: Cone.012
+    400694: Cone.014
+    400696: Cone.015
+    400698: Cone.016
+    400700: Cone.017
+    400702: Cone.022
+    400704: Cone.023
+    400706: Cone.024
+    400708: Cone.025
+    400710: Cone.026
+    400712: Cone.027
+    400714: Cone.028
+    400716: Cone.029
+    400718: Cube
+    400720: Cube.001
+    400722: Cube.002
+    400724: Cube.003
+    400726: Cube.004
+    400728: Cube.015
+    400730: Cube.018
+    400732: Cube.019
+    400734: Ear
+    400736: Eye_l
+    400738: Eye_r
+    400740: EyeBrow
+    400742: EyeLash
+    400744: EyePupil_l
+    400746: EyePupil_r
+    400748: EyeWhite_l
+    400750: EyeWhite_r
+    400752: f_index.01.L
+    400754: f_index.01.R
+    400756: f_index.02.L
+    400758: f_index.02.R
+    400760: f_index.03.L
+    400762: f_index.03.R
+    400764: f_middle.01.L
+    400766: f_middle.01.R
+    400768: f_middle.02.L
+    400770: f_middle.02.R
+    400772: f_middle.03.L
+    400774: f_middle.03.R
+    400776: f_pinky.01.L
+    400778: f_pinky.01.R
+    400780: f_pinky.02.L
+    400782: f_pinky.02.R
+    400784: f_pinky.03.L
+    400786: f_pinky.03.R
+    400788: f_ring.01.L
+    400790: f_ring.01.R
+    400792: f_ring.02.L
+    400794: f_ring.02.R
+    400796: f_ring.03.L
+    400798: f_ring.03.R
+    400800: foot.L
+    400802: foot.R
+    400804: forearm.L
+    400806: forearm.R
+    400808: HairBone
+    400810: HairBone.001
+    400812: HairBone.002
+    400814: HairBone.003
+    400816: HairBone.004
+    400818: HairBone.005
+    400820: HairBone.006
+    400822: HairBone.007
+    400824: HairBone.008
+    400826: HairBone.009
+    400828: HairBone.010
+    400830: HairBone.011
+    400832: HairBone.012
+    400834: HairBone.013
+    400836: HairBone.014
+    400838: HairBone.015
+    400840: HairBone.016
+    400842: HairBone.017
+    400844: HairBone.018
+    400846: HairBone.019
+    400848: HairCurveMeshA.001
+    400850: HairMesh
+    400852: HairMesh.001
+    400854: HairMesh.002
+    400856: HairMesh.003
+    400858: HairMesh.004
+    400860: HairMesh.005
+    400862: HairMesh.006
+    400864: HairMesh.007
+    400866: HairMesh.008
+    400868: HairMesh.009
+    400870: HairMesh.010
+    400872: HairMesh.011
+    400874: HairMesh.012
+    400876: HairMesh.013
+    400878: HairMesh.014
+    400880: HairMesh.015
+    400882: HairMesh.016
+    400884: HairMesh.017
+    400886: HairMesh.018
+    400888: HairMesh.019
+    400890: hand.L
+    400892: hand.R
+    400894: head
+    400896: HeadLower
+    400898: HeadWidget
+    400900: heel.02.L
+    400902: heel.02.R
+    400904: heel.L
+    400906: heel.R
+    400908: hips
+    400910: LampTarget
+    400912: metarig
+    400914: neck
+    400916: palm.01.L
+    400918: palm.01.R
+    400920: palm.02.L
+    400922: palm.02.R
+    400924: palm.03.L
+    400926: palm.03.R
+    400928: palm.04.L
+    400930: palm.04.R
+    400932: Plane
+    400934: Plane.001
+    400936: Plane.002
+    400938: Plane.003
+    400940: Plane.004
+    400942: Plane.005
+    400944: Plane.006
+    400946: Plane.007
+    400948: Plane.008
+    400950: Plane.009
+    400952: Plane.010
+    400954: Plane.012
+    400956: rigBagBeltL
+    400958: rigBagBeltL.001
+    400960: rigScabbard
+    400962: rigShield
+    400964: rigShirtMid
+    400966: rigSword
+    400968: shin.L
+    400970: shin.R
+    400972: Shirt
+    400974: ShirtButton
+    400976: Shoes
+    400978: shoulder.L
+    400980: shoulder.R
+    400982: spine
+    400984: thigh.L
+    400986: thigh.R
+    400988: thumb.01.L
+    400990: thumb.01.R
+    400992: thumb.02.L
+    400994: thumb.02.R
+    400996: thumb.03.L
+    400998: thumb.03.R
+    401000: toe.L
+    401002: toe.R
+    401004: upper_arm.L
+    401006: upper_arm.R
+    401008: Bone.005_end
+    401010: Bone.005_end 1
+    401012: Bone.007_end
+    401014: Bone.029_end
+    401016: Bone.031_end
+    401018: Bone.031_end 1
+    401020: Bone.031_end 2
+    401022: Bone.l.007_end
+    401024: Bone.l_end
+    401026: Bone.r.007_end
+    401028: Bone.r_end
+    401030: Bone_0_end
+    401032: Bone_0_end 1
+    401034: Bone_0_end 10
+    401036: Bone_0_end 11
+    401038: Bone_0_end 12
+    401040: Bone_0_end 13
+    401042: Bone_0_end 14
+    401044: Bone_0_end 15
+    401046: Bone_0_end 16
+    401048: Bone_0_end 17
+    401050: Bone_0_end 18
+    401052: Bone_0_end 19
+    401054: Bone_0_end 2
+    401056: Bone_0_end 3
+    401058: Bone_0_end 4
+    401060: Bone_0_end 5
+    401062: Bone_0_end 6
+    401064: Bone_0_end 7
+    401066: Bone_0_end 8
+    401068: Bone_0_end 9
+    401070: Bone_1_end
+    401072: Bone_1_end 1
+    401074: Bone_1_end 10
+    401076: Bone_1_end 11
+    401078: Bone_1_end 12
+    401080: Bone_1_end 13
+    401082: Bone_1_end 14
+    401084: Bone_1_end 15
+    401086: Bone_1_end 16
+    401088: Bone_1_end 17
+    401090: Bone_1_end 18
+    401092: Bone_1_end 19
+    401094: Bone_1_end 2
+    401096: Bone_1_end 3
+    401098: Bone_1_end 4
+    401100: Bone_1_end 5
+    401102: Bone_1_end 6
+    401104: Bone_1_end 7
+    401106: Bone_1_end 8
+    401108: Bone_1_end 9
+    401110: Bone_2_end
+    401112: Bone_2_end 1
+    401114: Bone_2_end 10
+    401116: Bone_2_end 11
+    401118: Bone_2_end 12
+    401120: Bone_2_end 13
+    401122: Bone_2_end 14
+    401124: Bone_2_end 15
+    401126: Bone_2_end 16
+    401128: Bone_2_end 17
+    401130: Bone_2_end 18
+    401132: Bone_2_end 19
+    401134: Bone_2_end 2
+    401136: Bone_2_end 3
+    401138: Bone_2_end 4
+    401140: Bone_2_end 5
+    401142: Bone_2_end 6
+    401144: Bone_2_end 7
+    401146: Bone_2_end 8
+    401148: Bone_2_end 9
+    401150: Bone_3_end
+    401152: Bone_3_end 1
+    401154: Bone_3_end 10
+    401156: Bone_3_end 11
+    401158: Bone_3_end 12
+    401160: Bone_3_end 13
+    401162: Bone_3_end 14
+    401164: Bone_3_end 15
+    401166: Bone_3_end 16
+    401168: Bone_3_end 17
+    401170: Bone_3_end 18
+    401172: Bone_3_end 19
+    401174: Bone_3_end 2
+    401176: Bone_3_end 3
+    401178: Bone_3_end 4
+    401180: Bone_3_end 5
+    401182: Bone_3_end 6
+    401184: Bone_3_end 7
+    401186: Bone_3_end 8
+    401188: Bone_3_end 9
+    401190: Bone_4_end
+    401192: Bone_4_end 1
+    401194: Bone_4_end 10
+    401196: Bone_4_end 11
+    401198: Bone_4_end 12
+    401200: Bone_4_end 13
+    401202: Bone_4_end 14
+    401204: Bone_4_end 15
+    401206: Bone_4_end 16
+    401208: Bone_4_end 17
+    401210: Bone_4_end 18
+    401212: Bone_4_end 19
+    401214: Bone_4_end 2
+    401216: Bone_4_end 3
+    401218: Bone_4_end 4
+    401220: Bone_4_end 5
+    401222: Bone_4_end 6
+    401224: Bone_4_end 7
+    401226: Bone_4_end 8
+    401228: Bone_4_end 9
+    401230: Bone_5_end
+    401232: Bone_5_end 1
+    401234: Bone_5_end 10
+    401236: Bone_5_end 11
+    401238: Bone_5_end 12
+    401240: Bone_5_end 13
+    401242: Bone_5_end 14
+    401244: Bone_5_end 15
+    401246: Bone_5_end 16
+    401248: Bone_5_end 17
+    401250: Bone_5_end 18
+    401252: Bone_5_end 19
+    401254: Bone_5_end 2
+    401256: Bone_5_end 3
+    401258: Bone_5_end 4
+    401260: Bone_5_end 5
+    401262: Bone_5_end 6
+    401264: Bone_5_end 7
+    401266: Bone_5_end 8
+    401268: Bone_5_end 9
+    401270: Bone_end
+    401272: Bone_end 1
+    401274: Bone_end 2
+    401276: Bone_end 3
+    401278: f_index.03.L_end
+    401280: f_index.03.R_end
+    401282: f_middle.03.L_end
+    401284: f_middle.03.R_end
+    401286: f_pinky.03.L_end
+    401288: f_pinky.03.R_end
+    401290: f_ring.03.L_end
+    401292: f_ring.03.R_end
+    401294: head_end
+    401296: heel.02.L_end
+    401298: heel.02.R_end
+    401300: thumb.03.L_end
+    401302: thumb.03.R_end
+    401304: toe.L_end
+    401306: toe.R_end
+    401308: BuckleBag
+    401310: BuckleBelt
+    401312: BuckleBelt.l
+    401314: BuckleBelt.r
+    401316: BuckleBag.001
+    401318: BuckleBag.002
+    401320: BuckleBag.003
+    401322: BuckleBag.004
+    401324: BuckleBag.000
+    401326: BuckleBag.005
+    401328: BuckleBag.006
+    401330: BuckleBag.007
+    401332: BuckleBag.008
+    2100000: Hair
+    2100002: LeatherDeep
+    2100004: MetalYellow
+    2100006: LeatherLight
+    2100008: Leather
+    2100010: Metal
+    2100012: Stone
+    2100014: LeatherDeep2
+    2100016: No Name
+    2100018: Skin
+    2100020: Shirt
+    2100022: WristBand
+    2100024: WristBand2
+    2100026: ShirtRed
+    2100028: LeatherSling
+    2100030: StoneDeep
+    2100032: MetalDeep
+    2100034: EyeBrow
+    2100036: Eye
+    2100038: EyePupil
+    2100040: EyeWhite.001
+    2100042: EyeLash
+    2300000: Bag
+    2300002: Bag.001
+    2300004: BagDoor
+    2300006: ClothLower
+    2300008: ClothLower.001
+    2300010: Cube.002
+    2300012: Cube.003
+    2300014: Cube.004
+    2300016: Ear
+    2300018: Eye_l
+    2300020: Eye_r
+    2300022: EyeBrow
+    2300024: EyeLash
+    2300026: EyePupil_l
+    2300028: EyePupil_r
+    2300030: EyeWhite_l
+    2300032: EyeWhite_r
+    2300034: HairCurveMeshA.001
+    2300036: HeadLower
+    2300038: HeadWidget
+    2300040: LampTarget
+    2300042: ShirtButton
+    2300044: BuckleBag
+    2300046: BuckleBelt
+    2300048: BuckleBelt.l
+    2300050: BuckleBelt.r
+    2300052: BuckleBag.001
+    2300054: BuckleBag.002
+    2300056: BuckleBag.003
+    2300058: BuckleBag.004
+    2300060: BuckleBag.000
+    2300062: BuckleBag.005
+    2300064: BuckleBag.006
+    2300066: BuckleBag.007
+    2300068: BuckleBag.008
+    3300000: Bag
+    3300002: Bag.001
+    3300004: BagDoor
+    3300006: ClothLower
+    3300008: ClothLower.001
+    3300010: Cube.002
+    3300012: Cube.003
+    3300014: Cube.004
+    3300016: Ear
+    3300018: Eye_l
+    3300020: Eye_r
+    3300022: EyeBrow
+    3300024: EyeLash
+    3300026: EyePupil_l
+    3300028: EyePupil_r
+    3300030: EyeWhite_l
+    3300032: EyeWhite_r
+    3300034: HairCurveMeshA.001
+    3300036: HeadLower
+    3300038: HeadWidget
+    3300040: LampTarget
+    3300042: ShirtButton
+    3300044: BuckleBag
+    3300046: BuckleBelt
+    3300048: BuckleBelt.l
+    3300050: BuckleBelt.r
+    3300052: BuckleBag.001
+    3300054: BuckleBag.002
+    3300056: BuckleBag.003
+    3300058: BuckleBag.004
+    3300060: BuckleBag.000
+    3300062: BuckleBag.005
+    3300064: BuckleBag.006
+    3300066: BuckleBag.007
+    3300068: BuckleBag.008
+    4300000: Cube.003
+    4300002: Cube.002
+    4300004: Bag.001
+    4300006: ClothLower.001
+    4300008: HairMesh.019
+    4300010: HairMesh.018
+    4300012: HairMesh.017
+    4300014: HairMesh.016
+    4300016: HairMesh.015
+    4300018: HairMesh.014
+    4300020: HairMesh.013
+    4300022: HairMesh.012
+    4300024: HairMesh.011
+    4300026: HairMesh.010
+    4300028: Cube.015
+    4300030: Cube.018
+    4300032: Cube.019
+    4300034: Cone
+    4300036: Cone.001
+    4300038: Cone.002
+    4300040: Cone.003
+    4300042: Cone.004
+    4300044: Cone.005
+    4300046: Cone.006
+    4300048: Cone.008
+    4300050: Cone.012
+    4300052: Cone.014
+    4300054: Cone.015
+    4300056: Cone.016
+    4300058: Cone.017
+    4300060: Plane
+    4300062: Cube.004
+    4300064: HairMesh.009
+    4300066: HairMesh.008
+    4300068: Ear
+    4300070: HairMesh.007
+    4300072: HairMesh.006
+    4300074: HairMesh.005
+    4300076: HairMesh.004
+    4300078: HairMesh.003
+    4300080: HairMesh.002
+    4300082: HairMesh.001
+    4300084: Plane.012
+    4300086: Buckle.003
+    4300088: Buckle.002
+    4300090: Buckle.001
+    4300092: Buckle
+    4300094: Shirt
+    4300096: Body
+    4300098: Arm.r
+    4300100: Arm
+    4300102: ArmRope
+    4300104: Shoes
+    4300106: ClothUpper
+    4300108: Bandage.001
+    4300110: Bandage
+    4300112: BagBeltR
+    4300114: Cube.001
+    4300116: Cube
+    4300118: ClothMid.002
+    4300120: Plane.010
+    4300122: Plane.009
+    4300124: Plane.008
+    4300126: Plane.007
+    4300128: Plane.006
+    4300130: Plane.005
+    4300132: Plane.004
+    4300134: ShirtButton
+    4300136: Cone.029
+    4300138: Cone.028
+    4300140: Cone.027
+    4300142: Cone.026
+    4300144: Cone.025
+    4300146: Cone.024
+    4300148: Cone.023
+    4300150: Plane.003
+    4300152: Plane.002
+    4300154: Plane.001
+    4300156: Cone.022
+    4300158: BagDoor
+    4300160: Bag
+    4300162: EyeBrow
+    4300164: LampTarget
+    4300166: HairMesh
+    4300168: HairCurveMeshA.001
+    4300170: HeadWidget
+    4300172: HeadLower
+    4300174: ClothLower
+    4300176: Eye_l
+    4300178: EyePupil_l
+    4300180: EyeWhite_l
+    4300182: EyeLash
+    4300184: BuckleBelt
+    4300186: BuckleBag
+    4300188: BuckleBelt.l
+    4300190: BuckleBelt.r
+    4300192: BuckleBag.004
+    4300194: BuckleBag.003
+    4300196: BuckleBag.002
+    4300198: BuckleBag.001
+    4300200: BuckleBag.007
+    4300202: BuckleBag.006
+    4300204: BuckleBag.005
+    4300206: BuckleBag.000
+    4300208: BuckleBag.008
+    9500000: //RootNode
+    13700000: Arm
+    13700002: Arm.r
+    13700004: ArmRope
+    13700006: BagBeltL
+    13700008: BagBeltR
+    13700010: Bandage
+    13700012: Bandage.001
+    13700014: Body
+    13700016: Buckle
+    13700018: Buckle.001
+    13700020: Buckle.002
+    13700022: Buckle.003
+    13700024: ClothMid.002
+    13700026: ClothUpper
+    13700028: Cone
+    13700030: Cone.001
+    13700032: Cone.002
+    13700034: Cone.003
+    13700036: Cone.004
+    13700038: Cone.005
+    13700040: Cone.006
+    13700042: Cone.008
+    13700044: Cone.012
+    13700046: Cone.014
+    13700048: Cone.015
+    13700050: Cone.016
+    13700052: Cone.017
+    13700054: Cone.022
+    13700056: Cone.023
+    13700058: Cone.024
+    13700060: Cone.025
+    13700062: Cone.026
+    13700064: Cone.027
+    13700066: Cone.028
+    13700068: Cone.029
+    13700070: Cube
+    13700072: Cube.001
+    13700074: Cube.015
+    13700076: Cube.018
+    13700078: Cube.019
+    13700080: HairMesh
+    13700082: HairMesh.001
+    13700084: HairMesh.002
+    13700086: HairMesh.003
+    13700088: HairMesh.004
+    13700090: HairMesh.005
+    13700092: HairMesh.006
+    13700094: HairMesh.007
+    13700096: HairMesh.008
+    13700098: HairMesh.009
+    13700100: HairMesh.010
+    13700102: HairMesh.011
+    13700104: HairMesh.012
+    13700106: HairMesh.013
+    13700108: HairMesh.014
+    13700110: HairMesh.015
+    13700112: HairMesh.016
+    13700114: HairMesh.017
+    13700116: HairMesh.018
+    13700118: HairMesh.019
+    13700120: Plane
+    13700122: Plane.001
+    13700124: Plane.002
+    13700126: Plane.003
+    13700128: Plane.004
+    13700130: Plane.005
+    13700132: Plane.006
+    13700134: Plane.007
+    13700136: Plane.008
+    13700138: Plane.009
+    13700140: Plane.010
+    13700142: Plane.012
+    13700144: Shirt
+    13700146: Shoes
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EyePupil
+    second: {fileID: 2100000, guid: d67f188f8d9dd0f458fc75e9a5a37a3b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hair
+    second: {fileID: 2100000, guid: fec946050e080e942bc4b7de032f4cb9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Leather
+    second: {fileID: 2100000, guid: 122a14a57d46ca84581e498479d78fe7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LeatherDeep
+    second: {fileID: 2100000, guid: 696aa0087334bfe47b0909a4a648c60d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LeatherDeep2
+    second: {fileID: 2100000, guid: 76154196a4f96c54993362327898fe98, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LeatherLight
+    second: {fileID: 2100000, guid: 972385ad42acb0f47b3fe60358c2efb4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal
+    second: {fileID: 2100000, guid: 38fd673cc5752094d8e7c3fd1eaf6184, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MetalDeep
+    second: {fileID: 2100000, guid: a581f495871fa6c408bea46f5042bd38, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MetalYellow
+    second: {fileID: 2100000, guid: f19321f0125f34c4a83b53959760d993, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shirt
+    second: {fileID: 2100000, guid: e9aa8f8d37a758a43825385dd5d8e19d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShirtRed
+    second: {fileID: 2100000, guid: 78b8c1bf1615df44eb827bc9a44181dd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Skin
+    second: {fileID: 2100000, guid: 72421b00001536841be8a089b1dc280c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Stone
+    second: {fileID: 2100000, guid: c6ae93697f4a2ee4cae021f012d3c3a5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StoneDeep
+    second: {fileID: 2100000, guid: 2c227f3b6e475a748bf03b7f3ec2f405, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WristBand
+    second: {fileID: 2100000, guid: 06ffd87e46028d84d95ad765161b3449, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

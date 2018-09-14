@@ -249,17 +249,17 @@ public class UICurve : MonoBehaviour
         alt = Events.Alt;
         use = false;
         over = ASUI.MouseOver(area, rulerX, rulerY);
-        var simMidDown = Events.MouseDown(MouseButton.Left) && alt;
-        if ((Events.MouseDown(MouseButton.Middle) || simMidDown) && over) { oldPos = ASUI.mousePositionRef; MouseDown(MouseButton.Middle); middle = true; }
-        if (Events.MouseDown(MouseButton.Left) && over && !simMidDown) { oldPos = ASUI.mousePositionRef; MouseDown(MouseButton.Left); left = true; }
-        if (Events.MouseDown(MouseButton.Right) && over) { oldPos = ASUI.mousePositionRef; MouseDown(MouseButton.Right); right = true; }
-        var simMid = Events.Mouse(MouseButton.Left) && alt;
-        if (!Events.Mouse(MouseButton.Middle) && !simMid) middle = false;
-        if (!Events.Mouse(MouseButton.Left) || simMid) left = false;
-        if (!Events.Mouse(MouseButton.Right)) right = false;
-        if (middle) MouseDrag(MouseButton.Middle);
-        if (left) MouseDrag(MouseButton.Left);
-        if (right) MouseDrag(MouseButton.Right);
+        var simMidDown = Events.MouseDown(MB.Left) && alt;
+        if ((Events.MouseDown(MB.Middle) || simMidDown) && over) { oldPos = ASUI.mousePositionRef; MouseDown(MB.Middle); middle = true; }
+        if (Events.MouseDown(MB.Left) && over && !simMidDown) { oldPos = ASUI.mousePositionRef; MouseDown(MB.Left); left = true; }
+        if (Events.MouseDown(MB.Right) && over) { oldPos = ASUI.mousePositionRef; MouseDown(MB.Right); right = true; }
+        var simMid = Events.Mouse(MB.Left) && alt;
+        if (!Events.Mouse(MB.Middle) && !simMid) middle = false;
+        if (!Events.Mouse(MB.Left) || simMid) left = false;
+        if (!Events.Mouse(MB.Right)) right = false;
+        if (middle) MouseDrag(MB.Middle);
+        if (left) MouseDrag(MB.Left);
+        if (right) MouseDrag(MB.Right);
         var codes = Enum.GetValues(typeof(KeyCode));
         foreach (KeyCode c in codes)
         {
@@ -358,11 +358,12 @@ public class UICurve : MonoBehaviour
             }
         }
     }
-    private void MouseDown(MouseButton button)
+    private void MouseDown(MB button)
     {
-        if (curve == null || keys.Count == 0) return;
         use = true;
-        if (button == MouseButton.Left)
+        if (!ASUI.MouseOver(area)) return;
+        if (curve == null || keys.Count == 0) return;
+        if (button == MB.Left)
         {
             ind = -1;
             for (int i = 0; i < keys.Count; i++)
@@ -444,15 +445,16 @@ public class UICurve : MonoBehaviour
     {
         get { return Mathf.RoundToInt(frameIndexTemp); }
     }
-    private void MouseDrag(MouseButton button)
+    private void MouseDrag(MB button)
     {
         use = true;
         var deltaV = ASUI.mousePositionRef - oldPos;
         deltaV = MathTool.Divide(deltaV, area.rect.size);
         deltaV = Vector2.Scale(deltaV, rulerLength);
+        if (!ASUI.MouseOver(area)) return;
         switch (button)
         {
-            case MouseButton.Left:
+            case MB.Left:
                 var l = ASUI.mousePositionRefLT - ASUI.AbsRefPos(area);
                 l.y = area.rect.height - l.y;
                 l = MathTool.Divide(l, area.rect.size);
@@ -499,10 +501,10 @@ public class UICurve : MonoBehaviour
                     UITimeLine.FrameValue = p.y;
                 }
                 break;
-            case MouseButton.Right:
+            case MB.Right:
                 break;
 
-            case MouseButton.Middle:
+            case MB.Middle:
 
                 startPos -= deltaV;
                 break;

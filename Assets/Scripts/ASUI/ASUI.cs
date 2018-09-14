@@ -4,12 +4,6 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using Obj = UnityEngine.Object;
 using System;
-public enum MouseButton
-{
-    Left = 0,
-    Right,
-    Middle,
-};
 /// <summary>
 /// 左上角坐标
 /// </summary>
@@ -25,19 +19,19 @@ public static class ASUI
     // 初始化UI控件
     public static void Init(this Button button, UnityAction onClick, bool trigger = false)
     {
-        button.onClick.AddListener(onClick);
+        if (onClick != null) button.onClick.AddListener(onClick);
         if (trigger) onClick();
     }
     public static void Init(this Toggle toggle, UnityAction<bool> onToggle, bool trigger = false)
     {
-        toggle.onValueChanged.AddListener(onToggle);
+        if (onToggle != null) toggle.onValueChanged.AddListener(onToggle);
         if (trigger) onToggle(toggle.isOn);
     }
     // trigger 是否立即触发事件
     public static void Init(this Dropdown drop, int value, string[] options, UnityAction<int> onValueChanged, bool trigger = false)
     {
         Init(drop, value, new List<string>(options), onValueChanged);
-        if (trigger) onValueChanged(value);        
+        if (trigger) onValueChanged(value);
     }
     public static void Init(this Dropdown drop, int value, List<string> options, UnityAction<int> onValueChanged)
     {
@@ -87,6 +81,42 @@ public static class ASUI
         return pos;
         //return MathTool.ReverseY(p);
     }
+    public static Vector2 AbsRefPos2(RectTransform rt)
+    {
+        var rtParent = rt.parent as RectTransform;
+        Vector2 posParent = MathTool.ReverseY(rtParent.anchoredPosition);
+        Vector2 pos = posParent;
+        Vector2 anchorPos;
+        var amin = rt.anchorMin;
+        amin.y = 1 - amin.y;
+        var amax = rt.anchorMax;
+        amax.y = 1 - amax.y;
+        var omin = rt.offsetMin;
+        var omax = rt.offsetMax;
+
+        if (amin == amax) // 九宫格锚点模式
+        {
+            anchorPos = Vector2.Scale(amin, rtParent.rect.size);
+            pos += anchorPos + new Vector2(omin.x, -omax.y);
+        }
+        else if (amin == new Vector2(0, 0) && amax == new Vector2(1, 0))
+        {
+            pos.y += rtParent.rect.height;
+            pos += MathTool.ReverseY(rt.anchoredPosition);
+        }
+        else if (amin == new Vector2(0, 0) && amax == new Vector2(0, 1))
+        {
+            anchorPos = MathTool.ReverseY(rt.anchoredPosition);
+            pos += anchorPos;
+        }
+        else
+        {
+            pos += new Vector2(omin.x, -omax.y);// rt.anchoredPosition;
+        }
+
+        //p.y = scaler.referenceResolution.y - p.y;
+        return pos;
+    }
     public static Vector2 AbsRefPos(RectTransform rt)
     {
         var rtParent = rt.parent as RectTransform;
@@ -101,7 +131,7 @@ public static class ASUI
         if (amin == amax) // 九宫格锚点模式
         {
             anchorPos = Vector2.Scale(amin, rtParent.rect.size);
-            pos += anchorPos + new Vector2(omin.x, -omax.y);// rt.anchoredPosition;
+            pos += anchorPos + new Vector2(omin.x, -omax.y);
         }
         else if (amin == new Vector2(0, 0) && amax == new Vector2(1, 0))
         {
@@ -436,10 +466,10 @@ public static class ASUI
         }
         return false;
     }
-    private static Rect GetAbsRect(RectTransform rt)
+    public static Rect GetAbsRect(RectTransform rt)
     {
         var rect = rt.rect;
-        rect.position = AbsRefPos(rt);
+        rect.position = AbsRefPos2(rt);
         //rect.position = MathTool.ReverseY(rt.anchoredPosition);
         //if (rt.name != "Area")
         //{

@@ -99,7 +99,7 @@ Shader "UnityChan/UCTS_Standard" {
             #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal xboxone ps4 switch
             #pragma target 3.0
             //�A�E�g���C�������͈ȉ���cginc��.
-            #include "UCTS_Outline.cginc"
+            #include "UCTS_Outline0.cginc"
             ENDCG
         }
 //ToonCoreStart

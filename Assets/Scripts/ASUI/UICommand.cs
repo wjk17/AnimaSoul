@@ -25,7 +25,7 @@ public class CommandHandler
     public CommandHandler() { }
     public CommandHandler(RectTransform owner) { this.owner = owner; }
     public List<Command> commands = new List<Command>();
-    public virtual void ExecuteCommand(Command cmd) {}
+    public virtual void ExecuteCommand(Command cmd) { }
     public virtual int SortList(Command a, Command b)
     {
         if (a.order > b.order) { return 1; }
@@ -105,6 +105,10 @@ public class GLUIHandler : CommandHandler
                 else if (ArgType<Vector2, Vector2, Color>(cmd))
                 {
                     GLUI.DrawLineOrtho((Vector2)cmd.args[0], (Vector2)cmd.args[1], (Color)cmd.args[2]);
+                }
+                else if (ArgType<Vector2, Vector2, Color, bool>(cmd))
+                {
+                    GLUI.DrawLineOrtho((Vector2)cmd.args[0], (Vector2)cmd.args[1], (Color)cmd.args[2], (bool)cmd.args[3]);
                 }
                 else if (ArgType<Vector2, Vector2, float>(cmd))
                 {

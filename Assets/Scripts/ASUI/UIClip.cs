@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIClip : MonoBehaviourInstance<UIClip>
+public class UIClip : MonoSingleton<UIClip>
 {
     public static ASClip clip
     {
@@ -144,9 +144,9 @@ public class UIClip : MonoBehaviourInstance<UIClip>
 
     public bool Load(string clipName)//不存在文件则返回false
     {
-        var dataPath = Application.dataPath;
-        var rootPath = dataPath + "/../";
-        path = rootPath + folder + clipName + ".clip";
+        //var dataPath = Application.dataPath;
+        //var rootPath = dataPath + "/../";
+        path = UIClipList.I.clipPath + clipName + ".clip";
         if (System.IO.File.Exists(path))
         {
             _clip = Serializer.XMLDeSerialize<ASClip>(path);
@@ -166,15 +166,16 @@ public class UIClip : MonoBehaviourInstance<UIClip>
         }
         else
         {
+            Debug.Log("路径: " + path + " 不存在。");
             return false;
         }
     }
 
     public bool Load()
     {
-        var dataPath = Application.dataPath;
-        var rootPath = dataPath + "/../";
-        path = rootPath + folder + clipName + ".clip";
+        //var dataPath = Application.dataPath;
+        //var rootPath = dataPath + "/../";
+        path = UIClipList.I.clipPath + clipName + ".clip";
         if (System.IO.File.Exists(path))
         {
             _clip = Serializer.XMLDeSerialize<ASClip>(path);
@@ -218,24 +219,24 @@ public class UIClip : MonoBehaviourInstance<UIClip>
         PlayerPrefs.SetString("LastOpenClipName", clipName);
         PlayerPrefs.Save();
 
-        var dataPath = Application.dataPath;
-        var rootPath = dataPath + "/../";
-        path = rootPath + folder + clipName + ".clip";
+        //var dataPath = Application.dataPath;
+        //var rootPath = dataPath + "/../";
+        path = UIClipList.I.clipPath + clipName + ".clip";
         Serializer.XMLSerialize(c, path);
         clip = c;
     }
     public void Save(string clipName)
     {
-        var dataPath = Application.dataPath;
-        var rootPath = dataPath + "/../";
-        path = rootPath + folder + clipName + ".clip";
+        //var dataPath = Application.dataPath;
+        //var rootPath = dataPath + "/../";
+        path = UIClipList.I.clipPath + clipName + ".clip";
         Serializer.XMLSerialize(clip, path);
     }
     public void Save()
     {
-        var dataPath = Application.dataPath;
-        var rootPath = dataPath + "/../";
-        path = rootPath + folder + clip.clipName + ".clip";
+        //var dataPath = Application.dataPath;
+        //var rootPath = dataPath + "/../";
+        path = UIClipList.I.clipPath + clip.clipName + ".clip";
         Serializer.XMLSerialize(clip, path);
     }
 }

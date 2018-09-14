@@ -70,6 +70,10 @@ public static class GLUI
     {
         ASUI.I.AddCommand(Cmd(commandOrder, GLUICmdType.DrawLineOrtho, p1, p2, color));
     }
+    public static void DrawLine(Vector2 p1, Vector2 p2, Color color, bool clip)
+    {
+        ASUI.I.AddCommand(Cmd(commandOrder, GLUICmdType.DrawLineOrtho, p1, p2, color, clip));
+    }
     public static void DrawLine(Vector2 p1, Vector2 p2, float width)
     {
         ASUI.I.AddCommand(Cmd(commandOrder, GLUICmdType.DrawLineOrtho, p1, p2, width));
@@ -82,12 +86,12 @@ public static class GLUI
     {
         DrawLineWidthIns(p1, p2, width, Color.black);
     }
-    public static void DrawLineWidthIns(Vector2 p1, Vector2 p2, float width,Color color)
+    public static void DrawLineWidthIns(Vector2 p1, Vector2 p2, float width, Color color)
     {
         p1.y = ASUI.scaler.referenceResolution.y - p1.y;
         p2.y = ASUI.scaler.referenceResolution.y - p2.y;
         SetLineMaterial();
-        GL.LoadOrtho();        
+        GL.LoadOrtho();
         DrawLineWidth(p1, p2, width, color, false);
     }
     public static void DrawLineWidth(Vector2 p1, Vector2 p2, float width)
@@ -116,9 +120,11 @@ public static class GLUI
         //p1 += MathTool.ReverseY(ASUI.owner.anchoredPosition);
         //p2 += MathTool.ReverseY(ASUI.owner.anchoredPosition);
         //clip
-        var rect = ASUI.Rect(ASUI.owner);
-        if (clip && LineClip.ClipCohSuth(rect[0], rect[1], ref p1, ref p2) == LineClip.Result.discard) return ;
-
+        if (clip)
+        {
+            var rect = ASUI.Rect(ASUI.owner);
+            if (LineClip.ClipCohSuth(rect[0], rect[1], ref p1, ref p2) == LineClip.Result.discard) return;
+        }
         var v = p2 - p1;
         var v2 = p1 - p2;
         width *= 0.5f;
@@ -136,7 +142,7 @@ public static class GLUI
     {
         DrawLineOrtho(p1, p2, Color.black);
     }
-    public static void DrawLineOrtho(Vector2 p1, Vector2 p2, Color color,bool clip = true)
+    public static void DrawLineOrtho(Vector2 p1, Vector2 p2, Color color, bool clip = true)
     {
         //p1 += ASUI.AbsPos(ASUI.owner);
         //p2 += ASUI.AbsPos(ASUI.owner);
@@ -145,8 +151,11 @@ public static class GLUI
         //p2 += MathTool.ReverseY(ASUI.owner.anchoredPosition);
 
         //clip
-        var rect = ASUI.Rect(ASUI.owner);
-        if (clip && LineClip.ClipCohSuth(rect[0], rect[1], ref p1, ref p2) == LineClip.Result.discard) return;
+        if (clip)
+        {
+            var rect = ASUI.Rect(ASUI.owner);
+            if (LineClip.ClipCohSuth(rect[0], rect[1], ref p1, ref p2) == LineClip.Result.discard) return;
+        }
 
         //normalize & flip y
         p1.x /= ASUI.scaler.referenceResolution.x;

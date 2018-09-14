@@ -115,7 +115,7 @@ Shader "UnityChan/UCTS_Standard_StencilMask" {
         //    #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal xboxone ps4 switch
         //    #pragma target 3.0
         //    //�A�E�g���C�������͈ȉ���cginc��.
-        //    #include "UCTS_Outline.cginc"
+        //    #include "UCTS_Outline0.cginc"
         //    ENDCG
         //}
 //ToonCoreStart
@@ -412,7 +412,6 @@ Shader "UnityChan/UCTS_Standard_StencilMask" {
 					float2 Set_UV0 = i.uv0;
 					float2 node_6830 = Set_UV0;
 					float3 lightDirection = normalize(_HighClrDir.xyz);
-                    lightDirection = UnityObjectToWorldNormal(lightDirection);                    
 					float3 lightColor = _LightColor0.rgb;
 					float3 halfDirection = viewDirection + lightDirection;
                     float3 direction;
@@ -420,6 +419,7 @@ Shader "UnityChan/UCTS_Standard_StencilMask" {
                     direction.y = lerp(lightDirection.y, halfDirection.y, _ViewDirWeight.y);
                     direction.z = lerp(lightDirection.z, halfDirection.z, _ViewDirWeight.z);
                     float3 directionN = normalize(direction);
+                    //discard;
 
 					float proj = 0.5 + 0.5 * dot(directionN, i.normalDir); //  proj
 					float mask = saturate((1 + _Tweak_HighColorMaskLevel));

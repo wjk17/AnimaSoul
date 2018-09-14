@@ -4,20 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIPlayer : MonoBehaviour
+public class UIPlayer : MonoSingleton<UIPlayer>
 {
-    public static UIPlayer I
-    {
-        get
-        {
-            if (_i == null) _i = FindObjectOfType<UIPlayer>(); return _i;
-        }
-    }
-    private static UIPlayer _i;
     public UIButtonSwitch buttonPlayPuase;
     public InputField inputfieldFps;
     public Toggle toggleLoop;
     public Toggle toggleFlip;
+    public Toggle togglePingPong;
     public Button buttonApplyTo60Fps;
     public Toggle toggleMirrorPv;
     public bool play;
@@ -118,6 +111,7 @@ public class UIPlayer : MonoBehaviour
     {
         play = true;
     }
+    public float speed = 1f;
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
@@ -126,7 +120,7 @@ public class UIPlayer : MonoBehaviour
         }
         if (play)
         {
-            UITimeLine.I.frameIndexF += Time.deltaTime * UITimeLine.Fps;
+            UITimeLine.I.frameIndexF += Time.deltaTime * UITimeLine.Fps * speed;
             float end;
             if (!toggleFlip.isOn)
             {
@@ -138,7 +132,18 @@ public class UIPlayer : MonoBehaviour
             }
             if (toggleLoop.isOn && UITimeLine.I.frameIndexF > end)
             {
-                UITimeLine.I.frameIndex = UIClip.clip.frameRange.x;
+                if (togglePingPong.isOn)
+                {
+                    speed = -Mathf.Abs(speed);
+                }
+                else
+                {
+                    UITimeLine.I.frameIndex = UIClip.clip.frameRange.x;
+                }
+            }
+            else if(togglePingPong.isOn && UITimeLine.I.frameIndexF < UIClip.clip.frameRange.x)
+            {
+                speed = Mathf.Abs(speed);
             }
         }
     }

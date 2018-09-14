@@ -98,7 +98,7 @@ public class UITimeLine : MonoBehaviour
         get
         {
             var end = UIClip.clip.frameRange.y;
-            return end == 0 ? 0 : GTool.Round(frameIndexF / end, indexNAccuracy);
+            return end == 0 ? 0 : MathTool.Round(frameIndexF / end, indexNAccuracy);
         }
     }
     public int indexNAccuracy = 3;
@@ -211,21 +211,22 @@ public class UITimeLine : MonoBehaviour
     {
         UpdateASUI();
     }
-    private void MouseDown(MouseButton button)
+    private void MouseDown(MB button)
     {
         use = true;
         MouseDrag(button);
     }
     public float lx;
-    private void MouseDrag(MouseButton button)
+    private void MouseDrag(MB button)
     {
         use = true;
+        if (!ASUI.MouseOver(area)) return;
         var deltaV = ASUI.mousePositionRef - oldPos;
         deltaV = MathTool.Divide(deltaV, area.rect.size);
         deltaV = Vector2.Scale(deltaV, new Vector2(rulerLength, 0));
         switch (button)
         {
-            case MouseButton.Left:
+            case MB.Left:
 
                 lx = ASUI.mousePositionRef.x - area.anchoredPosition.x;
                 lx = lx / area.rect.width;
@@ -233,11 +234,11 @@ public class UITimeLine : MonoBehaviour
                 frameIndex = (int)startPos.x + Mathf.RoundToInt(lx * rulerLength);
                 break;
 
-            case MouseButton.Right:
+            case MB.Right:
 
                 break;
 
-            case MouseButton.Middle:
+            case MB.Middle:
 
                 startPos -= deltaV;
                 break;
@@ -255,14 +256,14 @@ public class UITimeLine : MonoBehaviour
         var alt = Events.Alt;
         use = false;
         over = ASUI.MouseOver(area, ruler);
-        var simMidDown = Events.MouseDown(MouseButton.Left) && alt;
-        if ((Events.MouseDown(MouseButton.Middle) || simMidDown) && over) { oldPos = ASUI.mousePositionRef; MouseDown(MouseButton.Middle); middle = true; }
-        if (Events.MouseDown(MouseButton.Left) && over && !simMidDown) { oldPos = ASUI.mousePositionRef; MouseDown(MouseButton.Left); left = true; }
-        var simMid = Events.Mouse(MouseButton.Left) && alt;
-        if (!Events.Mouse(MouseButton.Middle) && !simMid) middle = false;
-        if (!Events.Mouse(MouseButton.Left) || simMid) left = false;
-        if (middle) MouseDrag(MouseButton.Middle);
-        if (left) MouseDrag(MouseButton.Left);
+        var simMidDown = Events.MouseDown(MB.Left) && alt;
+        if ((Events.MouseDown(MB.Middle) || simMidDown) && over) { oldPos = ASUI.mousePositionRef; MouseDown(MB.Middle); middle = true; }
+        if (Events.MouseDown(MB.Left) && over && !simMidDown) { oldPos = ASUI.mousePositionRef; MouseDown(MB.Left); left = true; }
+        var simMid = Events.Mouse(MB.Left) && alt;
+        if (!Events.Mouse(MB.Middle) && !simMid) middle = false;
+        if (!Events.Mouse(MB.Left) || simMid) left = false;
+        if (middle) MouseDrag(MB.Middle);
+        if (left) MouseDrag(MB.Left);
         float delta = Events.Axis("Mouse ScrollWheel");
         if (delta != 0 && ASUI.MouseOver(area, ruler))
         {
