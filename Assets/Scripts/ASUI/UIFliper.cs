@@ -36,7 +36,7 @@ public class UIFliper : MonoBehaviour
     }
     public void SwitchAllEx(params Bone[] bones)
     {
-        foreach (var t in UIDOFEditor.I.avatar.setting.asts)
+        foreach (var t in UIDOFEditor.I.avatar.data.asts)
         {
             if (ClipTool.IsLeftBone(t.dof.bone))
             {
@@ -68,7 +68,7 @@ public class UIFliper : MonoBehaviour
     }
     public void SwitchLeftAndRight()
     {
-        foreach (var t in UIDOFEditor.I.avatar.setting.asts)
+        foreach (var t in UIDOFEditor.I.avatar.data.asts)
         {
             if (!ClipTool.IsLeftBone(t.dof.bone)) continue;
             var rightBone = ClipTool.GetPairBone(t.dof.bone);
@@ -86,7 +86,7 @@ public class UIFliper : MonoBehaviour
     }
     public void FlipLeft2Right()
     {
-        foreach (var t in UIDOFEditor.I.avatar.setting.asts)
+        foreach (var t in UIDOFEditor.I.avatar.data.asts)
         {
             if (!ClipTool.IsLeftBone(t.dof.bone)) continue;
             var rightBone = ClipTool.GetPairBone(t.dof.bone);
@@ -99,7 +99,7 @@ public class UIFliper : MonoBehaviour
     }
     public void FlipRight2Left()
     {
-        foreach (var t in UIDOFEditor.I.avatar.setting.asts)
+        foreach (var t in UIDOFEditor.I.avatar.data.asts)
         {
             if (!ClipTool.IsRightBone(t.dof.bone)) continue;
             var leftBone = ClipTool.GetPairBone(t.dof.bone);
@@ -112,7 +112,7 @@ public class UIFliper : MonoBehaviour
     }
     TransDOF GetAstFromAvatar(Bone bone)
     {
-        foreach (var t in UIDOFEditor.I.avatar.setting.asts)
+        foreach (var t in UIDOFEditor.I.avatar.data.asts)
         {
             if (t.dof.bone == bone) return t;
         }

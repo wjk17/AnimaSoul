@@ -94,7 +94,7 @@ public class Clip
             if (curve.ast == null) continue;
             var pos = curve.ast.transform.localPosition;
             var os = curve.ast.coord.originPos;
-            curve.AddEulerPos(UITimeLine.I.frameIndex, curve.ast.euler, pos - os);
+            curve.AddEulerPos(UITimeLine.I.frameIdx, curve.ast.euler, pos - os);
             c++;
         }
         Debug.Log("插入到 " + c.ToString() + " 条曲线");

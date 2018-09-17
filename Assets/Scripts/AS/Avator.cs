@@ -55,7 +55,6 @@ public class Avator : MonoXmlSL<AvatorData>
         }
     }
     public Transform rig;
-    public AvatorData setting;
     public DOFMgr dofMgr { get { return GetComponent<DOFMgr>(); } }
     public Bone selectBone;
 
@@ -69,7 +68,7 @@ public class Avator : MonoXmlSL<AvatorData>
     {
         int count = 0;
         //Start();
-        foreach (var t in setting.asts)
+        foreach (var t in data.asts)
         {
             //t.Init();
             if (t != null || t.transform != null)
@@ -116,7 +115,7 @@ public class Avator : MonoXmlSL<AvatorData>
     }
     public TransDOF GetTransDOF(Bone bone)
     {
-        foreach (var t in setting.asts)
+        foreach (var t in data.asts)
         {
             if (t.dof.bone == bone)
             {
@@ -127,7 +126,7 @@ public class Avator : MonoXmlSL<AvatorData>
     }
     public TransDOF GetTransDOF(Transform trans)
     {
-        foreach (var t in setting.asts)
+        foreach (var t in data.asts)
         {
             if (t.transform == trans)
             {
@@ -139,7 +138,7 @@ public class Avator : MonoXmlSL<AvatorData>
     [ShowButton]
     public void ClearTrans()
     {
-        foreach (var t in setting.asts)
+        foreach (var t in data.asts)
         {
             t.transform = null;
         }
@@ -158,7 +157,7 @@ public class Avator : MonoXmlSL<AvatorData>
     {
         var _dic = new Dictionary<Bone, Transform>();
         _dic.Add(Bone.root, rig);
-        //ZHuman.MatchBones(_dic, rig, ZHuman.HumanSkeletonMap);
+        //RigHuman.MatchBones(_dic, rig, ZHuman.HumanSkeletonMap);
         RigHuman.MatchBones(_dic, rig, RigHuman.CreateHumanMap());
         foreach (var item in _dic)
         {
@@ -173,7 +172,7 @@ public class Avator : MonoXmlSL<AvatorData>
     }
     public void LoadFromDOFMgr()
     {
-        foreach (var ast in setting.asts)
+        foreach (var ast in data.asts)
         {
             var dof = dofMgr.GetDOF(ast.dof.bone);
             ast.dof = dof;
@@ -181,24 +180,24 @@ public class Avator : MonoXmlSL<AvatorData>
     }
     private void Start()
     {
-        foreach (var t in setting.asts)
+        foreach (var t in data.asts)
         {
-            t.Init(); // 获取坐标轴的初始值
+            if (t.transform != null) t.Init(); // 获取坐标轴的初始值
         }
     }
     public void Update()
     {
 #if UNITY_EDITOR
         if (drawLine)
-            setting.DrawLines(boneColor, drawLineLength, depthTest);
+            data.DrawLines(boneColor, drawLineLength, depthTest);
         if (Application.isPlaying)
 #endif
-            setting.UpdateTrans();
+            data.UpdateTrans();
     }
     [ShowButton]
     public void SetOrigin()
     {
-        foreach (var t in setting.asts)
+        foreach (var t in data.asts)
         {
             if (t != null && t.transform != null)
                 t.coord.origin = t.transform.localRotation;

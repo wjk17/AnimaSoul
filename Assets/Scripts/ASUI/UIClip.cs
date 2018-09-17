@@ -21,12 +21,12 @@ public class UIClip : MonoSingleton<UIClip>
     // 拖动时间轴绿色线（当前帧）时会更新所有曲线
     public void UpdateAllCurve()
     {
-        var index = UITimeLine.I.frameIndex;
+        var index = UITimeLine.I.frameIdx;
         float trueTime = 0, trueTime2 = 0, trueTime3 = 0;
         float endTime = 0;
-        if (UICurve.I.curr.Count >= 1)
+        if (UICurve.I.curve.Count >= 1)
         {
-            endTime = UICurve.I.curr.Last().time;
+            endTime = UICurve.I.curve.Last().time;
         }
         float n = endTime == 0 ? 0 : index / endTime;
         float t = 0;
@@ -196,7 +196,7 @@ public class UIClip : MonoSingleton<UIClip>
         else  // 不存在clip文件则新建一个
         {
             _clip = new Clip(clipName);
-            foreach (var ast in UIDOFEditor.I.avatar.setting.asts)
+            foreach (var ast in UIDOFEditor.I.avatar.data.asts)
             {
                 _clip.AddCurve(ast);
             }
@@ -210,7 +210,7 @@ public class UIClip : MonoSingleton<UIClip>
     public void New(string clipName)
     {
         var c = new Clip(clipName);
-        foreach (var ast in UIDOFEditor.I.avatar.setting.asts)
+        foreach (var ast in UIDOFEditor.I.avatar.data.asts)
         {
             c.AddCurve(ast);
         }
@@ -219,8 +219,6 @@ public class UIClip : MonoSingleton<UIClip>
         PlayerPrefs.SetString("LastOpenClipName", clipName);
         PlayerPrefs.Save();
 
-        //var dataPath = Application.dataPath;
-        //var rootPath = dataPath + "/../";
         path = UIClipList.I.clipPath + clipName + ".clip";
         Serializer.XMLSerialize(c, path);
         clip = c;
@@ -230,7 +228,7 @@ public class UIClip : MonoSingleton<UIClip>
         path = UIClipList.I.clipPath + clipName + ".clip";
         Serializer.XMLSerialize(clip, path);
     }
-    public new void Save()
+    public void Save()
     {
         path = UIClipList.I.clipPath + clip.clipName + ".clip";
         Serializer.XMLSerialize(clip, path);

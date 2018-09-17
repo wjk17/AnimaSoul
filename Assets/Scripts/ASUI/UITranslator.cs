@@ -20,11 +20,6 @@ public class UITranslator : MonoBehaviour
     public Toggle control;
     public Toggle update;
     public float range;
-    private void Awake()
-    {
-        //control.isOn = false;
-        //update.isOn = false;
-    }
     private void Start()
     {
         sliderX.Init(OnSliderChangeX);
@@ -39,28 +34,30 @@ public class UITranslator : MonoBehaviour
         sliderY.maxValue = range;
         sliderZ.minValue = -range;
         sliderZ.maxValue = range;
-        //control.Init(OnToggleControl, true);
+        control.Init(OnToggleControl, true);
+        UIDOFEditor.I.onDropdownChanged = () =>
+        { if (control.isOn) GizmosAxis.I.controlObj = UIDOFEditor.I.ast.transform; };
     }
-    //public void OnClick()
-    //{
-    //    foreach (var curve in UIClip.clip.curves)
-    //    {
-    //        UIClip.clip.AddPositionCurve(curve, UITimeLine.FrameIndex, curve.ast.transform.localPosition);
-    //    }
-    //}
-    //void OnToggleControl(bool on)
-    //{
-    //    if (on)
-    //    {
-    //        GizmosAxis.I.gameObject.SetActive(true);
-    //        GizmosAxis.I.controlObj = UIDOFEditor.I.ast.transform;
-    //    }
-    //    else
-    //    {
-    //        GizmosAxis.I.gameObject.SetActive(false);
-    //        GizmosAxis.I.controlObj = UIDOFEditor.I.target;
-    //    }
-    //}
+    public void OnClick()
+    {
+        foreach (var curve in UIClip.clip.curves)
+        {
+            UIClip.clip.AddEulerPosAllCurve(UITimeLine.I.frameIdx);
+        }
+    }
+    void OnToggleControl(bool on)
+    {
+        if (on)
+        {
+            GizmosAxis.I.gameObject.SetActive(true);
+            GizmosAxis.I.controlObj = UIDOFEditor.I.ast.transform;
+        }
+        else
+        {
+            GizmosAxis.I.gameObject.SetActive(false);
+            GizmosAxis.I.controlObj = UIDOFEditor.I.target;
+        }
+    }
     bool ignoreChange;
     internal void UpdateValueDisplay()
     {

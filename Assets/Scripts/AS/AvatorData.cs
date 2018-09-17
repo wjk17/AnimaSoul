@@ -20,7 +20,7 @@ public class AvatorData
     }
     public void DrawLines(Color boneColor, float drawLineLength, bool depthTest)
     {
-        DrawBones(boneColor,depthTest);
+        DrawBones(boneColor, depthTest);
         DrawCoords(drawLineLength, depthTest);
     }
     void DrawBones(Color boneColor, bool depthTest)
@@ -28,9 +28,8 @@ public class AvatorData
         // exclude root(0) and hips(1)
         for (int i = 2; i < asts.Count; i++)
         {
-            var ast = asts[i];
-            var t = ast.transform;
-            Debug.DrawLine(t.position, t.parent.position, boneColor, 0, depthTest);
+            var t = asts[i].transform;
+            if (t != null) Debug.DrawLine(t.position, t.parent.position, boneColor, 0, depthTest);
         }
     }
     void DrawCoords(float drawLineLength, bool depthTest)
@@ -45,7 +44,8 @@ public class AvatorData
     {
         foreach (var t in asts)
         {
-            t.Update();
+            if (t.transform != null)
+                t.Update();
         }
     }
 }
