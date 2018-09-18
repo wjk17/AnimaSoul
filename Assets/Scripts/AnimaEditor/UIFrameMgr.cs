@@ -23,6 +23,7 @@ public class UIFrameMgr : MonoBehaviour
     public Button pasteLeftHandToAllFrameBtn;
     private void Start()
     {
+        this.AddInputCB();
         insertMissButton.onClick.AddListener(InsertMissCurve);
         deleteAllCurveButton.onClick.AddListener(DeleteAllCurve);
         pasteAllFrameButton.onClick.AddListener(PasteAllFrame);

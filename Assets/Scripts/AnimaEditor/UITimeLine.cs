@@ -31,8 +31,8 @@ public class UITimeLine : MonoSingleton<UITimeLine>
     //    private float downTimer;
     //    public float continuousKeyTime = 0.5f; // 上下左右键连发延迟
     //    public float continuousKeyInterval = 0.01f; // 间隔（其实0.01通常约等于每帧触发）
-    public Text uiFrameIndex;
-    public Text uiFrameIndexN;
+    public Text txtFrameIdx;
+    public Text txtFrameIdxN;
     //    public Vector3 mousePos;
     //    public Rect uiRect;
     //    public Vector2 pos2D;
@@ -56,26 +56,27 @@ public class UITimeLine : MonoSingleton<UITimeLine>
     //    public static float FrameValue;
     public int frameIdx
     {
-        get { return Mathf.RoundToInt(frameIndexF); }
-        set { frameIndexF = value; }
+        get { return Mathf.RoundToInt(frameIdx_F); }
+        set { frameIdx_F = value; }
     }
-    private float _frameIndexFloat;
-    public float frameIndexF
+    [SerializeField] float _frameIdx_F;
+    [MAD.ShowProperty(MAD.ShowPropertyAttribute.EValueType.Float)]
+    public float frameIdx_F
     {
-        get { return _frameIndexFloat; }
+        get { return _frameIdx_F; }
         set
         {
-            _frameIndexFloat = value;
-            uiFrameIndex.text = "帧：" + frameIdx.ToString();
-            uiFrameIndexN.text = "n：" + frameIndexN.ToString("0.00");
+            _frameIdx_F = value;
+            txtFrameIdx.text = "帧：" + frameIdx.ToString();
+            txtFrameIdxN.text = "n：" + frameIdxN.ToString("0.00");
         }
     }
-    public float frameIndexN
+    public float frameIdxN
     {
         get
         {
             var end = UIClip.clip.frameRange.y;
-            return end == 0 ? 0 : MathTool.Round(frameIndexF / end, indexNAccuracy);
+            return end == 0 ? 0 : MathTool.Round(frameIdx_F / end, indexNAccuracy);
         }
     }
     public int indexNAccuracy = 3;
@@ -125,15 +126,15 @@ public class UITimeLine : MonoSingleton<UITimeLine>
 
 
 
-    //    void Start()
-    //    {
-    //        frameIndex = 0;
-    //        area = transform.Search("Area") as RectTransform;
-    //        topBar = transform.Search("TopBar") as RectTransform;
-    //        ruler = transform.Search("Ruler X") as RectTransform;
-    //        InitASUI();
-    //        ASUI.I.inputCallBacks.Add(new ASGUI.InputCallBack(GetInput, 1));
-    //    }
+    void Start()
+    {
+        this.AddInputCB(GetInput, 1);
+        frameIdx = 0;
+        //        area = transform.Search("Area") as RectTransform;
+        //        topBar = transform.Search("TopBar") as RectTransform;
+        //        ruler = transform.Search("Ruler X") as RectTransform;
+        //        InitASUI();
+    }
     //    private void InitASUI()
     //    {
     //        IMUI.fontSize = fontSize;
@@ -230,114 +231,114 @@ public class UITimeLine : MonoSingleton<UITimeLine>
     //    Vector2 oldPos;
     //    bool use, left, right, middle, shift, ctrl;
     //    public bool over;
-    //    void GetInput()
-    //    {
-    //        var shift = Events.Shift;
-    //        var ctrl = Events.Ctrl;
-    //        var alt = Events.Alt;
-    //        use = false;
-    //        over = ASUI.MouseOver(area, ruler);
-    //        var simMidDown = Events.MouseDown(MB.Left) && alt;
-    //        if ((Events.MouseDown(MB.Middle) || simMidDown) && over) { oldPos = ASUI.mousePositionRef; MouseDown(MB.Middle); middle = true; }
-    //        if (Events.MouseDown(MB.Left) && over && !simMidDown) { oldPos = ASUI.mousePositionRef; MouseDown(MB.Left); left = true; }
-    //        var simMid = Events.Mouse(MB.Left) && alt;
-    //        if (!Events.Mouse(MB.Middle) && !simMid) middle = false;
-    //        if (!Events.Mouse(MB.Left) || simMid) left = false;
-    //        if (middle) MouseDrag(MB.Middle);
-    //        if (left) MouseDrag(MB.Left);
-    //        float delta = Events.Axis("Mouse ScrollWheel");
-    //        if (delta != 0 && ASUI.MouseOver(area, ruler))
-    //        {
-    //            use = true;
-    //            rulerLength -= delta * rulerScalerSensitivity;
-    //            rulerLength = Mathf.Clamp(rulerLength, 1, Mathf.Infinity);
-    //        }
-    //        if (Events.Key(KeyCode.LeftArrow))
-    //        {
-    //            leftTimer += Time.deltaTime;
-    //        }
-    //        else { leftTimer = 0; }
-    //        if (Events.Key(KeyCode.RightArrow))
-    //        {
-    //            rightTimer += Time.deltaTime;
-    //        }
-    //        else { rightTimer = 0; }
-    //        if (Events.Key(KeyCode.UpArrow))
-    //        {
-    //            upTimer += Time.deltaTime;
-    //        }
-    //        else { upTimer = 0; }
-    //        if (Events.Key(KeyCode.DownArrow))
-    //        {
-    //            downTimer += Time.deltaTime;
-    //        }
-    //        else { downTimer = 0; }
-    //        if (leftTimer > continuousKeyTime || Events.KeyDown(KeyCode.LeftArrow))
-    //        {
-    //            leftTimer -= continuousKeyInterval;
-    //            frameIndex--;
-    //        }
-    //        else if (rightTimer > continuousKeyTime || Events.KeyDown(KeyCode.RightArrow))
-    //        {
-    //            rightTimer -= continuousKeyInterval;
-    //            frameIndex++;
-    //        }
-    //        else if (upTimer > continuousKeyTime * 1.5f || Events.KeyDown(KeyCode.UpArrow))
-    //        {
-    //            upTimer -= continuousKeyInterval * 1.5f;
-    //            if (UIClip.clip.curves.Count > 0)
-    //            {
-    //                var keys = UIClip.clip.curves[0].timeCurve.keys;
-    //                for (int i = keys.Count - 1; i >= 0; i--)
-    //                {
-    //                    if (keys[i].frameIndex < frameIndex)
-    //                    {
-    //                        frameIndex = keys[i].frameIndex;
-    //                        break;
-    //                    }
-    //                }
-    //            }
-    //        }
-    //        else if (downTimer > continuousKeyTime * 1.5f || Events.KeyDown(KeyCode.DownArrow))
-    //        {
-    //            downTimer -= continuousKeyInterval * 1.5f;
-    //            if (UIClip.clip.curves.Count > 0)
-    //            {
-    //                var keys = UIClip.clip.curves[0].timeCurve.keys;
-    //                for (int i = 0; i < keys.Count; i++)
-    //                {
-    //                    if (keys[i].frameIndex > frameIndex)
-    //                    {
-    //                        frameIndex = keys[i].frameIndex;
-    //                        break;
-    //                    }
-    //                }
-    //            }
-    //        }
-    //        if (Events.KeyDown(KeyCode.I))
-    //        {
-    //            if (Events.Key(KeyCode.LeftAlt) || Events.Key(KeyCode.RightAlt))
-    //            {
-    //                RemoveKey();
-    //            }
-    //            else
-    //            {
-    //                InsertKey();
-    //            }
-    //        }
-    //        if (use) Events.Use();
-    //    }
-    //    public void Load()
-    //    {
-    //        path = rootPath + folder + fileName;
-    //        UIClip.clip = Serializer.XMLDeSerialize<Clip>(path);
-    //    }
-    //    [ContextMenu("Save")]
-    //    public void Save()
-    //    {
-    //        path = rootPath + folder + fileName;
-    //        Serializer.XMLSerialize(UIClip.clip, path);
-    //    }
+    void GetInput()
+    {
+        //        var shift = Events.Shift;
+        //        var ctrl = Events.Ctrl;
+        //        var alt = Events.Alt;
+        //        use = false;
+        //        over = ASUI.MouseOver(area, ruler);
+        //        var simMidDown = Events.MouseDown(MB.Left) && alt;
+        //        if ((Events.MouseDown(MB.Middle) || simMidDown) && over) { oldPos = ASUI.mousePositionRef; MouseDown(MB.Middle); middle = true; }
+        //        if (Events.MouseDown(MB.Left) && over && !simMidDown) { oldPos = ASUI.mousePositionRef; MouseDown(MB.Left); left = true; }
+        //        var simMid = Events.Mouse(MB.Left) && alt;
+        //        if (!Events.Mouse(MB.Middle) && !simMid) middle = false;
+        //        if (!Events.Mouse(MB.Left) || simMid) left = false;
+        //        if (middle) MouseDrag(MB.Middle);
+        //        if (left) MouseDrag(MB.Left);
+        //        float delta = Events.Axis("Mouse ScrollWheel");
+        //        if (delta != 0 && ASUI.MouseOver(area, ruler))
+        //        {
+        //            use = true;
+        //            rulerLength -= delta * rulerScalerSensitivity;
+        //            rulerLength = Mathf.Clamp(rulerLength, 1, Mathf.Infinity);
+        //        }
+        //        if (Events.Key(KeyCode.LeftArrow))
+        //        {
+        //            leftTimer += Time.deltaTime;
+        //        }
+        //        else { leftTimer = 0; }
+        //        if (Events.Key(KeyCode.RightArrow))
+        //        {
+        //            rightTimer += Time.deltaTime;
+        //        }
+        //        else { rightTimer = 0; }
+        //        if (Events.Key(KeyCode.UpArrow))
+        //        {
+        //            upTimer += Time.deltaTime;
+        //        }
+        //        else { upTimer = 0; }
+        //        if (Events.Key(KeyCode.DownArrow))
+        //        {
+        //            downTimer += Time.deltaTime;
+        //        }
+        //        else { downTimer = 0; }
+        //        if (leftTimer > continuousKeyTime || Events.KeyDown(KeyCode.LeftArrow))
+        //        {
+        //            leftTimer -= continuousKeyInterval;
+        //            frameIndex--;
+        //        }
+        //        else if (rightTimer > continuousKeyTime || Events.KeyDown(KeyCode.RightArrow))
+        //        {
+        //            rightTimer -= continuousKeyInterval;
+        //            frameIndex++;
+        //        }
+        //        else if (upTimer > continuousKeyTime * 1.5f || Events.KeyDown(KeyCode.UpArrow))
+        //        {
+        //            upTimer -= continuousKeyInterval * 1.5f;
+        //            if (UIClip.clip.curves.Count > 0)
+        //            {
+        //                var keys = UIClip.clip.curves[0].timeCurve.keys;
+        //                for (int i = keys.Count - 1; i >= 0; i--)
+        //                {
+        //                    if (keys[i].frameIndex < frameIndex)
+        //                    {
+        //                        frameIndex = keys[i].frameIndex;
+        //                        break;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        else if (downTimer > continuousKeyTime * 1.5f || Events.KeyDown(KeyCode.DownArrow))
+        //        {
+        //            downTimer -= continuousKeyInterval * 1.5f;
+        //            if (UIClip.clip.curves.Count > 0)
+        //            {
+        //                var keys = UIClip.clip.curves[0].timeCurve.keys;
+        //                for (int i = 0; i < keys.Count; i++)
+        //                {
+        //                    if (keys[i].frameIndex > frameIndex)
+        //                    {
+        //                        frameIndex = keys[i].frameIndex;
+        //                        break;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        if (Events.KeyDown(KeyCode.I))
+        //        {
+        //            if (Events.Key(KeyCode.LeftAlt) || Events.Key(KeyCode.RightAlt))
+        //            {
+        //                RemoveKey();
+        //            }
+        //            else
+        //            {
+        //                InsertKey();
+        //            }
+        //        }
+        //        if (use) Events.Use();
+        //    }
+        //    public void Load()
+        //    {
+        //        path = rootPath + folder + fileName;
+        //        UIClip.clip = Serializer.XMLDeSerialize<Clip>(path);
+        //    }
+        //    [ContextMenu("Save")]
+        //    public void Save()
+        //    {
+        //        path = rootPath + folder + fileName;
+        //        Serializer.XMLSerialize(UIClip.clip, path);
+    }
     public void InsertKey()
     {
         switch (insertType)

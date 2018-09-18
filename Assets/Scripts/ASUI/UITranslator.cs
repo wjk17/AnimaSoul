@@ -22,6 +22,7 @@ public class UITranslator : MonoBehaviour
     public float range;
     private void Start()
     {
+        this.AddInputCB();
         sliderX.Init(OnSliderChangeX);
         sliderY.Init(OnSliderChangeY);
         sliderZ.Init(OnSliderChangeZ);

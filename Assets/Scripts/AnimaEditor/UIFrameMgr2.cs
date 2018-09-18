@@ -11,6 +11,7 @@ public class UIFrameMgr2 : MonoSingleton<UIFrameMgr2>
 
     void Start()
     {
+        this.AddInputCB();
         btnConvertToRelativePos.Init(SetAllCurveToLinear);
         btnGetTPose.Init(GetTPose);
     }

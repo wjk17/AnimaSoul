@@ -12,6 +12,7 @@ public class UICamera : MonoSingleton<UICamera>
     // Use this for initialization
     void Start()
     {
+        this.AddInputCB();
         buttonReset.onClick.AddListener(ResetCam);
     }
     private void Update()

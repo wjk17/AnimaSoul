@@ -6419,6 +6419,34 @@ MonoBehaviour:
   currentClipName: 
   buttons: []
   ySpace: 10
+--- !u!1 &282569546
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 282569547}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &282569547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 282569546}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.22607777, y: 0.50971526, z: 281.83185}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &282743618
 GameObject:
   m_ObjectHideFlags: 0
@@ -11300,6 +11328,7 @@ MonoBehaviour:
   exBone2RightHand: {x: 0, y: 0, z: 0}
   f: {fileID: 0}
   drawOrder: 10
+  CB_Order: 1
 --- !u!114 &465187103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13720,7 +13749,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 343, y: -704}
+  m_AnchoredPosition: {x: 343, y: -677}
   m_SizeDelta: {x: 903.3, y: 175.3}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &570338159
@@ -13735,10 +13764,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startActive: 1
-  _nSize: {x: 4, y: 1}
+  _nSize: {x: 100, y: 1}
   clrVectorSel: {r: 0.44971517, g: 0.4859856, b: 0.5849056, a: 1}
   clrVectorUnSel: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  clrCtrlLinesSel: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
+  clrCtrlLinesSel: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   clrCtrlLinesUnSel: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   clrTrack: {r: 0.24200004, g: 0.31900004, b: 0.59400004, a: 1}
   clrSubSel: {r: 0.9254902, g: 0.03137254, b: 0.121212274, a: 1}
@@ -13747,6 +13776,7 @@ MonoBehaviour:
   gridLinesCount: {x: 40, y: 10}
   clrGridLines: {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 1}
   clrBorder: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  clrFrameIdx: {r: 0, g: 1, b: 0, a: 1}
   curve:
     keys: []
     time1D: 0
@@ -13819,14 +13849,14 @@ MonoBehaviour:
   updateInEditor: 1
   anchorMin: {x: 0, y: 1}
   anchorMax: {x: 0, y: 1}
-  offsetMin: {x: 343, y: -879.3}
-  offsetMax: {x: 1246.3, y: -704}
+  offsetMin: {x: 343, y: -852.3}
+  offsetMax: {x: 1246.3, y: -677}
   pivot: {x: 0, y: 1}
-  anchoredPosition: {x: 343, y: -704}
+  anchoredPosition: {x: 343, y: -677}
   sizeDelta: {x: 903.3, y: 175.3}
   rectSize: {x: 903.3, y: 175.3}
   rect:
-    pos: {x: 343, y: 704}
+    pos: {x: 343, y: 677}
     size: {x: 903.3, y: 175.3}
     anchor: {x: 0, y: 0}
   mouseOver: 0
@@ -15868,7 +15898,7 @@ GameObject:
   - component: {fileID: 652913580}
   - component: {fileID: 652913579}
   m_Layer: 5
-  m_Name: frameIndex
+  m_Name: frameIdx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15924,7 +15954,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u5E27\uFF1A0"
+  m_Text: "\u5E27\uFF1A23"
 --- !u!222 &652913580
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18152,7 +18182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startActive: 1
-  path: 
+  path: G:/yx/Unity/AnimaSoul/Assets/StreamingAssets\Clips/Default.clip
   folder: Clips/
   clipName: Default
 --- !u!1 &765969971
@@ -37271,7 +37301,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1475540247}
   - component: {fileID: 1475540248}
-  - component: {fileID: 1475540249}
   m_Layer: 5
   m_Name: UITimeline
   m_TagString: Untagged
@@ -37300,7 +37329,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 323.92502, y: -932}
+  m_AnchoredPosition: {x: 323.92502, y: -857}
   m_SizeDelta: {x: 943.9, y: 140.6}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1475540248
@@ -37316,21 +37345,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startActive: 1
   fps: 60
-  uiFrameIndex: {fileID: 652913579}
-  uiFrameIndexN: {fileID: 1652000053}
+  txtFrameIdx: {fileID: 652913579}
+  txtFrameIdxN: {fileID: 1652000053}
+  _frameIdx_F: 23.14
   indexNAccuracy: 3
   insertType: 0
---- !u!114 &1475540249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1475540246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad25e669bbe909e44b71d98737af6603, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1477722158
 GameObject:
   m_ObjectHideFlags: 0
@@ -44202,7 +44221,7 @@ GameObject:
   - component: {fileID: 1652000054}
   - component: {fileID: 1652000053}
   m_Layer: 5
-  m_Name: frameIndexN
+  m_Name: frameIdxN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44258,7 +44277,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "n\uFF1A"
+  m_Text: "n\uFF1A0.00"
 --- !u!222 &1652000054
 CanvasRenderer:
   m_ObjectHideFlags: 0

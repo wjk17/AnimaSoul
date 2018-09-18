@@ -51,6 +51,7 @@ public class UIArms2 : MonoBehaviour
 
     void Start()
     {
+        this.AddInputCB();
         ResetFs();
         buttonSetArmTarget.onClick.AddListener(SetArmTarget);
         toggleTowardArmTarget.isOn = false;

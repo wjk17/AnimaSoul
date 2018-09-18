@@ -12,6 +12,7 @@ public class UIFliper : MonoBehaviour
     public Button buttonSwitchAllExHips;
     private void Awake()
     {
+        this.AddInputCB();
         buttonL2R.onClick.AddListener(FlipLeft2Right);
         buttonR2L.onClick.AddListener(FlipRight2Left);
         buttonSwitchLR.onClick.AddListener(SwitchLeftAndRight);

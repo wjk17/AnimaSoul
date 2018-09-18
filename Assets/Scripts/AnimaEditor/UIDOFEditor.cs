@@ -58,8 +58,12 @@ public partial class UIDOFEditor : MonoSingleton<UIDOFEditor>
     public UIDOFEditor_Fields f;
 
     public int drawOrder = -1;
+    public int CB_Order = 1;
+
     void Start()
     {
+        this.AddInputCB(GetInput, CB_Order);
+
         foreach (var curve in UIClip.clip.curves)
         {
             curve.ast.coord.originPos = curve.ast.transform.localPosition;
@@ -73,8 +77,6 @@ public partial class UIDOFEditor : MonoSingleton<UIDOFEditor>
         ASUI.parent = transform.Search("Area");
 
         InitUI();
-
-        UI.I.AddInputCB(name, GetInput, 1);
 
         UpdateDOF();
         exBone = avatar[Bone.other].transform;

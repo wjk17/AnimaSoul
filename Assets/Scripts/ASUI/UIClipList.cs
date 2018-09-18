@@ -27,6 +27,7 @@ public class UIClipList : MonoSingleton<UIClipList>
 
     void Start()
     {
+        this.AddInputCB(null, 0);
         buttonRefresh.Init(GetClipNamesInPath, true);
     }
     private void ItemClick()

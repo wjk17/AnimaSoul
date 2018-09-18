@@ -16,6 +16,7 @@ public class UIPlayer : MonoSingleton<UIPlayer>
     public bool play;
     void Start()
     {
+        this.AddInputCB();
         buttonPlayPuase.Reg(Play, Pause);
         inputfieldFps.onValueChanged.AddListener(OnFpsChange);
         inputfieldFps.contentType = InputField.ContentType.DecimalNumber;
@@ -74,7 +75,7 @@ public class UIPlayer : MonoSingleton<UIPlayer>
             }
         }
         ClipTool.GetFrameRange(UIClip.clip);
-        UITimeLine.I.frameIndexF *= ratio;
+        UITimeLine.I.frameIdx_F *= ratio;
         inputfieldFps.text = "60";
     }
     void OnFpsChange(string s)
@@ -100,7 +101,7 @@ public class UIPlayer : MonoSingleton<UIPlayer>
         }
         if (play)
         {
-            UITimeLine.I.frameIndexF += Time.deltaTime * UITimeLine.Fps * speed;
+            UITimeLine.I.frameIdx_F += Time.deltaTime * UITimeLine.Fps * speed;
             float end;
             if (!toggleFlip.isOn)
             {
@@ -110,7 +111,7 @@ public class UIPlayer : MonoSingleton<UIPlayer>
             {
                 end = UIClip.clip.frameRange.y * 2.5f;
             }
-            if (toggleLoop.isOn && UITimeLine.I.frameIndexF > end)
+            if (toggleLoop.isOn && UITimeLine.I.frameIdx_F > end)
             {
                 if (togglePingPong.isOn)
                 {
@@ -121,7 +122,7 @@ public class UIPlayer : MonoSingleton<UIPlayer>
                     UITimeLine.I.frameIdx = UIClip.clip.frameRange.x;
                 }
             }
-            else if (togglePingPong.isOn && UITimeLine.I.frameIndexF < UIClip.clip.frameRange.x)
+            else if (togglePingPong.isOn && UITimeLine.I.frameIdx_F < UIClip.clip.frameRange.x)
             {
                 speed = Mathf.Abs(speed);
             }
