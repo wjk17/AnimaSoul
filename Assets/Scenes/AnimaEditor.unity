@@ -10107,7 +10107,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startActive: 1
-  _inputCallBacks: []
+  inputCallBacks: []
+  listCalled: []
   _mousePositionRef: {x: 0, y: 0}
 --- !u!1 &437531844
 GameObject:
@@ -27796,6 +27797,7 @@ MonoBehaviour:
   dragSensitivity: 0.5
   trackSensitivity: 1
   moveSensitivity: 1
+  dragging: 0
   cb:
     RT: {fileID: 0}
     rt:
@@ -34453,6 +34455,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 942104199}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1381060289
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1381060290}
+  m_Layer: 0
+  m_Name: 0918
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1381060290
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1381060289}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.22607777, y: 0.50971526, z: 281.83185}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1383068669 stripped
 Transform:

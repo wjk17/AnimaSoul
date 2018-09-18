@@ -62,7 +62,7 @@ public partial class UIDOFEditor : MonoSingleton<UIDOFEditor>
 
     void Start()
     {
-        this.AddInputCB(GetInput, CB_Order);
+        this.AddInputCB(null, CB_Order);
 
         foreach (var curve in UIClip.clip.curves)
         {
@@ -81,10 +81,12 @@ public partial class UIDOFEditor : MonoSingleton<UIDOFEditor>
         UpdateDOF();
         exBone = avatar[Bone.other].transform;
     }
-    void GetInput()
-    {
-        if (Events.Click && ASUI.MouseOver(transform.Search("Area") as RectTransform)) Events.Use();//拦截点击事件，防止穿透
-    }
+    //void GetInput()
+    //{
+    //    //拦截点击事件，防止穿透
+    //    if (Events.Click && ASUI.MouseOver(transform.Search("Area") as RectTransform))
+    //        Events.Use();
+    //}
     public void InsertKeyToAllCurves()
     {
         UITimeLine.I.InsertKey();
