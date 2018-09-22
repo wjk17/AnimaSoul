@@ -9,13 +9,6 @@ using System;
 /// </summary>
 public static class ASUI
 {
-    public static List<string> Combine(string[] strs, params string[] strs2)
-    {
-        var list = new List<string>();
-        list.AddRange(strs);
-        list.AddRange(strs2);
-        return list;
-    }
     // 初始化UI控件
     public static void Init(this Button button, UnityAction onClick, bool trigger = false)
     {
@@ -28,16 +21,17 @@ public static class ASUI
         if (trigger) onToggle(toggle.isOn);
     }
     // trigger 是否立即触发事件
-    public static void Init(this Dropdown drop, int value, string[] options, UnityAction<int> onValueChanged, bool trigger = false)
+    public static void Init(this Dropdown drop, int value, IList<string> options, UnityAction<int> onValueChanged, bool trigger = false)
     {
         Init(drop, value, new List<string>(options), onValueChanged);
         if (trigger) onValueChanged(value);
     }
     public static void Init(this Dropdown drop, int value, List<string> options, UnityAction<int> onValueChanged)
     {
-        drop.onValueChanged.AddListener(onValueChanged);
+        drop.ClearOptions();
         drop.AddOptions(options);
-        drop.value = value;
+        drop.value = value; 
+        drop.onValueChanged.AddListener(onValueChanged); // add ofter set a default value, or it'll trigger the changed func
         drop.gameObject.AddComponent<DropDownLocateSelectedItem>();
     }
     public static void Init(this InputField input, int value, UnityAction<string> onValueChanged)
@@ -58,10 +52,19 @@ public static class ASUI
     {
         slider.onValueChanged.AddListener(onValueChanged);
     }
-    public static void Init(this Slider slider, float min, float max, UnityAction<float> onValueChanged)
+    public static void Init(this Slider slider, Vector3 mdm, UnityAction<float> onValueChanged)
     {
-        slider.minValue = max;
+        slider.minValue = mdm.x;
+        slider.maxValue = mdm.z;
+        slider.value = mdm.y;
+        slider.onValueChanged.AddListener(onValueChanged);
+    }
+    public static void Init(this Slider slider, float min, float max, float defaultValue,
+        UnityAction<float> onValueChanged)
+    {
+        slider.minValue = min;
         slider.maxValue = max;
+        slider.value = defaultValue;
         slider.onValueChanged.AddListener(onValueChanged);
     }
     public static void swapPts(ref Vector2 p1, ref Vector2 p2)

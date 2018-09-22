@@ -5,7 +5,7 @@ using System;
 using System.Xml.Serialization;
 [Serializable]
 public class TransDOF // 带关节限制（DOF）的变换。其实是一个可序列化的DeltaRotation Wrapper
-{    
+{
     public TransDOF() { }
     public TransDOF(DOF dof)
     {
@@ -81,7 +81,12 @@ public class TransDOF // 带关节限制（DOF）的变换。其实是一个可�
     }
     public void Init()
     {
-        var n = new Coordinate(transform);
+        Init(transform);
+    }
+    public void Init(Transform t)
+    {
+        transform = t;
+        var n = new Coordinate(t);
         coord = new Coordinate(n);
         coord.right = ToCoord(n, right);
         coord.up = ToCoord(n, up);
@@ -113,5 +118,24 @@ public class TransDOF // 带关节限制（DOF）的变换。其实是一个可�
     {
         euler = MathTool.NaNTo0(euler);
         Rotate();
+    }
+
+    [XmlIgnore]
+    public Vector3 pos
+    {
+        get { return transform.localPosition - coord.originPos; }
+        set { transform.localPosition = coord.originPos + value; }
+    }
+    public void SetPosX(float v)
+    {
+        transform.localPosition = transform.localPosition.SetX(coord.originPos.x + v);
+    }
+    public void SetPosY(float v)
+    {
+        transform.localPosition = transform.localPosition.SetY(coord.originPos.y + v);
+    }
+    public void SetPosZ(float v)
+    {
+        transform.localPosition = transform.localPosition.SetZ(coord.originPos.z + v);
     }
 }

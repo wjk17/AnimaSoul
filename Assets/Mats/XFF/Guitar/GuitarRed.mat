@@ -237,7 +237,7 @@ Material:
     - _HighClrDir: {r: 3.18, g: 0.357, b: 1.09, a: 0}
     - _HighClrDirWeight: {r: 0, g: 1, b: 0, a: 0}
     - _HighColor: {r: 0.63234246, g: 0.76128745, b: 0.9245283, a: 1}
-    - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MatCapColor: {r: 0.4056604, g: 0.39609292, b: 0.39609292, a: 1}
     - _MatCapColor_Mul: {r: 0.81327677, g: 0.80397826, b: 0.8396226, a: 1}
     - _Outline_Color: {r: 0.12004271, g: 0.11605554, b: 0.1509434, a: 1}
     - _PointLightClr_Add: {r: 0, g: 0, b: 0, a: 0}

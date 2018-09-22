@@ -60,7 +60,8 @@ public class UITimeLine : MonoSingleton<UITimeLine>
         set { frameIdx_F = value; }
     }
     [SerializeField] float _frameIdx_F;
-    [MAD.ShowProperty(MAD.ShowPropertyAttribute.EValueType.Float)]
+    public System.Action<int> onFrameIdxChanged;    
+    //[MAD.ShowProperty(MAD.ShowPropertyAttribute.EValueType.Float)]
     public float frameIdx_F
     {
         get { return _frameIdx_F; }
@@ -69,13 +70,14 @@ public class UITimeLine : MonoSingleton<UITimeLine>
             _frameIdx_F = value;
             txtFrameIdx.text = "帧：" + frameIdx.ToString();
             txtFrameIdxN.text = "n：" + frameIdxN.ToString("0.00");
+            if (onFrameIdxChanged != null) onFrameIdxChanged(frameIdx);
         }
     }
     public float frameIdxN
     {
         get
         {
-            var end = UIClip.clip.frameRange.y;
+            var end = UIClip.I.clip.frameRange.y;
             return end == 0 ? 0 : MathTool.Round(frameIdx_F / end, indexNAccuracy);
         }
     }
@@ -93,16 +95,16 @@ public class UITimeLine : MonoSingleton<UITimeLine>
     }
     //    //public static CurveObj ObjCurve
     //    //{
-    //    //    get { return UIClip.clip[I.trans]; }
+    //    //    get { return UIClip.I.clip[I.trans]; }
     //    //}
     //    public static CurveObj ObjCurve
     //    {
-    //        get { return UIClip.clip[I.ast]; }
+    //        get { return UIClip.I.clip[I.ast]; }
     //    }
     //    CurveObj objCurve
     //    {
-    //        //get { return UIClip.clip[trans]; }
-    //        get { return UIClip.clip[ast]; }
+    //        //get { return UIClip.I.clip[trans]; }
+    //        get { return UIClip.I.clip[ast]; }
     //    }
     //    ASTransDOF ast
     //    {
@@ -174,7 +176,7 @@ public class UITimeLine : MonoSingleton<UITimeLine>
     //                p = new Vector2(areaP.x + dX, areaP.y);
     //                GLUI.DrawLine(p, p + Vector2.up * area.rect.height, Color.grey - ASColor.V * 0.2f);//画线
     //            }
-    //            if (UIClip.clip.HasKey(objCurve, num))
+    //            if (UIClip.I.clip.HasKey(objCurve, num))
     //            {
     //                p = new Vector2(areaP.x + dX, areaP.y);
     //                GLUI.commandOrder = 2;
@@ -286,9 +288,9 @@ public class UITimeLine : MonoSingleton<UITimeLine>
         //        else if (upTimer > continuousKeyTime * 1.5f || Events.KeyDown(KeyCode.UpArrow))
         //        {
         //            upTimer -= continuousKeyInterval * 1.5f;
-        //            if (UIClip.clip.curves.Count > 0)
+        //            if (UIClip.I.clip.curves.Count > 0)
         //            {
-        //                var keys = UIClip.clip.curves[0].timeCurve.keys;
+        //                var keys = UIClip.I.clip.curves[0].timeCurve.keys;
         //                for (int i = keys.Count - 1; i >= 0; i--)
         //                {
         //                    if (keys[i].frameIndex < frameIndex)
@@ -302,9 +304,9 @@ public class UITimeLine : MonoSingleton<UITimeLine>
         //        else if (downTimer > continuousKeyTime * 1.5f || Events.KeyDown(KeyCode.DownArrow))
         //        {
         //            downTimer -= continuousKeyInterval * 1.5f;
-        //            if (UIClip.clip.curves.Count > 0)
+        //            if (UIClip.I.clip.curves.Count > 0)
         //            {
-        //                var keys = UIClip.clip.curves[0].timeCurve.keys;
+        //                var keys = UIClip.I.clip.curves[0].timeCurve.keys;
         //                for (int i = 0; i < keys.Count; i++)
         //                {
         //                    if (keys[i].frameIndex > frameIndex)
@@ -331,27 +333,42 @@ public class UITimeLine : MonoSingleton<UITimeLine>
         //    public void Load()
         //    {
         //        path = rootPath + folder + fileName;
-        //        UIClip.clip = Serializer.XMLDeSerialize<Clip>(path);
+        //        UIClip.I.clip = Serializer.XMLDeSerialize<Clip>(path);
         //    }
         //    [ContextMenu("Save")]
         //    public void Save()
         //    {
         //        path = rootPath + folder + fileName;
-        //        Serializer.XMLSerialize(UIClip.clip, path);
+        //        Serializer.XMLSerialize(UIClip.I.clip, path);
+    }
+    public void RemoveKey()
+    {
+        RemoveKeyAt(frameIdx);
+    }
+    public void RemoveKeyAt(float time)
+    {
+        switch (insertType)
+        {
+            case InsertKeyType.EulPos: UIClip.I.clip.RemoveEulerPosAllCurve(time); break;
+            case InsertKeyType.Eul: break;
+            case InsertKeyType.Pos: break;
+            default: throw null;
+        }
+        ClipTool.GetFrameRange(UIClip.I.clip);
     }
     public void InsertKey()
     {
         switch (insertType)
         {
-            case InsertKeyType.EulPos: UIClip.clip.AddEulerPosAllCurve(frameIdx); break;
+            case InsertKeyType.EulPos: UIClip.I.clip.AddEulerPosAllCurve(frameIdx); break;
             case InsertKeyType.Eul: break;
             case InsertKeyType.Pos: break;
             default: throw null;
         }
-        ClipTool.GetFrameRange(UIClip.clip);
+        ClipTool.GetFrameRange(UIClip.I.clip);
     }
     //    private void RemoveKey()
     //    {
-    //        UIClip.clip.RemoveKey(objCurve, frameIndex);
+    //        UIClip.I.clip.RemoveKey(objCurve, frameIndex);
     //    }
 }

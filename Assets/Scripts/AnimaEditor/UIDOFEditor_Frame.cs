@@ -8,8 +8,8 @@ public partial class UIDOFEditor {
     {
         frame n = new frame();
         n.keys = new List<key>();
-        if (UIClip.clip == null || UIClip.clip.curves == null) return;
-        foreach (var curve in UIClip.clip.curves)
+        if (UIClip.I.clip == null || UIClip.I.clip.curves == null) return;
+        foreach (var curve in UIClip.I.clip.curves)
         {
             if (curve.ast == null) continue;
             var rot = curve.ast.euler;
@@ -25,7 +25,7 @@ public partial class UIDOFEditor {
     }
     CurveObj GetCurve(Bone bone)
     {
-        foreach (var curve in UIClip.clip.curves)
+        foreach (var curve in UIClip.I.clip.curves)
         {
             if (curve.ast.dof.bone == bone)
             {

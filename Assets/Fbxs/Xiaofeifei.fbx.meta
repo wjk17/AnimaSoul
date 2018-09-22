@@ -204,6 +204,10 @@ ModelImporter:
     100396: Bone 1
     100398: RigDress
     100400: RigGuitar
+    100402: forearm.L.002
+    100404: forearm.L.003
+    100406: forearm.R.002
+    100408: forearm.R.003
     400000: Bone
     400002: Bowknot
     400004: chest
@@ -405,6 +409,10 @@ ModelImporter:
     400396: Bone 1
     400398: RigDress
     400400: RigGuitar
+    400402: forearm.L.002
+    400404: forearm.L.003
+    400406: forearm.R.002
+    400408: forearm.R.003
     2100000: Choker
     2100002: GuitarBlack
     2100004: No Name

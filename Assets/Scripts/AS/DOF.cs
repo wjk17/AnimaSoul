@@ -25,6 +25,9 @@ public class DOF
             return _fixed;
         }
     }
+    /// <summary>
+    /// 注意这是一个静态类成员，需要克隆后才能动态修改，TODO
+    /// </summary>
     public static DOF NoLimit
     {
         get

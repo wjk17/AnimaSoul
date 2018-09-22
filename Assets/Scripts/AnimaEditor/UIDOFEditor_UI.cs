@@ -33,7 +33,7 @@ public partial class UIDOFEditor
         f.inputSwingZ.Init(OnSwingZInputChanged);
 
         // 骨骼
-        f.dropBone.Init((int)Bone.root, ASUI.Combine(BoneTool.names, "额外骨骼"), OnDropdownChanged);
+        f.dropBone.Init((int)Bone.root, BoneTool.names.Combine("额外骨骼"), OnDropdownChanged, true);
         f.dropBone.gameObject.AddComponent<DropDownLocateSelectedItem>();
         // 保存DOF
         f.buttonSaveDOF.Init(SaveAvatarSetting);

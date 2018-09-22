@@ -80,14 +80,14 @@ public class UIFrameMgr : MonoBehaviour
     }
     void DeleteAllCurve()
     {
-        foreach (var curve in UIClip.clip.curves)
+        foreach (var curve in UIClip.I.clip.curves)
         {
             curve.RemoveAtTime(UITimeLine.I.frameIdx);
         }
     }
     bool MissAst(TransDOF t) // ast是否存在于当前clip
     {
-        foreach (var curve in UIClip.clip.curves)
+        foreach (var curve in UIClip.I.clip.curves)
         {
             if (curve.ast == t) return false;
         }
@@ -99,7 +99,7 @@ public class UIFrameMgr : MonoBehaviour
         {
             if (MissAst(ast)) // 插入新增的（化身ast表里有，clip里却没有的）曲线
             {
-                UIClip.clip.curves.Add(new CurveObj(ast));
+                UIClip.I.clip.curves.Add(new CurveObj(ast));
             }
         }
     }

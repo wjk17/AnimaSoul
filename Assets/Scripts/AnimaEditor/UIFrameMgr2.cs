@@ -18,27 +18,27 @@ public class UIFrameMgr2 : MonoSingleton<UIFrameMgr2>
     void GetTPose()
     {
         tPoseList = new List<Vector3>();
-        for (int i = 0; i < UIClip.clip.curves.Count; i++)
+        for (int i = 0; i < UIClip.I.clip.curves.Count; i++)
         {
-            var pos = UIClip.clip.curves[i].Pos(0);
+            var pos = UIClip.I.clip.curves[i].Pos(0);
             tPoseList.Add(pos);
         }
     }
     void SetAllCurveToLinear()
     {
-        for (int i = 0; i < UIClip.clip.curves.Count; i++)
+        for (int i = 0; i < UIClip.I.clip.curves.Count; i++)
         {
             int c = 0;
-            foreach (var curve in UIClip.clip.curves[i].poss)
+            foreach (var curve in UIClip.I.clip.curves[i].poss)
             {
                 foreach (var key in curve.keys)
                 {
                     var tpos = 0f;
                     switch (c)
                     {
-                        case 0: tpos = UIClip.clip.curves[i].ast.coord.originPos.x; break;
-                        case 1: tpos = UIClip.clip.curves[i].ast.coord.originPos.y; break;
-                        case 2: tpos = UIClip.clip.curves[i].ast.coord.originPos.z; break;
+                        case 0: tpos = UIClip.I.clip.curves[i].ast.coord.originPos.x; break;
+                        case 1: tpos = UIClip.I.clip.curves[i].ast.coord.originPos.y; break;
+                        case 2: tpos = UIClip.I.clip.curves[i].ast.coord.originPos.z; break;
                         default: break;
                     }
                     key.value -= tpos;

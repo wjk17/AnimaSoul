@@ -2,38 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIOCList : MonoBehaviour
+public class UIOCList : MonoSingleton<UIOCList>
 {
-    RectTransform area;
-    public RectTransform a;
-    public RectTransform b;
+    List<Bone> bones;
     void Start()
     {
-        area = transform.Search("Area") as RectTransform;
+        //this.AddInputCB();
+        //bones = new List<Bone>(){
+        //    Bone.hand_l,Bone.forearm_l,
+        //    Bone.hand_r,Bone.forearm_r};
+        //for (int i = 0; i < (int)IKTargetSingle.Count - 1; i++)
+        //{
+        //    var curve = UIClip.I.clip.GetCurve((Bone)i);
+        //    if (curve != null) bones.Add(curve.ast);
+        //}
     }
-    public Vector2 p, p2;
-    public float width = 20f;
     void Update()
     {
-        ASUI.owner = area;
-        GLUI.BeginOrtho();
-        p = MathTool.ReverseY(area.anchoredPosition);
-        int i = 0;
-        for (; i < UIClip.clip.curves.Count; i++)
-        {
-            var c = UIClip.clip.curves[i];
-            //var n = c.trans.name.ToString();
-            var n = c.ast.transform.name.ToString();
-            IMUI.DrawText(n, p);
-            p += Vector2.up * IMUI.CalSize(n).y;
-            if (p.y > -area.anchoredPosition.y + area.rect.height) break;
-        }
-        p = MathTool.ReverseY(area.anchoredPosition);
-        p.x += area.rect.width * 0.5f;
-        var showN = (float)i / UIClip.clip.curves.Count;
-        p2 = p + Vector2.up * showN * area.rect.height;
-        GLUI.DrawLine(p, p2, width, Color.black);
-        GLUI.DrawLine(new Vector2(), new Vector2(1600, 900), width, Color.black);
 
     }
 }

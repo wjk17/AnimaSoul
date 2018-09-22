@@ -9,7 +9,6 @@ public class UICamera : MonoSingleton<UICamera>
     public Toggle toggleRotate;
 
     public RectTransform rectView;
-    // Use this for initialization
     void Start()
     {
         this.AddInputCB();
@@ -17,7 +16,8 @@ public class UICamera : MonoSingleton<UICamera>
     }
     private void Update()
     {
-        if (ASUI.MouseOver(rectView) && Events.Key(KeyCode.Keypad1)) ResetCam();
+        //if (ASUI.MouseOver(rectView) && Events.Key(KeyCode.Keypad1)) ResetCam();
+        if (Events.Key(KeyCode.Keypad1)) ResetCam();
     }
     void ResetCam()
     {

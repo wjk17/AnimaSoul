@@ -64,7 +64,7 @@ public partial class UIDOFEditor : MonoSingleton<UIDOFEditor>
     {
         this.AddInputCB(null, CB_Order);
 
-        foreach (var curve in UIClip.clip.curves)
+        foreach (var curve in UIClip.I.clip.curves)
         {
             curve.ast.coord.originPos = curve.ast.transform.localPosition;
         }
@@ -78,8 +78,20 @@ public partial class UIDOFEditor : MonoSingleton<UIDOFEditor>
 
         InitUI();
 
+        UITimeLine.I.onFrameIdxChanged = OnFrameIdxChanged;
+
         UpdateDOF();
         exBone = avatar[Bone.other].transform;
+    }
+    void OnFrameIdxChanged(int frameIdx)
+    {
+        foreach (var oc in UIClip.I.clip.curves)
+        {
+            if (!oc.Empty())
+                oc.Update(UITimeLine.I.frameIdx);
+        }
+        UpdateDOF();
+        //curve
     }
     //void GetInput()
     //{
@@ -101,7 +113,7 @@ public partial class UIDOFEditor : MonoSingleton<UIDOFEditor>
         f.labelFileName.text = f.inputFileName.text;
         UIClipList.I.GetClipNamesInPath();
         Debug.Log("新建 " + f.labelFileName.text);
-    }
+    }    
     void LoadClip()
     {
         UIClip.I.Load(f.inputFileName.text);

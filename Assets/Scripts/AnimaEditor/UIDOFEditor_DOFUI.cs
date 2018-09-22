@@ -194,11 +194,14 @@ public partial class UIDOFEditor
     }
     void UpdateDOF()
     {
-        if (dof == null) return;
+        if (ast == null || dof == null) return;
         f.ignoreChanged = true;
         f.sliderTwist.value = ast.euler.y;
         f.sliderSwingX.value = ast.euler.x;
         f.sliderSwingZ.value = ast.euler.z;
+        f.inputTwist.text = ast.euler.y.ToString();
+        f.inputSwingX.text = ast.euler.x.ToString();
+        f.inputSwingZ.text = ast.euler.z.ToString();
         f.ignoreChanged = false;
         f.inputTwistMin.text = ast.dof.twistMin.ToString();
         f.inputTwistMax.text = ast.dof.twistMax.ToString();

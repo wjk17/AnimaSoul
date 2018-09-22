@@ -17,18 +17,39 @@ public class UITranslator : MonoBehaviour
     public InputField textX;
     public InputField textY;
     public InputField textZ;
+    public Vector2 sliderRange;
     public Toggle control;
     public Toggle update;
+    public Slider sliderSens;
+    public InputField textSens;
     public float range;
+    public Vector3 sensRange = new Vector3(0, 1, 2);
+    public float sens
+    {
+        set
+        {
+            ignoreChanged = true;
+            sliderX.maxValue =
+                sliderY.maxValue =
+                sliderZ.maxValue = sliderRange.y * sliderSens.value;
+            sliderX.minValue =
+                sliderY.minValue =
+                sliderZ.minValue = sliderRange.x * sliderSens.value;
+            ignoreChanged = false;
+        }
+    }
+    bool ignoreChanged;
+    List<float> valuePrev;
+    public Button btnSetOrigin;
     private void Start()
     {
         this.AddInputCB();
-        sliderX.Init(OnSliderChangeX);
-        sliderY.Init(OnSliderChangeY);
-        sliderZ.Init(OnSliderChangeZ);
-        textX.Init(OnTextChangeX);
-        textY.Init(OnTextChangeY);
-        textZ.Init(OnTextChangeZ);
+        sliderX.Init(OnSliderChangedX);
+        sliderY.Init(OnSliderChangedY);
+        sliderZ.Init(OnSliderChangedZ);
+        textX.Init(OnTextChangedX);
+        textY.Init(OnTextChangedY);
+        textZ.Init(OnTextChangedZ);
         sliderX.minValue = -range;
         sliderX.maxValue = range;
         sliderY.minValue = -range;
@@ -36,14 +57,50 @@ public class UITranslator : MonoBehaviour
         sliderZ.minValue = -range;
         sliderZ.maxValue = range;
         control.Init(OnToggleControl, true);
-        UIDOFEditor.I.onDropdownChanged = () =>
-        { if (control.isOn) GizmosAxis.I.controlObj = UIDOFEditor.I.ast.transform; };
+        btnSetOrigin.Init(OnSetOrigin);
+        UIDOFEditor.I.onDropdownChanged += () =>
+        {
+            if (control.isOn)
+                GizmosAxis.I.controlObj = UIDOFEditor.I.ast.transform;
+            UpdateValueDisplay();
+        };
+        sliderSens.Init(sensRange, OnSensChanged);
+        textSens.Init(OnSensChanged);
     }
+    private void OnSetOrigin()
+    {
+        var ast = UIDOFEditor.I.ast;
+        if (ast != null)
+        {
+            ast.coord.originPos = ast.transform.localPosition;
+        }
+    }
+
+    void OnSensChanged(string s)
+    {
+        if (ignoreChanged) return;
+        float result;
+        bool success = float.TryParse(s, out result);
+        if (success)
+        {
+            sliderSens.value = result;
+        }
+    }
+    private void OnSensChanged(float arg0)
+    {
+        if (ignoreChanged) return;
+        sens = arg0;
+
+        ignoreChanged = true;
+        textSens.text = arg0.ToString();
+        ignoreChanged = false;
+    }
+
     public void OnClick()
     {
-        foreach (var curve in UIClip.clip.curves)
+        foreach (var curve in UIClip.I.clip.curves)
         {
-            UIClip.clip.AddEulerPosAllCurve(UITimeLine.I.frameIdx);
+            UIClip.I.clip.AddEulerPosAllCurve(UITimeLine.I.frameIdx);
         }
     }
     void OnToggleControl(bool on)
@@ -59,70 +116,74 @@ public class UITranslator : MonoBehaviour
             GizmosAxis.I.controlObj = UIDOFEditor.I.target;
         }
     }
-    bool ignoreChange;
+
     internal void UpdateValueDisplay()
     {
         if (UIDOFEditor.I.ast != null)
         {
-            ignoreChange = true;
-            var t = UIDOFEditor.I.ast.transform;
-            sliderX.value = t.localPosition.x;
-            sliderY.value = t.localPosition.y;
-            sliderZ.value = t.localPosition.z;
-            textX.text = t.localPosition.x.ToString();
-            textY.text = t.localPosition.y.ToString();
-            textZ.text = t.localPosition.z.ToString();
-            ignoreChange = false;
+            ignoreChanged = true;
+            var ast = UIDOFEditor.I.ast;
+            sliderX.value = ast.pos.x;
+            sliderY.value = ast.pos.y;
+            sliderZ.value = ast.pos.z;
+            textX.text = ast.pos.x.ToString();
+            textY.text = ast.pos.y.ToString();
+            textZ.text = ast.pos.z.ToString();
+            ignoreChanged = false;
         }
     }
-    void OnSliderChangeX(float value)
+    void OnSliderChangedX(float value)
     {
-        OnSliderChange(1, value);
+        OnSliderChanged(1, value);
     }
-    void OnSliderChangeY(float value)
+    void OnSliderChangedY(float value)
     {
-        OnSliderChange(2, value);
+        OnSliderChanged(2, value);
     }
-    void OnSliderChangeZ(float value)
+    void OnSliderChangedZ(float value)
     {
-        OnSliderChange(3, value);
+        OnSliderChanged(3, value);
     }
-    void OnSliderChange(int index, float value)
+    void OnSliderChanged(int index, float value)
     {
-        if (!ignoreChange && update.isOn && UIDOFEditor.I.ast != null)
+        //var prev = valuePrev[index - 1];
+        //var os = value - prev;
+        //var v = prev + os * sens.y;
+        //valuePrev[index - 1] = v;
+
+        var v = value;
+        if (!ignoreChanged && update.isOn && UIDOFEditor.I.ast != null)
         {
-            var t = UIDOFEditor.I.ast.transform;
-            if (index == 1) t.localPosition = t.localPosition.SetX(value);
-            else if (index == 2) t.localPosition = t.localPosition.SetY(value);
-            else if (index == 3) t.localPosition = t.localPosition.SetZ(value);
+            if (index == 1) UIDOFEditor.I.ast.SetPosX(v);
+            else if (index == 2) UIDOFEditor.I.ast.SetPosY(v);
+            else if (index == 3) UIDOFEditor.I.ast.SetPosZ(v);
             else Debug.LogError("");
             UpdateValueDisplay();
         }
     }
-    void OnTextChangeX(string s)
+    void OnTextChangedX(string s)
     {
-        OnTextChange(1, s);
+        OnTextChanged(1, s);
     }
-    void OnTextChangeY(string s)
+    void OnTextChangedY(string s)
     {
-        OnTextChange(2, s);
+        OnTextChanged(2, s);
     }
-    void OnTextChangeZ(string s)
+    void OnTextChangedZ(string s)
     {
-        OnTextChange(3, s);
+        OnTextChanged(3, s);
     }
-    void OnTextChange(int index, string s)
+    void OnTextChanged(int index, string s)
     {
-        if (!ignoreChange && update.isOn && UIDOFEditor.I.ast != null)
+        if (!ignoreChanged && update.isOn && UIDOFEditor.I.ast != null)
         {
-            var t = UIDOFEditor.I.ast.transform;
             float result;
             bool success = float.TryParse(s, out result);
             if (success)
             {
-                if (index == 1) t.localPosition = t.localPosition.SetX(result);
-                else if (index == 2) t.localPosition = t.localPosition.SetY(result);
-                else if (index == 3) t.localPosition = t.localPosition.SetZ(result);
+                if (index == 1) sliderX.value = result;
+                else if (index == 2) sliderY.value = result;
+                else if (index == 3) sliderZ.value = result;
                 else Debug.LogError("");
             }
         }

@@ -33,7 +33,7 @@ public class UIPlayer : MonoSingleton<UIPlayer>
         if (I.toggleMirrorPv.isOn || force)//镜像翻转
         {
             var handledList = new List<CurveObj>();
-            foreach (var curve in UIClip.clip.curves)
+            foreach (var curve in UIClip.I.clip.curves)
             {
                 if (handledList.Contains(curve)) continue;
                 // 互换对称骨骼的euler值，因为使用了“向内”、“向外”描述，因此不需要翻转值。
@@ -63,7 +63,7 @@ public class UIPlayer : MonoSingleton<UIPlayer>
     void ApplyTo60Fps()
     {
         var ratio = 60f / UITimeLine.Fps;
-        foreach (var curveObj in UIClip.clip.curves)
+        foreach (var curveObj in UIClip.I.clip.curves)
         {
             foreach (var curve in curveObj.curves)
             {
@@ -74,7 +74,7 @@ public class UIPlayer : MonoSingleton<UIPlayer>
 
             }
         }
-        ClipTool.GetFrameRange(UIClip.clip);
+        ClipTool.GetFrameRange(UIClip.I.clip);
         UITimeLine.I.frameIdx_F *= ratio;
         inputfieldFps.text = "60";
     }
@@ -105,11 +105,11 @@ public class UIPlayer : MonoSingleton<UIPlayer>
             float end;
             if (!toggleFlip.isOn)
             {
-                end = UIClip.clip.frameRange.y;
+                end = UIClip.I.clip.frameRange.y;
             }
             else
             {
-                end = UIClip.clip.frameRange.y * 2.5f;
+                end = UIClip.I.clip.frameRange.y * 2.5f;
             }
             if (toggleLoop.isOn && UITimeLine.I.frameIdx_F > end)
             {
@@ -119,10 +119,10 @@ public class UIPlayer : MonoSingleton<UIPlayer>
                 }
                 else
                 {
-                    UITimeLine.I.frameIdx = UIClip.clip.frameRange.x;
+                    UITimeLine.I.frameIdx = UIClip.I.clip.frameRange.x;
                 }
             }
-            else if (togglePingPong.isOn && UITimeLine.I.frameIdx_F < UIClip.clip.frameRange.x)
+            else if (togglePingPong.isOn && UITimeLine.I.frameIdx_F < UIClip.I.clip.frameRange.x)
             {
                 speed = Mathf.Abs(speed);
             }

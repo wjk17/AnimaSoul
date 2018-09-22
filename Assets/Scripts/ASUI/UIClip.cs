@@ -1,19 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+#if UNITY_EDITOR
+using UnityEditor;
+[CustomEditor(typeof(UIClip))]
+public class UIClipEditor : E_ShowButtons<UIClip> { }
+#endif
 public class UIClip : MonoSingleton<UIClip>
 {
-    public static Clip clip
+    public Clip clip
     {
         get
         {
-            if (_clip == null) I.Load();
+            if (_clip == null || _clip.curves.Count == 0) I.Load();
             return _clip;
         }
         set { _clip = value; }
     }
-    private static Clip _clip;
+    [SerializeField]
+    private Clip _clip;
     [Header("ReadOnly")]
     public string path;
     public string folder = "Clips/";
@@ -144,7 +149,12 @@ public class UIClip : MonoSingleton<UIClip>
         }
         UIPlayer.I.Mirror();
     }
-
+    [ShowButton]
+    void Load_()
+    {
+        Load(name);
+    }
+    public System.Action onLoadClip;
     public bool Load(string clipName)//不存在文件则返回false
     {
         path = UIClipList.I.clipPath + clipName + ".clip";
@@ -162,7 +172,7 @@ public class UIClip : MonoSingleton<UIClip>
 
             PlayerPrefs.SetString("LastOpenClipName", clipName);
             PlayerPrefs.Save();
-
+            if (onLoadClip != null) onLoadClip();
             return true;
         }
         else
@@ -174,8 +184,6 @@ public class UIClip : MonoSingleton<UIClip>
 
     public bool Load()
     {
-        //var dataPath = Application.dataPath;
-        //var rootPath = dataPath + "/../";
         path = UIClipList.I.clipPath + clipName + ".clip";
         if (System.IO.File.Exists(path))
         {
@@ -207,6 +215,11 @@ public class UIClip : MonoSingleton<UIClip>
             return false;
         }
     }
+    [ShowButton]
+    void NewClip()
+    {
+        New(name);
+    }
     public void New(string clipName)
     {
         var c = new Clip(clipName);
@@ -220,8 +233,7 @@ public class UIClip : MonoSingleton<UIClip>
         PlayerPrefs.Save();
 
         path = UIClipList.I.clipPath + clipName + ".clip";
-        Serializer.XMLSerialize(c, path);
-        clip = c;
+        clip = Serializer.XMLSerialize(c, path);
     }
     public void Save(string clipName)
     {

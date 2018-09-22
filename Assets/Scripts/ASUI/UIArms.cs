@@ -54,7 +54,7 @@ public class UIArms : MonoBehaviour
     }
     void UpdateBone(Transform t)
     {
-        var curve = UIClip.clip.GetCurve(ava[t]);
+        var curve = UIClip.I.clip.GetCurve(ava[t]);
         var tran2e =  curve.Tran2E(UITimeLine.I.frameIdx);
         t.localPosition = tran2e.pos;
         var ast = ava[t];

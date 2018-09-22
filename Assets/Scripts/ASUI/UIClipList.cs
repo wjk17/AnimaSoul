@@ -5,7 +5,11 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-
+#if UNITY_EDITOR
+using UnityEditor;
+[CustomEditor(typeof(UIClipList))]
+public class UIClipListEditor : E_ShowButtons<UIClipList> { }
+#endif
 public class UIClipList : MonoSingleton<UIClipList>
 {
     public Button buttonRefresh;
@@ -23,8 +27,7 @@ public class UIClipList : MonoSingleton<UIClipList>
     public GameObject itemPrefab;
     public string currentClipName;
     public List<GameObject> buttons;
-    public float ySpace = 10;
-
+    public float ySpace = 10;    
     void Start()
     {
         this.AddInputCB(null, 0);
@@ -36,6 +39,7 @@ public class UIClipList : MonoSingleton<UIClipList>
         UIDOFEditor.I.f.inputFileName.text = currentClipName;// names[index];
         UIDOFEditor.I.f.buttonLoadClip.onClick.Invoke();
     }
+    [ShowButton]
     public void GetClipNamesInPath()
     {
         names = new List<string>();

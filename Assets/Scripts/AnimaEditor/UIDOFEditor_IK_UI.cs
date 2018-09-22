@@ -7,25 +7,25 @@ public partial class UIDOFEditor
     private void OnLockTargetChange(int index)
     {
         joints = new List<Bone>();
-        var lockTarget = (ASIKTarget)index;
+        var lockTarget = (IKTarget)index;
         switch (lockTarget)
         {
-            case ASIKTarget.RightHand:
+            case IKTarget.RightHand:
                 joints.Add(Bone.hand_r);
                 joints.Add(Bone.forearm_r);
                 joints.Add(Bone.upperarm_r);
                 break;
-            case ASIKTarget.LeftHand:
+            case IKTarget.LeftHand:
                 joints.Add(Bone.hand_l);
                 joints.Add(Bone.forearm_l);
                 joints.Add(Bone.upperarm_l);
                 break;
-            case ASIKTarget.RightLeg:
+            case IKTarget.RightLeg:
                 joints.Add(Bone.foot_r);
                 joints.Add(Bone.shin_r);
                 joints.Add(Bone.thigh_r);
                 break;
-            case ASIKTarget.LeftLeg:
+            case IKTarget.LeftLeg:
                 joints.Add(Bone.foot_l);
                 joints.Add(Bone.shin_l);
                 joints.Add(Bone.thigh_l);
@@ -38,17 +38,17 @@ public partial class UIDOFEditor
     {
         joints = new List<Bone>();
         joints2 = new List<Bone>();
-        var lockTargetMirror = (ASIKTargetMirror)index;
+        var lockTargetMirror = (IKTargetMirror)index;
         switch (lockTargetMirror)
         {
-            case ASIKTargetMirror.Hand:
+            case IKTargetMirror.Hand:
                 joints.Add(Bone.hand_l);
                 joints.Add(Bone.forearm_l);
                 joints.Add(Bone.upperarm_l);
                 lockPos1 = avatar[Bone.hand_l].transform.position;
                 lockPos2 = avatar[Bone.hand_r].transform.position;
                 break;
-            case ASIKTargetMirror.Leg:
+            case IKTargetMirror.Leg:
                 joints.Add(Bone.foot_l);
                 joints.Add(Bone.shin_l);
                 joints.Add(Bone.thigh_l);
@@ -83,25 +83,25 @@ public partial class UIDOFEditor
     void OnIKTargetChanged(int index)
     {
         joints = new List<Bone>();
-        var ikTarget = (ASIKTarget)index;
+        var ikTarget = (IKTarget)index;
         switch (ikTarget)
         {
-            case ASIKTarget.RightHand:
+            case IKTarget.RightHand:
                 joints.Add(Bone.hand_r);
                 joints.Add(Bone.forearm_r);
                 joints.Add(Bone.upperarm_r);
                 break;
-            case ASIKTarget.LeftHand:
+            case IKTarget.LeftHand:
                 joints.Add(Bone.hand_l);
                 joints.Add(Bone.forearm_l);
                 joints.Add(Bone.upperarm_l);
                 break;
-            case ASIKTarget.RightLeg:
+            case IKTarget.RightLeg:
                 joints.Add(Bone.foot_r);
                 joints.Add(Bone.shin_r);
                 joints.Add(Bone.thigh_r);
                 break;
-            case ASIKTarget.LeftLeg:
+            case IKTarget.LeftLeg:
                 joints.Add(Bone.foot_l);
                 joints.Add(Bone.shin_l);
                 joints.Add(Bone.thigh_l);
@@ -114,38 +114,38 @@ public partial class UIDOFEditor
     void IKSingleTargetChange(int index)
     {
         joints = new List<Bone>();
-        var ikSingleTarget = (ASIKTargetSingle)index;
+        var ikSingleTarget = (IKTargetSingle)index;
         switch (ikSingleTarget)
         {
-            case ASIKTargetSingle.RightElbow:
+            case IKTargetSingle.RightElbow:
                 joints.Add(Bone.forearm_r);
                 joints.Add(Bone.upperarm_r);
                 break;
-            case ASIKTargetSingle.RightHand:
+            case IKTargetSingle.RightHand:
                 joints.Add(Bone.hand_r);
                 joints.Add(Bone.forearm_r);
                 break;
-            case ASIKTargetSingle.LeftElbow:
+            case IKTargetSingle.LeftElbow:
                 joints.Add(Bone.forearm_l);
                 joints.Add(Bone.upperarm_l);
                 break;
-            case ASIKTargetSingle.LeftHand:
+            case IKTargetSingle.LeftHand:
                 joints.Add(Bone.hand_l);
                 joints.Add(Bone.forearm_l);
                 break;
-            case ASIKTargetSingle.RightKnee:
+            case IKTargetSingle.RightKnee:
                 joints.Add(Bone.shin_r);
                 joints.Add(Bone.thigh_r);
                 break;
-            case ASIKTargetSingle.RightLeg:
+            case IKTargetSingle.RightLeg:
                 joints.Add(Bone.foot_r);
                 joints.Add(Bone.shin_r);
                 break;
-            case ASIKTargetSingle.LeftKnee:
+            case IKTargetSingle.LeftKnee:
                 joints.Add(Bone.shin_l);
                 joints.Add(Bone.thigh_l);
                 break;
-            case ASIKTargetSingle.LeftLeg:
+            case IKTargetSingle.LeftLeg:
                 joints.Add(Bone.foot_l);
                 joints.Add(Bone.shin_l);
                 break;
