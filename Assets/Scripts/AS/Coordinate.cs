@@ -10,11 +10,12 @@ public class Coordinate
     public Vector3 up;
     public Vector3 forward;/// 本地坐标轴
     public Vector3 right; /// 本地坐标轴
+    public EulerOrder order = EulerOrder.ZXY;
 
     //初始姿势euler（0,0,0），不保存，程序开始时获取
     [XmlIgnore] public Quaternion origin;
     [XmlIgnore] public Vector3 originPos;
-    public Coordinate() { }
+    public Coordinate() {}
     public Coordinate World(Transform t, Vector3 euler)
     {
         var n = new Coordinate(this);
@@ -45,6 +46,7 @@ public class Coordinate
         right = c.right;
         origin = c.origin;
         originPos = c.originPos;
+        order = c.order;
     }
     public Coordinate(Transform t)
     {
@@ -62,16 +64,44 @@ public class Coordinate
         Quaternion result = origin;
         Quaternion rot;
 
-        rot = Quaternion.AngleAxis(euler.z, n.forward);
-        result = rot * result;
-        n *= rot;
+        switch (order)
+        {
+            case EulerOrder.XYZ:
+                Debug.LogError("undefined order");
+                break;
+            case EulerOrder.XZY:
+                Debug.LogError("undefined order");
+                break;
+            case EulerOrder.YXZ:
+                // 动态坐标轴 y x z
+                rot = Quaternion.AngleAxis(euler.y, n.up);
+                result = rot * result; n *= rot;
+                rot = Quaternion.AngleAxis(euler.x, n.right);
+                result = rot * result; n *= rot;
+                rot = Quaternion.AngleAxis(euler.z, n.forward);
+                result = rot * result;
+                break;
+            case EulerOrder.YZX:
+                Debug.LogError("undefined order");
+                break;
+            case EulerOrder.ZXY:
+                // 动态坐标轴 z x y
+                rot = Quaternion.AngleAxis(euler.z, n.forward);
+                result = rot * result; n *= rot;
 
-        rot = Quaternion.AngleAxis(euler.x, n.right);
-        result = rot * result;
-        n *= rot;
+                rot = Quaternion.AngleAxis(euler.x, n.right);
+                result = rot * result; n *= rot;
 
-        rot = Quaternion.AngleAxis(euler.y, n.up);
-        result = rot * result;
+                rot = Quaternion.AngleAxis(euler.y, n.up);
+                result = rot * result;
+                break;
+            case EulerOrder.ZYX:
+                Debug.LogError("undefined order");
+                break;
+            default:
+                Debug.LogError("undefined order");
+                break;
+        }
 
         if (MathTool.IsNaN(result))
         {

@@ -134,7 +134,7 @@ Material:
     - _Add_Antipodean_RimLight: 0
     - _Ap_RimLight_FeatherOff: 0
     - _Ap_RimLight_Power: 0.1
-    - _BaseColor_Step: 0.689
+    - _BaseColor_Step: 0.9
     - _BaseShade_Feather: 0.0001
     - _BumpScale: 1
     - _CullMode: 0
@@ -204,8 +204,8 @@ Material:
     - feather1: 0.038
     - feather2: 0.144
     m_Colors:
-    - _1st_ShadeColor: {r: 0.7326, g: 0.7578, b: 0.825, a: 1}
-    - _2nd_ShadeColor: {r: 0.73333335, g: 0.7568628, b: 0.8235295, a: 1}
+    - _1st_ShadeColor: {r: 0.5741812, g: 0.5942061, b: 0.6509434, a: 1}
+    - _2nd_ShadeColor: {r: 0.14965291, g: 0.15737265, b: 0.1792453, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseCustomDir: {r: 0.03849392, g: 0.8404509, b: -0.5405188, a: 0}

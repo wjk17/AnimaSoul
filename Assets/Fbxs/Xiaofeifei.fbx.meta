@@ -208,6 +208,81 @@ ModelImporter:
     100404: forearm.L.003
     100406: forearm.R.002
     100408: forearm.R.003
+    100410: Pin
+    100412: ChordEnd1
+    100414: ChordEnd2
+    100416: ChordEnd3
+    100418: ChordEnd4
+    100420: ChordEnd5
+    100422: ChordEnd6
+    100424: ChordStart1
+    100426: ChordStart2
+    100428: ChordStart3
+    100430: ChordStart4
+    100432: ChordStart5
+    100434: ChordStart6
+    100436: Bone_end
+    100438: Dress.003_end
+    100440: Dress.004_end
+    100442: Dress.007_end
+    100444: Dress.008_end
+    100446: Dress.l.002_end
+    100448: Dress.l.005_end
+    100450: Dress.l.008_end
+    100452: Dress.l.009_end
+    100454: Dress.l.010_end
+    100456: Dress.l.011_end
+    100458: Dress.l.014_end
+    100460: Dress.l.017_end
+    100462: Dress.l.020_end
+    100464: Dress.l.021_end
+    100466: Dress.l.022_end
+    100468: Dress.l.023_end
+    100470: Dress.l.026_end
+    100472: Dress.l.027_end
+    100474: Dress.r.002_end
+    100476: Dress.r.005_end
+    100478: Dress.r.008_end
+    100480: Dress.r.009_end
+    100482: Dress.r.010_end
+    100484: Dress.r.011_end
+    100486: Dress.r.014_end
+    100488: Dress.r.017_end
+    100490: Dress.r.020_end
+    100492: Dress.r.021_end
+    100494: Dress.r.022_end
+    100496: Dress.r.023_end
+    100498: Dress.r.026_end
+    100500: Dress.r.027_end
+    100502: ear.l.002_end
+    100504: ear.r.002_end
+    100506: f_index.03.L_end
+    100508: f_index.03.R_end
+    100510: f_middle.03.L_end
+    100512: f_middle.03.R_end
+    100514: f_pinky.03.L_end
+    100516: f_pinky.03.R_end
+    100518: f_ring.03.L_end
+    100520: f_ring.03.R_end
+    100522: forearm.L.002_end
+    100524: forearm.L.003_end
+    100526: forearm.R.002_end
+    100528: forearm.R.003_end
+    100530: heel.02.L_end
+    100532: heel.02.R_end
+    100534: thumb.03.L_end
+    100536: thumb.03.R_end
+    100538: toe.L_end
+    100540: toe.R_end
+    100542: UpperBottom.002_end
+    100544: UpperBottom.l.002_end
+    100546: UpperBottom.l.005_end
+    100548: UpperBottom.l.008_end
+    100550: UpperBottom.l.011_end
+    100552: UpperBottom.r.002_end
+    100554: UpperBottom.r.005_end
+    100556: UpperBottom.r.008_end
+    100558: UpperBottom.r.011_end
     400000: Bone
     400002: Bowknot
     400004: chest
@@ -413,6 +488,81 @@ ModelImporter:
     400404: forearm.L.003
     400406: forearm.R.002
     400408: forearm.R.003
+    400410: Pin
+    400412: ChordEnd1
+    400414: ChordEnd2
+    400416: ChordEnd3
+    400418: ChordEnd4
+    400420: ChordEnd5
+    400422: ChordEnd6
+    400424: ChordStart1
+    400426: ChordStart2
+    400428: ChordStart3
+    400430: ChordStart4
+    400432: ChordStart5
+    400434: ChordStart6
+    400436: Bone_end
+    400438: Dress.003_end
+    400440: Dress.004_end
+    400442: Dress.007_end
+    400444: Dress.008_end
+    400446: Dress.l.002_end
+    400448: Dress.l.005_end
+    400450: Dress.l.008_end
+    400452: Dress.l.009_end
+    400454: Dress.l.010_end
+    400456: Dress.l.011_end
+    400458: Dress.l.014_end
+    400460: Dress.l.017_end
+    400462: Dress.l.020_end
+    400464: Dress.l.021_end
+    400466: Dress.l.022_end
+    400468: Dress.l.023_end
+    400470: Dress.l.026_end
+    400472: Dress.l.027_end
+    400474: Dress.r.002_end
+    400476: Dress.r.005_end
+    400478: Dress.r.008_end
+    400480: Dress.r.009_end
+    400482: Dress.r.010_end
+    400484: Dress.r.011_end
+    400486: Dress.r.014_end
+    400488: Dress.r.017_end
+    400490: Dress.r.020_end
+    400492: Dress.r.021_end
+    400494: Dress.r.022_end
+    400496: Dress.r.023_end
+    400498: Dress.r.026_end
+    400500: Dress.r.027_end
+    400502: ear.l.002_end
+    400504: ear.r.002_end
+    400506: f_index.03.L_end
+    400508: f_index.03.R_end
+    400510: f_middle.03.L_end
+    400512: f_middle.03.R_end
+    400514: f_pinky.03.L_end
+    400516: f_pinky.03.R_end
+    400518: f_ring.03.L_end
+    400520: f_ring.03.R_end
+    400522: forearm.L.002_end
+    400524: forearm.L.003_end
+    400526: forearm.R.002_end
+    400528: forearm.R.003_end
+    400530: heel.02.L_end
+    400532: heel.02.R_end
+    400534: thumb.03.L_end
+    400536: thumb.03.R_end
+    400538: toe.L_end
+    400540: toe.R_end
+    400542: UpperBottom.002_end
+    400544: UpperBottom.l.002_end
+    400546: UpperBottom.l.005_end
+    400548: UpperBottom.l.008_end
+    400550: UpperBottom.l.011_end
+    400552: UpperBottom.r.002_end
+    400554: UpperBottom.r.005_end
+    400556: UpperBottom.r.008_end
+    400558: UpperBottom.r.011_end
     2100000: Choker
     2100002: GuitarBlack
     2100004: No Name
@@ -453,6 +603,7 @@ ModelImporter:
     2100074: Invisible
     2100076: SkinUpper
     2100078: HairBottom
+    2100080: SkinFace
     2300000: Choker
     2300002: Chords
     2300004: GuitarBody
@@ -472,6 +623,19 @@ ModelImporter:
     2300032: ScrewMiddle
     2300034: ScrewTail
     2300036: SunLightTarget
+    2300038: Pin
+    2300040: ChordEnd1
+    2300042: ChordEnd2
+    2300044: ChordEnd3
+    2300046: ChordEnd4
+    2300048: ChordEnd5
+    2300050: ChordEnd6
+    2300052: ChordStart1
+    2300054: ChordStart2
+    2300056: ChordStart3
+    2300058: ChordStart4
+    2300060: ChordStart5
+    2300062: ChordStart6
     3300000: Choker
     3300002: Chords
     3300004: GuitarBody
@@ -491,6 +655,19 @@ ModelImporter:
     3300032: ScrewMiddle
     3300034: ScrewTail
     3300036: SunLightTarget
+    3300038: Pin
+    3300040: ChordEnd1
+    3300042: ChordEnd2
+    3300044: ChordEnd3
+    3300046: ChordEnd4
+    3300048: ChordEnd5
+    3300050: ChordEnd6
+    3300052: ChordStart1
+    3300054: ChordStart2
+    3300056: ChordStart3
+    3300058: ChordStart4
+    3300060: ChordStart5
+    3300062: ChordStart6
     4300000: Choker
     4300002: GuitarHandle.001
     4300004: PinArrayControl
@@ -524,6 +701,19 @@ ModelImporter:
     4300060: EyeWhite
     4300062: EyePupil
     4300064: Eye
+    4300066: Pin
+    4300068: ChordStart6
+    4300070: ChordStart5
+    4300072: ChordStart4
+    4300074: ChordStart3
+    4300076: ChordStart2
+    4300078: ChordStart1
+    4300080: ChordEnd1
+    4300082: ChordEnd2
+    4300084: ChordEnd3
+    4300086: ChordEnd4
+    4300088: ChordEnd5
+    4300090: ChordEnd6
     9500000: //RootNode
     13700000: Bowknot
     13700002: Ear
@@ -555,6 +745,8 @@ ModelImporter:
     13700054: ScrewHead
     13700056: ScrewMiddle
     13700058: ScrewTail
+    13700060: Pin
+    13700062: Ring
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:

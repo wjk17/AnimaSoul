@@ -28,6 +28,7 @@
           <y>0</y>
           <z>0</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -72,6 +73,7 @@
           <y>4.60069259E-07</y>
           <z>1.25338914E-07</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -116,6 +118,7 @@
           <y>-4.342921E-08</y>
           <z>2.42407253E-07</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -160,6 +163,7 @@
           <y>-1.40691085E-08</y>
           <z>4.15498747E-10</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -204,6 +208,7 @@
           <y>6.288101E-08</y>
           <z>8.44170245E-09</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -248,6 +253,7 @@
           <y>-7.071143E-08</y>
           <z>1.07272333E-08</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -292,6 +298,7 @@
           <y>0.05242506</y>
           <z>-0.5172672</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>0</x>
@@ -336,6 +343,7 @@
           <y>0.515688956</y>
           <z>-0.0311132073</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>0</x>
@@ -380,6 +388,7 @@
           <y>0.03701164</y>
           <z>-0.9968915</z>
         </right>
+        <order>YXZ</order>
       </coord>
       <right>
         <x>0</x>
@@ -424,6 +433,7 @@
           <y>-0.07792914</y>
           <z>-0.995281041</z>
         </right>
+        <order>YXZ</order>
       </coord>
       <right>
         <x>-1</x>
@@ -468,6 +478,7 @@
           <y>0.162704349</y>
           <z>0.009381533</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -512,6 +523,7 @@
           <y>0.687086165</y>
           <z>-0.6573348</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -556,6 +568,7 @@
           <y>0.0603813529</y>
           <z>0.163021684</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -600,6 +613,7 @@
           <y>-0.106065057</y>
           <z>0.08407068</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -644,6 +658,7 @@
           <y>-0.0393789336</y>
           <z>-0.107748449</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -688,6 +703,7 @@
           <y>-0.118997075</y>
           <z>-0.0200528838</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -732,6 +748,7 @@
           <y>0.0029431046</y>
           <z>-0.0421203151</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -776,6 +793,7 @@
           <y>0.115125358</y>
           <z>0.01933515</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -820,6 +838,7 @@
           <y>-0.119258739</y>
           <z>-0.0612073466</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -864,6 +883,7 @@
           <y>-0.019798452</y>
           <z>0.025796473</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -908,6 +928,7 @@
           <y>-0.0617555939</y>
           <z>0.0260828231</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -952,6 +973,7 @@
           <y>0.00671950728</y>
           <z>0.0460133553</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -996,6 +1018,7 @@
           <y>0.0100075072</y>
           <z>0.0146726575</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1040,6 +1063,7 @@
           <y>-0.110190764</y>
           <z>0.0109841926</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1084,6 +1108,7 @@
           <y>-0.0122373365</y>
           <z>0.03380896</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1128,6 +1153,7 @@
           <y>-0.145308316</y>
           <z>0.00507968664</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1172,6 +1198,7 @@
           <y>0.0992792249</y>
           <z>0.170648381</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1216,6 +1243,7 @@
           <y>-0.0368265547</y>
           <z>0.00640098937</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1260,6 +1288,7 @@
           <y>-0.006959182</y>
           <z>0.0340054855</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1304,6 +1333,7 @@
           <y>-0.05242504</y>
           <z>0.5172676</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>0</x>
@@ -1348,6 +1378,7 @@
           <y>-0.515688658</y>
           <z>0.0311133862</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>0</x>
@@ -1392,6 +1423,7 @@
           <y>-0.03701134</y>
           <z>0.996892452</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>0</x>
@@ -1436,6 +1468,7 @@
           <y>0.0779288</y>
           <z>0.99528116</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1480,6 +1513,7 @@
           <y>-0.162704483</y>
           <z>-0.009381294</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1524,6 +1558,7 @@
           <y>-0.6870866</y>
           <z>0.6573355</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1568,6 +1603,7 @@
           <y>-0.06038177</y>
           <z>-0.163021982</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1612,6 +1648,7 @@
           <y>0.106065</y>
           <z>-0.08407049</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1656,6 +1693,7 @@
           <y>0.0393789224</y>
           <z>0.107748605</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1700,6 +1738,7 @@
           <y>0.118996784</y>
           <z>0.020053288</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1744,6 +1783,7 @@
           <y>-0.002943161</y>
           <z>0.04212042</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1788,6 +1828,7 @@
           <y>-0.115125522</y>
           <z>-0.0193349719</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1832,6 +1873,7 @@
           <y>0.119258411</y>
           <z>0.0612079427</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1876,6 +1918,7 @@
           <y>0.0197985489</y>
           <z>-0.0257961433</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1920,6 +1963,7 @@
           <y>0.0617557541</y>
           <z>-0.0260828231</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -1964,6 +2008,7 @@
           <y>-0.006719671</y>
           <z>-0.04601288</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -2008,6 +2053,7 @@
           <y>-0.0100079635</y>
           <z>-0.0146721918</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -2052,6 +2098,7 @@
           <y>0.110190533</y>
           <z>-0.0109839933</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -2096,6 +2143,7 @@
           <y>0.0122376336</y>
           <z>-0.03380905</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -2140,6 +2188,7 @@
           <y>0.145308465</y>
           <z>-0.00507938862</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -2184,6 +2233,7 @@
           <y>-0.09927919</y>
           <z>-0.1706483</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -2228,6 +2278,7 @@
           <y>0.0368265472</y>
           <z>-0.006401064</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -2272,6 +2323,7 @@
           <y>0.00695932563</y>
           <z>-0.03400502</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -2316,6 +2368,7 @@
           <y>-0.00507247262</y>
           <z>0.000712663867</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>1</x>
@@ -2360,6 +2413,7 @@
           <y>0.00467361975</y>
           <z>0.000181864249</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>1</x>
@@ -2404,6 +2458,7 @@
           <y>0.019770097</y>
           <z>-0.0501243547</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>1</x>
@@ -2448,6 +2503,7 @@
           <y>-0.0236679986</y>
           <z>-0.0213358216</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -2492,6 +2548,7 @@
           <y>0.05060185</y>
           <z>0.03395945</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>1</x>
@@ -2536,6 +2593,7 @@
           <y>0.7998166</y>
           <z>-0.5997624</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>1</x>
@@ -2580,6 +2638,7 @@
           <y>0.00507250568</y>
           <z>-0.0007136357</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>1</x>
@@ -2624,6 +2683,7 @@
           <y>-0.004673589</y>
           <z>-0.0001818717</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>1</x>
@@ -2668,6 +2728,7 @@
           <y>-0.0197700914</y>
           <z>0.0501243733</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>1</x>
@@ -2712,6 +2773,7 @@
           <y>0.0236707218</y>
           <z>0.0213372428</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>-1</x>
@@ -2756,6 +2818,7 @@
           <y>-0.0506018363</y>
           <z>-0.03395944</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>1</x>
@@ -2800,6 +2863,7 @@
           <y>-0.799816251</y>
           <z>0.599762738</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>1</x>
@@ -2844,6 +2908,7 @@
           <y>0.99999994</y>
           <z>-2.98023224E-08</z>
         </right>
+        <order>ZXY</order>
       </coord>
       <right>
         <x>1</x>

@@ -213,7 +213,7 @@ Material:
     - _1st_ShadeColor: {r: 0.052277453, g: 0.05153081, b: 0.05660379, a: 1}
     - _2nd_ShadeColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 0.24230155, g: 0.27518266, b: 0.31132078, a: 1}
+    - _BaseColor: {r: 0.2830189, g: 0.24430405, b: 0.24999739, a: 1}
     - _BaseCustomDir: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0.21107076, g: 0.18133679, b: 0.23584908, a: 1}
     - _CustomDirWeight: {r: 0, g: 0, b: 0, a: 0}

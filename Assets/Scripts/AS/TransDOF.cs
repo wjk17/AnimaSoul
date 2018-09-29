@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Xml.Serialization;
+public enum EulerOrder
+{
+    XYZ,
+    XZY,
+    YXZ,
+    YZX,
+    ZXY,
+    ZYX,
+}
 [Serializable]
 public class TransDOF // 带关节限制（DOF）的变换。其实是一个可序列化的DeltaRotation Wrapper
 {
@@ -16,6 +25,7 @@ public class TransDOF // 带关节限制（DOF）的变换。其实是一个可�
 
     public DOF dof;
     public Coordinate coord;
+
     public Vector3 right = new Vector3(1, 0, 0); // 用来转换坐标轴
     public Vector3 up = new Vector3(0, 1, 0);
     public Vector3 forward = new Vector3(0, 0, 1);
@@ -86,11 +96,13 @@ public class TransDOF // 带关节限制（DOF）的变换。其实是一个可�
     public void Init(Transform t)
     {
         transform = t;
+        var order = coord.order;
         var n = new Coordinate(t);
         coord = new Coordinate(n);
         coord.right = ToCoord(n, right);
         coord.up = ToCoord(n, up);
         coord.forward = ToCoord(n, forward);
+        coord.order = order;
     }
     public void Rotate()
     {

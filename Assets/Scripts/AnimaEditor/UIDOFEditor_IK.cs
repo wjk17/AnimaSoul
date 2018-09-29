@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class UIDOFEditor{
+public partial class UIDOFEditor
+{
     float Dist(Vector3 targetPos)
     {
         var endDir = end.position - astIK.transform.position; // 当前终端方向与目标方向的距离
@@ -36,7 +37,7 @@ public partial class UIDOFEditor{
             break;
         }
         theta1 = GetIterValue();
-        return MathTool.Approx(theta0, theta1); // 是否已经接近最佳值
+        return theta0.Approx(theta1); // 是否已经接近最佳值
     }
 
     float GetIterValue()

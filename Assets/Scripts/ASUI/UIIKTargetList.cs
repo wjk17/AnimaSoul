@@ -20,11 +20,13 @@ public class UIIKTargetList : MonoBehaviour
             int idx = i;
             btn.GetComponent<Button>().onClick.AddListener(() =>
             {
+                UITranslator.I.control.isOn = false;
                 UIDOFEditor.I.f.dropIKSingleTarget.value = idx;
                 UIDOFEditor.I.f.buttonIKSingleSnap.onClick.Invoke();
+                UIDOFEditor.I.f.toggleIKSingle.isOn = false;
                 UIDOFEditor.I.f.toggleIKSingle.isOn = true;
                 // Bug 第一次点击时变成了关节链IK
-            });            
+            });
         }
         //for (int i = 0; i < (int)IKTarget.Count; i++)
         //{
