@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 #if UNITY_EDITOR
 using UnityEditor;
 [CustomEditor(typeof(FretsIK))]
@@ -24,6 +25,15 @@ public class FretsIK : MonoBehaviour
 
     public Transform target;
     public Transform end;
+
+    public int handFret;
+
+    public Transform target2;
+    public Transform end2;
+
+    public Transform target3;
+    public Transform end3;
+
     public int iter;
     public TransDOF astIK;
 
@@ -42,6 +52,8 @@ public class FretsIK : MonoBehaviour
     Avator _avatar;
     List<Bone> joints;
 
+    int distIdx = 0;
+
     void Solve(int chord, int fret, int finger, int section)
     {
         //targetPos = fretsPos.frets[chord * fretsCount + fret].position;
@@ -52,11 +64,32 @@ public class FretsIK : MonoBehaviour
         Solve(chord, fret, 0, 0);
         if (solveOn) Solve();
     }
+    Bone[] ArmBones()
+    {
+        var bones = new List<Bone>();
+        bones.Add(Bone.upperarm_l);
+        bones.Add(Bone.forearm_l);
+        bones.Add(Bone.hand_l);
+        return bones.ToArray();
+    }
     [ShowButton]
     void Solve()
     {
+        SetHand();
         SetBones();
-        IKSolve(target.position, joints.ToArray());
+        distIdx = 1; IKSolve(ArmBones());
+        distIdx = 0; IKSolve(joints.ToArray());
+    }
+    public int hand = 2;
+    private void SetHand()
+    {
+        while (Mathf.Abs(hand - fret) > 2)
+        {
+            if (hand > fret) hand--;
+            else hand++;
+        }
+        target2 = fretsPos.hands1[hand];
+        target3 = fretsPos.hands2[hand];
     }
     void SetBones()
     {
@@ -100,18 +133,18 @@ public class FretsIK : MonoBehaviour
         Gizmos.DrawWireSphere(target.position, gizmosRadius);
     }
 
-    public bool Iteration(Vector3 targetPos)
+    public bool Iteration()
     {
         var dict = new SortedDictionary<float, float>();
         theta0 = GetIterValue();
-        dict.Add(Dist(targetPos), GetIterValue()); // 计算当前距离并存放到字典里，以距离作为Key排序
+        dict.Add(Dist(), GetIterValue()); // 计算当前距离并存放到字典里，以距离作为Key排序
 
         SetIterValue(theta0 + alpha); // 计算向前步进后的距离，放进字典
-        var dist = Dist(targetPos);
+        var dist = Dist();
         if (!dict.ContainsKey(dist)) dict.Add(dist, GetIterValue()); //（字典里的值是被DOF限制后的）
 
         SetIterValue(theta0 - alpha); // 反向
-        dist = Dist(targetPos);
+        dist = Dist();
         if (!dict.ContainsKey(dist)) dict.Add(dist, GetIterValue());
 
         foreach (var i in dict)
@@ -123,10 +156,28 @@ public class FretsIK : MonoBehaviour
         theta1 = GetIterValue();
         return theta0.Approx(theta1); // 是否已经接近最佳值
     }
-    float Dist(Vector3 targetPos)
+    float Dist()
+    {
+        return distIdx == 0 ? Dist1() : (Dist2() + Dist3());
+    }
+    float Dist1()
     {
         var endDir = end.position - astIK.transform.position; // 当前终端方向与目标方向的距离
-        var targetDir = targetPos - astIK.transform.position;
+        var targetDir = target.position - astIK.transform.position;
+        var dist = Vector3.Distance(endDir, targetDir);
+        return dist;
+    }
+    float Dist2()
+    {
+        var endDir = end2.position - astIK.transform.position;
+        var targetDir = target2.position - astIK.transform.position;
+        var dist = Vector3.Distance(endDir, targetDir);
+        return dist;
+    }
+    float Dist3()
+    {
+        var endDir = end3.position - astIK.transform.position;
+        var targetDir = target3.position - astIK.transform.position;
         var dist = Vector3.Distance(endDir, targetDir);
         return dist;
     }
@@ -164,20 +215,16 @@ public class FretsIK : MonoBehaviour
         }
         astIK.Rotate();
     }
-    private void IKSolve(Vector3 targetPos, params Bone[] bones)
+    private void IKSolve(params Bone[] bones)
     {
         var joints = new List<TransDOF>();
         foreach (var bone in bones)
         {
             joints.Add(avatar[bone]);
         }
-        IKSolve(targetPos, joints.ToArray());
+        IKSolve(joints.ToArray());
     }
     private void IKSolve(params TransDOF[] joints)
-    {
-        IKSolve(target.position, joints);
-    }
-    private void IKSolve(Vector3 targetPos, params TransDOF[] joints)
     {
         //带DOF的IK思路：把欧拉旋转拆分为三个旋转分量，像迭代关节一样按照旋转顺序进行循环下降迭代。
         int c = jointIterCount;
@@ -190,7 +237,7 @@ public class FretsIK : MonoBehaviour
                 int c2 = axisIterCount;
                 while (true)
                 {
-                    if (Iteration(targetPos) || c2 <= 0)
+                    if (Iteration() || c2 <= 0)
                     {
                         iter++;
                         if (iter > 2) break;

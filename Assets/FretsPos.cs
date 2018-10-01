@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 #if UNITY_EDITOR
 using UnityEditor;
 [CustomEditor(typeof(FretsPos))]
@@ -20,14 +21,33 @@ public class FretsPos : MonoBehaviour, IFind
     public float angle;
     public float cos;
     public List<Transform> frets;
+    public List<Transform> hands1;
+    public List<Transform> hands2;
+    public Vector3 handOffset1;
+    Vector3 _handOffset1;
+    public Vector3 handOffset2;
+    Vector3 _handOffset2;
     public string findName { get { return "frets"; } }
     [Range(0, 1)]
     public float nearFret = 0.8f; // 有多靠近品柱
+
     [ShowButton]
     void ClearGOs()
     {
         this.Clear();
         frets.Clear();
+        hands1.Clear();
+        hands2.Clear();
+    }
+    private void Update()
+    {
+        if(_handOffset1!= handOffset1 ||
+            _handOffset2 != handOffset2)
+        {
+            _handOffset1 = handOffset1;
+            _handOffset2 = handOffset2;
+            GetFrets();
+        }
     }
     [ShowButton]
     void GetFrets()
@@ -63,7 +83,27 @@ public class FretsPos : MonoBehaviour, IFind
                 frets.Add(t);
             }
         }
+        GetHands();
     }
+    private void GetHands()
+    {
+        for (int fret = 0; fret < 22; fret++)
+        {
+            var t1 = new GameObject().transform;
+            t1.SetParent(this.Find());
+            t1.name = "hand1 " + fret.ToString();
+
+            var t2 = new GameObject().transform;
+            t2.SetParent(this.Find());
+            t2.name = "hand2 " + fret.ToString();
+
+            t1.position = frets[fret].position + handOffset1;
+            hands1.Add(t1);
+            t2.position = frets[fret].position + handOffset2;
+            hands2.Add(t2);
+        }
+    }
+
     private void OnDrawGizmos()
     {
         foreach (var fret in frets)
@@ -74,6 +114,16 @@ public class FretsPos : MonoBehaviour, IFind
             Gizmos.color = gizmosColor;
             //Gizmos.DrawSphere(fret.position, gizmosRadius);
             Gizmos.DrawWireSphere(fret.position, gizmosRadius);
+        }
+        foreach (var hand in hands1)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(hand.position, gizmosRadius);
+        }
+        foreach (var hand in hands2)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(hand.position, gizmosRadius);
         }
     }
 }
