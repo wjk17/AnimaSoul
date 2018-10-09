@@ -29110,6 +29110,11 @@ MonoBehaviour:
   finger: 4
   target: {fileID: 4268615761081458}
   end: {fileID: 4284942532465966}
+  handFret: 0
+  target2: {fileID: 0}
+  end2: {fileID: 0}
+  target3: {fileID: 0}
+  end3: {fileID: 0}
   iter: 3
   astIK:
     transform: {fileID: 4536680340773846}
@@ -29140,6 +29145,7 @@ MonoBehaviour:
   axisIterCount: 20
   minValue: -45
   solveOn: 0
+  hand: 2
 --- !u!114 &114461406928720038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -30854,6 +30860,10 @@ MonoBehaviour:
   - {fileID: 4823071256909886}
   - {fileID: 4028020471716766}
   - {fileID: 4727376128169268}
+  hands1: []
+  hands2: []
+  handOffset1: {x: 0, y: 0, z: 0}
+  handOffset2: {x: 0, y: 0, z: 0}
   nearFret: 0.8
 --- !u!114 &114747825932404184
 MonoBehaviour:
