@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Hair
-  m_Shader: {fileID: 4800000, guid: 9baf30ce95c751649b14d96da3a4b4d5, type: 3}
+  m_Shader: {fileID: 4800000, guid: e8e7d781c3155254b9ea8956c5bd1218, type: 3}
   m_ShaderKeywords: _IS_BLENDADDTOHICOLOR_ON _IS_BLENDADDTOMATCAP_ON _IS_LIGHTCOLOR_1ST_SHADE_ON
     _IS_LIGHTCOLOR_2ND_SHADE_ON _IS_LIGHTCOLOR_AP_RIMLIGHT_ON _IS_LIGHTCOLOR_BASE_ON
     _IS_LIGHTCOLOR_HIGHCOLOR_ON _IS_LIGHTCOLOR_RIMLIGHT_ON _IS_USETWEAKMATCAPONSHADOW_ON
@@ -69,6 +69,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _HighShift_Tex:
+        m_Texture: {fileID: 2800000, guid: 882da8e1f829da84589bfd9e20cac33d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -126,6 +130,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Set_HighColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Set_HighColorMask2:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -222,8 +230,17 @@ Material:
     - _UVSec: 0
     - _Unlit_Intensity: 1
     - _ZWrite: 1
+    - baseShift: 0
     - feather1: 0.02
     - feather2: 0.144
+    - fourthlyShift: 0
+    - primaryShift: 0.16
+    - secondaryShift: 0
+    - specExp1: 23.49
+    - specExp2: 0
+    - specExp3: 0
+    - specExp4: 0
+    - thirdlyShift: 0
     m_Colors:
     - _1st_ShadeColor: {r: 0.671, g: 0.2511345, b: 0.33746198, a: 1}
     - _2nd_ShadeColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
@@ -237,6 +254,9 @@ Material:
     - _HighClrDir: {r: 3.18, g: 0.357, b: 1.09, a: 0}
     - _HighClrDirWeight: {r: 0, g: 1, b: 0, a: 0}
     - _HighColor: {r: 0.63234246, g: 0.76128745, b: 0.9245283, a: 1}
+    - _HighColor2: {r: 0, g: 0, b: 0, a: 1}
+    - _HighColor3: {r: 0, g: 0, b: 0, a: 1}
+    - _HighColor4: {r: 1, g: 1, b: 1, a: 1}
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
     - _MatCapColor_Mul: {r: 0.81327677, g: 0.80397826, b: 0.8396226, a: 1}
     - _Outline_Color: {r: 0.2264151, g: 0.0074759745, b: 0.045643996, a: 1}
@@ -250,3 +270,4 @@ Material:
     - _PointLightRadius: {r: 0, g: 0, b: 0, a: 0}
     - _RimLightColor: {r: 1, g: 1, b: 1, a: 1}
     - _ViewDirWeight: {r: 1, g: 1, b: 1, a: 0}
+    - viewDirFactor: {r: 0, g: 1, b: 0, a: 1}

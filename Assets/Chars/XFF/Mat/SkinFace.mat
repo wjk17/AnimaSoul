@@ -66,6 +66,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _HighShift_Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -127,6 +131,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Set_HighColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Set_HighColorMask2:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -221,6 +229,10 @@ Material:
     - _ZWrite: 1
     - feather1: 0.0001
     - feather2: 0.356
+    - primaryShift: 0
+    - secondaryShift: 0
+    - specExp1: 0
+    - specExp2: 0
     m_Colors:
     - _1st_ShadeColor: {r: 0.85882354, g: 0.68065363, b: 0.6313726, a: 1}
     - _2nd_ShadeColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
@@ -233,6 +245,7 @@ Material:
     - _Emissive_Color: {r: 0, g: 0, b: 0, a: 1}
     - _HighClrDir: {r: 0, g: 0, b: 0, a: 0}
     - _HighColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HighColor2: {r: 0, g: 0, b: 0, a: 1}
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
     - _MatCapColor_Mul: {r: 1, g: 1, b: 1, a: 1}
     - _Outline_Color: {r: 0.6509434, g: 0.1325489, b: 0.11974903, a: 1}
@@ -246,3 +259,4 @@ Material:
     - _PointLightRadius: {r: 0, g: 0, b: 0, a: 0}
     - _RimLightColor: {r: 1, g: 0.84859157, b: 0.7971698, a: 1}
     - _ViewDirWeight: {r: 0, g: 0, b: 0, a: 0}
+    - viewDirFactor: {r: 0, g: 1, b: 0, a: 1}
