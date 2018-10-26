@@ -1,2 +1,5 @@
 # AnimaSoul
-3rdÄ¿Â¼ºÍWSAÄ¿Â¼µÄÄÚÈİ£¬ĞèÒªÔÚÔ­ÏîÄ¿´¦clone¡£
+3rdç›®å½•å’ŒWSAç›®å½•çš„å†…å®¹ï¼Œéœ€è¦åœ¨åŸé¡¹ç›®å¤„cloneã€‚
+æ‰‹æŒ‡å¼¹å¥åŠ¨ç”»ï¼š
+![image](https://gitee.com/wjk/AnimaSoul/raw/master/Manual/fingerMotions.gif)
+![image](https://gitee.com/wjk/AnimaSoul/raw/master/Manual/xff.png)
