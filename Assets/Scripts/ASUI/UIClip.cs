@@ -29,9 +29,9 @@ public class UIClip : MonoSingleton<UIClip>
         var index = UITimeLine.I.frameIdx;
         float trueTime = 0, trueTime2 = 0, trueTime3 = 0;
         float endTime = 0;
-        if (UICurve.I.curve.Count >= 1)
+        if (UICurve.I.Curve.Count >= 1)
         {
-            endTime = UICurve.I.curve.Last().time;
+            endTime = UICurve.I.Curve.Last().time;
         }
         float n = endTime == 0 ? 0 : index / endTime;
         float t = 0;
