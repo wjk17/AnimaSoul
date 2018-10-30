@@ -129,8 +129,11 @@ public class FretsIK : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        Gizmos.color = gizmosColor;
-        Gizmos.DrawWireSphere(target.position, gizmosRadius);
+        if (target != null)
+        {
+            Gizmos.color = gizmosColor;
+            Gizmos.DrawWireSphere(target.position, gizmosRadius);
+        }
     }
 
     public bool Iteration()

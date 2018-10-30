@@ -35,7 +35,7 @@ public class CommandHandler
     public void Execute()
     {
         commands.Sort(SortList);
-        ASUI.I.owner = owner;
+        //ASUI.I.owner = owner;
         foreach (var command in commands)
         {
             ExecuteCommand(command);

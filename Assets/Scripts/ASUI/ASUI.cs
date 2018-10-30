@@ -29,7 +29,7 @@ public static class ASUI
     public static Vector2 AbsRefPos2(RectTransform rt)
     {
         var rtParent = rt.parent as RectTransform;
-        Vector2 posParent = MathTool.ReverseY(rtParent.anchoredPosition);
+        Vector2 posParent = rtParent.anchoredPosition.ReverseY();
         Vector2 pos = posParent;
         Vector2 anchorPos;
         var amin = rt.anchorMin;
@@ -47,11 +47,11 @@ public static class ASUI
         else if (amin == new Vector2(0, 0) && amax == new Vector2(1, 0))
         {
             pos.y += rtParent.rect.height;
-            pos += MathTool.ReverseY(rt.anchoredPosition);
+            pos += rt.anchoredPosition.ReverseY();
         }
         else if (amin == new Vector2(0, 0) && amax == new Vector2(0, 1))
         {
-            anchorPos = MathTool.ReverseY(rt.anchoredPosition);
+            anchorPos = rt.anchoredPosition.ReverseY();
             pos += anchorPos;
         }
         else
@@ -65,7 +65,7 @@ public static class ASUI
     public static Vector2 AbsRefPos(RectTransform rt)
     {
         var rtParent = rt.parent as RectTransform;
-        Vector2 posParent = MathTool.ReverseY(rtParent.anchoredPosition);
+        Vector2 posParent = rtParent.anchoredPosition.ReverseY();
         Vector2 pos = posParent;
         Vector2 anchorPos;
         var amin = rt.anchorMin;
@@ -81,7 +81,7 @@ public static class ASUI
         else if (amin == new Vector2(0, 0) && amax == new Vector2(1, 0))
         {
             pos.y += rtParent.rect.height;
-            pos += MathTool.ReverseY(rt.anchoredPosition);
+            pos += rt.anchoredPosition.ReverseY();
 
             //amin.y = 1 - amin.y;
             //anchorPos = Vector2.Scale(amin, rtParent.rect.size);
@@ -90,7 +90,7 @@ public static class ASUI
         }
         else if (amin == new Vector2(0, 0) && amax == new Vector2(0, 1))
         {
-            anchorPos = MathTool.ReverseY(rt.anchoredPosition);
+            anchorPos = rt.anchoredPosition.ReverseY();
             pos += anchorPos;
         }
         else

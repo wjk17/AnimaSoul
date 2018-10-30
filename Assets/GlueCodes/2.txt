@@ -1,0 +1,13 @@
+    Vector2 _rtAreaPos;
+    Vector2 rtAreaPos
+    {
+        get
+        {
+            _rtAreaPos = rtArea.anchoredPosition;
+            _rtAreaPos.y = -_rtAreaPos.y;
+            _rtAreaPos.y = UI.scaler.referenceResolution.y - _rtAreaPos.y;
+            return _rtAreaPos;
+        }
+    }
+    Vector2 rtAreaSize { get { return rtArea.sizeDelta; } } // ������ͼ������С
+    RectTransform rtArea { get { return (transform as RectTransform); } }
