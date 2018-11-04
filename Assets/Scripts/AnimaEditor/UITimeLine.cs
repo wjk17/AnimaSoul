@@ -328,7 +328,7 @@ public partial class UITimeLine : MonoSingleton<UITimeLine>
                 RemoveKey();
             else InsertKey();
         }
-        if (Events.Mouse1to3) use = true;
+        if (ASUI.MouseOver(rt) && Events.Mouse1to3) use = true;
         if (use) Events.Use();
     }
     public void RemoveKey()
