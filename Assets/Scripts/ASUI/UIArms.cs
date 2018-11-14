@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UIArms : MonoBehaviour
 {
-    public Button buttonSetTrans;
+    public UnityEngine.UI.Button buttonSetTrans;
     public Toggle toggleLockTrans;
     public Tran2 leftRela;
     public Tran2 leftForearmRela;

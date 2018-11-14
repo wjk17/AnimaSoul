@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UICurveMgr : MonoBehaviour
 {
-    public Button setAllCurveToLinear;
+    public UnityEngine.UI.Button setAllCurveToLinear;
     void Start()
     {
         this.AddInputCB();

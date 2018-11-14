@@ -243,7 +243,7 @@ public static class ASUI
     }
     public static void Button(string labelStr, float width, UnityAction onClick)
     {
-        var button = Obj.Instantiate(I.buttonPrefab, parent).GetComponent<Button>();
+        var button = Obj.Instantiate(I.buttonPrefab, parent).GetComponent<UnityEngine.UI.Button>();
         button.onClick.AddListener(onClick);
         var label = button.GetComponentInChildren<Text>(true);
         label.text = labelStr;
@@ -254,7 +254,7 @@ public static class ASUI
     }
     public static void Button(string labelStr, float width, UnityAction<ButtonWrapper> onClick)
     {
-        var button = Obj.Instantiate(I.buttonPrefab, parent).GetComponent<Button>();
+        var button = Obj.Instantiate(I.buttonPrefab, parent).GetComponent<UnityEngine.UI.Button>();
         var wrapper = new ButtonWrapper(button);
         button.onClick.AddListener(wrapper.OnClick);
         wrapper.onClick = onClick;

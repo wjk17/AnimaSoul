@@ -18,7 +18,7 @@ public class UIIKTargetList : MonoBehaviour
             buttons.Add(btn);
             btn.GetComponentInChildren<Text>().text = UIDOFEditor.ikTargetSingleNames[i];
             int idx = i;
-            btn.GetComponent<Button>().onClick.AddListener(() =>
+            btn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() =>
             {
                 UITranslator.I.control.isOn = false;
                 UIDOFEditor.I.f.dropIKSingleTarget.value = idx;

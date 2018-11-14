@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-#if UNITY_EDITOR
-using UnityEditor;
-[CustomEditor(typeof(FretsPos))]
-public class FretsPosEditor : E_ShowButtons<FretsPos> { }
-#endif
+using Esa;
 [ExecuteInEditMode]
 public class FretsPos : MonoBehaviour, IFind
 {
@@ -31,7 +27,7 @@ public class FretsPos : MonoBehaviour, IFind
     [Range(0, 1)]
     public float nearFret = 0.8f; // 有多靠近品柱
 
-    [ShowButton]
+    [Button]
     void ClearGOs()
     {
         this.Clear();
@@ -49,7 +45,7 @@ public class FretsPos : MonoBehaviour, IFind
             GetFrets();
         }
     }
-    [ShowButton]
+    [Button]
     void GetFrets()
     {
         ClearGOs();

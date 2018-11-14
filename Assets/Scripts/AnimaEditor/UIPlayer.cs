@@ -11,7 +11,7 @@ public class UIPlayer : MonoSingleton<UIPlayer>
     public Toggle toggleLoop;
     public Toggle toggleFlip;
     public Toggle togglePingPong;
-    public Button buttonApplyTo60Fps;
+    public UnityEngine.UI.Button buttonApplyTo60Fps;
     public Toggle toggleMirrorPv;
     public bool play;
     void Start()

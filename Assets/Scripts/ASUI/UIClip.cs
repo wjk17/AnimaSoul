@@ -1,11 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-[CustomEditor(typeof(UIClip))]
-public class UIClipEditor : E_ShowButtons<UIClip> { }
-#endif
+using Esa;
 public class UIClip : MonoSingleton<UIClip>
 {
     public Clip clip
@@ -149,7 +145,7 @@ public class UIClip : MonoSingleton<UIClip>
         }
         UIPlayer.I.Mirror();
     }
-    [ShowButton]
+    [Button]
     void Load_()
     {
         Load(name);
@@ -215,7 +211,7 @@ public class UIClip : MonoSingleton<UIClip>
             return false;
         }
     }
-    [ShowButton]
+    [Button]
     void NewClip()
     {
         New(name);

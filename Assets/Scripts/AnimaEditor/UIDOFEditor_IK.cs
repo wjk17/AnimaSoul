@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Esa;
 public partial class UIDOFEditor
 {
     float Dist(Vector3 targetPos)
@@ -11,7 +11,7 @@ public partial class UIDOFEditor
         var dist = Vector3.Distance(endDir, targetDir);
         return dist;
     }
-    [ShowButton]
+    [Button]
     public bool Iteration()
     {
         return Iteration(target.position);

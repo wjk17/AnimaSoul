@@ -3,9 +3,9 @@ using UnityEngine.UI;
 using UnityEngine;
 public class ButtonWrapper
 {
-    public Button button;
+    public UnityEngine.UI.Button button;
     public UnityAction<ButtonWrapper> onClick;
-    public ButtonWrapper(Button f)
+    public ButtonWrapper(UnityEngine.UI.Button f)
     {
         button = f;
     }

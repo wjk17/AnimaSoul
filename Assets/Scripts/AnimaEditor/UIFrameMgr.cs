@@ -15,12 +15,12 @@ public class key
 }
 public class UIFrameMgr : MonoBehaviour
 {
-    public Button insertMissButton;
-    public Button deleteAllCurveButton;
-    public Button pasteAllFrameButton;
-    public Button pasteToArmButton;
-    public Button pasteToGunButton;
-    public Button pasteLeftHandToAllFrameBtn;
+    public UnityEngine.UI.Button insertMissButton;
+    public UnityEngine.UI.Button deleteAllCurveButton;
+    public UnityEngine.UI.Button pasteAllFrameButton;
+    public UnityEngine.UI.Button pasteToArmButton;
+    public UnityEngine.UI.Button pasteToGunButton;
+    public UnityEngine.UI.Button pasteLeftHandToAllFrameBtn;
     private void Start()
     {
         this.AddInputCB();

@@ -5,14 +5,10 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-#if UNITY_EDITOR
-using UnityEditor;
-[CustomEditor(typeof(UIClipList))]
-public class UIClipListEditor : E_ShowButtons<UIClipList> { }
-#endif
+using Esa;
 public class UIClipList : MonoSingleton<UIClipList>
 {
-    public Button buttonRefresh;
+    public UnityEngine.UI.Button buttonRefresh;
     public int index;
     public List<string> names;
     public string _clipPath = "Clips/";
@@ -39,7 +35,7 @@ public class UIClipList : MonoSingleton<UIClipList>
         UIDOFEditor.I.f.inputFileName.text = currentClipName;// names[index];
         UIDOFEditor.I.f.buttonLoadClip.onClick.Invoke();
     }
-    [ShowButton]
+    [Button]
     public void GetClipNamesInPath()
     {
         names = new List<string>();
@@ -64,7 +60,7 @@ public class UIClipList : MonoSingleton<UIClipList>
             btn.transform.SetLocalPosY(i * ((itemPrefab.transform as RectTransform).sizeDelta.y + ySpace));
             buttons.Add(btn);
             btn.GetComponentInChildren<Text>().text = clipName;
-            btn.GetComponent<Button>().onClick.AddListener(delegate { currentClipName = clipName; ItemClick(); });
+            btn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(delegate { currentClipName = clipName; ItemClick(); });
             i++;
         }
     }

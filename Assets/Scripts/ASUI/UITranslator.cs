@@ -40,7 +40,7 @@ public class UITranslator : MonoBehaviour
     }
     bool ignoreChanged;
     List<float> valuePrev;
-    public Button btnSetOrigin;
+    public UnityEngine.UI.Button btnSetOrigin;
     private void Start()
     {
         this.AddInputCB();

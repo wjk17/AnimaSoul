@@ -31,7 +31,7 @@ public class UIArms2Editor : Editor
 #endif
 public class UIArms2 : MonoBehaviour
 {
-    public Button buttonSetArmTarget;
+    public UnityEngine.UI.Button buttonSetArmTarget;
     public Toggle toggleTowardArmTarget;
 
     public Vector3 leftHandPos;

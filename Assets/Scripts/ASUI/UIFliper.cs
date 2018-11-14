@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class UIFliper : MonoBehaviour
 {
-    public Button buttonL2R;
-    public Button buttonR2L;
-    public Button buttonSwitchLR;
-    public Button buttonSwitchAll;
-    public Button buttonSwitchAllExHips;
+    public UnityEngine.UI.Button buttonL2R;
+    public UnityEngine.UI.Button buttonR2L;
+    public UnityEngine.UI.Button buttonSwitchLR;
+    public UnityEngine.UI.Button buttonSwitchAll;
+    public UnityEngine.UI.Button buttonSwitchAllExHips;
     private void Awake()
     {
         this.AddInputCB();

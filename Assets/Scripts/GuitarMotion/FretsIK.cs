@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-#if UNITY_EDITOR
-using UnityEditor;
-[CustomEditor(typeof(FretsIK))]
-public class FretsIKEditor : E_ShowButtons<FretsIK> { }
-#endif
+using Esa;
 public enum Finger
 {
     Thumb, Index, Middle, Ring, Pinky
@@ -46,7 +42,7 @@ public class FretsIK : MonoBehaviour
 
     public float minValue = -45;
 
-    [HideInInspector] [ShowToggle] public bool solveOn = false;
+    [HideInInspector] [ToggleAttribute] public bool solveOn = false;
 
     Avator avatar { get { if (_avatar == null) _avatar = UIDOFEditor.I.avatar; return _avatar; } }
     Avator _avatar;
@@ -72,7 +68,7 @@ public class FretsIK : MonoBehaviour
         bones.Add(Bone.hand_l);
         return bones.ToArray();
     }
-    [ShowButton]
+    [Button]
     void Solve()
     {
         SetHand();

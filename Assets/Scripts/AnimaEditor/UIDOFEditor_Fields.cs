@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-#if UNITY_EDITOR
-using UnityEditor;
-[CustomEditor(typeof(UIDOFEditor_Fields))]
-public class UIDOFEditor_FieldsEditor : E_ShowButtons<UIDOFEditor_Fields> { }
-#endif
+using Esa;
 public class UIDOFEditor_Fields : MonoBehaviour
 {
     public InputField inputTwistMin;
@@ -53,7 +49,7 @@ public class UIDOFEditor_Fields : MonoBehaviour
     public Button buttonEulerReset;
 
     public bool ignoreChanged;
-    [ShowButton]
+    [Button]
     void GetUIToField()
     {
         var area = transform.Search("Area");

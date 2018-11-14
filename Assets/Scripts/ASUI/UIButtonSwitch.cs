@@ -22,7 +22,7 @@ public class UIButtonSwitchEditor : Editor
 #endif
 public class UIButtonSwitch : MonoBehaviour
 {
-    public Button[] buttons;
+    public UnityEngine.UI.Button[] buttons;
     public int index = 0;
     public void Switch()
     {
@@ -44,7 +44,7 @@ public class UIButtonSwitch : MonoBehaviour
     }
     private void Reset()
     {
-        buttons = GetComponentsInChildren<Button>(true);
+        buttons = GetComponentsInChildren<UnityEngine.UI.Button>(true);
 
     }
     public void Reg(params UnityAction[] callbacks)

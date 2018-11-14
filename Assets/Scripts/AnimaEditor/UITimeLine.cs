@@ -1,7 +1,80 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
+public class FrameIdx_Key
+{
+    private float leftTimer;
+    private float rightTimer;
+    private float upTimer;
+    private float downTimer;
+    public float continuousKeyTime = 0.5f; // 上下左右键连发延迟
+    public float continuousKeyInterval = 0.01f; // 间隔（其实0.01通常约等于每帧触发）
+    public int GetInput(int frameIdx)
+    {
+        if (Events.Key(KeyCode.LeftArrow))
+        {
+            leftTimer += Time.deltaTime;
+        }
+        else { leftTimer = 0; }
+        if (Events.Key(KeyCode.RightArrow))
+        {
+            rightTimer += Time.deltaTime;
+        }
+        else { rightTimer = 0; }
+        if (Events.Key(KeyCode.UpArrow))
+        {
+            upTimer += Time.deltaTime;
+        }
+        else { upTimer = 0; }
+        if (Events.Key(KeyCode.DownArrow))
+        {
+            downTimer += Time.deltaTime;
+        }
+        else { downTimer = 0; }
+        if (leftTimer > continuousKeyTime || Events.KeyDown(KeyCode.LeftArrow))
+        {
+            leftTimer -= continuousKeyInterval;
+            frameIdx--;
+        }
+        else if (rightTimer > continuousKeyTime || Events.KeyDown(KeyCode.RightArrow))
+        {
+            rightTimer -= continuousKeyInterval;
+            frameIdx++;
+        }
+        else if (upTimer > continuousKeyTime * 1.5f || Events.KeyDown(KeyCode.UpArrow))
+        {
+            upTimer -= continuousKeyInterval * 1.5f;
+            if (UIClip.I.clip.curves.Count > 0)
+            {
+                var keys = UIClip.I.clip.curves[0].pos.x.keys;
+                for (int i = keys.Count - 1; i >= 0; i--)
+                {
+                    if (keys[i].time < frameIdx)
+                    {
+                        frameIdx = Mathf.RoundToInt(keys[i].time);
+                        break;
+                    }
+                }
+            }
+        }
+        else if (downTimer > continuousKeyTime * 1.5f || Events.KeyDown(KeyCode.DownArrow))
+        {
+            downTimer -= continuousKeyInterval * 1.5f;
+            if (UIClip.I.clip.curves.Count > 0)
+            {
+                var keys = UIClip.I.clip.curves[0].pos.x.keys;
+                for (int i = 0; i < keys.Count; i++)
+                {
+                    if (keys[i].time > frameIdx)
+                    {
+                        frameIdx = Mathf.RoundToInt(keys[i].time);
+                        break;
+                    }
+                }
+            }
+        }
+        return frameIdx;
+    }
+}
 // UI控件
 public partial class UITimeLine : MonoSingleton<UITimeLine>
 {
@@ -22,19 +95,7 @@ public partial class UITimeLine : MonoSingleton<UITimeLine>
     public int xSpaceTextInRuler; // 标尺每隔多少帧有一个帧数数字
     public int xSpaceLineInRuler; // 多少帧画一条线
     public float rulerScalerSensitivity = 20;
-    //    public Canvas canvas;
-    //    private RectTransform area;
-    //    private RectTransform topBar;
-    //    private RectTransform ruler;
 
-    private float leftTimer;
-    private float rightTimer;
-    private float upTimer;
-    private float downTimer;
-    public float continuousKeyTime = 0.5f; // 上下左右键连发延迟
-    public float continuousKeyInterval = 0.01f; // 间隔（其实0.01通常约等于每帧触发）
-    public Text txtFrameIdx;
-    public Text txtFrameIdxN;
     //    public Vector3 mousePos;
     //    public Rect uiRect;
     //    public Vector2 pos2D;
@@ -49,40 +110,7 @@ public partial class UITimeLine : MonoSingleton<UITimeLine>
     //    {
     //        get { return startPos + new Vector2(rulerLength, 0); }
     //    }
-    //    public Vector2Int startPosInt
-    //    {
-    //        get { return new Vector2Int(Mathf.RoundToInt(startPos.x), Mathf.RoundToInt(startPos.y)); }
-    //    }
-    //    private Vector2 startPos;
 
-    //    public static float FrameValue;
-    public int frameIdx
-    {
-        get { return Mathf.RoundToInt(frameIdx_F); }
-        set { frameIdx_F = value; }
-    }
-    [SerializeField] float _frameIdx_F;
-    public System.Action<int> onFrameIdxChanged;
-    //[MAD.ShowProperty(MAD.ShowPropertyAttribute.EValueType.Float)]
-    public float frameIdx_F
-    {
-        get { return _frameIdx_F; }
-        set
-        {
-            _frameIdx_F = value;
-            txtFrameIdx.text = "帧：" + frameIdx.ToString();
-            txtFrameIdxN.text = "n：" + frameIdxN.ToString("0.00");
-            if (onFrameIdxChanged != null) onFrameIdxChanged(frameIdx);
-        }
-    }
-    public float frameIdxN
-    {
-        get
-        {
-            var end = UIClip.I.clip.frameRange.y;
-            return end == 0 ? 0 : MathTool.Round(frameIdx_F / end, indexNAccuracy);
-        }
-    }
     public int indexNAccuracy = 3;
 
     public InsertKeyType insertType;
@@ -154,6 +182,7 @@ public partial class UITimeLine : MonoSingleton<UITimeLine>
     void Start()
     {
         this.AddInputCB(GetInput, -5);
+        frameIdx_KeyHandler = new FrameIdx_Key();
         frameIdx = 0;
     }
     //    public Vector2 areaP;
@@ -200,44 +229,46 @@ public partial class UITimeLine : MonoSingleton<UITimeLine>
     //            GLUI.DrawLine(p, p + Vector2.up * area.rect.height, lineWidth, Color.green);
     //        }
     //    }
-    //    private void MouseDown(MB button)
-    //    {
-    //        use = true;
-    //        MouseDrag(button);
-    //    }
+    private void MouseDown(MB button)
+    {
+        use = true;
+        MouseDrag(button);
+    }
     //    public float lx;
-    //    private void MouseDrag(MB button)
-    //    {
-    //        use = true;
-    //        if (!ASUI.MouseOver(area)) return;
-    //        var deltaV = ASUI.mousePositionRef - oldPos;
-    //        deltaV = MathTool.Divide(deltaV, area.rect.size);
-    //        deltaV = Vector2.Scale(deltaV, new Vector2(rulerLength, 0));
-    //        switch (button)
-    //        {
-    //            case MB.Left:
+    public RectTransform area { get { return null; } }
+    private void MouseDrag(MB button)
+    {
+        use = true;
 
-    //                lx = ASUI.mousePositionRef.x - area.anchoredPosition.x;
-    //                lx = lx / area.rect.width;
-    //                lx = Mathf.Clamp01(lx);
-    //                frameIdx = (int)startPos.x + Mathf.RoundToInt(lx * rulerLength);
-    //                break;
+        if (!ASUI.MouseOver(area)) return;
+        var deltaV = ASUI.mousePositionRef - oldPos;
+        //deltaV = deltaV.Divide(areaSize);
+        //deltaV = Vector2.Scale(deltaV, new Vector2(rulerLength, 0));
+        switch (button)
+        {
+            case MB.Left:
 
-    //            case MB.Right:
+                //lx = ASUI.mousePositionRef.x - area.anchoredPosition.x;
+                //lx = lx / area.rect.width;
+                //lx = Mathf.Clamp01(lx);
+                //frameIdx = (int)startPos.x + Mathf.RoundToInt(lx * rulerLength);
+                break;
 
-    //                break;
+            case MB.Right:
 
-    //            case MB.Middle:
+                break;
 
-    //                startPos -= deltaV;
-    //                break;
-    //            default: throw null;
-    //        }
-    //        oldPos = ASUI.mousePositionRef;
-    //    }
-    //    Vector2 oldPos;
-    //    bool use, left, right, middle, shift, ctrl;
-    //    public bool over;
+            case MB.Middle:
+
+                startPos -= deltaV;
+                break;
+            default: throw null;
+        }
+        oldPos = ASUI.mousePositionRef;
+    }
+    Vector2 oldPos;
+    bool use, left, right, middle, shift, ctrl;
+    public bool over;
     void GetInput()
     {
         //        var shift = Events.Shift;
@@ -260,68 +291,7 @@ public partial class UITimeLine : MonoSingleton<UITimeLine>
             SIZE.x -= delta * rulerScalerSensitivity;
             SIZE.x = Mathf.Clamp(SIZE.x, 10, Mathf.Infinity);
         }
-        if (Events.Key(KeyCode.LeftArrow))
-        {
-            leftTimer += Time.deltaTime;
-        }
-        else { leftTimer = 0; }
-        if (Events.Key(KeyCode.RightArrow))
-        {
-            rightTimer += Time.deltaTime;
-        }
-        else { rightTimer = 0; }
-        if (Events.Key(KeyCode.UpArrow))
-        {
-            upTimer += Time.deltaTime;
-        }
-        else { upTimer = 0; }
-        if (Events.Key(KeyCode.DownArrow))
-        {
-            downTimer += Time.deltaTime;
-        }
-        else { downTimer = 0; }
-        if (leftTimer > continuousKeyTime || Events.KeyDown(KeyCode.LeftArrow))
-        {
-            leftTimer -= continuousKeyInterval;
-            frameIdx--;
-        }
-        else if (rightTimer > continuousKeyTime || Events.KeyDown(KeyCode.RightArrow))
-        {
-            rightTimer -= continuousKeyInterval;
-            frameIdx++;
-        }
-        else if (upTimer > continuousKeyTime * 1.5f || Events.KeyDown(KeyCode.UpArrow))
-        {
-            upTimer -= continuousKeyInterval * 1.5f;
-            if (UIClip.I.clip.curves.Count > 0)
-            {
-                var keys = UIClip.I.clip.curves[0].pos.x.keys;
-                for (int i = keys.Count - 1; i >= 0; i--)
-                {
-                    if (keys[i].time < frameIdx)
-                    {
-                        frameIdx = Mathf.RoundToInt(keys[i].time);
-                        break;
-                    }
-                }
-            }
-        }
-        else if (downTimer > continuousKeyTime * 1.5f || Events.KeyDown(KeyCode.DownArrow))
-        {
-            downTimer -= continuousKeyInterval * 1.5f;
-            if (UIClip.I.clip.curves.Count > 0)
-            {
-                var keys = UIClip.I.clip.curves[0].pos.x.keys;
-                for (int i = 0; i < keys.Count; i++)
-                {
-                    if (keys[i].time > frameIdx)
-                    {
-                        frameIdx = Mathf.RoundToInt(keys[i].time);
-                        break;
-                    }
-                }
-            }
-        }
+        frameIdx = frameIdx_KeyHandler.GetInput(frameIdx);
         if (Events.KeyDown(KeyCode.I))
         {
             if (Events.Alt)

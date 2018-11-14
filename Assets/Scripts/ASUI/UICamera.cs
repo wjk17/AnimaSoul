@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UICamera : MonoSingleton<UICamera>
 {
-    public Button buttonReset;
+    public UnityEngine.UI.Button buttonReset;
     public Toggle toggleRotate;
 
     public RectTransform rectView;

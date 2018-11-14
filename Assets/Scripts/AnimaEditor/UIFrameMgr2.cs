@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class UIFrameMgr2 : MonoSingleton<UIFrameMgr2>
 {
-    public Button btnConvertToRelativePos;
-    public Button btnGetTPose;
+    public UnityEngine.UI.Button btnConvertToRelativePos;
+    public UnityEngine.UI.Button btnGetTPose;
     public List<Vector3> tPoseList;
 
     void Start()

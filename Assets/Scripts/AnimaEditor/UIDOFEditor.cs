@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
-#if UNITY_EDITOR
-using UnityEditor;
-[CustomEditor(typeof(UIDOFEditor))]
-public class UIDOFEditorEditor : E_ShowButtons<UIDOFEditor> { }
-#endif
+using Esa;
 public partial class UIDOFEditor : MonoSingleton<UIDOFEditor>
 {
     public Bone bone = Bone.chest; // 给出个初始值
