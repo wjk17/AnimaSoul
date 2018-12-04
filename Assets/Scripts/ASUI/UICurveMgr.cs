@@ -2,25 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class UICurveMgr : MonoBehaviour
+namespace Esa.UI
 {
-    public UnityEngine.UI.Button setAllCurveToLinear;
-    void Start()
+    public class UICurveMgr : MonoBehaviour
     {
-        this.AddInputCB();
-        setAllCurveToLinear.onClick.AddListener(SetAllCurveToLinear);
-    }
-    void SetAllCurveToLinear()
-    {
-        foreach (var oc in UIClip.I.clip.curves)
+        public Button setAllCurveToLinear;
+        void Start()
         {
-            foreach (var curve in oc.curves)
+            this.AddInputCB();
+            setAllCurveToLinear.onClick.AddListener(SetAllCurveToLinear);
+        }
+        void SetAllCurveToLinear()
+        {
+            foreach (var oc in UIClip.I.clip.curves)
             {
-                foreach (var key in curve.keys)
+                foreach (var curve in oc.curves)
                 {
-                    key.inMode = KeyMode.Linear;
-                    key.outMode = KeyMode.Linear;
+                    foreach (var key in curve.keys)
+                    {
+                        key.inMode = KeyMode.Linear;
+                        key.outMode = KeyMode.Linear;
+                    }
                 }
             }
         }

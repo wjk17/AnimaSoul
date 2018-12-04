@@ -3,128 +3,130 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class UIPlayer : MonoSingleton<UIPlayer>
+namespace Esa.UI
 {
-    public UIButtonSwitch buttonPlayPuase;
-    public InputField inputfieldFps;
-    public Toggle toggleLoop;
-    public Toggle toggleFlip;
-    public Toggle togglePingPong;
-    public UnityEngine.UI.Button buttonApplyTo60Fps;
-    public Toggle toggleMirrorPv;
-    public bool play;
-    void Start()
+    public class UIPlayer : MonoSingleton<UIPlayer>
     {
-        this.AddInputCB();
-        buttonPlayPuase.Reg(Play, Pause);
-        inputfieldFps.onValueChanged.AddListener(OnFpsChange);
-        inputfieldFps.contentType = InputField.ContentType.DecimalNumber;
-        inputfieldFps.text = UITimeLine.I.fps.ToString();
-        buttonApplyTo60Fps.onClick.AddListener(ApplyTo60Fps);
-        toggleMirrorPv.onValueChanged.AddListener(MirrorPv);
-    }
-    void MirrorPv(bool value)
-    {
-        Mirror(true);
-    }
-    public void Mirror(bool force = false)
-    {
-        if (I.toggleMirrorPv.isOn || force)//镜像翻转
+        public UIButtonSwitch buttonPlayPuase;
+        public InputField inputfieldFps;
+        public Toggle toggleLoop;
+        public Toggle toggleFlip;
+        public Toggle togglePingPong;
+        public UnityEngine.UI.Button buttonApplyTo60Fps;
+        public Toggle toggleMirrorPv;
+        public bool play;
+        void Start()
         {
-            var handledList = new List<CurveObj>();
-            foreach (var curve in UIClip.I.clip.curves)
+            this.AddInputCB();
+            buttonPlayPuase.Reg(Play, Pause);
+            inputfieldFps.onValueChanged.AddListener(OnFpsChange);
+            inputfieldFps.contentType = InputField.ContentType.DecimalNumber;
+            inputfieldFps.text = UITimeLine.I.fps.ToString();
+            buttonApplyTo60Fps.onClick.AddListener(ApplyTo60Fps);
+            toggleMirrorPv.onValueChanged.AddListener(MirrorPv);
+        }
+        void MirrorPv(bool value)
+        {
+            Mirror(true);
+        }
+        public void Mirror(bool force = false)
+        {
+            if (I.toggleMirrorPv.isOn || force)//镜像翻转
             {
-                if (handledList.Contains(curve)) continue;
-                // 互换对称骨骼的euler值，因为使用了“向内”、“向外”描述，因此不需要翻转值。
-                if (curve.pair != null)
+                var handledList = new List<CurveObj>();
+                foreach (var curve in UIClip.I.clip.curves)
                 {
-                    var ex = curve.ast.euler;
-                    curve.ast.euler = curve.pair.ast.euler;
-                    curve.pair.ast.euler = ex;
-                    handledList.Add(curve);
-                    handledList.Add(curve.pair);
-                }
-                else
-                {
-                    // 没有.r或.l后缀的骨骼，因此需要翻转两条轴。
-                    if (curve == null || curve.ast == null)
+                    if (handledList.Contains(curve)) continue;
+                    // 互换对称骨骼的euler值，因为使用了“向内”、“向外”描述，因此不需要翻转值。
+                    if (curve.pair != null)
                     {
-                        continue;
+                        var ex = curve.ast.euler;
+                        curve.ast.euler = curve.pair.ast.euler;
+                        curve.pair.ast.euler = ex;
+                        handledList.Add(curve);
+                        handledList.Add(curve.pair);
                     }
-                    Vector3 mirrorOn = new Vector3(0, 1, 1);
-                    if (mirrorOn.x > 0) curve.ast.euler.x = -curve.ast.euler.x;
-                    if (mirrorOn.y > 0) curve.ast.euler.y = -curve.ast.euler.y;
-                    if (mirrorOn.z > 0) curve.ast.euler.z = -curve.ast.euler.z;
+                    else
+                    {
+                        // 没有.r或.l后缀的骨骼，因此需要翻转两条轴。
+                        if (curve == null || curve.ast == null)
+                        {
+                            continue;
+                        }
+                        Vector3 mirrorOn = new Vector3(0, 1, 1);
+                        if (mirrorOn.x > 0) curve.ast.euler.x = -curve.ast.euler.x;
+                        if (mirrorOn.y > 0) curve.ast.euler.y = -curve.ast.euler.y;
+                        if (mirrorOn.z > 0) curve.ast.euler.z = -curve.ast.euler.z;
+                    }
                 }
             }
         }
-    }
-    void ApplyTo60Fps()
-    {
-        var ratio = 60f / UITimeLine.Fps;
-        foreach (var curveObj in UIClip.I.clip.curves)
+        void ApplyTo60Fps()
         {
-            foreach (var curve in curveObj.curves)
+            var ratio = 60f / UITimeLine.Fps;
+            foreach (var curveObj in UIClip.I.clip.curves)
             {
-                foreach (var key in curve)
+                foreach (var curve in curveObj.curves)
                 {
-                    key.time = Mathf.RoundToInt(key.time * ratio);
-                }
+                    foreach (var key in curve)
+                    {
+                        key.time = Mathf.RoundToInt(key.time * ratio);
+                    }
 
+                }
             }
+            ClipTool.GetFrameRange(UIClip.I.clip);
+            UITimeLine.I.frameIdx_F *= ratio;
+            inputfieldFps.text = "60";
         }
-        ClipTool.GetFrameRange(UIClip.I.clip);
-        UITimeLine.I.frameIdx_F *= ratio;
-        inputfieldFps.text = "60";
-    }
-    void OnFpsChange(string s)
-    {
-        float v;
-        var success = float.TryParse(s, out v);
-        if (success) UITimeLine.Fps = v;
-    }
-    public void Pause()
-    {
-        play = false;
-    }
-    public void Play()
-    {
-        play = true;
-    }
-    public float speed = 1f;
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
+        void OnFpsChange(string s)
         {
-            play = !play;
+            float v;
+            var success = float.TryParse(s, out v);
+            if (success) UITimeLine.Fps = v;
         }
-        if (play)
+        public void Pause()
         {
-            UITimeLine.I.frameIdx_F += Time.deltaTime * UITimeLine.Fps * speed;
-            float end;
-            if (!toggleFlip.isOn)
+            play = false;
+        }
+        public void Play()
+        {
+            play = true;
+        }
+        public float speed = 1f;
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                end = UIClip.I.clip.frameRange.y;
+                play = !play;
             }
-            else
+            if (play)
             {
-                end = UIClip.I.clip.frameRange.y * 2.5f;
-            }
-            if (toggleLoop.isOn && UITimeLine.I.frameIdx_F > end)
-            {
-                if (togglePingPong.isOn)
+                UITimeLine.I.frameIdx_F += Time.deltaTime * UITimeLine.Fps * speed;
+                float end;
+                if (!toggleFlip.isOn)
                 {
-                    speed = -Mathf.Abs(speed);
+                    end = UIClip.I.clip.frameRange.y;
                 }
                 else
                 {
-                    UITimeLine.I.frameIdx = UIClip.I.clip.frameRange.x;
+                    end = UIClip.I.clip.frameRange.y * 2.5f;
                 }
-            }
-            else if (togglePingPong.isOn && UITimeLine.I.frameIdx_F < UIClip.I.clip.frameRange.x)
-            {
-                speed = Mathf.Abs(speed);
+                if (toggleLoop.isOn && UITimeLine.I.frameIdx_F > end)
+                {
+                    if (togglePingPong.isOn)
+                    {
+                        speed = -Mathf.Abs(speed);
+                    }
+                    else
+                    {
+                        UITimeLine.I.frameIdx = UIClip.I.clip.frameRange.x;
+                    }
+                }
+                else if (togglePingPong.isOn && UITimeLine.I.frameIdx_F < UIClip.I.clip.frameRange.x)
+                {
+                    speed = Mathf.Abs(speed);
+                }
             }
         }
     }
